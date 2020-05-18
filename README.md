@@ -1,3 +1,3 @@
 # WIREFARME
 
-![ex_screenshot](./WIREFRAME/1.jpg)
+![ex_screenshot](./WIREFRAME/1.JPG)
