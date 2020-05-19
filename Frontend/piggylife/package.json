@@ -6,6 +6,7 @@
     "@babel/core": "7.9.0",
     "@babel/plugin-proposal-class-properties": "^7.8.3",
     "@babel/plugin-proposal-decorators": "^7.8.3",
+    "@styled-icons/evil": "^10.0.0",
     "@svgr/webpack": "4.3.3",
     "@testing-library/jest-dom": "^4.2.4",
     "@testing-library/react": "^9.3.2",
@@ -61,13 +62,15 @@
     "semver": "6.3.0",
     "style-loader": "0.23.1",
     "styled-components": "^5.1.0",
+    "styled-icons": "^10.2.1",
     "terser-webpack-plugin": "2.3.5",
     "ts-pnp": "1.1.6",
     "url-loader": "2.3.0",
     "webpack": "4.42.0",
     "webpack-dev-server": "3.10.3",
     "webpack-manifest-plugin": "2.2.0",
-    "workbox-webpack-plugin": "4.3.1"
+    "workbox-webpack-plugin": "4.3.1",
+    "yarn": "^1.22.4"
   },
   "scripts": {
     "start": "node scripts/start.js",
