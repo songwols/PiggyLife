@@ -1,0 +1,29 @@
+package com.piggy.PIGGY.controller;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
+
+import com.piggy.PIGGY.entity.User;
+import com.piggy.PIGGY.repository.UserRepository;
+import com.piggy.PIGGY.service.UserService;
+
+@RestController
+@RequestMapping(value="/user")
+public class UserRestController {
+	
+	@Autowired
+	private UserService uService;
+	
+
+	@GetMapping("/findById")
+	public ResponseEntity<Object> findById(@RequestParam String nickname){
+		User user = uService.findByNickname(nickname);
+		return new ResponseEntity<Object>(user, HttpStatus.OK);
+		
+	}
+}

@@ -6,4 +6,5 @@ import com.piggy.PIGGY.entity.User;
 
 public interface UserRepository extends JpaRepository<User, Long> {
 	
+	public User findByNickname(String nickname);
 }

@@ -1,0 +1,8 @@
+package com.piggy.PIGGY.service;
+
+import com.piggy.PIGGY.entity.User;
+
+public interface UserService {
+	
+	public User findByNickname(String nickname);
+}
