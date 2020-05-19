@@ -1,15 +1,17 @@
-import React from 'react';
+import React from "react";
 import { Switch, Route } from "react-router-dom";
 import { createGlobalStyle } from "styled-components";
 
 import LoginPage from "./pages/LoginPage";
 import JoinPage from "./pages/JoinPage";
+import HomePage from "./pages/HomePage";
 
 const App = () => {
   return (
     <div>
       <GlobalStyle></GlobalStyle>
       <Switch>
+        <Route path="/home" component={HomePage} />
         <Route path="/join" component={JoinPage} />
         <Route path="/" component={LoginPage} />
       </Switch>
@@ -23,6 +25,5 @@ const GlobalStyle = createGlobalStyle`
     height: 100%;
   }
 `;
-
 
 export default App;
