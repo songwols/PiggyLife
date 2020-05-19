@@ -2,12 +2,24 @@ import React from "react";
 import styled from "styled-components";
 
 class CJoin extends React.Component{
+    constructor(props){
+        super(props);
+        this.state={
+            show_code : false,
+        }
+    }
+    inputShow(){
+        this.setState({
+            show_code: !this.state.show_code,
+        })
+    }
+
     render(){
         return(
             <Frame>
                 EMAIL
                 <Input placeholder="이메일을 입력해주세요"></Input>
-                <EBF><EButton>이메일 인증</EButton></EBF>
+                <EBF><EButton onClick={() => this.inputShow(this)}>이메일 인증</EButton></EBF>
                 <EConfirm placeholder="인증코드 입력해주세요"></EConfirm>
                 <Space></Space>
                 닉네임
