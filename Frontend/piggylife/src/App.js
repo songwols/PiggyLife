@@ -6,6 +6,7 @@ import LoginPage from "./pages/LoginPage";
 import JoinPage from "./pages/JoinPage";
 import WritePage from "./pages/WritePage";
 import HomePage from "./pages/HomePage";
+import MatchingPage from "./pages/MatchingPage";
 
 const App = () => {
   return (
@@ -15,6 +16,7 @@ const App = () => {
         <Route path="/home" component={HomePage} />
         <Route path="/join" component={JoinPage} />
         <Route path="/write" component={WritePage} />
+        <Route path="/match" component={MatchingPage} />
         <Route path="/" component={LoginPage} />
       </Switch>
     </div>
