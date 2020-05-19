@@ -1,0 +1,16 @@
+package com.piggy.PIGGY.controller;
+
+import org.springframework.web.bind.annotation.RestController;
+
+import com.piggy.PIGGY.repository.UserRepository;
+
+import springfox.documentation.swagger2.annotations.EnableSwagger2;
+
+@RestController
+@EnableSwagger2
+@EnableTransactionManagement
+public class UserRestController {
+	
+	UserRepository uRepo;
+	
+}
