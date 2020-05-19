@@ -4,6 +4,7 @@ import { createGlobalStyle } from "styled-components";
 
 import LoginPage from "./pages/LoginPage";
 import JoinPage from "./pages/JoinPage";
+import WritePage from "./pages/WritePage";
 import HomePage from "./pages/HomePage";
 
 const App = () => {
@@ -13,6 +14,7 @@ const App = () => {
       <Switch>
         <Route path="/home" component={HomePage} />
         <Route path="/join" component={JoinPage} />
+        <Route path="/write" component={WritePage} />
         <Route path="/" component={LoginPage} />
       </Switch>
     </div>
