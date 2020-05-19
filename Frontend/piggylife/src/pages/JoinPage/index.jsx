@@ -3,7 +3,7 @@ import styled from "styled-components";
 import Top from "../../components/Top"
 import CJoin from "../../components/Join"
 
-class Join extends React.Component{
+class JoinPage extends React.Component{
     render(){
         return(
             <Frame>
@@ -22,4 +22,4 @@ const Frame = styled.div`
 `
 
 
-export default Join;
+export default JoinPage;

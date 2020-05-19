@@ -2,16 +2,16 @@ import React from 'react';
 import { Switch, Route } from "react-router-dom";
 import { createGlobalStyle } from "styled-components";
 
-import MainPage from "./pages/Mainpage";
-import Join from "./pages/Join";
+import LoginPage from "./pages/LoginPage";
+import JoinPage from "./pages/JoinPage";
 
 const App = () => {
   return (
     <div>
       <GlobalStyle></GlobalStyle>
       <Switch>
-        <Route path="/join" component={Join} />
-        <Route path="/" component={MainPage} />
+        <Route path="/join" component={JoinPage} />
+        <Route path="/" component={LoginPage} />
       </Switch>
     </div>
   );
