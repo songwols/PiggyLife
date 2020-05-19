@@ -8,7 +8,7 @@ class Top extends React.Component{
     render(){
         return(
             <Frame>
-                <Back><Link to={"/Mainpage"} style={{ textDecoration: "none" }}><Img1 src={back}></Img1></Link></Back>
+                <Back><Link to={"/"} style={{ textDecoration: "none" }}><Img1 src={back}></Img1></Link></Back>
                 <Icon><Img2 src={logo}></Img2></Icon>
             </Frame>
         )
