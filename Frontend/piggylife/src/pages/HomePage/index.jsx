@@ -11,7 +11,7 @@ class HomePage extends React.Component {
           <Mukitlist>
             <Title>먹킷리스트</Title>
             {/* {returns ? (
-              returns.map((item, index) => <Card key={index} post={item} />)
+              returns.map((item, index) => <Card key={index} store={item} />)
             ) : (
               <></>
             )} */}
@@ -20,7 +20,7 @@ class HomePage extends React.Component {
           <Top10>
             <Title>이 달의 MukSpot-TOP10</Title>
             {/* {returns ? (
-              returns.map((item, index) => <Card key={index} post={item} />)
+              returns.map((item, index) => <Card key={index} store={item} />)
             ) : (
               <></>
             )} */}
@@ -29,7 +29,7 @@ class HomePage extends React.Component {
           <Place>
             <Title>OOO지역에서 가볼만한 곳</Title>
             {/* {returns ? (
-              returns.map((item, index) => <Card key={index} post={item} />)
+              returns.map((item, index) => <Card key={index} store={item} />)
             ) : (
               <></>
             )} */}
@@ -38,7 +38,7 @@ class HomePage extends React.Component {
           <User>
             <Title>OOO님과 비슷한 먹유저들의 MukSpot</Title>
             {/* {returns ? (
-              returns.map((item, index) => <Card key={index} post={item} />)
+              returns.map((item, index) => <Card key={index} store={item} />)
             ) : (
               <></>
             )} */}
