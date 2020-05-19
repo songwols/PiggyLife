@@ -10,7 +10,6 @@ class Confirm extends React.Component{
 }
 
 const EConfirm = styled.input`
-    // display: none;
     font-size: 1.0rem;
     margin-top: .3rem;
     width: 95%;

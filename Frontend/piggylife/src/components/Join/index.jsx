@@ -6,12 +6,12 @@ class CJoin extends React.Component{
     constructor(props){
         super(props);
         this.state={
-            showCode : false,
+            showConfirm : false,
         }
     }
     toggleConfirm(){
         this.setState({
-            showCode: !this.state.showCode,
+            showConfirm: !this.state.showConfirm,
         })
     }
 
@@ -21,7 +21,7 @@ class CJoin extends React.Component{
                 EMAIL
                 <Input placeholder="이메일을 입력해주세요"></Input>
                 <EBF><EButton onClick={this.toggleConfirm.bind(this)}>이메일 인증</EButton></EBF>
-                {this.state.showCode ? (
+                {this.state.showConfirm ? (
                 <Confirm/>
                 ) : null}
                 <Space></Space>

@@ -3,14 +3,14 @@ import { Switch, Route } from "react-router-dom";
 import { createGlobalStyle } from "styled-components";
 
 import LoginPage from "./pages/LoginPage";
-import Join from "./pages/JoinPage";
+import JoinPage from "./pages/JoinPage";
 
 const App = () => {
   return (
     <div>
       <GlobalStyle></GlobalStyle>
       <Switch>
-        <Route path="/join" component={Join} />
+        <Route path="/join" component={JoinPage} />
         <Route path="/" component={LoginPage} />
       </Switch>
     </div>
