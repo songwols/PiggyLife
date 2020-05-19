@@ -3,7 +3,7 @@ import title from './title.png'
 import styled from "styled-components";
 import Login from "../../components/Login";
 
-class Mainpage extends React.Component{
+class LoginPage extends React.Component{
     render(){
         return(
             <Frame>
@@ -45,4 +45,4 @@ const Img = styled.img`
 `
 
 
-export default Mainpage;
+export default LoginPage;

@@ -1,16 +1,17 @@
 import React from "react";
 import styled from "styled-components";
+import Confirm from "./confirm";
 
 class CJoin extends React.Component{
     constructor(props){
         super(props);
         this.state={
-            show_code : false,
+            showCode : false,
         }
     }
-    inputShow(){
+    toggleConfirm(){
         this.setState({
-            show_code: !this.state.show_code,
+            showCode: !this.state.showCode,
         })
     }
 
@@ -19,8 +20,10 @@ class CJoin extends React.Component{
             <Frame>
                 EMAIL
                 <Input placeholder="이메일을 입력해주세요"></Input>
-                <EBF><EButton onClick={() => this.inputShow(this)}>이메일 인증</EButton></EBF>
-                <EConfirm placeholder="인증코드 입력해주세요"></EConfirm>
+                <EBF><EButton onClick={this.toggleConfirm.bind(this)}>이메일 인증</EButton></EBF>
+                {this.state.showCode ? (
+                <Confirm/>
+                ) : null}
                 <Space></Space>
                 닉네임
                 <Input placeholder="닉네임"></Input>
@@ -31,6 +34,7 @@ class CJoin extends React.Component{
                 <Space></Space>
                 <EBF><CButton>회원가입</CButton></EBF>
             </Frame>
+      
         )
     }
 }
@@ -64,21 +68,7 @@ const EBF = styled.div`
     width: 95%;
 `
 
-const EConfirm = styled.input`
-    display: none;
-    font-size: 1.0rem;
-    margin-top: .3rem;
-    width: 95%;
-    padding-left: .3rem;
-    background: none;
-    border-color: gray;
-    border-style: solid;
-    border-radius: 0.3rem;
-    outline: none;
-    box-shadow: none;
-    border-width: 0.05rem;
-    height: 2rem;
-`
+
 
 const EButton = styled.button`
     margin-top: .3rem;
