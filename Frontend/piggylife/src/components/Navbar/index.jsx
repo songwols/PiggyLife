@@ -89,7 +89,9 @@ class Navbar extends React.Component {
         </MAP>
 
         <MUK>
-          <Muk></Muk>
+          <Link to={"/Match"} style={{ textDecoration: "none" }}>
+            <Muk></Muk>
+          </Link>
         </MUK>
       </Frame>
     );
