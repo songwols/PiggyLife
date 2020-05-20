@@ -31,7 +31,7 @@ class WriteContent extends React.Component{
     render(){
         return(
             <Content>
-                <Pic></Pic>
+                <Pic type="file"></Pic>
                 {this.state.show ? (
                 <IFrame></IFrame>
                 ) : null}
@@ -59,7 +59,7 @@ const Content = styled.div`
     height: 100%;
     padding: 10%;
 `
-const Pic = styled.div`
+const Pic = styled.input`
     height: 5rem;
     border-style: solid;
     border-width: 0.05rem;

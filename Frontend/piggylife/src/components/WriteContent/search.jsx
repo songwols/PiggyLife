@@ -30,7 +30,7 @@ class Search extends React.Component{
                   </Box>
                 </PopupInner>
                 {this.state.showList ? (
-                <List/>
+                <List cancelList={this.toggleList.bind(this)}/>
                 ) : null}
             </Popup>
         )

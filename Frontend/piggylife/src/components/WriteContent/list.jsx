@@ -5,7 +5,20 @@ class List extends React.Component{
     render(){
         return(
             <Popup>
-                <PopupInner></PopupInner>
+                <PopupInner>
+                    <SFrame>
+                    <Select>
+                        <Option selected>셀렉트박스</Option>
+                        <Option>옵션1</Option>
+                        <Option>옵션2</Option>
+                        <Option>옵션3</Option>
+                    </Select>
+                    </SFrame>
+                    <BFrame>
+                      <Cancel onClick={this.props.cancelList}>닫기</Cancel>&nbsp;
+                      <OK>확인</OK>
+                    </BFrame>
+                </PopupInner>
             </Popup>
         )
     }
@@ -50,5 +63,60 @@ const PopupInner = styled.div`
   }
 
 `;
+
+const SFrame = styled.div`
+    margin: 70% 10% 45% 10%;
+    height: 4rem;
+    width: 80%;
+    background-color: #ffe8bd;
+    text-align: center;
+    display: flex; 
+    align-items: center; 
+    justify-content: center; 
+`
+
+const Select = styled.select`
+    height: 2rem;
+    width: 80%;
+`
+
+const Option = styled.option`
+    height: 2rem;
+    width: 80%;
+`
+
+const BFrame = styled.div`
+  grid-area: "bframe";
+  margin-top: .3rem;
+  height: 2rem;
+  text-align: center;
+  display: flex; 
+  align-items: center; 
+  justify-content: center; 
+  -webkit-justify-content: center; 
+  -webkit-align-items: center;
+`
+
+const Cancel = styled.button`
+  width: 30%;
+  height: 2rem;
+  color: white;
+  background: none;
+  border: none;
+  outline: none;
+  border-radius: 0.3rem;
+  background-color: #F28379;
+`
+
+const OK = styled.button`
+  width: 30%;
+  height: 2rem;
+  color: white;
+  background: none;
+  border: none;
+  outline: none;
+  border-radius: 0.3rem;
+  background-color: #5897A6;
+`
 
 export default List;
