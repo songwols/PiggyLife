@@ -12,7 +12,6 @@ export const Home = styled(Home4)`
   height: 30px;
   cursor: pointer;
   color: #5897a6;
-  margin-top: 0.6rem;
   margin-left: auto;
   margin-right: auto;
   :hover {
@@ -24,7 +23,6 @@ export const Feed = styled(GridAlt)`
   height: 30px;
   cursor: pointer;
   color: #cccccc;
-  margin-top: 0.6rem;
   margin-left: auto;
   margin-right: auto;
   :hover {
@@ -36,7 +34,6 @@ export const Muk = styled(UserHeart)`
   height: 30px;
   cursor: pointer;
   color: #cccccc;
-  margin-top: 0.6rem;
   margin-left: auto;
   margin-right: auto;
   :hover {
@@ -48,7 +45,6 @@ export const MapIcon = styled(Map)`
   height: 30px;
   cursor: pointer;
   color: #cccccc;
-  margin-top: 0.6rem;
   margin-left: auto;
   margin-right: auto;
   :hover {
@@ -61,7 +57,6 @@ export const Post = styled(PlusCircle)`
   height: 30px;
   cursor: pointer;
   color: #cccccc;
-  margin-top: 0.6rem;
   margin-left: auto;
   margin-right: auto;
   :hover {
@@ -72,15 +67,62 @@ class Navbar extends React.Component {
   render() {
     return (
       <Frame>
-        <Home></Home>
-        <Feed></Feed>
-        <Post></Post>
-        <MapIcon></MapIcon>
-        <Muk></Muk>
+        <HOME>
+          <Link to={"/Home"} style={{ textDecoration: "none" }}>
+            <Home></Home>
+          </Link>
+        </HOME>
+        <FEED>
+          <Link to={"/Feed"} style={{ textDecoration: "none" }}>
+            <Feed></Feed>
+          </Link>
+        </FEED>
+        <POST>
+          <Link to={"/Write"} style={{ textDecoration: "none" }}>
+            <Post></Post>
+          </Link>
+        </POST>
+        <MAP>
+          <Link to={"/Map"} style={{ textDecoration: "none" }}>
+            <MapIcon></MapIcon>
+          </Link>
+        </MAP>
+
+        <MUK>
+          <Link to={"/Match"} style={{ textDecoration: "none" }}>
+            <Muk></Muk>
+          </Link>
+        </MUK>
       </Frame>
     );
   }
 }
+
+const HOME = styled.div`
+  margin-top: 0.6rem;
+  margin-left: auto;
+  margin-right: auto;
+`;
+const FEED = styled.div`
+  margin-top: 0.6rem;
+  margin-left: auto;
+  margin-right: auto;
+`;
+const POST = styled.div`
+  margin-top: 0.6rem;
+  margin-left: auto;
+  margin-right: auto;
+`;
+const MAP = styled.div`
+  margin-top: 0.6rem;
+  margin-left: auto;
+  margin-right: auto;
+`;
+const MUK = styled.div`
+  margin-top: 0.6rem;
+  margin-left: auto;
+  margin-right: auto;
+`;
 
 const Frame = styled.div`
   border-top: solid 1px;
@@ -91,7 +133,7 @@ const Frame = styled.div`
   height: 8vh;
   display: grid;
   grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
-  grid-template-areas: "Home" "Feed" "Post" "MapIcon" "Muk";
+  grid-template-areas: "HOME" "FEED" "POST" "MAP" "MUK";
 `;
 
 export default Navbar;
