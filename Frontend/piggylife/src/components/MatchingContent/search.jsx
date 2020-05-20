@@ -23,7 +23,7 @@ class Search extends React.Component {
   }
 }
 const Content = styled.div`
-  height: 100vh;
+  height: 100%;
   padding: 10%;
   justify-content: center;
   top: 0;
