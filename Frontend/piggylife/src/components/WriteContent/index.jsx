@@ -46,10 +46,9 @@ class WriteContent extends React.Component{
                     <label><BF onClick={this.showIcon.bind(this)}><CK type="radio" name="group" value="went"/></BF>간 곳</label>            
                 </CheckDiv>
                 <EBF><CButton>검색</CButton></EBF>
-                {this.state.showSearch ? (
-                <Search />
+                {this.state.searchShow ? (
+                <Search cancelSearch={this.toggleSearch.bind(this)}/>
                 ) : null}
-
             </Content>
         )
     }
@@ -57,6 +56,7 @@ class WriteContent extends React.Component{
 
 const Content = styled.div`
     grid-area: "content";
+    height: 100%;
     padding: 10%;
 `
 const Pic = styled.div`
