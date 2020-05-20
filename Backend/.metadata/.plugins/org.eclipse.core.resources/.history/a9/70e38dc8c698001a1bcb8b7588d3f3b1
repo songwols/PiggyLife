@@ -1,5 +1,0 @@
-package com.piggy.PIGGY.repository;
-
-public class UserRepositoryImpl {
-
-}
