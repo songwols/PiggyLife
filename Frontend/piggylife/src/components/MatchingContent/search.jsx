@@ -47,7 +47,7 @@ const Img = styled.img`
   margin: auto;
 `;
 const Box2 = styled.div`
-  widtj: 100%;
+  // width: 100%;
   background-color: #ffe8bd;
   border-radius: 0.5rem;
   padding: 5% 10% 5% 10%;
