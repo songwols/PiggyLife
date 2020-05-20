@@ -1,6 +1,7 @@
 import React from "react";
 import styled from "styled-components";
 import logo from "./logo_match.png";
+import { Link } from "react-router-dom";
 
 class Search extends React.Component {
   render() {
@@ -12,7 +13,9 @@ class Search extends React.Component {
         <Box2>
           <Input placeholder="궁합 상대의 메일을 넣어주세요"></Input>
           <EBF>
-            <CButton>Search</CButton>
+            <Link to={"/HOME"} style={{ textDecoration: "none" }}>
+              <CButton>Search</CButton>
+            </Link>
           </EBF>
         </Box2>
       </Content>
@@ -20,14 +23,18 @@ class Search extends React.Component {
   }
 }
 const Content = styled.div`
-  grid-area: "content";
+  height: 100vh;
   padding: 10%;
+  justify-content: center;
+  top: 0;
+  bottom: 0;
+  flexDirection:'row',
+  align-items: center;
 `;
 const Box1 = styled.div`
   display: flex;
   justify-content: center;
   text-align: center;
-  height: 100%;
   object-fit: cover;
   margin: auto;
 `;
