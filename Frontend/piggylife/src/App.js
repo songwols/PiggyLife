@@ -6,12 +6,16 @@ import LoginPage from "./pages/LoginPage";
 import JoinPage from "./pages/JoinPage";
 import WritePage from "./pages/WritePage";
 import HomePage from "./pages/HomePage";
+import FeedPage from "./pages/FeedPage";
+import MapPage from "./pages/MapPage";
 
 const App = () => {
   return (
     <div>
       <GlobalStyle></GlobalStyle>
       <Switch>
+        <Route path="/map" component={MapPage} />
+        <Route path="/feed" component={FeedPage} />
         <Route path="/home" component={HomePage} />
         <Route path="/join" component={JoinPage} />
         <Route path="/write" component={WritePage} />

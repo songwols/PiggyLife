@@ -1,7 +1,6 @@
 import React from "react";
 import styled from "styled-components";
 import Navbar from "../../components/Navbar";
-import Card from "../../components/Card";
 
 class HomePage extends React.Component {
   render() {
