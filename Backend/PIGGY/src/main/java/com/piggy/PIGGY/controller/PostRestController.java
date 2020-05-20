@@ -31,8 +31,8 @@ public class PostRestController {
 	private PostService pService;
 	
 	@ApiOperation(value = "Post 생성")
-	@PostMapping("/create/{uid}")
-	public ResponseEntity<Object> createPost(@RequestParam Long uId, @RequestBody Post inputPost){
+	@PostMapping("/create/{uId}")
+	public ResponseEntity<Object> create(@RequestParam Long uId, @RequestBody Post inputPost){
 		try {
 			Post post = pService.create(uId, inputPost);
 			return new ResponseEntity<Object>(post, HttpStatus.OK);
