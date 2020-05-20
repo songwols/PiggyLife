@@ -1,6 +1,7 @@
 import React from "react";
 import styled from "styled-components";
 import WriteContent from "../../components/WriteContent"
+import Navbar from "../../components/Navbar"
 
 class WritePage extends React.Component{
     render(){
@@ -18,11 +19,6 @@ const Frame = styled.div`
     display: grid;
     grid-template-rows: auto 8vh;
     grid-template-areas: "content" "navbar";
-`
-
-
-const Navbar = styled.div`
-    grid-area: "navbar";
 `
 
 export default WritePage;
