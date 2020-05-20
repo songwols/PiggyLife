@@ -24,7 +24,7 @@ class Login extends React.Component {
             </Link>
           </L1>
           <L2>
-            <Link to={"/"} style={{ textDecoration: "none" }}>
+            <Link to={"/findpw"} style={{ textDecoration: "none" }}>
               비번찾기
             </Link>
           </L2>
@@ -110,14 +110,17 @@ const LinkFrame = styled.div`
   grid-area: "linkframe";
   padding-left: 25%;
   padding-right: 25%;
+  display: flex; 
+  align-items: center; 
+  justify-content: center; 
 `;
 
 const L1 = styled.div`
-  float: left;
+  margin-right: .3rem;
 `;
 
 const L2 = styled.div`
-  float: right;
+  margin-left: .3rem;
 `;
 
 export default Login;

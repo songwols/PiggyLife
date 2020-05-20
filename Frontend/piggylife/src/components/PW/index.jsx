@@ -1,9 +1,9 @@
 import React from "react";
 import styled from "styled-components";
-import Confirm from "./confirm";
+import Confirm from "../Join/confirm";
 import { Link } from "react-router-dom";
 
-class CJoin extends React.Component{
+class PW extends React.Component{
     constructor(props){
         super(props);
         this.state={
@@ -19,6 +19,7 @@ class CJoin extends React.Component{
     render(){
         return(
             <Frame>
+                <Space></Space>
                 EMAIL
                 <Input placeholder="이메일을 입력해주세요"></Input>
                 <EBF><EButton onClick={this.toggleConfirm.bind(this)}>이메일 인증</EButton></EBF>
@@ -26,16 +27,10 @@ class CJoin extends React.Component{
                 <Confirm/>
                 ) : null}
                 <Space></Space>
-                닉네임
-                <Input placeholder="닉네임"></Input>
                 <Space></Space>
-                PASSWORD
-                <Input placeholder="비밀번호"></Input>
-                <Input placeholder="비밀번호 확인"></Input>
                 <Space></Space>
-                <EBF><Link to={"/"} style={{ textDecoration: "none" }}><CButton>회원가입</CButton></Link></EBF>
+                <EBF><Link to={"/"} style={{ textDecoration: "none" }}><CButton>비번 찾기</CButton></Link></EBF>
             </Frame>
-      
         )
     }
 }
@@ -48,7 +43,9 @@ const Frame = styled.div`
     grid-area: "content";
     padding: 10%;
     width: 100wh;
+    
 `
+
 const Input = styled.input`
     font-size: 1.0rem;
     margin-top: .3rem;
@@ -68,8 +65,6 @@ const EBF = styled.div`
     text-align: center;
     width: 95%;
 `
-
-
 
 const EButton = styled.button`
     margin-top: .3rem;
@@ -95,5 +90,4 @@ const CButton = styled.button`
     background-color: #5897A6;
 `
 
-
-export default CJoin;
+export default PW;
