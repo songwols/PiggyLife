@@ -1,8 +1,0 @@
-package com.piggy.PIGGY.service;
-
-import com.piggy.PIGGY.entity.User;
-
-public interface UserService {
-	
-	private User findById(Long uId);
-}
