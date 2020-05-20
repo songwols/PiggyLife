@@ -125,6 +125,7 @@ const MUK = styled.div`
 `;
 
 const Frame = styled.div`
+  background-color: white;
   border-top: solid 1px;
   border-color: #e6e6e6;
   position: fixed;
