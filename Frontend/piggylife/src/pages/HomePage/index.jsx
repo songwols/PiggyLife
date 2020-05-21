@@ -9,6 +9,7 @@ class HomePage extends React.Component {
         <List>
           <Mukitlist>
             <Title>먹킷리스트</Title>
+            <Div></Div>
             {/* {returns ? (
               returns.map((item, index) => <Card key={index} store={item} />)
             ) : (
@@ -18,6 +19,7 @@ class HomePage extends React.Component {
 
           <Top10>
             <Title>이 달의 MukSpot-TOP10</Title>
+            <Div></Div>
             {/* {returns ? (
               returns.map((item, index) => <Card key={index} store={item} />)
             ) : (
@@ -27,6 +29,7 @@ class HomePage extends React.Component {
 
           <Place>
             <Title>OOO지역에서 가볼만한 곳</Title>
+            <Div></Div>
             {/* {returns ? (
               returns.map((item, index) => <Card key={index} store={item} />)
             ) : (
@@ -36,6 +39,7 @@ class HomePage extends React.Component {
 
           <User>
             <Title>OOO님과 비슷한 먹유저들의 MukSpot</Title>
+            <Div></Div>
             {/* {returns ? (
               returns.map((item, index) => <Card key={index} store={item} />)
             ) : (
@@ -49,7 +53,15 @@ class HomePage extends React.Component {
   }
 }
 
-const Title = styled.div``;
+const Title = styled.div`
+  margin-left: 1rem;
+`;
+
+const Div = styled.div`
+  background-color: #f2e9e4;
+  width: 100%;
+  height: 100px;
+`;
 
 const Mukitlist = styled.div`
   /* background-color: #5897a6; */
@@ -74,7 +86,7 @@ const List = styled.div`
   display: grid;
   height: 92vh;
   grid-template-areas: "Mukitlist" "Top10" "Place" "User";
-  margin-left: 1rem;
+
   margin-top: 1rem;
 `;
 
