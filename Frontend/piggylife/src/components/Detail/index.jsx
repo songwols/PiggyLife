@@ -10,6 +10,7 @@ class Detail extends React.Component{
                 <Menu>메뉴</Menu>
                 <Map>지도</Map>
                 <Tag>태그</Tag>
+                <Memo>메모</Memo>
             </Frame>
         )
     }
@@ -18,8 +19,8 @@ class Detail extends React.Component{
 const Frame = styled.div`
     height: 100%;
     display: grid;
-    grid-template-rows: repeat(5, auto);
-    grid-template-areas: "pic" "info" "menu" "map" "tag";
+    grid-template-rows: repeat(6, auto);
+    grid-template-areas: "pic" "info" "menu" "map" "tag" "memo";
 `
 const Pic = styled.div`
     grid-area: "pic";
@@ -51,5 +52,10 @@ const Tag = styled.div`
     height: 5rem;
 `
 
+const Memo = styled.div`
+    grid-area: "memo";
+    margin-top: .5rem;
+    height: 7rem;
+`
 
 export default Detail;
