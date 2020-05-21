@@ -10,6 +10,7 @@ import FeedPage from "./pages/FeedPage";
 import MapPage from "./pages/MapPage";
 import MatchingPage from "./pages/MatchingPage";
 import FindPWPage from "./pages/FindPWPage";
+import MorePage from "./pages/MorePage";
 
 const App = () => {
   return (
@@ -23,6 +24,7 @@ const App = () => {
         <Route path="/write" component={WritePage} />
         <Route path="/match" component={MatchingPage} />
         <Route path="/findpw" component={FindPWPage} />
+        <Route path="/more" component={MorePage} />
         <Route path="/" component={LoginPage} />
       </Switch>
     </div>
