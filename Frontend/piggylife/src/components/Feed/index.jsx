@@ -17,9 +17,14 @@ class Feed extends React.Component {
   }
 }
 
-const Frame = styled.div``;
+const Frame = styled.div`
+  display: flex;
+
+  justify-content: center;
+  align-items: center;
+`;
 const Div = styled.div`
-  margin: 0 0 0 0;
+  margin-top: 3rem;
 `;
 
 export default Feed;

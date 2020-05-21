@@ -6,29 +6,24 @@ import FeedCompo from "../../components/Feed";
 import Statistic from "../../components/Statistic";
 import { GridAlt } from "@styled-icons/boxicons-regular/GridAlt";
 import { Graph } from "@styled-icons/octicons/Graph";
+import { inject, observer } from "mobx-react";
 
 export const Grid = styled(GridAlt)`
   width: 25px;
   height: 25px;
   cursor: pointer;
-  color: #cccccc;
-
-  :hover {
-    color: #5897a6;
-  }
+  align-items: center;
 `;
 
 export const GraphIcon = styled(Graph)`
   width: 25px;
   height: 25px;
   cursor: pointer;
-  color: #cccccc;
   align-items: center;
-  :hover {
-    color: #5897a6;
-  }
 `;
 
+@inject("colorStore")
+@observer
 class FeedPage extends React.Component {
   constructor(props) {
     super(props);
@@ -44,16 +39,16 @@ class FeedPage extends React.Component {
       feed: true,
       statistic: false,
     });
-    console.log(this.state.feed);
-    console.log(this.state.statistic);
+    this.props.colorStore.setMyFeedColor("#5897A6");
+    this.props.colorStore.setStatisticColor("#cccccc");
   };
   StatisticClick = (e) => {
     this.setState({
       feed: false,
       statistic: true,
     });
-    console.log(this.state.feed);
-    console.log(this.state.statistic);
+    this.props.colorStore.setMyFeedColor("#cccccc");
+    this.props.colorStore.setStatisticColor("#5897A6");
   };
 
   render() {
@@ -64,10 +59,10 @@ class FeedPage extends React.Component {
           <Content>
             <Tab>
               <FeedTab onClick={this.FeedClick}>
-                <Grid></Grid>
+                <Grid color={this.props.colorStore.myfeed}></Grid>
               </FeedTab>
               <StatisticTab onClick={this.StatisticClick}>
-                <GraphIcon></GraphIcon>
+                <GraphIcon color={this.props.colorStore.statistic}></GraphIcon>
               </StatisticTab>
             </Tab>
             <Bottom>
@@ -88,6 +83,9 @@ class FeedPage extends React.Component {
 
 const Frame = styled.div`
   height: 100vh;
+  display: grid;
+  grid-template-rows: 92vh 8vh;
+  grid-template-areas: "Feed" "Navbar";
 `;
 const FeedTab = styled.div`
   height: 53px;
@@ -116,10 +114,9 @@ const Tab = styled.div`
   border-color: #e6e6e6;
 `;
 const Bottom = styled.div`
-  display: flex;
-
+  /* display: flex;
   justify-content: center;
-  align-items: center;
+  align-items: center; */
 `;
 const Feed = styled.div`
   display: grid;
