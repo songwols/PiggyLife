@@ -15,7 +15,7 @@ class WritePage extends React.Component{
 }
 
 const Frame = styled.div`
-    height: 100vh;
+    height: 100%;
     display: grid;
     grid-template-rows: auto 8vh;
     grid-template-areas: "content" "navbar";

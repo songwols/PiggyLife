@@ -57,7 +57,7 @@ class WriteContent extends React.Component{
 const Content = styled.div`
     grid-area: "content";
     height: 100%;
-    padding: 10%;
+    padding: 10% 10% 5% 10%;
 `
 const Pic = styled.input`
     height: 5rem;
