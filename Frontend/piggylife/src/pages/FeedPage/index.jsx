@@ -2,26 +2,27 @@ import React from "react";
 import styled from "styled-components";
 import Navbar from "../../components/Navbar";
 import Profile from "../../components/Profile";
+import FeedCompo from "../../components/Feed";
+import Statistic from "../../components/Statistic";
 import { GridAlt } from "@styled-icons/boxicons-regular/GridAlt";
 import { Graph } from "@styled-icons/octicons/Graph";
 
 export const Grid = styled(GridAlt)`
-  width: 30px;
-  height: 30px;
+  width: 25px;
+  height: 25px;
   cursor: pointer;
-  /* color: #cccccc; */
-  justify-content: center;
-  align-items: center;
+  color: #cccccc;
+
   :hover {
     color: #5897a6;
   }
 `;
 
 export const GraphIcon = styled(Graph)`
-  width: 30px;
-  height: 30px;
+  width: 25px;
+  height: 25px;
   cursor: pointer;
-  /* color: #cccccc; */
+  color: #cccccc;
   align-items: center;
   :hover {
     color: #5897a6;
@@ -70,7 +71,11 @@ class FeedPage extends React.Component {
               </StatisticTab>
             </Tab>
             <Bottom>
-              {this.state.feed === true ? <div>첫번째</div> : <div>두번째</div>}
+              {this.state.feed === true ? (
+                <FeedCompo></FeedCompo>
+              ) : (
+                <Statistic></Statistic>
+              )}
             </Bottom>
             {/* state로 true면 피드, false면 통계 */}
           </Content>
@@ -88,11 +93,19 @@ const FeedTab = styled.div`
   height: 53px;
   border-right: solid 1px;
   border-color: #e6e6e6;
+  display: flex;
+
+  justify-content: center;
+  align-items: center;
 `;
 const StatisticTab = styled.div`
   height: 53px;
   border-bottom: solid 1px;
   border-color: #e6e6e6;
+  display: flex;
+
+  justify-content: center;
+  align-items: center;
 `;
 const Tab = styled.div`
   display: grid;
@@ -102,7 +115,12 @@ const Tab = styled.div`
   border-bottom: solid 1px;
   border-color: #e6e6e6;
 `;
-const Bottom = styled.div``;
+const Bottom = styled.div`
+  display: flex;
+
+  justify-content: center;
+  align-items: center;
+`;
 const Feed = styled.div`
   display: grid;
   height: 92vh;
