@@ -12,6 +12,7 @@ import MatchingPage from "./pages/MatchingPage";
 import FindPWPage from "./pages/FindPWPage";
 import MorePage from "./pages/MorePage";
 import EditProPage from "./pages/EditProPage";
+import DetailPage from "./pages/DetailPage";
 
 const App = () => {
   return (
@@ -27,6 +28,7 @@ const App = () => {
         <Route path="/findpw" component={FindPWPage} />
         <Route path="/more" component={MorePage} />
         <Route path="/editP" component={EditProPage} />
+        <Route path="/detail" component={DetailPage} />
         <Route path="/" component={LoginPage} />
       </Switch>
     </div>
