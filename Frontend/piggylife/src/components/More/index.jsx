@@ -6,7 +6,7 @@ class More extends React.Component{
     render(){
         return(
             <Frame>
-                <BF><Link to={"/"} style={{ textDecoration: "none" }}><Button>프로필 수정</Button></Link></BF>
+                <BF><Link to={"/editP"} style={{ textDecoration: "none" }}><Button>프로필 수정</Button></Link></BF>
                 <Space></Space>
                 <BF><Link to={"/"} style={{ textDecoration: "none" }}><Button>로그아웃</Button></Link></BF>
                 <Space></Space>
