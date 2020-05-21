@@ -9,7 +9,7 @@ import com.piggy.PIGGY.entity.Store;
 import com.piggy.PIGGY.repository.StoreRepository;
 
 @Service
-public class StoreServiceImpl implements StoreService{
+public class StoreServiceImpl implements StoreService {
 
 	@Autowired
 	private StoreRepository sRepo;
