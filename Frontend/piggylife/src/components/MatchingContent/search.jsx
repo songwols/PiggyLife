@@ -13,7 +13,7 @@ class Search extends React.Component {
         <Box2>
           <Input placeholder="궁합 상대의 메일을 넣어주세요"></Input>
           <EBF>
-            <Link to={"/HOME"} style={{ textDecoration: "none" }}>
+            <Link to={"/RESULT"} style={{ textDecoration: "none" }}>
               <CButton>Search</CButton>
             </Link>
           </EBF>
@@ -23,8 +23,9 @@ class Search extends React.Component {
   }
 }
 const Content = styled.div`
-  height: 100%;
+  height: auto;
   padding: 10%;
+  align-items: center; 
   justify-content: center;
   top: 0;
   bottom: 0;

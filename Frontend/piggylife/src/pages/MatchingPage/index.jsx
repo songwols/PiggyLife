@@ -15,5 +15,7 @@ class MatchingPage extends React.Component {
 }
 const Frame = styled.div`
   height: 100vh;
+  
 `;
+
 export default MatchingPage;

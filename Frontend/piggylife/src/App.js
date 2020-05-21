@@ -9,6 +9,7 @@ import HomePage from "./pages/HomePage";
 import FeedPage from "./pages/FeedPage";
 import MapPage from "./pages/MapPage";
 import MatchingPage from "./pages/MatchingPage";
+import MatchingResultPage from "./pages/MatchingResultPage";
 
 const App = () => {
   return (
@@ -21,6 +22,7 @@ const App = () => {
         <Route path="/join" component={JoinPage} />
         <Route path="/write" component={WritePage} />
         <Route path="/match" component={MatchingPage} />
+        <Route path="/result" component={MatchingResultPage} />
         <Route path="/" component={LoginPage} />
       </Switch>
     </div>
