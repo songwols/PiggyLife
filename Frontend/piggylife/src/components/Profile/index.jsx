@@ -37,11 +37,11 @@ class Profile extends React.Component {
 }
 
 const Frame = styled.div`
-  height: 200px;
+  height: 150px;
   align-items: center;
   display: grid;
   grid-template-columns: 1fr 2fr;
-  grid-template-areas: "ProfileImage" "Info";
+  grid-template-areas: "ProfileImage Info";
 `;
 
 const Info = styled.div`
