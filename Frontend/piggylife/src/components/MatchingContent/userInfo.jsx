@@ -23,19 +23,22 @@ class UserInfo extends React.Component{
 
 }
 const Content = styled.span`
-    height: auto;
+    height: 100%;
     width: 100%;
     // padding: 15%;
-    align-items: center; 
     text-align:center;
     justify-content: center;
     align-items: center;
+    display:inline-block;
 `;
 const Img = styled.div`
-    display: flex;
+    display: inline-block;
     justify-content: cneter;
+    align-items: center; 
     background-color:#404239;
-    height: 90px;
+    height: 100px;
+    width: 100px;
+    margin:10px;
 
 `
 const Level = styled.div`
