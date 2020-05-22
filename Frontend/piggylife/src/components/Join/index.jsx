@@ -1,17 +1,25 @@
 import React from "react";
 import styled from "styled-components";
 import Confirm from "./confirm";
+import Check from "./check";
 
 class CJoin extends React.Component{
     constructor(props){
         super(props);
         this.state={
             showConfirm : false,
+            showCheck : false,
         }
     }
     toggleConfirm(){
         this.setState({
             showConfirm: !this.state.showConfirm,
+        })
+    }
+
+    toggleCheck(){
+        this.setState({
+            showCheck: !this.state.showCheck,
         })
     }
 
@@ -32,7 +40,11 @@ class CJoin extends React.Component{
                 <Input placeholder="비밀번호"></Input>
                 <Input placeholder="비밀번호 확인"></Input>
                 <Space></Space>
-                <EBF><CButton>회원가입</CButton></EBF>
+                <EBF><CButton onClick={this.toggleCheck.bind(this)}>회원가입</CButton></EBF>
+                {this.state.showCheck ? (
+                <Check cancelCheck={this.toggleCheck.bind(this)}/>
+                ) : null}
+
             </Frame>
       
         )
