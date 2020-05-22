@@ -54,27 +54,27 @@ class FeedPage extends React.Component {
   render() {
     return (
       <Frame>
-        <Feed>
+        <Top>
           <Profile></Profile>
-          <Content>
-            <Tab>
-              <FeedTab onClick={this.FeedClick}>
-                <Grid color={this.props.colorStore.myfeed}></Grid>
-              </FeedTab>
-              <StatisticTab onClick={this.StatisticClick}>
-                <GraphIcon color={this.props.colorStore.statistic}></GraphIcon>
-              </StatisticTab>
-            </Tab>
-            <Bottom>
-              {this.state.feed === true ? (
-                <FeedCompo></FeedCompo>
-              ) : (
-                <Statistic></Statistic>
-              )}
-            </Bottom>
-            {/* state로 true면 피드, false면 통계 */}
-          </Content>
-        </Feed>
+          <Tab>
+            <FeedTab onClick={this.FeedClick}>
+              <Grid color={this.props.colorStore.myfeed}></Grid>
+            </FeedTab>
+            <StatisticTab onClick={this.StatisticClick}>
+              <GraphIcon color={this.props.colorStore.statistic}></GraphIcon>
+            </StatisticTab>
+          </Tab>
+        </Top>
+        <Content>
+          <Bottom>
+            {this.state.feed === true ? (
+              <FeedCompo></FeedCompo>
+            ) : (
+              <Statistic></Statistic>
+            )}
+          </Bottom>
+          {/* state로 true면 피드, false면 통계 */}
+        </Content>
         <Navbar></Navbar>
       </Frame>
     );
@@ -84,15 +84,22 @@ class FeedPage extends React.Component {
 const Frame = styled.div`
   height: 100vh;
   display: grid;
-  grid-template-rows: 92vh 8vh;
-  grid-template-areas: "Feed" "Navbar";
+  grid-template-rows: 205px auto 8vh;
+  grid-template-areas: "Top" "Content" "Navbar";
+`;
+
+const Top = styled.div`
+  position: sticky;
+  top: 0;
+  background-color: white;
 `;
 const FeedTab = styled.div`
   height: 53px;
   border-right: solid 1px;
   border-color: #e6e6e6;
   display: flex;
-
+  position: sticky;
+  top: 0;
   justify-content: center;
   align-items: center;
 `;
@@ -101,11 +108,14 @@ const StatisticTab = styled.div`
   border-bottom: solid 1px;
   border-color: #e6e6e6;
   display: flex;
-
+  position: sticky;
+  top: 0;
   justify-content: center;
   align-items: center;
 `;
 const Tab = styled.div`
+  position: sticky;
+  top: 0;
   display: grid;
   grid-template-columns: 1fr 1fr;
   grid-template-areas: "FeedTab StatisticTab";
