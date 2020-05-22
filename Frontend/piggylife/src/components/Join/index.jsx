@@ -1,18 +1,29 @@
 import React from "react";
 import styled from "styled-components";
 import Confirm from "./confirm";
+<<<<<<< HEAD
 import { Link } from "react-router-dom";
+=======
+import Check from "./check";
+>>>>>>> feature/frame_front
 
 class CJoin extends React.Component{
     constructor(props){
         super(props);
         this.state={
             showConfirm : false,
+            showCheck : false,
         }
     }
     toggleConfirm(){
         this.setState({
             showConfirm: !this.state.showConfirm,
+        })
+    }
+
+    toggleCheck(){
+        this.setState({
+            showCheck: !this.state.showCheck,
         })
     }
 
@@ -33,7 +44,11 @@ class CJoin extends React.Component{
                 <Input placeholder="비밀번호"></Input>
                 <Input placeholder="비밀번호 확인"></Input>
                 <Space></Space>
-                <EBF><Link to={"/"} style={{ textDecoration: "none" }}><CButton>회원가입</CButton></Link></EBF>
+                <EBF><CButton onClick={this.toggleCheck.bind(this)}>회원가입</CButton></EBF>
+                {this.state.showCheck ? (
+                <Check cancelCheck={this.toggleCheck.bind(this)}/>
+                ) : null}
+
             </Frame>
       
         )
