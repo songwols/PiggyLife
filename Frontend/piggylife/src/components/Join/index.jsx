@@ -1,11 +1,8 @@
 import React from "react";
 import styled from "styled-components";
 import Confirm from "./confirm";
-<<<<<<< HEAD
 import { Link } from "react-router-dom";
-=======
 import Check from "./check";
->>>>>>> feature/frame_front
 
 class CJoin extends React.Component{
     constructor(props){
