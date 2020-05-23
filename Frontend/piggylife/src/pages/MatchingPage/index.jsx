@@ -15,5 +15,11 @@ class MatchingPage extends React.Component {
 }
 const Frame = styled.div`
   height: 100vh;
+  align-items: center; 
+  text-align:center;
+  justify-content: center;
+  align-items: center;
+  
 `;
+
 export default MatchingPage;
