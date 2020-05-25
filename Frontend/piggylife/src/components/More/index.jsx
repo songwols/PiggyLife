@@ -10,7 +10,7 @@ class More extends React.Component{
                 <Space></Space>
                 <BF><Link to={"/"} style={{ textDecoration: "none" }}><Button>로그아웃</Button></Link></BF>
                 <Space></Space>
-                <BF><Button>고객센터</Button></BF>
+                <BF><a href="https://pf.kakao.com/_fzqDxb"><Button>고객센터</Button></a></BF>
             </Frame>
         )
     }
