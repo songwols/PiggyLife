@@ -1,9 +1,9 @@
 package com.piggy.PIGGY.service;
 
+import java.util.Collections;
 import java.util.List;
 import java.util.NoSuchElementException;
 
-import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -14,12 +14,19 @@ import org.springframework.stereotype.Service;
 import com.piggy.PIGGY.dto.SignupDto;
 import com.piggy.PIGGY.entity.User;
 import com.piggy.PIGGY.repository.UserRepository;
+import com.piggy.PIGGY.security.JwtTokenProvider;
 
 @Service
-public class UserServiceImpl implements UserDetailsService, UserService{
+public class UserServiceImpl implements UserService{
 	
 	@Autowired
 	private UserRepository uRepo;
+
+	@Autowired
+	private PasswordEncoder passwordEncoder;
+	
+	@Autowired
+	private JwtTokenProvider jwtProvider;
 	
 	@Override
 	public UserDetails loadUserByUsername(String uId) throws UsernameNotFoundException {
@@ -28,19 +35,25 @@ public class UserServiceImpl implements UserDetailsService, UserService{
 	
 	@Override
 	public User singup(SignupDto dto) {
-		
-		return uRepo.save(User.builder()
+		User user = User.builder()
 				.email(dto.getEmail())
-				.password(dto.getPassword())
+				.password(passwordEncoder.encode(dto.getPassword()))
 				.nickname(dto.getNickname())
-//				.emailCertify(authkey)
-//				.roles(Collections.singletonList("EMAIL_USER"))
-				.build());
+				.image(dto.getImage())
+				.ranking(1)
+				.roles(Collections.singletonList("EMAIL_USER"))
+				.build();
+		return uRepo.save(user);
 	}
 
 	@Override
 	public User signin(String email, String password) {
 		User user = uRepo.findByEmail(email).orElseThrow(NoSuchElementException::new);
+		if (!passwordEncoder.matches(password, user.getPassword())) {
+			
+		}
+		
+			
 		return user;
 	}
 	
@@ -53,8 +66,8 @@ public class UserServiceImpl implements UserDetailsService, UserService{
 	}
 	
 	@Override
-	public User findById(Long uId) {
-		return uRepo.findById(uId).orElseThrow(NoSuchElementException::new);
+	public User findByEmail(String email) {
+		return uRepo.findByEmail(email).orElseThrow(NoSuchElementException::new);
 	}
 	
 	@Override
@@ -70,6 +83,12 @@ public class UserServiceImpl implements UserDetailsService, UserService{
 	@Override
 	public void deleteById(Long uId) {
 		uRepo.deleteById(uId);
+	}
+
+	@Override
+	public void updateEmail(String email) {
+		uRepo.updateEmail(email);
+		
 	}
 	
 }
