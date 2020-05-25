@@ -10,7 +10,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.mail.javamail.JavaMailSender;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -24,7 +23,6 @@ import com.piggy.PIGGY.dto.SignupDto;
 import com.piggy.PIGGY.entity.User;
 import com.piggy.PIGGY.mail.MailUtils;
 import com.piggy.PIGGY.mail.TempKey;
-import com.piggy.PIGGY.security.JwtTokenProvider;
 import com.piggy.PIGGY.service.UserService;
 
 import io.swagger.annotations.Api;
@@ -41,9 +39,6 @@ public class SignRestController {
 	
 	@Autowired
 	private JavaMailSender mailSender;
-	
-	@Autowired
-	private JwtTokenProvider jwtProvider;
 
 	@ApiOperation(value = "회원가입")
 	@PostMapping("/signup")
@@ -83,16 +78,7 @@ public class SignRestController {
 	@PostMapping("/signin")
 	public ResponseEntity<Object> signin(@RequestParam String email, @RequestParam String password) {
 		try {
-			User user = uService.signin(email, password);
-			if (user == null)
-				return new ResponseEntity<Object>("password가 틀렸습니다.", HttpStatus.OK);
-			
-			List<String> result = new ArrayList<>();
-			result.add(jwtProvider.createToken(user.getUsername(), user.getRoles()));
-			result.add(user.getUId().toString());
-			result.add(user.getEmail());
-			result.add(user.getNickname());
-			
+			List<String> result = uService.signin(email, password);
 			OutputDto output = new OutputDto(result, "로그인");
 			return new ResponseEntity<Object>(output, HttpStatus.OK);
 		} catch (Exception e) {

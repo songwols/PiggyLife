@@ -1,5 +1,6 @@
 package com.piggy.PIGGY.service;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.NoSuchElementException;
@@ -47,14 +48,18 @@ public class UserServiceImpl implements UserService{
 	}
 
 	@Override
-	public User signin(String email, String password) {
+	public List<String> signin(String email, String password) {
+		
+		List<String> result = new ArrayList<>();
 		User user = uRepo.findByEmail(email).orElseThrow(NoSuchElementException::new);
 		if (!passwordEncoder.matches(password, user.getPassword())) {
-			
+			result.add("비밀번호가 일치하지 않습니다.");
+		} else {
+			result.add(jwtProvider.createToken(user.getUsername(), user.getRoles()));
+			result.add(user.getUId().toString());
 		}
-		
 			
-		return user;
+		return result;
 	}
 	
 	@Override

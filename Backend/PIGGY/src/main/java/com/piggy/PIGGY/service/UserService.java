@@ -11,7 +11,7 @@ public interface UserService extends UserDetailsService{
 	
 	public User singup(SignupDto dto);
 	
-	public User signin(String email, String password);
+	public List<String> signin(String email, String password);
 	
 	public boolean emailDuplicateCheck(String email);
 	
