@@ -9,6 +9,7 @@ class WriteContent extends React.Component{
         this.state={
             show : false,
             searchShow: false,
+            store_name:"",
         }
     }
     showIcon(){

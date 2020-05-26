@@ -2,21 +2,40 @@ import React from "react";
 import styled from "styled-components";
 
 class List extends React.Component{
+  constructor() {
+    super();
+    this.state = {
+      address: "",
+    };
+  }
+
+  addressChange(e) {
+    this.setState({
+      address: e.target.value,
+    });
+  };
+
     render(){
+      const searching = (e) => {
+        e.preventDefault();
+        
+      };
+  
         return(
             <Popup>
                 <PopupInner>
                     <SFrame>
-                    <Select>
-                        <Option selected>셀렉트박스</Option>
+                    <Select onChange={this.addressChange.bind(this)}>
+                        <Option defaultValue>셀렉트박스</Option>
                         <Option>옵션1</Option>
                         <Option>옵션2</Option>
                         <Option>옵션3</Option>
+                        <Option>옵션4</Option>
                     </Select>
                     </SFrame>
                     <BFrame>
                       <Cancel onClick={this.props.cancelList}>닫기</Cancel>&nbsp;
-                      <OK>확인</OK>
+                      <OK onClick={searching}>확인</OK>
                     </BFrame>
                 </PopupInner>
             </Popup>
@@ -65,7 +84,7 @@ const PopupInner = styled.div`
 `;
 
 const SFrame = styled.div`
-    margin: 70% 10% 45% 10%;
+    margin: 60% 10% 45% 10%;
     height: 4rem;
     width: 80%;
     background-color: #ffe8bd;
@@ -83,6 +102,7 @@ const Select = styled.select`
 const Option = styled.option`
     height: 2rem;
     width: 80%;
+    overflow:scroll;
 `
 
 const BFrame = styled.div`
