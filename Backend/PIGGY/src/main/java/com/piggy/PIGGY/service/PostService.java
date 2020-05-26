@@ -7,7 +7,7 @@ import com.piggy.PIGGY.entity.Post;
 
 public interface PostService {
 
-	public Post create(Long uId, PostInputDto post);
+	public Post create(Long uId, PostInputDto dto);
 	
 	public List<Post> findAll();
 	
@@ -15,7 +15,7 @@ public interface PostService {
 	
 	public List<Post> findByUser(Long uId);
 	
-	public Post update(Long pId);
+	public Post update(Long pId, PostInputDto dto);
 	
 	public void delete(Long pId);
 	

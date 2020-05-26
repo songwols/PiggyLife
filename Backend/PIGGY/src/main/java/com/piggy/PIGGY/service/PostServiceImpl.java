@@ -1,13 +1,11 @@
 package com.piggy.PIGGY.service;
 
-import java.lang.reflect.Type;
 import java.util.List;
 import java.util.NoSuchElementException;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.google.common.reflect.TypeToken;
 import com.piggy.PIGGY.dto.PostInputDto;
 import com.piggy.PIGGY.entity.Post;
 import com.piggy.PIGGY.entity.Store;
@@ -29,16 +27,16 @@ public class PostServiceImpl implements PostService {
 	private StoreRepository sRepo;
 	
 	@Override
-	public Post create(Long uId, PostInputDto post) {
+	public Post create(Long uId, PostInputDto dto) {
 		User user = uRepo.findById(uId).orElseThrow(NoSuchElementException::new);
-		Store store = sRepo.findById(post.getSId()).orElseThrow(NoSuchElementException::new);
+		Store store = sRepo.findById(dto.getSId()).orElseThrow(NoSuchElementException::new);
 		return pRepo.save(Post.builder()
 				.user(user)
 				.store(store)
-				.image(post.getImage())
-				.content(post.getContent())
-				.visited(post.getVisited())
-				.isLike(post.getIsLike())
+				.image(dto.getImage())
+				.content(dto.getContent())
+				.visited(dto.getVisited())
+				.isLike(dto.getIsLike())
 				.build()
 		);
 	}
@@ -60,10 +58,11 @@ public class PostServiceImpl implements PostService {
 	}
 
 	@Override
-	public Post update(Long pId) {
-		// update는 기존에 pid가 겹칠경우 pRepo.save를 통해 자동으로 수정되서 삽입된다.
-		// 직접 일부분만 수정하려면 repository에서 쿼리문을 작성해야한다. 아마도?
-		return null;
+	public Post update(Long pId, PostInputDto dto) {
+		Post post = pRepo.findById(pId).orElseThrow(NoSuchElementException::new);
+		Store store = sRepo.findById(dto.getSId()).orElseThrow(NoSuchElementException::new);
+		post.update(store, dto.getImage(), dto.getContent(), dto.getVisited(), dto.getIsLike());
+		return pRepo.save(post);
 	}
 
 	@Override

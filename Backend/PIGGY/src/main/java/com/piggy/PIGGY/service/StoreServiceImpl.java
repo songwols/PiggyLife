@@ -5,6 +5,7 @@ import java.util.NoSuchElementException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.piggy.PIGGY.dto.StoreInputDto;
 import com.piggy.PIGGY.entity.Store;
 import com.piggy.PIGGY.repository.StoreRepository;
 
@@ -15,7 +16,7 @@ public class StoreServiceImpl implements StoreService {
 	private StoreRepository sRepo;
 	
 	@Override
-	public Store create(Store store) {
+	public Store create(StoreInputDto store) {
 		return sRepo.save(Store.builder()
 				.name(store.getName())
 				.tel(store.getTel())

@@ -9,11 +9,15 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
+
 import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
+@JsonIdentityInfo(generator = ObjectIdGenerators.IntSequenceGenerator.class)
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Getter
 @Entity
@@ -46,6 +50,14 @@ public class Post extends DateTime {
 	@Builder
 	public Post(User user, Store store, String image, String content, Boolean visited, Boolean isLike) {
 		this.user = user;
+		this.store = store;
+		this.image = image;
+		this.content = content;
+		this.visited = visited;
+		this.isLike = isLike;
+	}
+	
+	public void update(Store store, String image, String content, Boolean visited, Boolean isLike) {
 		this.store = store;
 		this.image = image;
 		this.content = content;

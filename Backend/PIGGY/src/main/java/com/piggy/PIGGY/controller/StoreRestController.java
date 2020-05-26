@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.piggy.PIGGY.dto.StoreInputDto;
 import com.piggy.PIGGY.entity.Store;
 import com.piggy.PIGGY.service.StoreService;
 
@@ -28,9 +29,9 @@ public class StoreRestController {
 	
 	@ApiOperation(value = "Store 생성")
 	@PostMapping("/create")
-	public ResponseEntity<Object> create(@RequestBody Store inputStore) {
+	public ResponseEntity<Object> create(@RequestBody StoreInputDto dto) {
 		try {
-			Store store = sService.create(inputStore);
+			Store store = sService.create(dto);
 			return new ResponseEntity<Object>(store, HttpStatus.OK);
 		} catch (Exception e) {
 			throw e;
