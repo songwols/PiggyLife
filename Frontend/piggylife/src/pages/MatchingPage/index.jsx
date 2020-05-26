@@ -19,7 +19,7 @@ const Frame = styled.div`
   text-align:center;
   justify-content: center;
   align-items: center;
-  
+  overflow: hidden;
 `;
 
 export default MatchingPage;
