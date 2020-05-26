@@ -33,7 +33,6 @@ class Search extends React.Component{
         e.preventDefault();
         //리스트를 받아올 스토어
         console.log(this.state.store_name)
-        // this.props.storeStore.setInfo(this.state.info);
         // this.props.storeStore.search(this.state.info);
         this.setState({
           showList: !this.state.showList,
@@ -69,7 +68,6 @@ class Search extends React.Component{
                       <Option>옵션1</Option>
                       <Option>옵션2</Option>
                       <Option>옵션3</Option>
-                      <Option>옵션4</Option>
                   </Select>
                   </SFrame>
                   <BFrame>

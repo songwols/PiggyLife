@@ -18,11 +18,7 @@ class List extends React.Component{
     render(){
       const searching = (e) => {
         e.preventDefault();
-        // this.props.storeStore.search(this.state.address);
-        // this.props.history.push(
-        //   "/result/" +
-        //     this.state.info.store_name
-        // );
+        
       };
   
         return(
