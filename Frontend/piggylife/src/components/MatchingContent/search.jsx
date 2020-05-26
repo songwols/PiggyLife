@@ -1,21 +1,43 @@
 import React from "react";
 import styled from "styled-components";
 import logo from "./logo_match.png";
-import { Link } from "react-router-dom";
 
 class Search extends React.Component {
+  constructor(props){
+    super(props);
+    this.state={
+        friendID: "",
+    }
+  }
+
+  onIDChange = (e) => {
+    this.setState({
+      friendID: e.target.value,
+    });
+    console.log(e.target.value)
+  };
+
+
   render() {
+    const matching = (e) => {
+      e.preventDefault();
+      //아이디를 매칭하는 스토어에 전송
+      // this.props.storeStore.search(this.state.address);
+      // this.props.history.push(
+      //   "/result/" +
+      //     this.state.info.store_name
+      // );
+    };
+
     return (
       <Content>
         <Box1>
           <Img src={logo}></Img>
         </Box1>
         <Box2>
-          <Input placeholder="궁합 상대의 메일을 넣어주세요"></Input>
+          <Input onChange={this.onIDChange} placeholder="궁합 상대의 메일을 넣어주세요"></Input>
           <EBF>
-            <Link to={"/RESULT"} style={{ textDecoration: "none" }}>
-              <CButton>Search</CButton>
-            </Link>
+              <CButton onClick={matching}>Search</CButton>
           </EBF>
         </Box2>
       </Content>
@@ -31,6 +53,7 @@ const Content = styled.div`
   bottom: 0;
   flexDirection:'row',
   align-items: center;
+  margin-top: 6rem;
 `;
 const Box1 = styled.div`
   display: flex;
@@ -72,7 +95,7 @@ const Input = styled.input`
 
 const EBF = styled.div`
   text-align: center;
-  width: 95%;
+  // width: 95%;
 `;
 
 const CButton = styled.button`
