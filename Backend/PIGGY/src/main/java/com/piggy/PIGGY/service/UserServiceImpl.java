@@ -1,13 +1,13 @@
 package com.piggy.PIGGY.service;
 
-import java.util.ArrayList;
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.NoSuchElementException;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -18,7 +18,7 @@ import com.piggy.PIGGY.repository.UserRepository;
 import com.piggy.PIGGY.security.JwtTokenProvider;
 
 @Service
-public class UserServiceImpl implements UserService{
+public class UserServiceImpl implements UserService {
 	
 	@Autowired
 	private UserRepository uRepo;
@@ -35,30 +35,30 @@ public class UserServiceImpl implements UserService{
 	}
 	
 	@Override
-	public User singup(SignupDto dto) {
-		User user = User.builder()
+	public User singup(SignupDto dto, String authkey) {
+		return uRepo.save(User.builder()
 				.email(dto.getEmail())
 				.password(passwordEncoder.encode(dto.getPassword()))
 				.nickname(dto.getNickname())
 				.image(dto.getImage())
+				.emailCertify(authkey)
 				.ranking(1)
 				.roles(Collections.singletonList("EMAIL_USER"))
-				.build();
-		return uRepo.save(user);
+				.build());
 	}
 
 	@Override
-	public List<String> signin(String email, String password) {
+	public Map<String, String> signin(String email, String password) {
 		
-		List<String> result = new ArrayList<>();
+		Map<String, String> result = new HashMap<>();
 		User user = uRepo.findByEmail(email).orElseThrow(NoSuchElementException::new);
 		if (!passwordEncoder.matches(password, user.getPassword())) {
-			result.add("비밀번호가 일치하지 않습니다.");
+			result.put("massage", "비밀번호가 일치하지 않습니다.");
 		} else {
-			result.add(jwtProvider.createToken(user.getUsername(), user.getRoles()));
-			result.add(user.getUId().toString());
+			result.put("token", jwtProvider.createToken(user.getUsername(), user.getRoles()));
+			result.put("uId", user.getUId().toString());
 		}
-			
+		
 		return result;
 	}
 	
@@ -84,16 +84,23 @@ public class UserServiceImpl implements UserService{
 	public List<User> findAll() {
 		return uRepo.findAll();
 	}
+	
+	@Override
+	public void updateEmail(String email) {
+		uRepo.updateEmail(email);
+	}
+	
+
+	@Override
+	public User updatePassword(Long uId, String password) {
+		User user = uRepo.findById(uId).orElseThrow(NoSuchElementException::new);
+		user.passwordUpdate(passwordEncoder.encode(password));
+		return uRepo.save(user);
+	}
 
 	@Override
 	public void deleteById(Long uId) {
 		uRepo.deleteById(uId);
-	}
-
-	@Override
-	public void updateEmail(String email) {
-		uRepo.updateEmail(email);
-		
 	}
 	
 }

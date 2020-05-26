@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.piggy.PIGGY.dto.PostInputDto;
 import com.piggy.PIGGY.entity.Post;
 import com.piggy.PIGGY.service.PostService;
 
@@ -32,9 +33,9 @@ public class PostRestController {
 	
 	@ApiOperation(value = "Post 생성")
 	@PostMapping("/create/{uId}")
-	public ResponseEntity<Object> create(@RequestParam Long uId, @RequestBody Post inputPost){
+	public ResponseEntity<Object> create(@RequestParam Long uId, @RequestBody PostInputDto dto){
 		try {
-			Post post = pService.create(uId, inputPost);
+			Post post = pService.create(uId, dto);
 			return new ResponseEntity<Object>(post, HttpStatus.OK);
 		} catch (Exception e) {
 			throw e;

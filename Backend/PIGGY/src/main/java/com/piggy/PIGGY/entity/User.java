@@ -59,13 +59,18 @@ public class User implements UserDetails {
 	private List<Post> feeds = new ArrayList<>();
 
 	@Builder
-	public User(String email, String password, String nickname, String image, Integer ranking, List<String> roles) {
+	public User(String email, String password, String nickname, String image, String emailCertify, Integer ranking, List<String> roles) {
 		this.email = email;
 		this.password = password;
 		this.nickname = nickname;
 		this.image = image;
 		this.roles = roles;
+		this.emailCertify = emailCertify; 
 		this.ranking = ranking;
+	}
+	
+	public void passwordUpdate(String password) {
+		this.password = password;
 	}
 
 	// user detail method
@@ -79,7 +84,7 @@ public class User implements UserDetails {
 
 	@Override
 	public String getUsername() {
-		return this.email;
+		return this.getUId().toString();
 	}
 
 	@JsonProperty(access = JsonProperty.Access.WRITE_ONLY)

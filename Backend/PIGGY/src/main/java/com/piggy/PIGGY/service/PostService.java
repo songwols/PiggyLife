@@ -2,11 +2,12 @@ package com.piggy.PIGGY.service;
 
 import java.util.List;
 
+import com.piggy.PIGGY.dto.PostInputDto;
 import com.piggy.PIGGY.entity.Post;
 
 public interface PostService {
 
-	public Post create(Long uId, Post post);
+	public Post create(Long uId, PostInputDto post);
 	
 	public List<Post> findAll();
 	

@@ -1,14 +1,19 @@
 package com.piggy.PIGGY.service;
 
+import java.lang.reflect.Type;
 import java.util.List;
 import java.util.NoSuchElementException;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.google.common.reflect.TypeToken;
+import com.piggy.PIGGY.dto.PostInputDto;
 import com.piggy.PIGGY.entity.Post;
+import com.piggy.PIGGY.entity.Store;
 import com.piggy.PIGGY.entity.User;
 import com.piggy.PIGGY.repository.PostRepository;
+import com.piggy.PIGGY.repository.StoreRepository;
 import com.piggy.PIGGY.repository.UserRepository;
 
 @Service
@@ -20,12 +25,16 @@ public class PostServiceImpl implements PostService {
 	@Autowired
 	private UserRepository uRepo;
 	
+	@Autowired
+	private StoreRepository sRepo;
+	
 	@Override
-	public Post create(Long uId, Post post) {
+	public Post create(Long uId, PostInputDto post) {
 		User user = uRepo.findById(uId).orElseThrow(NoSuchElementException::new);
-		
+		Store store = sRepo.findById(post.getSId()).orElseThrow(NoSuchElementException::new);
 		return pRepo.save(Post.builder()
 				.user(user)
+				.store(store)
 				.image(post.getImage())
 				.content(post.getContent())
 				.visited(post.getVisited())

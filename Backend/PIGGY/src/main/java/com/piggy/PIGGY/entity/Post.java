@@ -44,8 +44,9 @@ public class Post extends DateTime {
 	private Boolean isLike;
 
 	@Builder
-	public Post(User user, String image, String content, Boolean visited, Boolean isLike) {
+	public Post(User user, Store store, String image, String content, Boolean visited, Boolean isLike) {
 		this.user = user;
+		this.store = store;
 		this.image = image;
 		this.content = content;
 		this.visited = visited;
