@@ -5,6 +5,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -40,7 +41,7 @@ public class StoreRestController {
 	
 	@ApiOperation(value = "해당 Store 찾기")
 	@GetMapping("/findById/{sId}")
-	public ResponseEntity<Object> findById(@RequestParam Long sId) {
+	public ResponseEntity<Object> findById(@PathVariable Long sId) {
 		try {
 			Store store = sService.findById(sId);
 			return new ResponseEntity<Object>(store, HttpStatus.OK);

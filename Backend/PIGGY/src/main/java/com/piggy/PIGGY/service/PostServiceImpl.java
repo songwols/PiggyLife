@@ -1,11 +1,22 @@
 package com.piggy.PIGGY.service;
 
+import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Map;
 import java.util.NoSuchElementException;
+import java.util.Set;
+import java.util.StringTokenizer;
+
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
+import javax.persistence.Query;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.piggy.PIGGY.dto.PostAreaStatisticDto;
+import com.piggy.PIGGY.dto.PostCategoryStatisticDto;
 import com.piggy.PIGGY.dto.PostInputDto;
 import com.piggy.PIGGY.entity.Post;
 import com.piggy.PIGGY.entity.Store;
@@ -17,6 +28,9 @@ import com.piggy.PIGGY.repository.UserRepository;
 @Service
 public class PostServiceImpl implements PostService {
 
+	@PersistenceContext
+	EntityManager em;
+	
 	@Autowired
 	private PostRepository pRepo;
 	
@@ -68,6 +82,41 @@ public class PostServiceImpl implements PostService {
 	@Override
 	public void delete(Long pId) {
 		pRepo.deleteById(pId);
+	}
+
+	@Override
+	public List<PostAreaStatisticDto> getAreaStatistic(Long uId) {
+		String sql = "SELECT r.city AS city, r.area AS area, count(r.area) AS cnt "
+				+ "FROM Post p LEFT JOIN Store s ON p.s_id = s.s_id LEFT JOIN Region r ON s.r_id = r.r_id "
+				+ "WHERE p.u_id = :uId GROUP BY r.area ORDER BY cnt DESC";
+		Query query = em.createNativeQuery(sql, "Post.AreaStatistic");
+		query.setParameter("uId", uId);
+		List<PostAreaStatisticDto> list = query.getResultList();
+		return list;
+	}
+
+	@Override
+	public Map<String, Integer> getCategoryStatistic(Long uId) {
+		String sql = "SELECT s.category AS category FROM Post p LEFT JOIN Store s ON p.s_id = s.s_id "
+				+ "WHERE p.u_id = :uId";
+		Query query = em.createNativeQuery(sql, "Post.CategoryStatistic");
+		query.setParameter("uId", uId);
+		List<PostCategoryStatisticDto> list = query.getResultList();
+
+		Map<String, Integer> map = new HashMap<String, Integer>(); //망고플레이트 db랑 연결하면 카테고리 String가져와서 보여줘야함
+		for (int i = 0; i < list.size(); i++) {
+			String categories = list.get(i).getCategory();
+			StringTokenizer st = new StringTokenizer(categories,"|");
+			while(st.hasMoreTokens()) {
+				String category = st.nextToken();
+				if(map.containsKey(category)) {
+					map.put(category, map.get(category)+1);
+				}else {
+					map.put(category, 1);
+				}
+			}
+		}
+		return map;
 	}
 
 }
