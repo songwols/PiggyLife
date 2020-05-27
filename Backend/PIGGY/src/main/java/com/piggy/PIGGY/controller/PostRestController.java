@@ -1,6 +1,7 @@
 package com.piggy.PIGGY.controller;
 
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -8,6 +9,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -15,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.piggy.PIGGY.dto.PostAreaStatisticDto;
 import com.piggy.PIGGY.dto.PostInputDto;
 import com.piggy.PIGGY.dto.PostOutputDto;
 import com.piggy.PIGGY.entity.Post;
@@ -35,7 +38,7 @@ public class PostRestController {
 	
 	@ApiOperation(value = "Post 생성")
 	@PostMapping("/create/{uId}")
-	public ResponseEntity<Object> create(@RequestParam Long uId, @RequestBody PostInputDto dto){
+	public ResponseEntity<Object> create(@PathVariable Long uId, @RequestBody PostInputDto dto){
 		try {
 			Post post = pService.create(uId, dto);
 			return new ResponseEntity<Object>(post, HttpStatus.OK);
@@ -58,7 +61,7 @@ public class PostRestController {
 	
 	@ApiOperation(value = "해당 Post 불러오기")
 	@GetMapping("/findById/{pId}")
-	public ResponseEntity<Object> findById(@RequestParam Long pId){
+	public ResponseEntity<Object> findById(@PathVariable Long pId){
 		try {
 			Post post = pService.findById(pId);
 			PostOutputDto output = MapperUtils.map(post, PostOutputDto.class);
@@ -70,7 +73,7 @@ public class PostRestController {
 	
 	@ApiOperation(value = "해당 유저의 모든 Post 불러오기")
 	@GetMapping("/findByUser/{pId}")
-	public ResponseEntity<Object> findByUser(@RequestParam Long uId){
+	public ResponseEntity<Object> findByUser(@PathVariable Long uId){
 		try {
 			List<Post> posts = pService.findByUser(uId);
 			List<PostOutputDto> output = MapperUtils.mapAll(posts, PostOutputDto.class);
@@ -82,7 +85,7 @@ public class PostRestController {
 	
 	@ApiOperation(value = "해당 피드 업데이트")
 	@PutMapping("/update/{pId}")
-	public ResponseEntity<Object> update(@RequestParam Long pId, @RequestBody PostInputDto dto){
+	public ResponseEntity<Object> update(@PathVariable Long pId, @RequestBody PostInputDto dto){
 		try {
 			Post post = pService.update(pId, dto);
 			PostOutputDto output = MapperUtils.map(post, PostOutputDto.class);
@@ -92,9 +95,9 @@ public class PostRestController {
 		}
 	}
 	
-	@ApiOperation(value = "해당 유저의 모든 Post 불러오기")
+	@ApiOperation(value = "해당 유저의 Post 삭제")
 	@DeleteMapping("/delete/{pId}")
-	public ResponseEntity<Object> delete(@RequestParam Long pId){
+	public ResponseEntity<Object> delete(@PathVariable Long pId){
 		try {
 			pService.delete(pId);
 			return new ResponseEntity<Object>("삭제완료", HttpStatus.OK);
@@ -103,5 +106,26 @@ public class PostRestController {
 		}
 	}
 	
+	@ApiOperation(value = "해당 유저의 지역통계 불러오기")
+	@GetMapping("/getAreaStatistic/{uId}")
+	public ResponseEntity<Object> getAreaStatistic(@PathVariable Long uId){
+		try {
+			List<PostAreaStatisticDto> output = pService.getAreaStatistic(uId);
+			return new ResponseEntity<Object>(output, HttpStatus.OK);
+		} catch (Exception e) {
+			throw e;
+		}
+	}
+	
+	@ApiOperation(value = "해당 유저의 카테코리 통계 불러오기")
+	@GetMapping("/getCategoryStatistic/{uId}")
+	public ResponseEntity<Object> getCategoryStatistic(@PathVariable Long uId){
+		try {
+			Map<String, Integer> output = pService.getCategoryStatistic(uId);
+			return new ResponseEntity<Object>(output, HttpStatus.OK);
+		} catch (Exception e) {
+			throw e;
+		}
+	}
 }
 
