@@ -15,8 +15,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.piggy.PIGGY.dto.PostInputDto;
+import com.piggy.PIGGY.dto.PostOutputDto;
 import com.piggy.PIGGY.entity.Post;
 import com.piggy.PIGGY.service.PostService;
+import com.piggy.PIGGY.util.MapperUtils;
 
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -32,9 +35,9 @@ public class PostRestController {
 	
 	@ApiOperation(value = "Post 생성")
 	@PostMapping("/create/{uId}")
-	public ResponseEntity<Object> create(@RequestParam Long uId, @RequestBody Post inputPost){
+	public ResponseEntity<Object> create(@RequestParam Long uId, @RequestBody PostInputDto dto){
 		try {
-			Post post = pService.create(uId, inputPost);
+			Post post = pService.create(uId, dto);
 			return new ResponseEntity<Object>(post, HttpStatus.OK);
 		} catch (Exception e) {
 			throw e;
@@ -46,7 +49,8 @@ public class PostRestController {
 	public ResponseEntity<Object> findAll(){
 		try {
 			List<Post> posts = pService.findAll();
-			return new ResponseEntity<Object>(posts, HttpStatus.OK);
+			List<PostOutputDto> output = MapperUtils.mapAll(posts, PostOutputDto.class);
+			return new ResponseEntity<Object>(output, HttpStatus.OK);
 		} catch (Exception e) {
 			throw e;
 		}
@@ -57,7 +61,8 @@ public class PostRestController {
 	public ResponseEntity<Object> findById(@RequestParam Long pId){
 		try {
 			Post post = pService.findById(pId);
-			return new ResponseEntity<Object>(post, HttpStatus.OK);
+			PostOutputDto output = MapperUtils.map(post, PostOutputDto.class);
+			return new ResponseEntity<Object>(output, HttpStatus.OK);
 		} catch (Exception e) {
 			throw e;
 		}
@@ -68,7 +73,8 @@ public class PostRestController {
 	public ResponseEntity<Object> findByUser(@RequestParam Long uId){
 		try {
 			List<Post> posts = pService.findByUser(uId);
-			return new ResponseEntity<Object>(posts, HttpStatus.OK);
+			List<PostOutputDto> output = MapperUtils.mapAll(posts, PostOutputDto.class);
+			return new ResponseEntity<Object>(output, HttpStatus.OK);
 		} catch (Exception e) {
 			throw e;
 		}
@@ -76,10 +82,11 @@ public class PostRestController {
 	
 	@ApiOperation(value = "해당 피드 업데이트")
 	@PutMapping("/update/{pId}")
-	public ResponseEntity<Object> update(@RequestParam Long pId){
+	public ResponseEntity<Object> update(@RequestParam Long pId, @RequestBody PostInputDto dto){
 		try {
-			Post post = pService.update(pId);
-			return new ResponseEntity<Object>(post, HttpStatus.OK);
+			Post post = pService.update(pId, dto);
+			PostOutputDto output = MapperUtils.map(post, PostOutputDto.class);
+			return new ResponseEntity<Object>(output, HttpStatus.OK);
 		} catch (Exception e) {
 			throw e;
 		}

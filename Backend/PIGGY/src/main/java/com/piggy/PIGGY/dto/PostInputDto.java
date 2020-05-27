@@ -7,9 +7,12 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 @Data
-public class OutputDto {
-
-	private Object obj;
-	private String msg;
+public class PostInputDto {
 	
+	private Long sId;
+	private String image;
+	private String content;
+	private Boolean visited;
+	private Boolean isLike;
+
 }
