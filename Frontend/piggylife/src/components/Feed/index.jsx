@@ -2,7 +2,7 @@ import React from "react";
 import styled from "styled-components";
 import { Link } from "react-router-dom";
 
-class Feed extends React.Component {
+class FeedCompo extends React.Component {
   render() {
     return (
       <Frame>
@@ -27,4 +27,4 @@ const Div = styled.div`
   margin-top: 3rem;
 `;
 
-export default Feed;
+export default FeedCompo;
