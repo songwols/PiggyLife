@@ -15,7 +15,6 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 
-import org.hibernate.annotations.ColumnDefault;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -23,15 +22,12 @@ import org.springframework.security.core.userdetails.UserDetails;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 import lombok.AccessLevel;
-import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
 
-@Builder
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-@AllArgsConstructor
 @ToString
 @Getter
 @Entity
@@ -40,29 +36,45 @@ public class User implements UserDetails {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long uId;
-	
-	@Column
+
+	@Column(nullable = false, unique = true)
 	private String email;
 
-	@Column
+	@Column(nullable = false)
 	private String password;
 
-	@Column
+	@Column(nullable = false)
 	private String nickname;
-	
-	@Column 
-	@ColumnDefault("1")
+
+	@Column(nullable=false, columnDefinition = "int default 0")
 	private Integer ranking;
 
 	@Column
 	private String image;
+	
+	@Column
+	String emailCertify;
 
 	@OneToMany(mappedBy = "user", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
 	private List<Post> feeds = new ArrayList<>();
 
+	@Builder
+	public User(String email, String password, String nickname, String image, String emailCertify, Integer ranking, List<String> roles) {
+		this.email = email;
+		this.password = password;
+		this.nickname = nickname;
+		this.image = image;
+		this.roles = roles;
+		this.emailCertify = emailCertify; 
+		this.ranking = ranking;
+	}
+	
+	public void passwordUpdate(String password) {
+		this.password = password;
+	}
+
 	// user detail method
 	@ElementCollection(fetch = FetchType.EAGER)
-	@Builder.Default
 	private List<String> roles = new ArrayList<>();
 
 	@Override
@@ -72,7 +84,7 @@ public class User implements UserDetails {
 
 	@Override
 	public String getUsername() {
-		return this.email;
+		return this.getUId().toString();
 	}
 
 	@JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
