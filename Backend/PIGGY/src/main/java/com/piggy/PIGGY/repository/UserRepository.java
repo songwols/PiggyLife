@@ -20,5 +20,10 @@ public interface UserRepository extends JpaRepository<User, Long> {
 	@Modifying
 	@Query(value = "UPDATE user u set u.email_certify = 'Y' where u.email = :email", nativeQuery = true)
 	Integer updateEmail(@Param("email") String email);
+
+	@Transactional
+	@Modifying
+	@Query(value = "UPDATE user u set u.ranking = :nextRank where u.u_id = :uId", nativeQuery = true)
+	Integer updateRanking(@Param("nextRank") int nextRank, @Param("uId") Long uId);
 }
 

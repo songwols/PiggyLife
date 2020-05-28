@@ -9,7 +9,7 @@ import com.piggy.PIGGY.entity.Post;
 
 public interface PostService {
 
-	public Post create(Long uId, PostInputDto dto);
+	public Map<String, Object> create(Long uId, PostInputDto dto);
 	
 	public List<Post> findAll();
 	
