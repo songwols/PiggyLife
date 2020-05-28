@@ -136,5 +136,18 @@ public class PostRestController {
 			throw e;
 		}
 	}
+	
+	@ApiOperation(value = "해당 유저의 먹킷리스트 불러오기")
+	@GetMapping("/getMukitlist/{uId}")
+	public ResponseEntity<Object> getMukitlist(@PathVariable Long uId){
+		try {
+			log.trace("PostRestController - getMukitlist", uId);
+			List<Post> posts = pService.findByUserAndVisited(uId, false);
+			List<PostOutputDto> output = MapperUtils.mapAll(posts, PostOutputDto.class);
+			return new ResponseEntity<Object>(output, HttpStatus.OK);
+		} catch (Exception e) {
+			throw e;
+		}
+	}
 }
 

@@ -132,4 +132,11 @@ public class PostServiceImpl implements PostService {
 		return map;
 	}
 
+	@Override
+	public List<Post> findByUserAndVisited(Long uId, boolean visited) {
+		User user = uRepo.findById(uId).orElseThrow(NoSuchElementException::new);
+		List<Post> list = pRepo.findByUserAndVisited(user, visited);
+		return list;
+	}
+
 }

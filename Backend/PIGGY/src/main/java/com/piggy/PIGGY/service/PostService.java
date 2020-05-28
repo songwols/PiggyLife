@@ -25,4 +25,6 @@ public interface PostService {
 
 	public Map<String, Integer> getCategoryStatistic(Long uId);
 	
+	public List<Post> findByUserAndVisited(Long uId, boolean visited);
+	
 }
