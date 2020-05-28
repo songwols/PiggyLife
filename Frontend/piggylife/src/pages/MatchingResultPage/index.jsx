@@ -2,7 +2,7 @@ import React from "react"
 import Navbar from "../../components/Navbar"
 import UserInfo from "../../components/MatchingContent/userInfo"
 import styled from "styled-components";
-import Card from "../../components/Card"
+import CardLayout from "../../components/CardL"
 import icon from "./clipboard.png";
 
 class MatchingResultPage extends React.Component{
