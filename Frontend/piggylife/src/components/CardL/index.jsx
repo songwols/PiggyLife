@@ -6,29 +6,25 @@ import Card from "./Card";
 //@inject("스토어이름")
 //@observer
 class CardLayout extends React.Component {
-  state={
-
-  }
-
-  componentWillMount(){
-    //데이터 가져올 스토어 처리
-  }
+  state = {};
 
   render() {
-    //const returns = this.props.스토어.아이템가져와;
+    const returns = this.props.list;
+    console.log(returns);
     return (
       <Frame>
-        {/* {returns ? (
-              returns.map((item, index) => <Card key={index} store={item} />)
-            ) : (
-              <></>
-            )} */}
-            <Card></Card>
+        {returns ? (
+          returns.map((item, index) => <Card key={index} store={item} />)
+        ) : (
+          // <Text>등록된 게시글이 없습니다.</Text>
+          <></>
+        )}
+        {/* <Card></Card> */}
       </Frame>
-    )
+    );
   }
 }
-
+const Text = styled.div``;
 const Frame = styled.div`
   padding-left: 5%;
   padding-right: 5%;
@@ -38,7 +34,6 @@ const Frame = styled.div`
   grid-row-gap: 3%;
   grid-template-columns: repeat(auto-fit, 29%);
   grid-template-rows: repeat(auto-fit, 1fr);
-
 `;
 
 export default CardLayout;
