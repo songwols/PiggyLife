@@ -1,6 +1,7 @@
 import React from "react";
 import styled from "styled-components";
 import Navbar from "../../components/Navbar";
+import CardLayout from "../../components/CardL"
 
 class HomePage extends React.Component {
   render() {
@@ -9,42 +10,38 @@ class HomePage extends React.Component {
         <List>
           <Mukitlist>
             <Title>먹킷리스트</Title>
-            <Div></Div>
-            {/* {returns ? (
-              returns.map((item, index) => <Card key={index} store={item} />)
-            ) : (
-              <></>
-            )} */}
+            <Div>
+              <CardLayout
+                /*store_name={store_name}*/
+              ></CardLayout> 
+            </Div>
           </Mukitlist>
 
           <Top10>
             <Title>이 달의 MukSpot-TOP10</Title>
-            <Div></Div>
-            {/* {returns ? (
-              returns.map((item, index) => <Card key={index} store={item} />)
-            ) : (
-              <></>
-            )} */}
+            <Div>
+            <CardLayout
+                /*store_name={store_name}*/
+              ></CardLayout> 
+            </Div>
           </Top10>
 
           <Place>
             <Title>OOO지역에서 가볼만한 곳</Title>
-            <Div></Div>
-            {/* {returns ? (
-              returns.map((item, index) => <Card key={index} store={item} />)
-            ) : (
-              <></>
-            )} */}
+            <Div>
+            <CardLayout
+                /*store_name={store_name}*/
+              ></CardLayout> 
+            </Div>
           </Place>
 
           <User>
             <Title>OOO님과 비슷한 먹유저들의 MukSpot</Title>
-            <Div></Div>
-            {/* {returns ? (
-              returns.map((item, index) => <Card key={index} store={item} />)
-            ) : (
-              <></>
-            )} */}
+            <Div>
+            <CardLayout
+                /*store_name={store_name}*/
+              ></CardLayout>
+            </Div>
           </User>
         </List>
         <Navbar></Navbar>
