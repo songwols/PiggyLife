@@ -4,19 +4,40 @@ import java.math.BigDecimal;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
+import javax.persistence.ColumnResult;
+import javax.persistence.ConstructorResult;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
+import javax.persistence.SqlResultSetMapping;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.piggy.PIGGY.dto.StoreTop10Dto;
 
 import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
-//@JsonIdentityInfo(generator = ObjectIdGenerators.IntSequenceGenerator.class)
+@SqlResultSetMapping(
+		name="Store.Top10",
+		classes={
+				@ConstructorResult(
+						targetClass=StoreTop10Dto.class,
+						columns={
+								@ColumnResult(name="sId",type=Long.class),
+								@ColumnResult(name="name",type=String.class),
+								@ColumnResult(name="image",type=String.class),
+								@ColumnResult(name="cnt",type=Integer.class)
+						}
+						)
+		}
+		)
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Getter
 @Entity
@@ -26,26 +47,31 @@ public class Store {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long sId;
 	
-	@Column
+	@Column(nullable=false)
 	private String name;
 	
-	@Column
 	private String tel;
 	
-	@Column
+	@Column(nullable=false)
 	private String address;
 	
-	@Column
+	@Column(nullable=false)
 	private BigDecimal latitude;
 	
-	@Column
+	@Column(nullable=false)
 	private BigDecimal longitude;
 	
-	@Column
 	private String category;
+	
+	private String image;
 
+	@JsonIgnore
 	@OneToOne(mappedBy = "store", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
 	private Post post;
+	
+	@ManyToOne
+	@JoinColumn(name="rId")
+	private Region region;
 
 	@Builder
 	public Store(String name, String tel, String address, BigDecimal latitude, BigDecimal longitude, String category) {

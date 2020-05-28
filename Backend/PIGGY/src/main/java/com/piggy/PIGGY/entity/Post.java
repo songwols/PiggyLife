@@ -68,10 +68,10 @@ public class Post extends DateTime {
 	@JoinColumn(name = "sId")
 	private Store store;
 	
-	@Column
+	@Column(nullable=false)
 	private String image;
 	
-	@Column
+	@Column(nullable=false)
 	private String content;
 	
 	@Column
