@@ -160,7 +160,6 @@ def import_data(data_path=DATA_FILE):
         elif key == '세종특별자치시':
             area = None
             temp = [key, area, value]
-            print(temp)
             region_tags.append(temp)
         elif key == '경기도':
             for area in kyunggi_area:
@@ -226,61 +225,51 @@ def import_data(data_path=DATA_FILE):
             # print("too short")
             continue        
         
-        if region[0] == '서울특별시':
-            if region_dict.get(region[1]):
-                #구역 코드 넣기
-                region_tag = region_dict[region[1]]
+        if region_dict.get(region[0]):
+            #구역 코드 넣기
+            region_tag = region[0]+'|'+region[1]
 
-                stores.append(
-                    [
-                        d["id"],
-                        region_tag,
-                        d["name"],
-                        d["branch"],
-                        d["area"],
-                        d["tel"],
-                        d["address"],
-                        d["latitude"],
-                        d["longitude"],
-                        "|".join(categories),
-                    ]
+            stores.append(
+                [
+                    d["id"],
+                    region_tag,
+                    d["name"],
+                    d["branch"],
+                    d["area"],
+                    d["tel"],
+                    d["address"],
+                    d["latitude"],
+                    d["longitude"],
+                    "|".join(categories),
+                ]
+            )
+            for review in d["review_list"]:
+                r = review["review_info"]
+                u = review["writer_info"]  # user
+                reviews.append(
+                    [r["id"], d["id"], u["id"], r["score"],
+                     r["content"], r["reg_time"]]
                 )
+                # users내에 user가 존재하면 넣지않는다 --> 중복 데이터제거필요 && age 나이 계산
+                if u["id"] not in user_set:
+                    # 이메일 생성
+                    email = "guest" + str(idx) +"@example.com"  # 임의 이메일 생성
+                    nick_name = "User" + str(idx)  # 임의 닉네임 생성
+                    idx = idx + 1
+                    pwd = create_pwd()  # 임의 패스워드 생성
+                    default_year = int(r["reg_time"][0:4])
+                    if default_year >= 1970 and default_year <= 2015:
+                        create_account = "2015" + r["reg_time"][4:]  # 리뷰일 기준으로 임의 생성
+                        update_account = "2015" + r["reg_time"][4:]  # 리뷰일 기준으로 임의 생성
+                    else:
+                        create_account = r["reg_time"]  # 리뷰일 기준으로 임의 생성
+                        update_account = r["reg_time"]  # 리뷰일 기준으로 임의 생성
 
-                for review in d["review_list"]:
-                    r = review["review_info"]
-                    u = review["writer_info"]  # user
-
-                    reviews.append(
-                        [r["id"], d["id"], u["id"], r["score"],
-                            r["content"], r["reg_time"]]
+                    age = (year-int(u["born_year"])) if int(u["born_year"]) > 0 and int(u["born_year"]) < year else 0
+                    users.append(
+                        [u["id"], u["gender"], age, email, pwd,create_account, update_account, None, nick_name],
                     )
-
-                    # users내에 user가 존재하면 넣지않는다 --> 중복 데이터제거필요 && age 나이 계산
-                    if u["id"] not in user_set:
-                        # 이메일 생성
-                        email = "guest" + str(idx) + \
-                            "@example.com"  # 임의 이메일 생성
-                        nick_name = "User" + str(idx)  # 임의 닉네임 생성
-                        idx = idx + 1
-                        pwd = create_pwd()  # 임의 패스워드 생성
-
-                        default_year = int(r["reg_time"][0:4])
-                        if default_year >= 1970 and default_year <= 2015:
-                            create_account = "2015" + \
-                                r["reg_time"][4:]  # 리뷰일 기준으로 임의 생성
-                            update_account = "2015" + \
-                                r["reg_time"][4:]  # 리뷰일 기준으로 임의 생성
-                        else:
-                            create_account = r["reg_time"]  # 리뷰일 기준으로 임의 생성
-                            update_account = r["reg_time"]  # 리뷰일 기준으로 임의 생성
-
-                        age = (year-int(u["born_year"])) if int(u["born_year"]
-                                                                ) > 0 and int(u["born_year"]) < year else 0
-                        users.append(
-                            [u["id"], u["gender"], age, email, pwd,
-                                create_account, update_account, None, nick_name],
-                        )
-                        user_set.add(u["id"])
+                    user_set.add(u["id"])             
 
                 for menu in d["menu_list"]:
                     menus.append(
