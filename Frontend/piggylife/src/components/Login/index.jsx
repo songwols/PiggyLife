@@ -1,19 +1,58 @@
 import React from "react";
 import styled from "styled-components";
 import { Link } from "react-router-dom";
+import { inject, observer } from "mobx-react";
 
+@inject("userStore")
+@observer
 class Login extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      email: "",
+      password: "",
+    };
+  }
+  onEmailChange = (e) => {
+    this.setState({
+      email: e.target.value,
+    });
+  };
+  onPasswordChange = (e) => {
+    this.setState({
+      password: e.target.value,
+    });
+  };
+  Login = (e) => {
+    const user = {
+      email: this.state.email,
+      password: this.state.password,
+    };
+    this.props.userStore.login(user);
+    alert(this.state.username + "님! 반갑습니다!");
+  };
   render() {
     return (
       <Frame>
         <InputFrame>
           <InputBox>
-            <ID placeholder="EMAIL"></ID>
-            <PW placeholder="PASSWORD"></PW>
+            <ID
+              placeholder="EMAIL"
+              onChange={this.onEmailChange}
+              name="email"
+              value={this.state.email}
+            ></ID>
+            <PW
+              placeholder="PASSWORD"
+              type="password"
+              onChange={this.onPasswordChange}
+              name="password"
+              value={this.state.password}
+            ></PW>
           </InputBox>
           <ButtonBox>
             <Link to={"/Home"} style={{ textDecoration: "none" }}>
-              <Button>LOGIN</Button>
+              <Button onClick={this.Login}>LOGIN</Button>
             </Link>
           </ButtonBox>
         </InputFrame>
@@ -110,17 +149,17 @@ const LinkFrame = styled.div`
   grid-area: "linkframe";
   padding-left: 25%;
   padding-right: 25%;
-  display: flex; 
-  align-items: center; 
-  justify-content: center; 
+  display: flex;
+  align-items: center;
+  justify-content: center;
 `;
 
 const L1 = styled.div`
-  margin-right: .3rem;
+  margin-right: 0.3rem;
 `;
 
 const L2 = styled.div`
-  margin-left: .3rem;
+  margin-left: 0.3rem;
 `;
 
 export default Login;

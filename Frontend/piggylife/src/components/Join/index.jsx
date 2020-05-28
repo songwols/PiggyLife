@@ -99,12 +99,14 @@ class CJoin extends React.Component {
         PASSWORD
         <Input
           placeholder="비밀번호"
+          type="password"
           onChange={this.onPasswordChange}
           name="password"
           value={this.state.password}
         ></Input>
         <Input
           placeholder="비밀번호 확인"
+          type="password"
           onChange={this.onPassword2Change}
           name="password2"
           value={this.state.password2}

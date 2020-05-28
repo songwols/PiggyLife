@@ -5,4 +5,8 @@ export default class UserStore {
   register(user) {
     console.log(user);
   }
+  @action
+  login(user) {
+    console.log(user);
+  }
 }
