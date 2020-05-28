@@ -1,6 +1,6 @@
 import axios from "axios";
 
-const API_ROOT = "http://localhost:8000";
+const API_ROOT = "http://k02a3011.p.ssafy.io/PIGGY";
 
 const requests = {
   get: (url, header) => axios.get(`${API_ROOT}${url}`, { headers: header }),
