@@ -82,7 +82,7 @@ class FeedPage extends React.Component {
 }
 
 const Frame = styled.div`
-  height: 100vh;
+  height: 100%;
   display: grid;
   grid-template-rows: 205px auto 8vh;
   grid-template-areas: "Top" "Content" "Navbar";
@@ -135,9 +135,9 @@ const Feed = styled.div`
   grid-template-areas: "Profile" "Content";
 `;
 const Content = styled.div`
-  display: grid;
-  grid-template-rows: 55px auto;
-  grid-template-areas: "Tab" "Bottom";
+  // display: grid;
+  // grid-template-rows: 55px auto;
+  // grid-template-areas: "Tab" "Bottom";
 `;
 
 export default FeedPage;
