@@ -50,6 +50,7 @@ class WriteContent extends React.Component{
             n_color: "gray",
             g_show: false,
             n_show: false,
+            sid: "",
         }
         this.g_changeColor = this.g_changeColor.bind(this);
         this.n_changeColor = this.n_changeColor.bind(this);
@@ -80,6 +81,7 @@ class WriteContent extends React.Component{
                 v_address: this.state.detail.address,
                 v_tel: this.state.detail.tel,
                 v_menu: this.state.detail.menues,
+                sid: this.state.detail.sid,
             })
             if(this.state.detail.menues.length===0){
               this.setState({
@@ -118,7 +120,7 @@ class WriteContent extends React.Component{
               alert("빈 값이 있습니다.")
           }
           else{
-              console.log(this.state)
+              this.props.storeStore.upload(this.state);
           }
       }
 
@@ -134,7 +136,6 @@ class WriteContent extends React.Component{
         const getDetail = async (e) => {
             e.preventDefault();
             //디테일 받아올 스토어
-            console.log(this.state.address)
             await this.props.storeStore.detail(this.state.address);
             const getD = this.props.storeStore.detailPost;
             this.setState({
@@ -147,10 +148,8 @@ class WriteContent extends React.Component{
           };
           const searching = async (e) => {
             e.preventDefault();
-            console.log("searching")
             await this.props.storeStore.search(this.state.store_name);
             const addr = this.props.storeStore.storeItems;
-            console.log(addr[0])
             this.setState({
               showList: !this.state.showList,
               click: 3,
@@ -237,7 +236,7 @@ const TextD = styled.div`
     border-width: 0.05rem;
     border-radius: 0.3rem;
     border-color: gray;
-    width: 97%;
+    width: 96%;
     display: flex;
     align-items: center;
 `

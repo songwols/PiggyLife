@@ -18,6 +18,14 @@ const Data = {
     requests.get(`/store/findByName?name=${store_name}`),
   detail: (sid) =>
     requests.get(`/store/findById/${sid}`),
+  upload: (info) =>
+    requests.post(`/post/create/`,{
+      content: info.v_memo,
+      image: "",
+      isLike: info.isLike,
+      sid: info.sid,
+      visited: info.visited,
+    })
 };
 
 export default {

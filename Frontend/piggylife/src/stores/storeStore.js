@@ -39,6 +39,7 @@ export default class StoreStore {
       })
       .catch((err) => alert("실패"))
   }
+
   @action detail(sid){
     return agent.Data.detail(sid)
       .then((res) => {
@@ -46,5 +47,18 @@ export default class StoreStore {
         // console.log(res.data);
       })
       .catch((err) => alert("실패"))
+  }
+
+  @action upload(data){
+    console.log(data)
+    console.log(data.v_memo)
+    console.log(data.isLike)
+    console.log(data.sid)
+    console.log(data.visited)
+    // return agent.Data.upload(data)
+    //   .then((res) => {
+
+    //   })
+    //   .catch((err) => alert("업로드 실패!"))
   }
 }
