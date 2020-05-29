@@ -52,18 +52,25 @@ class CJoin extends React.Component {
     });
   };
   Register = (e) => {
-    const user = {
-      email: this.state.email,
-      nickname: this.state.nickname,
-      password: this.state.password,
-      password2: this.state.password2,
-    };
-    this.props.userStore.register(user);
-    alert(this.state.username + "님! 회원가입이 완료되었습니다!");
+    if (this.state.password === this.state.password2) {
+      if (this.props.userStore.isCheck) {
+        const user = {
+          email: this.state.email,
+          nickname: this.state.nickname,
+          password: this.state.password,
+          password2: this.state.password2,
+        };
+        this.props.userStore.register(user);
+        alert(this.state.username + "님! 회원가입이 완료되었습니다!");
+      } else {
+        alert("이메일 인증을 확인해주세요!");
+      }
+    } else {
+      alert("비밀번호를 확인해주세요!");
+    }
   };
 
   EmailCheck = (e) => {
-    //alert(this.state.email);
     this.setState({
       showConfirm: !this.state.showConfirm,
     });
