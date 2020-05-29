@@ -20,11 +20,6 @@ class CJoin extends React.Component {
       password2: "",
     };
   }
-  toggleConfirm() {
-    this.setState({
-      showConfirm: !this.state.showConfirm,
-    });
-  }
 
   toggleCheck() {
     this.setState({
@@ -67,6 +62,15 @@ class CJoin extends React.Component {
     alert(this.state.username + "님! 회원가입이 완료되었습니다!");
   };
 
+  EmailCheck = (e) => {
+    //alert(this.state.email);
+    this.setState({
+      showConfirm: !this.state.showConfirm,
+    });
+
+    this.props.userStore.email_check(this.state.email);
+  };
+
   render() {
     return (
       <Frame>
@@ -78,13 +82,14 @@ class CJoin extends React.Component {
           value={this.state.email}
         ></Input>
         <EBF>
-          <EButton onClick={this.toggleConfirm.bind(this)}>이메일 인증</EButton>
+          <EButton onClick={this.EmailCheck}>이메일 인증</EButton>
         </EBF>
         {this.state.showConfirm ? (
           <Confirm
             onChange={this.onEmailCheckChangeChange}
             name="emailcheck"
             value={this.state.emailcheck}
+            email={this.state.email}
           />
         ) : null}
         <Space></Space>

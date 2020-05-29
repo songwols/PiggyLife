@@ -2,7 +2,7 @@
   "name": "piggylife",
   "version": "0.1.0",
   "private": true,
-  "proxy": "http://k02a3011.p.ssafy.io/PIGGY",
+  "proxy": "http://52.78.169.231:8080/PIGGY",
   "dependencies": {
     "@babel/core": "7.9.0",
     "@babel/plugin-proposal-class-properties": "^7.8.3",
