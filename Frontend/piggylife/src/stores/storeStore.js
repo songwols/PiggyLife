@@ -3,6 +3,9 @@ import agent from "../agent";
 
 export default class StoreStore {
   @observable myposts = [];
+  @observable store_name="";
+  @observable storeItems = [];
+  @observable detailPost = {};
 
   @computed get mypostslength() {
     return this.myposts.length;
@@ -21,5 +24,22 @@ export default class StoreStore {
   @action
   setMyPosts(myposts) {
     this.myposts = myposts;
+  }
+
+  @action search(store_name){
+    this.store_name=store_name;
+    return agent.Data.search(this.store_name)
+      .then((res) => {
+        // console.log(res.data);
+        this.storeItems=res.data;
+      })
+      .catch((err) => alert("실패"))
+  }
+  @action detail(sid){
+    return agent.Data.detail(sid)
+      .then((res) => {
+        this.detailPost = res.data;
+        // console.log(res.data);
+      })
   }
 }

@@ -1,15 +1,30 @@
 import React from "react";
 import styled from "styled-components";
+import { inject, observer } from "mobx-react";
 import IFrame from "./icon"
-import Search from "./search"
+// import Search from "./search"
 
+@inject("storeStore")
+@observer
 class WriteContent extends React.Component{
     constructor(props){
         super(props);
         this.state={
             show : false,
             searchShow: false,
+            detail: [],
+            showList : false,
             store_name:"",
+            address: "",
+            stores: [],
+            v_img: "",
+            v_name: "이름을 검색하고 싶으면 여기를 클릭하세요",
+            v_category: "카테고리",
+            v_address: "주소",
+            v_tel: "전화번호",
+            v_menu: "메뉴",
+            v_memo: "메모",
+            click: 0,
         }
     }
     showIcon(){
@@ -26,29 +41,120 @@ class WriteContent extends React.Component{
         this.setState({
             searchShow: !this.state.searchShow,
         });
+        if(this.state.click === 3){
+            this.setState({
+                v_img: "",
+                v_name: this.state.detail.name,
+                v_category: this.state.detail.category,
+                v_address: this.state.detail.address,
+                v_tel: this.state.detail.tel,
+                v_menu: this.state.detail.menues,
+            })
+        }
       }
+
+    VMemoChange = (e) => {
+        this.setState({
+            v_memo : e.target.value,
+        })
+    }
+
+    VNameChange = (e) => {
+        this.setState({
+            v_name : "",
+        })
+    }
+
+    onNameChange = (e) => {
+        this.setState({
+          store_name: e.target.value,
+        });
+      };
+  
+      toggleList() {
+        this.setState({
+          showList: !this.state.showList,
+        });
+      }
+      addressChange(e) {
+        this.setState({
+          address: e.target.value,
+        });
+      };
     
 
     render(){
+        const getDetail = async (e) => {
+            e.preventDefault();
+            //디테일 받아올 스토어
+            console.log(this.state.address)
+            await this.props.storeStore.detail(this.state.address);
+            const getD = this.props.storeStore.detailPost;
+            this.setState({
+              detail: getD,
+            })
+    
+            this.setState({
+              showList: !this.state.showList,
+            })
+          };
+          const searching = async (e) => {
+            e.preventDefault();
+            console.log("searching")
+            await this.props.storeStore.search(this.state.store_name);
+    
+            this.setState({
+              showList: !this.state.showList,
+              click: 3,
+            })
+          };
+          const lst=this.props.storeStore.storeItems;
+
         return(
             <Content>
+                {this.state.detail.length===0 ? (<div></div>) : (<div></div>)}
                 <Pic type="file"></Pic>
                 {this.state.show ? (
                 <IFrame></IFrame>
                 ) : null}
-                <FF onClick={this.toggleSearch.bind(this)}><Input placeholder="이름을 검색하고 싶으면 여기를 클릭하세요" readOnly></Input></FF>
-                <Input placeholder="카테고리" readOnly></Input>
-                <Input placeholder="주소" readOnly></Input>
-                <Input placeholder="전화번호" readOnly></Input>
-                <TextArea placeholder="메뉴" readOnly></TextArea>
-                <TextArea placeholder="메모"></TextArea>
+                <FF onClick={this.toggleSearch.bind(this)}><Input value={this.state.v_name} readOnly></Input></FF>
+                <Input value={this.state.v_category} readOnly></Input>
+                <Input value={this.state.v_address} readOnly></Input>
+                <Input value={this.state.v_tel} readOnly></Input>
+                <TextArea value={this.state.v_menu} readOnly></TextArea>
+                <TextArea placeholder="메모" onChange={this.VMemoChange}></TextArea>
                 <CheckDiv>
                     <label><BF onClick={this.nonIcon.bind(this)}><CK type="radio" name="group" value="will"/></BF>갈 곳</label>&nbsp;
                     <label><BF onClick={this.showIcon.bind(this)}><CK type="radio" name="group" value="went"/></BF>간 곳</label>            
                 </CheckDiv>
-                <EBF><CButton>검색</CButton></EBF>
+                <EBF><CButton>등록</CButton></EBF>
                 {this.state.searchShow ? (
-                <Search cancelSearch={this.toggleSearch.bind(this)}/>
+                // <Search cancelSearch={this.toggleSearch.bind(this)} saveD={this.toggleDetailSave.bind(this)}/>
+                <Popup>
+                <PopupInner>
+                  <Box>
+                    <Title>가게 이름 검색</Title>
+                    <Searching value={this.state.store_name} onChange={this.onNameChange}></Searching>
+                    <BFrame>
+                      <Cancel onClick={this.toggleSearch.bind(this)}>닫기</Cancel>&nbsp;
+                      <OK onClick={searching} >검색</OK>
+                    </BFrame>
+                  </Box>
+                </PopupInner>
+                {this.state.showList ? (
+                  <PopupInner>
+                  <SFrame>
+                  <Select onChange={this.addressChange.bind(this)}>
+                    {lst.map((item, index) => <Option key={index} value={item.sid}>{item.name} - {item.address}</Option>)}
+                  </Select>
+                  </SFrame>
+                  <BFrame>
+                    <Cancel onClick={this.props.cancelSearch}>닫기</Cancel>&nbsp;
+                    <OK onClick={getDetail}>확인</OK>
+                  </BFrame>
+              </PopupInner>
+                ) : null}
+            </Popup>
                 ) : null}
             </Content>
         )
@@ -131,7 +237,6 @@ const EBF = styled.div`
     width: 95%;
 `
 
-
 const CButton = styled.button`
     margin-top: .3rem;
     width: 30%;
@@ -142,6 +247,141 @@ const CButton = styled.button`
     outline: none;
     border-radius: 0.3rem;
     background-color: #5897A6;
+`
+
+const Popup = styled.div`
+  z-index: 10;
+  position: fixed;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  margin: auto;
+  background-color: rgba(0, 0, 0, 0.5);
+  z-index: 999;
+`;
+
+const PopupInner = styled.div`
+  position: absolute;
+  left: 20%;
+  right: 20%;
+  top: 20%;
+  bottom: 20%;
+  margin: auto;
+  background: white;
+
+  border-radius: 4%;
+  overflow: hidden;
+
+  animation-name: zoom;
+  animation-duration: 0.6s;
+
+  @keyframes zoom {
+    from {
+      transform: scale(0);
+    }
+    to {
+      transform: scale(1);
+    }
+  }
+
+`;
+
+const Box = styled.div`
+  margin: 45% 10% 45% 10%;
+  height: 40%;
+  width: 80%;
+  background-color: #ffe8bd;
+  display: grid;
+  grid-template-rows: repeat(3,1fr);
+  grid-template-areas: "title" "searching" "bframe";
+
+`
+const Title = styled.div`
+  grid-area: "title";
+  display: flex; 
+  align-items: center; 
+  justify-content: center; 
+  -webkit-justify-content: center; 
+  -webkit-align-items: center;
+
+`
+
+const Searching = styled.input`
+  grid-area: "searching";
+  font-size: 1.0rem;
+  margin-top: .3rem;
+  margin-left: .4rem;
+  width: 90%;
+  padding-left: .3rem;
+  background: none;
+  border-color: gray;
+  border-style: solid;
+  outline: none;
+  box-shadow: none;
+  border-width: 0.05rem;
+  height: 2rem;
+  border-top: hidden;
+  border-left: hidden;
+  border-right: hidden;
+`
+
+
+const Cancel = styled.button`
+  width: 30%;
+  height: 2rem;
+  color: white;
+  background: none;
+  border: none;
+  outline: none;
+  border-radius: 0.3rem;
+  background-color: #F28379;
+`
+
+const OK = styled.button`
+  width: 30%;
+  height: 2rem;
+  color: white;
+  background: none;
+  border: none;
+  outline: none;
+  border-radius: 0.3rem;
+  background-color: #5897A6;
+`
+const SFrame = styled.div`
+    margin: 60% 10% 45% 10%;
+    height: 4rem;
+    width: 80%;
+    background-color: #ffe8bd;
+    text-align: center;
+    display: flex; 
+    align-items: center; 
+    justify-content: center; 
+`
+
+const Select = styled.select`
+    height: 2rem;
+    width: 80%;
+`
+
+const Option = styled.option`
+    height: 2rem;
+    width: 80%;
+    overflow:scroll;
+`
+
+const BFrame = styled.div`
+  grid-area: "bframe";
+  margin-top: .3rem;
+  height: 2rem;
+  text-align: center;
+  display: flex; 
+  align-items: center; 
+  justify-content: center; 
+  -webkit-justify-content: center; 
+  -webkit-align-items: center;
 `
 
 export default WriteContent;

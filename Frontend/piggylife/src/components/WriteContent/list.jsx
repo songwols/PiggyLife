@@ -1,6 +1,9 @@
 import React from "react";
 import styled from "styled-components";
+import { inject, observer } from "mobx-react";
 
+@inject("storeStore")
+@observer
 class List extends React.Component{
   constructor() {
     super();
@@ -16,6 +19,9 @@ class List extends React.Component{
   };
 
     render(){
+      console.log(this.props.list);
+      const lst=this.props.list;
+      
       const searching = (e) => {
         e.preventDefault();
         
@@ -26,11 +32,7 @@ class List extends React.Component{
                 <PopupInner>
                     <SFrame>
                     <Select onChange={this.addressChange.bind(this)}>
-                        <Option defaultValue>셀렉트박스</Option>
-                        <Option>옵션1</Option>
-                        <Option>옵션2</Option>
-                        <Option>옵션3</Option>
-                        <Option>옵션4</Option>
+                    {lst.map((item, index) => <Option key={index}>{item.name} - {item.address}</Option>)}
                     </Select>
                     </SFrame>
                     <BFrame>
@@ -100,7 +102,7 @@ const Select = styled.select`
 `
 
 const Option = styled.option`
-    height: 2rem;
+    height: 4rem;
     width: 80%;
     overflow:scroll;
 `

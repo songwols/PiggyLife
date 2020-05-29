@@ -1,6 +1,10 @@
 import React from "react";
 import styled from "styled-components";
+import { inject, observer } from "mobx-react";
+import List from "./list";
 
+@inject("storeStore")
+@observer
 class Search extends React.Component{
     constructor(props){
       super(props);
@@ -8,6 +12,8 @@ class Search extends React.Component{
           showList : false,
           store_name:"",
           address: "",
+          stores: [],
+          detail: [],
       }
     }
 
@@ -29,25 +35,32 @@ class Search extends React.Component{
     };
 
     render(){
-      const getList = (e) => {
+      const getDetail = async (e) => {
         e.preventDefault();
-        //리스트를 받아올 스토어
-        console.log(this.state.store_name)
-        // this.props.storeStore.search(this.state.info);
+        //디테일 받아올 스토어
+        console.log(this.state.address)
+        await this.props.storeStore.detail(this.state.address);
+        const getD = this.props.storeStore.detailPost;
+        this.setState({
+          detail: getD,
+        })
+
         this.setState({
           showList: !this.state.showList,
         })
       };
-      const searching = (e) => {
+      const searching = async (e) => {
         e.preventDefault();
-        //디테일 정보 받아올 스토어
-        // this.props.storeStore.search(this.state.address);
-        // this.props.history.push(
-        //   "/result/" +
-        //     this.state.info.store_name
-        // );
+        //리스트 정보 받아올 스토어
+        console.log("searching")
+        await this.props.storeStore.search(this.state.store_name);
+
+        this.setState({
+          showList: !this.state.showList,
+        })
       };
-  
+      const lst=this.props.storeStore.storeItems;
+
         return(
             <Popup>
                 <PopupInner>
@@ -56,7 +69,7 @@ class Search extends React.Component{
                     <Searching value={this.state.store_name} onChange={this.onNameChange}></Searching>
                     <BFrame>
                       <Cancel onClick={this.props.cancelSearch}>닫기</Cancel>&nbsp;
-                      <OK onClick={getList} >검색</OK>
+                      <OK onClick={searching} >검색</OK>
                     </BFrame>
                   </Box>
                 </PopupInner>
@@ -64,15 +77,12 @@ class Search extends React.Component{
                   <PopupInner>
                   <SFrame>
                   <Select onChange={this.addressChange.bind(this)}>
-                      <Option defaultValue>셀렉트박스</Option>
-                      <Option>옵션1</Option>
-                      <Option>옵션2</Option>
-                      <Option>옵션3</Option>
+                    {lst.map((item, index) => <Option key={index} value={index}>{item.name} - {item.address}</Option>)}
                   </Select>
                   </SFrame>
                   <BFrame>
-                    <Cancel onClick={this.props.cancelSearch}>닫기</Cancel>&nbsp;
-                    <OK onClick={searching}>확인</OK>
+                    <Cancel onClick={this.props.cancelSearch} value={this.state.detail}>닫기</Cancel>&nbsp;
+                    <OK onClick={getDetail}>확인</OK>
                   </BFrame>
               </PopupInner>
                 ) : null}
