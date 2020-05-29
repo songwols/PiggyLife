@@ -11,12 +11,15 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.piggy.PIGGY.dto.StoreInputDto;
+import com.piggy.PIGGY.dto.StoreOutputDto;
 import com.piggy.PIGGY.dto.StoreTop10Dto;
 import com.piggy.PIGGY.entity.Store;
 import com.piggy.PIGGY.service.StoreService;
+import com.piggy.PIGGY.util.MapperUtils;
 
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -50,7 +53,8 @@ public class StoreRestController {
 		try {
 			log.trace("StoreRestController - findById", sId);
 			Store store = sService.findById(sId);
-			return new ResponseEntity<Object>(store, HttpStatus.OK);
+			StoreOutputDto output = MapperUtils.map(store, StoreOutputDto.class);
+			return new ResponseEntity<Object>(output, HttpStatus.OK);
 		} catch (Exception e) {
 			throw e;
 		}
@@ -64,6 +68,20 @@ public class StoreRestController {
 			log.trace("StoreRestController - getStoreTop10");
 			List<StoreTop10Dto> stores = sService.getStoreTop10();
 			return new ResponseEntity<Object>(stores, HttpStatus.OK);
+		} catch (Exception e) {
+			throw e;
+		}
+	}
+	
+	@ApiOperation(value = "이름으로 가게 찾기")
+	@GetMapping("/findByName")
+	public ResponseEntity<Object> findByName(@RequestParam String name) {
+		try {
+			
+			log.trace("StoreRestController - findByName");
+			List<Store> stores = sService.findByName(name);
+			List<StoreOutputDto> output = MapperUtils.mapAll(stores, StoreOutputDto.class);
+			return new ResponseEntity<Object>(output, HttpStatus.OK);
 		} catch (Exception e) {
 			throw e;
 		}
