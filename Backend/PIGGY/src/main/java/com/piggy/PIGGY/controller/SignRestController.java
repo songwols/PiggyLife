@@ -45,7 +45,6 @@ public class SignRestController {
 				return new ResponseEntity<Object>("중복된 이메일 입니다.", HttpStatus.ACCEPTED);
 
 			User user = uService.singup(input);
-			emailSend(input.getEmail());
 			return new ResponseEntity<Object>(user, HttpStatus.CREATED);
 		} catch (Exception e) {
 			throw e;
