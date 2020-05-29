@@ -9,7 +9,7 @@ import random
 # date time
 from datetime import datetime
 
-DATA_DIR = "./data"
+DATA_DIR = "./Backend/Python/data"
 DATA_FILE = os.path.join(DATA_DIR, "data.json")
 DUMP_FILE = os.path.join(DATA_DIR, "dump.pkl")
 
@@ -59,7 +59,7 @@ user_columns = (
 region_tags_cloumns = (
     "city", # 시도
     "area",  # 시군구
-    "id",  # region_tag_id
+    "id",  # region_tag_id --> 사용되지 않음
 )
 
 
@@ -286,13 +286,13 @@ def import_data(data_path=DATA_FILE):
     return {"stores": store_frame, "reviews": review_frame, "menus": menu_frame, "users": user_frame, "region_tags": region_tag_frame}
 
 
-def create_pwd():
-    _LENGTH = 10  # 10자리
-    string_pool = string.ascii_letters + string.digits + string.punctuation  # 소문자
-    result = ""  # 결과값
-    for i in range(_LENGTH):
-        result += random.choice(string_pool)  # 랜덤한 문자열 하나 선택
-    return result
+# def create_pwd():
+#     _LENGTH = 10  # 10자리
+#     string_pool = string.ascii_letters + string.digits + string.punctuation  # 소문자
+#     result = ""  # 결과값
+#     for i in range(_LENGTH):
+#         result += random.choice(string_pool)  # 랜덤한 문자열 하나 선택
+#     return result
 
 
 def dump_dataframes(dataframes):
@@ -324,20 +324,20 @@ def main():
     print(data["stores"].size)
     print(f"\n{separater}\n\n")
 
-    print("[리뷰]")
-    print(f"{separater}\n")
-    print(data["reviews"].head())
-    print(f"\n{separater}\n\n")
+    # print("[리뷰]")
+    # print(f"{separater}\n")
+    # print(data["reviews"].head())
+    # print(f"\n{separater}\n\n")
 
-    print("[메뉴]")
-    print(f"{separater}\n")
-    print(data["menus"].head())
-    print(f"\n{separater}\n\n")
+    # print("[메뉴]")
+    # print(f"{separater}\n")
+    # print(data["menus"].head())
+    # print(f"\n{separater}\n\n")
 
-    print("[사용자]")
-    print(f"{separater}\n")
-    print(data["users"].head())
-    print(f"\n{separater}\n\n")
+    # print("[사용자]")
+    # print(f"{separater}\n")
+    # print(data["users"].head())
+    # print(f"\n{separater}\n\n")
 
     print("[구역 태그]")
     print(f"{separater}\n")

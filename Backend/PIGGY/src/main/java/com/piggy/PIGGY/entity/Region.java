@@ -25,7 +25,7 @@ public class Region {
 	@Column(nullable=false)
 	private String city;
 	
-	@Column(nullable=false)
+	@Column(nullable=true)
 	private String area;
 
 	@Builder
