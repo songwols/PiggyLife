@@ -1,6 +1,9 @@
 package com.piggy.PIGGY.dto;
 
 import java.math.BigDecimal;
+import java.util.List;
+
+import com.piggy.PIGGY.entity.Menu;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -11,12 +14,13 @@ import lombok.NoArgsConstructor;
 @Data
 public class StoreOutputDto {
 
-	private Long sId; 
+	private Long sId;
 	private String name;
 	private String tel;
 	private String address;
 	private BigDecimal latitude;
 	private BigDecimal longitude;
 	private String category;
+	private List<Menu> menues;
 	
 }

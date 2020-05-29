@@ -1,6 +1,8 @@
 package com.piggy.PIGGY.entity;
 
 import java.math.BigDecimal;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -13,10 +15,13 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.SqlResultSetMapping;
 
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import com.piggy.PIGGY.dto.StoreTop10Dto;
 
 import lombok.AccessLevel;
@@ -38,6 +43,7 @@ import lombok.NoArgsConstructor;
 						)
 		}
 		)
+@JsonIdentityInfo(generator = ObjectIdGenerators.IntSequenceGenerator.class)
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Getter
 @Entity
@@ -50,6 +56,7 @@ public class Store {
 	@Column(nullable=false)
 	private String name;
 	
+	@Column
 	private String tel;
 	
 	@Column(nullable=false)
@@ -61,10 +68,13 @@ public class Store {
 	@Column(nullable=false)
 	private BigDecimal longitude;
 	
+	@Column
 	private String category;
 	
+	@Column
 	private String image;
 	
+	@Column
 	private String branch;
 
 	@JsonIgnore
@@ -74,9 +84,12 @@ public class Store {
 	@ManyToOne
 	@JoinColumn(name="rId")
 	private Region region;
+	
+	@OneToMany(mappedBy = "store", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+	private List<Menu> menues = new ArrayList<>();
 
 	@Builder
-	public Store(String name, String tel, String address, BigDecimal latitude, BigDecimal longitude, String category,String branch) {
+	public Store(String name, String tel, String address, BigDecimal latitude, BigDecimal longitude, String category, String branch) {
 		this.name = name;
 		this.tel = tel;
 		this.address = address;

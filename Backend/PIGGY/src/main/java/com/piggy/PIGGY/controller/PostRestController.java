@@ -76,7 +76,7 @@ public class PostRestController {
 	}
 	
 	@ApiOperation(value = "해당 유저의 모든 Post 불러오기")
-	@GetMapping("/findByUser/{pId}")
+	@GetMapping("/findByUser/{uId}")
 	public ResponseEntity<Object> findByUser(@PathVariable Long uId){
 		try {
 			log.trace("PostRestController - findByUser", uId);
@@ -101,7 +101,7 @@ public class PostRestController {
 		}
 	}
 	
-	@ApiOperation(value = "해당 유저의 Post 삭제")
+	@ApiOperation(value = "해당  Post 삭제")
 	@DeleteMapping("/delete/{pId}")
 	public ResponseEntity<Object> delete(@PathVariable Long pId){
 		try {

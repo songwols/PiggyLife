@@ -35,13 +35,13 @@ public class UserServiceImpl implements UserService {
 	}
 	
 	@Override
-	public User singup(SignupDto dto, String authkey) {
+	public User singup(SignupDto dto) {
 		return uRepo.save(User.builder()
 				.email(dto.getEmail())
 				.password(passwordEncoder.encode(dto.getPassword()))
 				.nickname(dto.getNickname())
 				.image(dto.getImage())
-				.emailCertify(authkey)
+				.emailCertify("email_send_require")
 				.ranking(1)
 				.roles(Collections.singletonList("EMAIL_USER"))
 				.build());
@@ -52,8 +52,14 @@ public class UserServiceImpl implements UserService {
 		
 		Map<String, String> result = new HashMap<>();
 		User user = uRepo.findByEmail(email).orElseThrow(NoSuchElementException::new);
+		
 		if (!passwordEncoder.matches(password, user.getPassword())) {
+			result.put("code", "-1");
 			result.put("massage", "비밀번호가 일치하지 않습니다.");
+		} else if (!user.getEmailCertify().equals("Y")){
+			System.out.println(user.getEmailCertify());
+			result.put("code", "-2");
+			result.put("massage", "인증되지 않은 회원입니다.");
 		} else {
 			result.put("token", jwtProvider.createToken(user.getUsername(), user.getRoles()));
 			result.put("uId", user.getUId().toString());
@@ -86,8 +92,8 @@ public class UserServiceImpl implements UserService {
 	}
 	
 	@Override
-	public void updateEmail(String email) {
-		uRepo.updateEmail(email);
+	public void updateEmail(String email, String massage) {
+		uRepo.updateEmail(email, massage);
 	}
 	
 

@@ -3,25 +3,62 @@ import styled from "styled-components";
 import { inject, observer } from "mobx-react";
 import Card from "./Card";
 
-//@inject("스토어이름")
-//@observer
+@inject("storeStore")
+@observer
 class CardLayout extends React.Component {
-  state = {};
+  constructor(props) {
+    super(props);
+    this.state = {
+      list: [],
+      length: 0,
+    };
+  }
+  componentWillMount() {
+    const keyword = this.props.keyword;
+    console.log(keyword);
+    if (keyword === "top10") {
+      this.props.storeStore.get_top10();
+      this.setState({
+        list: this.props.storeStore.top10,
+        length: this.props.storeStore.top10length,
+      });
+    } else if (keyword === "mypost") {
+      this.props.storeStore.get_mypost();
+      this.setState({
+        list: this.props.storeStore.mypost,
+        length: this.props.storeStore.mypostslength,
+      });
+    } else if (keyword === "hotplace") {
+      this.props.storeStore.get_hotplace();
+      this.setState({
+        list: this.props.storeStore.hotplace,
+        length: this.props.storeStore.hotplacelength,
+      });
+    } else if (keyword === "similar") {
+      this.props.storeStore.get_similar();
+      this.setState({
+        list: this.props.storeStore.similar,
+        length: this.props.storeStore.similarlength,
+      });
+    }
+    console.log("여기");
+    console.log(this.state.length);
+  }
 
   render() {
-    const returns = this.props.list;
-    console.log(returns);
     return (
       <div>
-        {returns ? 
-        <Frame>
-          {/* returns.map((item, index) => <Card key={index} store={item} />) */}
-        </Frame>
-      :
-      <NFrame>
-        <Text>등록된 게시글이 없습니다.</Text>
-      </NFrame>
-      }
+        {this.state.length !== 0 ? (
+          <Frame>
+            {this.state.list.map((item, index) => (
+              <Card key={index} store={item} />
+            ))}
+          </Frame>
+        ) : (
+          <NFrame>
+            <Text>등록된 게시글이 없습니다.</Text>
+          </NFrame>
+        )}
       </div>
     );
   }

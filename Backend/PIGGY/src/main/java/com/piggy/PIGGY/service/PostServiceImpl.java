@@ -1,11 +1,9 @@
 package com.piggy.PIGGY.service;
 
 import java.util.HashMap;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.NoSuchElementException;
-import java.util.Set;
 import java.util.StringTokenizer;
 
 import javax.persistence.EntityManager;
@@ -100,8 +98,8 @@ public class PostServiceImpl implements PostService {
 	@Override
 	public List<PostAreaStatisticDto> getAreaStatistic(Long uId) {
 		String sql = "SELECT r.city AS city, r.area AS area, count(r.area) AS cnt "
-				+ "FROM Post p LEFT JOIN Store s ON p.s_id = s.s_id LEFT JOIN Region r ON s.r_id = r.r_id "
-				+ "WHERE p.u_id = :uId GROUP BY r.area ORDER BY cnt DESC";
+				+ "FROM post p LEFT JOIN store s ON p.s_id = s.s_id LEFT JOIN region r ON s.r_id = r.r_id "
+				+ "WHERE p.u_id = :uId GROUP BY r.r_id ORDER BY cnt DESC";
 		Query query = em.createNativeQuery(sql, "Post.AreaStatistic");
 		query.setParameter("uId", uId);
 		List<PostAreaStatisticDto> list = query.getResultList();
@@ -110,13 +108,13 @@ public class PostServiceImpl implements PostService {
 
 	@Override
 	public Map<String, Integer> getCategoryStatistic(Long uId) {
-		String sql = "SELECT s.category AS category FROM Post p LEFT JOIN Store s ON p.s_id = s.s_id "
+		String sql = "SELECT s.category AS category FROM post p LEFT JOIN store s ON p.s_id = s.s_id "
 				+ "WHERE p.u_id = :uId";
 		Query query = em.createNativeQuery(sql, "Post.CategoryStatistic");
 		query.setParameter("uId", uId);
 		List<PostCategoryStatisticDto> list = query.getResultList();
 
-		Map<String, Integer> map = new HashMap<String, Integer>(); //망고플레이트 db랑 연결하면 카테고리 String가져와서 보여줘야함
+		Map<String, Integer> map = new HashMap<String, Integer>();
 		for (int i = 0; i < list.size(); i++) {
 			String categories = list.get(i).getCategory();
 			StringTokenizer st = new StringTokenizer(categories,"|");
