@@ -3,7 +3,13 @@ import agent from "../agent";
 
 export default class UserStore {
   @observable isCheck = false;
+  @observable token = "";
+  @observable uid = "";
 
+  // @action
+  // whoami(token) {
+  //   return agent.Data.
+  // }
   @action
   register(user) {
     return agent.Data.signup(user)
@@ -17,7 +23,16 @@ export default class UserStore {
   }
   @action
   login(user) {
-    console.log(user);
+    return agent.Data.signin(user)
+      .then((res) => {
+        console.log(res);
+        this.token = res.data.token;
+        this.uid = res.data.uId;
+        //window.location.replace("/Home");
+      })
+      .catch((err) => {
+        console.log(err);
+      });
   }
   @action
   email_check(email) {

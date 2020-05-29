@@ -23,10 +23,7 @@ const Data = {
       password: user.password,
     }),
   signin: (user) =>
-    requests.post(`/sign/signin`, {
-      email: user.email,
-      password: user.password,
-    }),
+    requests.get(`/sign/signin?email=${user.email}&password=${user.password}`),
   email_send: (email) => requests.post(`/sign/emailSend?email=${email}`),
 };
 
