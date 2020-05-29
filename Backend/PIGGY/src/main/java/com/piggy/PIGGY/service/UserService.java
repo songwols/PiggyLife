@@ -10,19 +10,19 @@ import com.piggy.PIGGY.entity.User;
 
 public interface UserService extends UserDetailsService{
 	
-	public User singup(SignupDto dto, String authkey);
+	public User singup(SignupDto dto);
 	
 	public Map<String, String> signin(String email, String password);
 	
 	public boolean emailDuplicateCheck(String email);
 	
 	public User findByEmail(String eamil);
-	
+	 
 	public User findByNickname(String nickname);
 	
 	public List<User> findAll();
 	
-	public void updateEmail(String email);
+	public void updateEmail(String email, String massage);
 	
 	public User updatePassword(Long uId, String password);
 	
