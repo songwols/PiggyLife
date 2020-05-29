@@ -1,8 +1,27 @@
 import React from "react";
 import styled from "styled-components";
 import { inject, observer } from "mobx-react";
-import IFrame from "./icon"
+import { Like } from "@styled-icons/boxicons-regular/Like";
+import { Dislike } from "@styled-icons/boxicons-regular/Dislike";
+// import IFrame from "./icon"
 // import Search from "./search"
+
+export const Good = styled(Like)`
+    width: 30px;
+    height: 30px;
+    cursor: pointer;
+    color: red;
+    margin-left: auto;
+    margin-right: auto;
+`;
+
+export const NGood = styled(Dislike)`
+    width: 30px;
+    height: 30px;
+    cursor: pointer;
+    margin-left: auto;
+    margin-right: auto;
+`;
 
 @inject("storeStore")
 @observer
@@ -25,16 +44,27 @@ class WriteContent extends React.Component{
             v_menu: "메뉴",
             v_memo: "메모",
             click: 0,
+            visited: false,
+            isLike: true,
+            g_color: "#5897A6",
+            n_color: "gray",
+            g_show: false,
+            n_show: false,
         }
+        this.g_changeColor = this.g_changeColor.bind(this);
+        this.n_changeColor = this.n_changeColor.bind(this);
     }
     showIcon(){
         this.setState({
             show: true,
+            visited: true,
         })
     }
     nonIcon(){
         this.setState({
             show: false,
+            isLike: !this.state.isLike,
+            visited: false,
         })
     }
     toggleSearch() {
@@ -59,12 +89,6 @@ class WriteContent extends React.Component{
         })
     }
 
-    VNameChange = (e) => {
-        this.setState({
-            v_name : "",
-        })
-    }
-
     onNameChange = (e) => {
         this.setState({
           store_name: e.target.value,
@@ -82,6 +106,22 @@ class WriteContent extends React.Component{
         });
       };
     
+      goRegister = (e) => {
+          if(this.state.v_name === "이름을 검색하고 싶으면 여기를 클릭하세요"){
+              alert("빈 값이 있습니다.")
+          }
+          else{
+              console.log(this.state)
+          }
+      }
+
+      g_changeColor = (e) =>{
+        this.setState({g_color: e, n_color: "gray", g_show: true, n_show: false, isLike: false,})
+    }
+
+    n_changeColor = (e) =>{
+        this.setState({n_color: e, g_color: "gray", n_show: true, g_show: false})
+    }
 
     render(){
         const getDetail = async (e) => {
@@ -115,7 +155,15 @@ class WriteContent extends React.Component{
                 {this.state.detail.length===0 ? (<div></div>) : (<div></div>)}
                 <Pic type="file"></Pic>
                 {this.state.show ? (
-                <IFrame></IFrame>
+                <ICFrame>
+                    <Div onClick={() => this.g_changeColor("#5897A6")}>
+                    <Good style={{color: this.state.g_color}}/>좋아요
+                    </Div>
+
+                    <Div onClick={() => this.n_changeColor("#F28379")}>
+                    <NGood style={{color: this.state.n_color}}/>싫어요
+                    </Div>
+                </ICFrame>
                 ) : null}
                 <FF onClick={this.toggleSearch.bind(this)}><Input value={this.state.v_name} readOnly></Input></FF>
                 <Input value={this.state.v_category} readOnly></Input>
@@ -124,10 +172,10 @@ class WriteContent extends React.Component{
                 <TextArea value={this.state.v_menu} readOnly></TextArea>
                 <TextArea placeholder="메모" onChange={this.VMemoChange}></TextArea>
                 <CheckDiv>
-                    <label><BF onClick={this.nonIcon.bind(this)}><CK type="radio" name="group" value="will"/></BF>갈 곳</label>&nbsp;
+                    <label><BF onClick={this.nonIcon.bind(this)}><CK type="radio" name="group" value="will" defaultChecked/></BF>갈 곳</label>&nbsp;
                     <label><BF onClick={this.showIcon.bind(this)}><CK type="radio" name="group" value="went"/></BF>간 곳</label>            
                 </CheckDiv>
-                <EBF><CButton>등록</CButton></EBF>
+                <EBF><CButton onClick={this.goRegister}>등록</CButton></EBF>
                 {this.state.searchShow ? (
                 // <Search cancelSearch={this.toggleSearch.bind(this)} saveD={this.toggleDetailSave.bind(this)}/>
                 <Popup>
@@ -145,7 +193,7 @@ class WriteContent extends React.Component{
                   <PopupInner>
                   <SFrame>
                   <Select onChange={this.addressChange.bind(this)}>
-                    {lst.map((item, index) => <Option key={index} value={item.sid}>{item.name} - {item.address}</Option>)}
+                    {lst.map((item, index) => <Option key={index} value={item.sid} defaultValue>{item.name} - {item.address}</Option>)}
                   </Select>
                   </SFrame>
                   <BFrame>
@@ -382,6 +430,18 @@ const BFrame = styled.div`
   justify-content: center; 
   -webkit-justify-content: center; 
   -webkit-align-items: center;
+`
+const ICFrame = styled.div`
+    text-align: center;
+    height: 2rem;
+    width: 95%;
+    display: inline-block;
+`
+
+const Div = styled.button`
+    background: none;
+    border: none;
+    outline: none;
 `
 
 export default WriteContent;
