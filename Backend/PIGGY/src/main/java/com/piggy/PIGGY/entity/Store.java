@@ -64,6 +64,8 @@ public class Store {
 	private String category;
 	
 	private String image;
+	
+	private String branch;
 
 	@JsonIgnore
 	@OneToOne(mappedBy = "store", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
@@ -74,12 +76,13 @@ public class Store {
 	private Region region;
 
 	@Builder
-	public Store(String name, String tel, String address, BigDecimal latitude, BigDecimal longitude, String category) {
+	public Store(String name, String tel, String address, BigDecimal latitude, BigDecimal longitude, String category,String branch) {
 		this.name = name;
 		this.tel = tel;
 		this.address = address;
 		this.latitude = latitude;
 		this.longitude = longitude;
 		this.category = category;
+		this.branch = branch;
 	}
 }

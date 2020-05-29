@@ -11,6 +11,7 @@ import lombok.NoArgsConstructor;
 @Data
 public class StoreOutputDto {
 
+	private Long sId; 
 	private String name;
 	private String tel;
 	private String address;
