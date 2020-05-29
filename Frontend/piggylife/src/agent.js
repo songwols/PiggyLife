@@ -1,6 +1,6 @@
 import axios from "axios";
 
-const API_ROOT = "http://k02a3011.p.ssafy.io/PIGGY";
+const API_ROOT = "http://52.78.169.231:8080/PIGGY";
 
 const requests = {
   get: (url, header) => axios.get(`${API_ROOT}${url}`, { headers: header }),
@@ -10,6 +10,10 @@ const requests = {
 
 const Data = {
   get_myposts: () => requests.get(``), //url 정해지면 채워넣기
+  get_top10: () => requests.get(`/store/getStoreTop10`),
+  email_check: (email) => requests.get(`/sign/checkEmail?email=${email}`),
+  code_check: (user) =>
+    requests.get(`/sign/EmailConfirm?email=${user.email}&authkey=${user.code}`),
 };
 
 export default {
