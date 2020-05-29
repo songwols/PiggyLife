@@ -12,19 +12,30 @@ class CardLayout extends React.Component {
     const returns = this.props.list;
     console.log(returns);
     return (
-      <Frame>
-        {returns ? (
-          returns.map((item, index) => <Card key={index} store={item} />)
-        ) : (
-          // <Text>등록된 게시글이 없습니다.</Text>
-          <></>
-        )}
-        {/* <Card></Card> */}
-      </Frame>
+      <div>
+        {returns ? 
+        <Frame>
+          {/* returns.map((item, index) => <Card key={index} store={item} />) */}
+        </Frame>
+      :
+      <NFrame>
+        <Text>등록된 게시글이 없습니다.</Text>
+      </NFrame>
+      }
+      </div>
     );
   }
 }
-const Text = styled.div``;
+const Text = styled.div`
+  margin-top: 40px;
+`;
+
+const NFrame = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+`;
+
 const Frame = styled.div`
   padding-left: 5%;
   padding-right: 5%;
