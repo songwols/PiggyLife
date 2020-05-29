@@ -41,10 +41,21 @@ public class PostServiceImpl implements PostService {
 	private StoreRepository sRepo;
 	
 	@Override
-	public Post create(Long uId, PostInputDto dto) {
+	public Map<String, Object> create(Long uId, PostInputDto dto) {
 		User user = uRepo.findById(uId).orElseThrow(NoSuchElementException::new);
 		Store store = sRepo.findById(dto.getSId()).orElseThrow(NoSuchElementException::new);
-		return pRepo.save(Post.builder()
+		int size = pRepo.findByUser(user).size();
+		int status = 0;
+		if(size <= 100) {
+			int rank = user.getRanking();
+			int[] step = {10,10,10,20,20,20,30,30,30,50};
+			int nextRank = (int)((size+1)/step[rank]);
+			if(rank != nextRank) {
+				status = uRepo.updateRanking(nextRank, uId);
+			}
+		}
+	    Map<String, Object> resultMap = new HashMap<String, Object>();
+	    resultMap.put("data", pRepo.save(Post.builder()
 				.user(user)
 				.store(store)
 				.image(dto.getImage())
@@ -52,7 +63,9 @@ public class PostServiceImpl implements PostService {
 				.visited(dto.getVisited())
 				.isLike(dto.getIsLike())
 				.build()
-		);
+		));
+	    resultMap.put("status", status);
+		return resultMap;
 	}
 
 	@Override
@@ -117,6 +130,13 @@ public class PostServiceImpl implements PostService {
 			}
 		}
 		return map;
+	}
+
+	@Override
+	public List<Post> findByUserAndVisited(Long uId, boolean visited) {
+		User user = uRepo.findById(uId).orElseThrow(NoSuchElementException::new);
+		List<Post> list = pRepo.findByUserAndVisited(user, visited);
+		return list;
 	}
 
 }

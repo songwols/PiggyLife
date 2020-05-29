@@ -26,6 +26,7 @@ class Statistic extends React.Component {
 
 const Frame = styled.div`
   margin: 1rem;
+  overflow: hidden;
 `;
 const LevelGraph = styled.div`
   justify-content: center;

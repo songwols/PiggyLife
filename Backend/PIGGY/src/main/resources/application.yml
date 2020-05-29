@@ -36,7 +36,7 @@ spring:
 server:
   servlet:
     context-path: /Piggy
-  port: 8090
+  port: 8080
 
 logging:
   level:

@@ -9,7 +9,7 @@ import com.piggy.PIGGY.entity.Post;
 
 public interface PostService {
 
-	public Post create(Long uId, PostInputDto dto);
+	public Map<String, Object> create(Long uId, PostInputDto dto);
 	
 	public List<Post> findAll();
 	
@@ -24,5 +24,7 @@ public interface PostService {
 	public List<PostAreaStatisticDto> getAreaStatistic(Long uId);
 
 	public Map<String, Integer> getCategoryStatistic(Long uId);
+	
+	public List<Post> findByUserAndVisited(Long uId, boolean visited);
 	
 }
