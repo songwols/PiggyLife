@@ -45,7 +45,7 @@ class WriteContent extends React.Component{
             v_memo: "메모",
             click: 0,
             visited: false,
-            isLike: true,
+            isLike: false,
             g_color: "#5897A6",
             n_color: "gray",
             g_show: false,
@@ -58,12 +58,13 @@ class WriteContent extends React.Component{
         this.setState({
             show: true,
             visited: true,
+            isLike: true,
         })
     }
     nonIcon(){
         this.setState({
             show: false,
-            isLike: !this.state.isLike,
+            isLike: false,
             visited: false,
         })
     }
@@ -80,6 +81,12 @@ class WriteContent extends React.Component{
                 v_tel: this.state.detail.tel,
                 v_menu: this.state.detail.menues,
             })
+            if(this.state.detail.menues.length===0){
+              this.setState({
+                v_menu: "메뉴",
+              })
+            }
+            
         }
       }
 
@@ -116,11 +123,11 @@ class WriteContent extends React.Component{
       }
 
       g_changeColor = (e) =>{
-        this.setState({g_color: e, n_color: "gray", g_show: true, n_show: false, isLike: false,})
+        this.setState({g_color: e, n_color: "gray", g_show: true, n_show: false, isLike: true,})
     }
 
     n_changeColor = (e) =>{
-        this.setState({n_color: e, g_color: "gray", n_show: true, g_show: false})
+        this.setState({n_color: e, g_color: "gray", n_show: true, g_show: false, isLike: false,})
     }
 
     render(){
@@ -142,11 +149,17 @@ class WriteContent extends React.Component{
             e.preventDefault();
             console.log("searching")
             await this.props.storeStore.search(this.state.store_name);
-    
+            const addr = this.props.storeStore.storeItems;
+            console.log(addr[0])
             this.setState({
               showList: !this.state.showList,
               click: 3,
             })
+            if(addr[0] !== undefined){
+              this.setState({
+                address: addr[0].sid,
+              })
+            }
           };
           const lst=this.props.storeStore.storeItems;
 
@@ -169,7 +182,14 @@ class WriteContent extends React.Component{
                 <Input value={this.state.v_category} readOnly></Input>
                 <Input value={this.state.v_address} readOnly></Input>
                 <Input value={this.state.v_tel} readOnly></Input>
-                <TextArea value={this.state.v_menu} readOnly></TextArea>
+                {/* <TextArea value={this.state.v_menu} readOnly></TextArea> */}
+                {this.state.v_menu==="메뉴" ? <TextD>{this.state.v_menu}</TextD> 
+                :
+                <ML>
+                  {this.state.v_menu.map((item, index) => <Mn key={index}> {item.menuName} - {item.price}</Mn>)}
+                </ML>
+                }
+                
                 <TextArea placeholder="메모" onChange={this.VMemoChange}></TextArea>
                 <CheckDiv>
                     <label><BF onClick={this.nonIcon.bind(this)}><CK type="radio" name="group" value="will" defaultChecked/></BF>갈 곳</label>&nbsp;
@@ -184,7 +204,7 @@ class WriteContent extends React.Component{
                     <Title>가게 이름 검색</Title>
                     <Searching value={this.state.store_name} onChange={this.onNameChange}></Searching>
                     <BFrame>
-                      <Cancel onClick={this.toggleSearch.bind(this)}>닫기</Cancel>&nbsp;
+                      <Cancel onClick={this.toggleSearch.bind(this)}>저장</Cancel>&nbsp;
                       <OK onClick={searching} >검색</OK>
                     </BFrame>
                   </Box>
@@ -197,7 +217,7 @@ class WriteContent extends React.Component{
                   </Select>
                   </SFrame>
                   <BFrame>
-                    <Cancel onClick={this.props.cancelSearch}>닫기</Cancel>&nbsp;
+                    <Cancel onClick={this.toggleList.bind(this)}>닫기</Cancel>&nbsp;
                     <OK onClick={getDetail}>확인</OK>
                   </BFrame>
               </PopupInner>
@@ -208,6 +228,32 @@ class WriteContent extends React.Component{
         )
     }
 }
+
+const TextD = styled.div`
+    padding-left: .3rem;
+    margin-top: .3rem;
+    height: 2rem;
+    border-style: solid;
+    border-width: 0.05rem;
+    border-radius: 0.3rem;
+    border-color: gray;
+    width: 97%;
+    display: flex;
+    align-items: center;
+`
+
+const ML = styled.div`
+    padding-left: .3rem;
+    margin-top: .3rem;
+    border-style: solid;
+    border-width: 0.05rem;
+    border-radius: 0.3rem;
+    border-color: gray;
+    width: 96%;
+`
+const Mn = styled.div `
+
+`
 
 const Content = styled.div`
     grid-area: "content";

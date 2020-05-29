@@ -31,7 +31,11 @@ export default class StoreStore {
     return agent.Data.search(this.store_name)
       .then((res) => {
         // console.log(res.data);
-        this.storeItems=res.data;
+        this.storeItems=res.data;        
+        if(res.data.length === 0){
+          alert("검색된 데이터가 없습니다.")
+          window.location.reload();
+        }
       })
       .catch((err) => alert("실패"))
   }
@@ -41,5 +45,6 @@ export default class StoreStore {
         this.detailPost = res.data;
         // console.log(res.data);
       })
+      .catch((err) => alert("실패"))
   }
 }
