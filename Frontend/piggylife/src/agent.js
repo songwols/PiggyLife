@@ -10,6 +10,7 @@ const requests = {
 
 const Data = {
   get_myposts: () => requests.get(``), //url 정해지면 채워넣기
+  get_top10: () => requests.get(`store/getStoreTop10`),
   email_check: (email) => requests.get(`/sign/checkEmail?email=${email}`),
   code_check: (user) =>
     requests.get(`/sign/EmailConfirm?email=${user.email}&authkey=${user.code}`),
