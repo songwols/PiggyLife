@@ -18,34 +18,28 @@ class HomePage extends React.Component {
           <Mukitlist>
             <Title>먹킷리스트</Title>
             <Div>
-              <CardLayout list={this.props.storeStore.myposts}></CardLayout>
+              <CardLayout keyword="mypost"></CardLayout>
             </Div>
           </Mukitlist>
 
           <Top10>
             <Title>이 달의 MukSpot-TOP10</Title>
             <Div>
-              <CardLayout
-              /*store_name={store_name}*/
-              ></CardLayout>
+              <CardLayout keyword="top10"></CardLayout>
             </Div>
           </Top10>
 
           <Place>
             <Title>OOO지역에서 가볼만한 곳</Title>
             <Div>
-              <CardLayout
-              /*store_name={store_name}*/
-              ></CardLayout>
+              <CardLayout keyword="hotplace"></CardLayout>
             </Div>
           </Place>
 
           <User>
             <Title>OOO님과 비슷한 먹유저들의 MukSpot</Title>
             <Div>
-              <CardLayout
-              /*store_name={store_name}*/
-              ></CardLayout>
+              <CardLayout keyword="similar"></CardLayout>
             </Div>
           </User>
         </List>

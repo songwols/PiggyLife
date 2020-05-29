@@ -2,36 +2,64 @@ import { observable, action } from "mobx";
 import agent from "../agent";
 
 export default class UserStore {
+  @observable isCheck = false;
+  @observable token = "";
+  @observable uid = "";
+
+  // @action
+  // whoami(token) {
+  //   return agent.Data.
+  // }
   @action
   register(user) {
-    console.log(user);
+    return agent.Data.signup(user)
+      .then((res) => {
+        alert(res.data);
+        window.location.replace("/");
+      })
+      .catch((err) => {
+        alert(err.data);
+      });
   }
   @action
   login(user) {
-    console.log(user);
+    return agent.Data.signin(user)
+      .then((res) => {
+        console.log(res);
+        this.token = res.data.token;
+        this.uid = res.data.uId;
+        //window.location.replace("/Home");
+      })
+      .catch((err) => {
+        console.log(err);
+      });
   }
   @action
   email_check(email) {
     return agent.Data.email_check(email)
       .then((res) => {
-        console.log(res);
-        alert("사용가능한 이메일입니다.");
+        alert(res.data);
+        return agent.Data.email_send(email)
+          .then((res) => {
+            alert(res.data);
+          })
+          .catch((err) => {
+            alert(err.data);
+          });
       })
       .catch((err) => {
-        console.log(err);
-        alert("이미 등록된 이메일입니다.");
+        alert(err.data);
       });
   }
   @action
   code_check(user) {
     return agent.Data.code_check(user)
       .then((res) => {
-        console.log(res);
-        alert("인증되었습니다.");
+        this.isCheck = true;
+        alert(res.data);
       })
       .catch((err) => {
-        console.log(err);
-        alert("코드를 다시 확인해주세요!");
+        alert(err.data);
       });
   }
 }

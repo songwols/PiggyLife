@@ -11,21 +11,20 @@ const requests = {
 const Data = {
   get_myposts: () => requests.get(``), //url 정해지면 채워넣기
   get_top10: () => requests.get(`/store/getStoreTop10`),
-  email_check: (email) => requests.get(`/sign/checkEmail?email=${email}`),
+  email_check: (email) =>
+    requests.get(`/sign/checkDuplicateEmail?email=${email}`),
   code_check: (user) =>
     requests.get(`/sign/EmailConfirm?email=${user.email}&authkey=${user.code}`),
-  search: (store_name) =>
-    requests.get(`/store/findByName?name=${store_name}`),
-  detail: (sid) =>
-    requests.get(`/store/findById/${sid}`),
-  upload: (info) =>
-    requests.post(`/post/create/`,{
-      content: info.v_memo,
+  signup: (user) =>
+    requests.post(`/sign/signup`, {
+      email: user.email,
       image: "",
-      isLike: info.isLike,
-      sid: info.sid,
-      visited: info.visited,
-    })
+      nickname: user.nickname,
+      password: user.password,
+    }),
+  signin: (user) =>
+    requests.get(`/sign/signin?email=${user.email}&password=${user.password}`),
+  email_send: (email) => requests.post(`/sign/emailSend?email=${email}`),
 };
 
 export default {

@@ -33,46 +33,55 @@ public class SignRestController {
 	
 	@Autowired
 	private UserService uService;
-	
+
 	@Autowired
 	private JavaMailSender mailSender;
 
-	@ApiOperation(value = "회원가입")
+	@ApiOperation(value = "회원가입, (인증 이메일까지 동시에 보냄)")
 	@PostMapping("/signup")
 	public ResponseEntity<Object> signup(@RequestBody SignupDto input) {
 		try {
 			if (uService.emailDuplicateCheck(input.getEmail())) 
 				return new ResponseEntity<Object>("중복된 이메일 입니다.", HttpStatus.ACCEPTED);
 
-			String authkey = new TempKey().getKey(8, false);
-			MailUtils sendMail;
-			try {
-				sendMail = new MailUtils(mailSender);
-				sendMail.setTo(input.getEmail());
-				sendMail.setSubject("[Piggy] 회원가입 이메일 인증");
-				sendMail.setText(new StringBuffer().append("<h1>[이메일 인증]</h1>")
-						.append("<p>인증번호.</p>")
-						.append(authkey).toString());
-//						.append("<p>아래 링크를 클릭하시면 이메일 인증이 완료됩니다.</p>")
-//						.append("<a href='http://localhost:8090/Piggy/sign/Confirm?email=").append(input.getEmail())
-//						.append("&authkey=").append(authkey).append("' target='_blenk'>이메일 인증 확인</a>").toString());
-				sendMail.setFrom("noreply@Piggy.com", "Piggy Master");
-				sendMail.send();
-			} catch (MessagingException | UnsupportedEncodingException e) {
-				e.printStackTrace();
-			}
-
-			User user = uService.singup(input, authkey);
+			User user = uService.singup(input);
 			return new ResponseEntity<Object>(user, HttpStatus.CREATED);
 		} catch (Exception e) {
 			throw e;
 		}
 	}
 	
+	@ApiOperation(value = "이메일 인증 보내기")
+	@PostMapping("/emailSend")
+	public ResponseEntity<Object> emailSend(@RequestParam String email) {
+		try {
+			String authkey = new TempKey().getKey(8, false);
+			MailUtils sendMail;
+			try {
+				sendMail = new MailUtils(mailSender);
+				sendMail.setTo(email);
+				sendMail.setSubject("[Piggy] 회원가입 이메일 인증");
+				sendMail.setText(new StringBuffer().append("<h1>[이메일 인증]</h1>")
+						.append("<p>인증번호.</p>")
+						.append(authkey).toString());
+				sendMail.setFrom("noreply@Piggy.com", "Piggy Master");
+				sendMail.send();
+			} catch (MessagingException | UnsupportedEncodingException e) {
+				e.printStackTrace();
+			}
+			uService.updateEmail(email, authkey);
+			
+			return new ResponseEntity<Object>("이메일을 성공적으로 보냈습니다.", HttpStatus.OK);
+		} catch (Exception e) {
+			throw e;
+		}
+	}
+	
 	@ApiOperation(value = "로그인")
-	@PostMapping("/signin")
+	@GetMapping("/signin")
 	public ResponseEntity<Object> signin(@RequestParam String email, @RequestParam String password) {
 		try {
+			System.out.println(email + " : " + password);
 			return new ResponseEntity<Object>(uService.signin(email, password), HttpStatus.OK);
 		} catch (Exception e) {
 			throw e;
@@ -80,7 +89,7 @@ public class SignRestController {
 	}
 	
 	@ApiOperation(value = "이메일 중복 검사")
-	@GetMapping(value = "/checkEmail")
+	@GetMapping(value = "/checkDuplicateEmail")
 	public ResponseEntity<Object> checkDuplicateEmail(@RequestParam String email) {
 		if (uService.emailDuplicateCheck(email)) {
 			return new ResponseEntity<Object>("중복된 이메일 입니다.", HttpStatus.ACCEPTED);
@@ -95,14 +104,14 @@ public class SignRestController {
 			throws Exception {
 		User user = uService.findByEmail(email);
 		if (user != null) {
-			if (user.getEmailCertify() == "Y") {
+			if (user.getEmailCertify().equals("Y")) {
 				return new ResponseEntity<Object>("이미 인증이 완료되었습니다.", HttpStatus.OK);
 			}
 			if (user.getEmailCertify().equals(authkey)) {
-				uService.updateEmail(email);
+				uService.updateEmail(email, "Y");
 				return new ResponseEntity<Object>("인증이 완료되었습니다.", HttpStatus.OK);
 			} else
-				return new ResponseEntity<Object>("인증 실패", HttpStatus.ACCEPTED);
+				return new ResponseEntity<Object>("인증 실패, 코드가 다릅니다.", HttpStatus.ACCEPTED);
 		}
 		return new ResponseEntity<Object>("회원정보를 찾지 못했습니다..", HttpStatus.ACCEPTED);
 	}
