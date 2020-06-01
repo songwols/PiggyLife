@@ -5,11 +5,12 @@ export default class StoreStore {
   @observable myposts = [];
   @observable store_name="";
   @observable storeItems = [];
-  @observable detailPost = {};
+  @observable mydetailPost = {};
   @observable top10 = [];
   @observable hotplace = [];
   @observable similar = [];
   @observable location = [];
+  @observable detailPost = {};
 
 
   @computed get mypostslength() {
@@ -85,11 +86,11 @@ export default class StoreStore {
       .catch((err) => alert("실패"))
   }
 
-  @action detail(sid){
-    return agent.Data.detail(sid)
+  @action mydetail(pid){
+    return agent.Data.mypdetail(pid)
       .then((res) => {
-        this.detailPost = res.data;
-        // console.log(res.data);
+        this.mydetailPost = res.data;
+        console.log(res.data);
       })
       .catch((err) => alert("실패"))
   }
@@ -118,4 +119,12 @@ export default class StoreStore {
     this.similar = similar;
   }
 
+  @action detail(sid){
+    return agent.Data.detail(sid)
+      .then((res) => {
+        this.detailPost = res.data;
+        // console.log(res.data);
+      })
+      .catch((err) => alert("실패"))
+  }
 }

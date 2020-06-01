@@ -27,8 +27,8 @@ const Data = {
   email_send: (email) => requests.post(`/sign/emailSend?email=${email}`),
   search: (store_name) =>
     requests.get(`/store/findByName?name=${store_name}`),
-  detail: (sid) =>
-    requests.get(`/store/findById/${sid}`),
+  mypdetail: (pid) =>
+    requests.get(`/post/findById/${pid}`),
   upload: (info, uid) =>
     requests.post(`/post/create/${uid}`,{
       content: info.v_memo,
@@ -41,6 +41,8 @@ const Data = {
   signin: (user) =>
     requests.get(`/sign/signin?email=${user.email}&password=${user.password}`),
   findById: (token) => requests.get(`/user/findById?TOKEN=${token}`),
+  detail: (sid) =>
+    requests.get(`/store/findById/${sid}`),
 };
 
 export default {

@@ -4,7 +4,7 @@ import { inject, observer } from "mobx-react";
 
 @inject("storeStore")
 @observer
-class Detail extends React.Component{
+class Mydetail extends React.Component{
     constructor(props){
         super(props);
         this.state={
@@ -15,17 +15,17 @@ class Detail extends React.Component{
             address: "",
             tel: "",
             menu: "등록된 메뉴가 없습니다.",
+            memo: "",
             visited: false,
             isLike: 0,
         }
     }
 
     async componentWillMount() {
-        // this.props.storeStore.detail(this.props.storeid);
         console.log(this.props)
-        await this.props.storeStore.detail(111018);
+        await this.props.storeStore.mydetail(1);
         //14322
-        const post = this.props.storeStore.detailPost;
+        const post = this.props.storeStore.mydetailPost;
         console.log(post)
         this.setState({
             store_name: post.name,
@@ -34,6 +34,7 @@ class Detail extends React.Component{
             category: post.category,
             tel: post.tel,
             menu: post.menues,
+            memo: "",
             visited: false,
             isLike: 0,
         })
@@ -64,6 +65,9 @@ class Detail extends React.Component{
                 </Menu>
                 <Map>지도</Map>
                 <Tag>태그</Tag>
+                <Memo>
+                    <Text>메모</Text>
+                </Memo>
             </Frame>
         )
     }
@@ -120,4 +124,4 @@ const Context = styled.div`
     height: 2rem;
 `
 
-export default Detail;
+export default Mydetail;
