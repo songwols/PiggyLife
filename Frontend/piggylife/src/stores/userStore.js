@@ -14,13 +14,20 @@ export default class UserStore {
     return agent.Data.findByEmail(email)
       .then((res) => {
         alert("매칭을 시작합니다!");
-        window.location.replace("/result");
+        window.location.replace("/Result");
       })
       .catch((err) => {
         alert("존재하지 않는 이메일입니다.");
       });
   }
 
+  @action
+  logout() {
+    window.sessionStorage.removeItem("email");
+    window.sessionStorage.removeItem("uid");
+    alert("로그아웃 되었습니다.");
+    window.location.replace("/");
+  }
   @action
   whoami(email) {
     return agent.Data.findByEmail(email)

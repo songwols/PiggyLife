@@ -21,8 +21,9 @@ class Search extends React.Component {
   };
 
   Matching = (e) => {
-    console.log(this.state.frinedID);
-    this.props.userStore.findByEmail(this.state.frinedID);
+    const email = this.state.friendID;
+    console.log(email);
+    this.props.userStore.findByEmail(email);
   };
 
   render() {
@@ -35,6 +36,8 @@ class Search extends React.Component {
           <Input
             onChange={this.onIDChange}
             placeholder="궁합 상대의 메일을 넣어주세요"
+            value={this.state.friendID}
+            name="friendId"
           ></Input>
           <EBF>
             <CButton onClick={this.Matching}>Search</CButton>
@@ -47,11 +50,10 @@ class Search extends React.Component {
 const Content = styled.div`
   height: auto;
   padding: 10%;
-  align-items: center; 
+  align-items: center;
   justify-content: center;
   top: 0;
   bottom: 0;
-  flexDirection:'row',
   align-items: center;
   margin-top: 6rem;
 `;
