@@ -14,7 +14,7 @@ export default class UserStore {
     return agent.Data.findByEmail(email)
       .then((res) => {
         alert("매칭을 시작합니다!");
-        window.location.replace("/result");
+        window.location.replace("/Result");
       })
       .catch((err) => {
         alert("존재하지 않는 이메일입니다.");
