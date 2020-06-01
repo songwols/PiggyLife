@@ -9,7 +9,7 @@ const requests = {
 };
 
 const Data = {
-  get_myposts: () => requests.get(``), //url 정해지면 채워넣기
+  get_mypost: (uid) => requests.get(`/post/findByUser/${uid}`), //url 정해지면 채워넣기
   get_top10: () => requests.get(`/store/getStoreTop10`),
   email_check: (email) =>
     requests.get(`/sign/checkDuplicateEmail?email=${email}`),
