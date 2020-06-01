@@ -22,6 +22,13 @@ export default class UserStore {
   }
 
   @action
+  logout() {
+    window.sessionStorage.removeItem("email");
+    window.sessionStorage.removeItem("uid");
+    alert("로그아웃 되었습니다.");
+    window.location.replace("/");
+  }
+  @action
   whoami(email) {
     return agent.Data.findByEmail(email)
       .then((res) => {
