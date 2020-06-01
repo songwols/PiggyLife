@@ -51,6 +51,7 @@ export default class UserStore {
     return agent.Data.signin(user)
       .then((res) => {
         window.sessionStorage.setItem("email", user.email);
+        window.sessionStorage.setItem("uid", res.data.uId);
         window.location.replace("/Home");
       })
       .catch((err) => {

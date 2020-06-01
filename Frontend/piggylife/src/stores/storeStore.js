@@ -87,15 +87,13 @@ export default class StoreStore {
 
   @action upload(data){
     console.log(data)
-    console.log(data.v_memo)
-    console.log(data.isLike)
-    console.log(data.sid)
-    console.log(data.visited)
-    // return agent.Data.upload(data)
-    //   .then((res) => {
-
-    //   })
-    //   .catch((err) => alert("업로드 실패!"))
+    const uid = window.sessionStorage.getItem("uid");
+    console.log(uid)
+    return agent.Data.upload(data,uid)
+      .then((res) => {
+        window.location.replace("/feed");
+      })
+      .catch((err) => alert("업로드 실패!"))
   }
 
   @action

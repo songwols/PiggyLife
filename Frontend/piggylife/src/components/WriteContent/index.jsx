@@ -55,11 +55,6 @@ class WriteContent extends React.Component{
         this.n_changeColor = this.n_changeColor.bind(this);
     }
 
-    componentWillMount(){
-      console.log("컨텐트")
-      console.log(this.props.userStore.uid)
-    }
-
     showIcon(){
         this.setState({
             show: true,

@@ -29,8 +29,8 @@ const Data = {
     requests.get(`/store/findByName?name=${store_name}`),
   detail: (sid) =>
     requests.get(`/store/findById/${sid}`),
-  upload: (info) =>
-    requests.post(`/post/create/`,{
+  upload: (info, uid) =>
+    requests.post(`/post/create/${uid}`,{
       content: info.v_memo,
       image: "",
       isLike: info.isLike,
