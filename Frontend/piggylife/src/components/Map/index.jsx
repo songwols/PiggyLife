@@ -34,14 +34,14 @@ class MapContent extends React.Component {
       kakao.maps.load(() => {
         let container = document.getElementById("Mymap");
         let options = {
-          center: new kakao.maps.LatLng(37.19, 127.07),
+          center: new kakao.maps.LatLng(37.506502, 127.053617),
           level: 7
         };
 
         const map = new window.kakao.maps.Map(container, options);
 
         const markerPosition  = new kakao.maps.LatLng(
-          37.19, 127.07
+          (37.19, 127.38)
         ); 
         const marker = new kakao.maps.Marker({position: markerPosition});
 

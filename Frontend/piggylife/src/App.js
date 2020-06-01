@@ -29,7 +29,7 @@ const App = () => {
         <Route path="/findpw" component={FindPWPage} />
         <Route path="/more" component={MorePage} />
         <Route path="/editP" component={EditProPage} />
-        <Route path="/detail" component={DetailPage} />
+        <Route path="/detail/:id" component={DetailPage} />
         <Route path="/result" component={MatchingResultPage} />
         <Route path="/" component={LoginPage} />
       </Switch>
