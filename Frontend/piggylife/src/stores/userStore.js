@@ -3,37 +3,62 @@ import agent from "../agent";
 
 export default class UserStore {
   @observable isCheck = false;
+  @observable token = "";
+  @observable uid = "";
+
+  @action
+  findByEmail(email) {
+    console.log(email);
+    return agent.Data.findByEmail(email)
+      .then((res) => {
+        alert("매칭을 시작합니다!");
+        window.location.replace("/result");
+      })
+      .catch((err) => {
+        alert("존재하지 않는 이메일입니다.");
+      });
+  }
 
   @action
   register(user) {
     return agent.Data.signup(user)
       .then((res) => {
-        alert(res.data);
+        alert(user.nickname + " 님! 회원가입이 완료되었습니다.");
         window.location.replace("/");
       })
       .catch((err) => {
-        alert(err.data);
+        alert("회원가입에 실패하였습니다.");
       });
   }
   @action
   login(user) {
-    console.log(user);
+    return agent.Data.signin(user)
+      .then((res) => {
+        console.log(res);
+        this.token = res.data.token;
+        this.uid = res.data.uId;
+        window.location.replace("/Home");
+      })
+      .catch((err) => {
+        alert("이메일과 패스워드를 확인해주세요.");
+        console.log(err);
+      });
   }
+
   @action
   email_check(email) {
     return agent.Data.email_check(email)
       .then((res) => {
-        alert(res.data);
         return agent.Data.email_send(email)
           .then((res) => {
-            alert(res.data);
+            alert("인증번호를 입력해주세요.");
           })
           .catch((err) => {
-            alert(err.data);
+            console.log(err);
           });
       })
       .catch((err) => {
-        alert(err.data);
+        alert("중복된 이메일입니다.");
       });
   }
   @action
@@ -41,10 +66,10 @@ export default class UserStore {
     return agent.Data.code_check(user)
       .then((res) => {
         this.isCheck = true;
-        alert(res.data);
+        alert("인증되었습니다.");
       })
       .catch((err) => {
-        alert(err.data);
+        alert("인증번호를 확인해주세요.");
       });
   }
 }

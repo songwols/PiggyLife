@@ -28,6 +28,9 @@ const Data = {
       password: user.password,
     }),
   email_send: (email) => requests.post(`/sign/emailSend?email=${email}`),
+  findByEmail: (email) => requests.get(`/user/findByEmail?email=${email}`),
+  signin: (user) =>
+    requests.get(`/sign/signin?email=${user.email}&password=${user.password}`),
 };
 
 export default {
