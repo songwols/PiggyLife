@@ -15,7 +15,6 @@ class CardLayout extends React.Component {
   }
   componentWillMount() {
     const keyword = this.props.keyword;
-    console.log(keyword);
     if (keyword === "top10") {
       this.props.storeStore.get_top10();
       this.setState({
@@ -41,8 +40,6 @@ class CardLayout extends React.Component {
         length: this.props.storeStore.similarlength,
       });
     }
-    console.log("여기");
-    console.log(this.state.length);
   }
 
   render() {

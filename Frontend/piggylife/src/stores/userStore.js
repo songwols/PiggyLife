@@ -1,10 +1,12 @@
-import { observable, action } from "mobx";
+import { observable, action, reaction } from "mobx";
 import agent from "../agent";
 
 export default class UserStore {
   @observable isCheck = false;
-  @observable token = "";
-  @observable uid = "";
+  @observable email = "";
+  @observable nickname = "";
+  @observable image = "";
+  @observable data = "";
 
   @action
   findByEmail(email) {
@@ -16,6 +18,20 @@ export default class UserStore {
       })
       .catch((err) => {
         alert("존재하지 않는 이메일입니다.");
+      });
+  }
+
+  @action
+  whoami(email) {
+    return agent.Data.findByEmail(email)
+      .then((res) => {
+        this.email = res.data.email;
+        this.image = res.data.image;
+        this.nickname = res.data.nickname;
+        this.ranking = res.data.ranking;
+      })
+      .catch((err) => {
+        console.log(err);
       });
   }
 
@@ -34,9 +50,7 @@ export default class UserStore {
   login(user) {
     return agent.Data.signin(user)
       .then((res) => {
-        console.log(res);
-        this.token = res.data.token;
-        this.uid = res.data.uId;
+        window.sessionStorage.setItem("email", user.email);
         window.location.replace("/Home");
       })
       .catch((err) => {
