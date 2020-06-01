@@ -35,7 +35,7 @@ public class UserServiceImpl implements UserService {
 	}
 	
 	@Override
-	public User singup(SignupDto dto) {
+	public User signup(SignupDto dto) {
 		return uRepo.save(User.builder()
 				.email(dto.getEmail())
 				.password(passwordEncoder.encode(dto.getPassword()))
@@ -107,6 +107,14 @@ public class UserServiceImpl implements UserService {
 	@Override
 	public void deleteById(Long uId) {
 		uRepo.deleteById(uId);
+	}
+
+	@Override
+	public User update(SignupDto dto) {
+		User user = uRepo.findByEmail(dto.getEmail()).orElseThrow(NoSuchElementException::new);
+		user.update(dto.getEmail(), passwordEncoder.encode(dto.getPassword()),
+				dto.getNickname(), dto.getImage());
+		return uRepo.save(user);
 	}
 	
 }
