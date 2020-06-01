@@ -3,8 +3,6 @@ import styled from "styled-components";
 import { inject, observer } from "mobx-react";
 import { Like } from "@styled-icons/boxicons-regular/Like";
 import { Dislike } from "@styled-icons/boxicons-regular/Dislike";
-// import IFrame from "./icon"
-// import Search from "./search"
 
 export const Good = styled(Like)`
     width: 30px;

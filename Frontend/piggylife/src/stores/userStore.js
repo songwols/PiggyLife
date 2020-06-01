@@ -19,10 +19,6 @@ export default class UserStore {
       });
   }
 
-  // @action
-  // whoami(token) {
-  //   return agent.Data.
-  // }
   @action
   register(user) {
     return agent.Data.signup(user)
