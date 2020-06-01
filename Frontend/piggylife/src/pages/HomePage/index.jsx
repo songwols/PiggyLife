@@ -1,46 +1,47 @@
 import React from "react";
 import styled from "styled-components";
 import Navbar from "../../components/Navbar";
+import CardLayout from "../../components/CardL";
+import { inject, observer } from "mobx-react";
 
+@inject("storeStore", "userStore")
+@observer
 class HomePage extends React.Component {
+  componentWillMount() {
+    this.props.storeStore.get_mypost();
+    this.props.userStore.whoami(window.sessionStorage.getItem("email"));
+  }
+
   render() {
     return (
       <Frame>
         <List>
           <Mukitlist>
             <Title>먹킷리스트</Title>
-            {/* {returns ? (
-              returns.map((item, index) => <Card key={index} store={item} />)
-            ) : (
-              <></>
-            )} */}
+            <Div>
+              <CardLayout keyword="mypost"></CardLayout>
+            </Div>
           </Mukitlist>
 
           <Top10>
             <Title>이 달의 MukSpot-TOP10</Title>
-            {/* {returns ? (
-              returns.map((item, index) => <Card key={index} store={item} />)
-            ) : (
-              <></>
-            )} */}
+            <Div>
+              <CardLayout keyword="top10"></CardLayout>
+            </Div>
           </Top10>
 
           <Place>
             <Title>OOO지역에서 가볼만한 곳</Title>
-            {/* {returns ? (
-              returns.map((item, index) => <Card key={index} store={item} />)
-            ) : (
-              <></>
-            )} */}
+            <Div>
+              <CardLayout keyword="hotplace"></CardLayout>
+            </Div>
           </Place>
 
           <User>
             <Title>OOO님과 비슷한 먹유저들의 MukSpot</Title>
-            {/* {returns ? (
-              returns.map((item, index) => <Card key={index} store={item} />)
-            ) : (
-              <></>
-            )} */}
+            <Div>
+              <CardLayout keyword="similar"></CardLayout>
+            </Div>
           </User>
         </List>
         <Navbar></Navbar>
@@ -49,7 +50,15 @@ class HomePage extends React.Component {
   }
 }
 
-const Title = styled.div``;
+const Title = styled.div`
+  margin-left: 1rem;
+`;
+
+const Div = styled.div`
+  background-color: #f2e9e4;
+  width: 100%;
+  height: 100px;
+`;
 
 const Mukitlist = styled.div`
   /* background-color: #5897a6; */
@@ -74,7 +83,7 @@ const List = styled.div`
   display: grid;
   height: 92vh;
   grid-template-areas: "Mukitlist" "Top10" "Place" "User";
-  margin-left: 1rem;
+
   margin-top: 1rem;
 `;
 

@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import styled from "styled-components";
 import { Link } from "react-router-dom";
 import { Home4 } from "@styled-icons/remix-line/Home4";
@@ -6,93 +6,127 @@ import { PlusCircle } from "@styled-icons/boxicons-regular/PlusCircle";
 import { Map } from "@styled-icons/boxicons-regular/Map";
 import { UserHeart } from "@styled-icons/remix-line/UserHeart";
 import { GridAlt } from "@styled-icons/boxicons-regular/GridAlt";
+import { inject, observer } from "mobx-react";
 
 export const Home = styled(Home4)`
   width: 30px;
   height: 30px;
   cursor: pointer;
-  color: #5897a6;
   margin-left: auto;
   margin-right: auto;
-  :hover {
-    color: #5897a6;
-  }
 `;
 export const Feed = styled(GridAlt)`
   width: 30px;
   height: 30px;
   cursor: pointer;
-  color: #cccccc;
   margin-left: auto;
   margin-right: auto;
-  :hover {
-    color: #5897a6;
-  }
 `;
 export const Muk = styled(UserHeart)`
   width: 30px;
   height: 30px;
   cursor: pointer;
-  color: #cccccc;
   margin-left: auto;
   margin-right: auto;
-  :hover {
-    color: #5897a6;
-  }
 `;
 export const MapIcon = styled(Map)`
   width: 30px;
   height: 30px;
   cursor: pointer;
-  color: #cccccc;
   margin-left: auto;
   margin-right: auto;
-  :hover {
-    color: #5897a6;
-  }
 `;
 
 export const Post = styled(PlusCircle)`
   width: 30px;
   height: 30px;
   cursor: pointer;
-  color: #cccccc;
   margin-left: auto;
   margin-right: auto;
-  :hover {
-    color: #5897a6;
-  }
 `;
+
+@inject("colorStore")
+@observer
 class Navbar extends React.Component {
+  HomeClick = (e) => {
+    this.props.colorStore.setHomeColor("#5897A6");
+    this.props.colorStore.setFeedColor("#cccccc");
+    this.props.colorStore.setPostColor("#cccccc");
+    this.props.colorStore.setMapColor("#cccccc");
+    this.props.colorStore.setMatchColor("#cccccc");
+  };
+  FeedClick = (e) => {
+    this.props.colorStore.setHomeColor("#cccccc");
+    this.props.colorStore.setFeedColor("#5897A6");
+    this.props.colorStore.setPostColor("#cccccc");
+    this.props.colorStore.setMapColor("#cccccc");
+    this.props.colorStore.setMatchColor("#cccccc");
+  };
+  PostClick = (e) => {
+    this.props.colorStore.setHomeColor("#cccccc");
+    this.props.colorStore.setFeedColor("#cccccc");
+    this.props.colorStore.setPostColor("#5897A6");
+    this.props.colorStore.setMapColor("#cccccc");
+    this.props.colorStore.setMatchColor("#cccccc");
+  };
+  MapClick = (e) => {
+    this.props.colorStore.setHomeColor("#cccccc");
+    this.props.colorStore.setFeedColor("#cccccc");
+    this.props.colorStore.setPostColor("#cccccc");
+    this.props.colorStore.setMapColor("#5897A6");
+    this.props.colorStore.setMatchColor("#cccccc");
+  };
+  MatchClick = (e) => {
+    this.props.colorStore.setHomeColor("#cccccc");
+    this.props.colorStore.setFeedColor("#cccccc");
+    this.props.colorStore.setPostColor("#cccccc");
+    this.props.colorStore.setMapColor("#cccccc");
+    this.props.colorStore.setMatchColor("#5897A6");
+  };
   render() {
     return (
       <Frame>
         <HOME>
           <Link to={"/Home"} style={{ textDecoration: "none" }}>
-            <Home></Home>
+            <Home
+              onClick={this.HomeClick}
+              color={this.props.colorStore.home}
+            ></Home>
           </Link>
         </HOME>
         <FEED>
           <Link to={"/Feed"} style={{ textDecoration: "none" }}>
-            <Feed></Feed>
+            <Feed
+              onClick={this.FeedClick}
+              color={this.props.colorStore.feed}
+            ></Feed>
           </Link>
         </FEED>
         <POST>
           <Link to={"/Write"} style={{ textDecoration: "none" }}>
-            <Post></Post>
+            <Post
+              onClick={this.PostClick}
+              color={this.props.colorStore.post}
+            ></Post>
           </Link>
         </POST>
         <MAP>
           <Link to={"/Map"} style={{ textDecoration: "none" }}>
-            <MapIcon></MapIcon>
+            <MapIcon
+              onClick={this.MapClick}
+              color={this.props.colorStore.map}
+            ></MapIcon>
           </Link>
         </MAP>
 
-        <MUK>
+        <Match>
           <Link to={"/Match"} style={{ textDecoration: "none" }}>
-            <Muk></Muk>
+            <Muk
+              onClick={this.MatchClick}
+              color={this.props.colorStore.match}
+            ></Muk>
           </Link>
-        </MUK>
+        </Match>
       </Frame>
     );
   }
@@ -118,13 +152,14 @@ const MAP = styled.div`
   margin-left: auto;
   margin-right: auto;
 `;
-const MUK = styled.div`
+const Match = styled.div`
   margin-top: 0.6rem;
   margin-left: auto;
   margin-right: auto;
 `;
 
 const Frame = styled.div`
+  background-color: white;
   border-top: solid 1px;
   border-color: #e6e6e6;
   position: fixed;
@@ -133,7 +168,7 @@ const Frame = styled.div`
   height: 8vh;
   display: grid;
   grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
-  grid-template-areas: "HOME" "FEED" "POST" "MAP" "MUK";
+  grid-template-areas: "HOME" "FEED" "POST" "MAP" "Match";
 `;
 
 export default Navbar;

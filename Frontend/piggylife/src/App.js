@@ -13,6 +13,7 @@ import FindPWPage from "./pages/FindPWPage";
 import MorePage from "./pages/MorePage";
 import EditProPage from "./pages/EditProPage";
 import DetailPage from "./pages/DetailPage";
+import MatchingResultPage from "./pages/MatchingResultPage";
 
 const App = () => {
   return (
@@ -29,6 +30,7 @@ const App = () => {
         <Route path="/more" component={MorePage} />
         <Route path="/editP" component={EditProPage} />
         <Route path="/detail/:id" component={DetailPage} />
+        <Route path="/result" component={MatchingResultPage} />
         <Route path="/" component={LoginPage} />
       </Switch>
     </div>
@@ -36,9 +38,11 @@ const App = () => {
 };
 
 const GlobalStyle = createGlobalStyle`
+
   body{
     width: 100%;
     height: 100%;
+    
   }
 `;
 

@@ -2,6 +2,7 @@ import React from "react";
 import styled from "styled-components";
 import { Link } from "react-router-dom";
 import { Pencil } from "@styled-icons/boxicons-regular/Pencil";
+import Secession from "./secession"
 
 export const PencilIncon = styled(Pencil)`
     width: 1rem;
@@ -13,6 +14,17 @@ export const PencilIncon = styled(Pencil)`
 
 
 class EditPro extends React.Component{
+    constructor(props){
+        super(props);
+        this.state={
+            confirmS : false,
+        }
+    }
+    toggleConfirm() {
+        this.setState({
+            confirmS: !this.state.confirmS,
+        });
+    }
     render(){
         return(
             <Frame>
@@ -29,9 +41,12 @@ class EditPro extends React.Component{
                 <Input value="패스워드" type="password"></Input>
                 <Space></Space>
                 <BF>
-                <SButton>탈퇴하기</SButton> &nbsp;
+                <SButton onClick={this.toggleConfirm.bind(this)}>탈퇴하기</SButton> &nbsp;
                 <Link to={"/feed"} style={{ textDecoration: "none" }}><EButton>수정하기</EButton></Link>
                 </BF>
+                {this.state.confirmS ? (
+                <Secession cancelSecession={this.toggleConfirm.bind(this)}/>
+                ) : null}
             </Frame>
         )
     }

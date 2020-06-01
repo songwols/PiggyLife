@@ -42,7 +42,7 @@ class IFrame extends React.Component{
 
     render(){
         return(
-            <Frame>
+            <ICFrame>
                 <Div onClick={() => this.g_changeColor("#5897A6")}>
                 <Good style={{color: this.state.g_color}}/>좋아요
                 </Div>
@@ -50,12 +50,12 @@ class IFrame extends React.Component{
                 <Div onClick={() => this.n_changeColor("#F28379")}>
                 <NGood style={{color: this.state.n_color}}/>싫어요
                 </Div>
-            </Frame>
+            </ICFrame>
         )
     }
 }
 
-const Frame = styled.div`
+const ICFrame = styled.div`
     text-align: center;
     height: 2rem;
     width: 95%;

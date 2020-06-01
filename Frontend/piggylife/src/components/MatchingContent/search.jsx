@@ -1,9 +1,31 @@
 import React from "react";
 import styled from "styled-components";
 import logo from "./logo_match.png";
-import { Link } from "react-router-dom";
+import { inject, observer } from "mobx-react";
 
+@inject("userStore")
+@observer
 class Search extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      friendID: "",
+    };
+  }
+
+  onIDChange = (e) => {
+    this.setState({
+      friendID: e.target.value,
+    });
+    console.log(this.state.friendID);
+  };
+
+  Matching = (e) => {
+    const email = this.state.friendID;
+    console.log(email);
+    this.props.userStore.findByEmail(email);
+  };
+
   render() {
     return (
       <Content>
@@ -11,11 +33,14 @@ class Search extends React.Component {
           <Img src={logo}></Img>
         </Box1>
         <Box2>
-          <Input placeholder="궁합 상대의 메일을 넣어주세요"></Input>
+          <Input
+            onChange={this.onIDChange}
+            placeholder="궁합 상대의 메일을 넣어주세요"
+            value={this.state.friendID}
+            name="friendId"
+          ></Input>
           <EBF>
-            <Link to={"/HOME"} style={{ textDecoration: "none" }}>
-              <CButton>Search</CButton>
-            </Link>
+            <CButton onClick={this.Matching}>Search</CButton>
           </EBF>
         </Box2>
       </Content>
@@ -23,13 +48,14 @@ class Search extends React.Component {
   }
 }
 const Content = styled.div`
-  height: 100%;
+  height: auto;
   padding: 10%;
+  align-items: center;
   justify-content: center;
   top: 0;
   bottom: 0;
-  flexDirection:'row',
   align-items: center;
+  margin-top: 6rem;
 `;
 const Box1 = styled.div`
   display: flex;
@@ -71,7 +97,7 @@ const Input = styled.input`
 
 const EBF = styled.div`
   text-align: center;
-  width: 95%;
+  // width: 95%;
 `;
 
 const CButton = styled.button`
