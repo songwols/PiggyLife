@@ -96,6 +96,8 @@ export default class StoreStore {
 
     //   })
     //   .catch((err) => alert("업로드 실패!"))
+  }
+
   @action
   setTop10(top10) {
     this.top10 = top10;

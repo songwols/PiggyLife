@@ -24,6 +24,7 @@ export const NGood = styled(Dislike)`
 `;
 
 @inject("storeStore")
+@inject("userStore")
 @observer
 class WriteContent extends React.Component{
     constructor(props){
@@ -45,7 +46,7 @@ class WriteContent extends React.Component{
             v_memo: "메모",
             click: 0,
             visited: false,
-            isLike: false,
+            isLike: 0,
             g_color: "#5897A6",
             n_color: "gray",
             g_show: false,
@@ -55,17 +56,23 @@ class WriteContent extends React.Component{
         this.g_changeColor = this.g_changeColor.bind(this);
         this.n_changeColor = this.n_changeColor.bind(this);
     }
+
+    componentWillMount(){
+      console.log("컨텐트")
+      console.log(this.props.userStore.uid)
+    }
+
     showIcon(){
         this.setState({
             show: true,
             visited: true,
-            isLike: true,
+            isLike: 1,
         })
     }
     nonIcon(){
         this.setState({
             show: false,
-            isLike: false,
+            isLike: 0,
             visited: false,
         })
     }
@@ -116,6 +123,7 @@ class WriteContent extends React.Component{
       };
     
       goRegister = (e) => {
+        console.log(this.props.userStore.uid)
           if(this.state.v_name === "이름을 검색하고 싶으면 여기를 클릭하세요"){
               alert("빈 값이 있습니다.")
           }
@@ -125,11 +133,11 @@ class WriteContent extends React.Component{
       }
 
       g_changeColor = (e) =>{
-        this.setState({g_color: e, n_color: "gray", g_show: true, n_show: false, isLike: true,})
+        this.setState({g_color: e, n_color: "gray", g_show: true, n_show: false, isLike: 1,})
     }
 
     n_changeColor = (e) =>{
-        this.setState({n_color: e, g_color: "gray", n_show: true, g_show: false, isLike: false,})
+        this.setState({n_color: e, g_color: "gray", n_show: true, g_show: false, isLike: -1,})
     }
 
     render(){

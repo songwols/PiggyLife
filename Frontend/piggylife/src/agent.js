@@ -25,6 +25,18 @@ const Data = {
   signin: (user) =>
     requests.get(`/sign/signin?email=${user.email}&password=${user.password}`),
   email_send: (email) => requests.post(`/sign/emailSend?email=${email}`),
+  search: (store_name) =>
+    requests.get(`/store/findByName?name=${store_name}`),
+  detail: (sid) =>
+    requests.get(`/store/findById/${sid}`),
+  upload: (info) =>
+    requests.post(`/post/create/`,{
+      content: info.v_memo,
+      image: "",
+      isLike: info.isLike,
+      sid: info.sid,
+      visited: info.visited,
+    })
 };
 
 export default {
