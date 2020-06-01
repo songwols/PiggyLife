@@ -56,7 +56,7 @@ const Title = styled.div`
 
 const Div = styled.div`
   background-color: #f2e9e4;
-  width: 100%;
+  width: 100vw;
   height: 100px;
   /* display: flex; */
   white-space: nowrap;
