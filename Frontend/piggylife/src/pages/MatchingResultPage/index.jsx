@@ -15,12 +15,12 @@ class MatchingResultPage extends React.Component {
         <Content>
           <TopText>이인경 님과 박유진 님의 먹궁합 결과는</TopText>
           <Info>
-            {/* <UserInfo></UserInfo> */}
+            <UserInfo></UserInfo>
             <Score>
               <Icon src={icon}></Icon>
               <div>70%</div>
             </Score>
-            {/* <UserInfo></UserInfo> */}
+            <UserInfo></UserInfo>
           </Info>
           <Blank></Blank>
           <BothMukSpotlist>
