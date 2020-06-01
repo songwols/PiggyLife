@@ -9,6 +9,8 @@ export default class StoreStore {
   @observable top10 = [];
   @observable hotplace = [];
   @observable similar = [];
+  @observable location = [];
+
 
   @computed get mypostslength() {
     return this.myposts.length;
@@ -24,13 +26,20 @@ export default class StoreStore {
   }
 
   @action
-  get_mypost() {
-    //console.log("내가 작성한 먹킷리스트 불러오기");
-    // return agent.Data.get_mypost()
-    //   .then((res) => {
-    //     this.setMyPosts(res.data.results);
-    //   })
-    //   .catch((err) => console.log(err));
+  get_mypost(uid) {
+    console.log("내가 작성한 먹킷리스트 불러오기");
+    return agent.Data.get_mypost(uid)
+      .then((res) => {
+        this.setMyPosts(res.data);
+        this.location = [];
+        for (var i = 0; i < res.data.length; i++) {
+          this.location = this.location.concat({
+            lat: res.data[i].store.latitude,
+            long: res.data[i].store.longitude,
+          });
+        }
+      })
+      .catch((err) => console.log(err));
   }
 
   @action
@@ -108,4 +117,5 @@ export default class StoreStore {
   setSimilar(similar) {
     this.similar = similar;
   }
+
 }
