@@ -14,7 +14,7 @@ public class PostOutputDto {
 	private String image;
 	private String content;
 	private Boolean visited;
-	private Boolean isLike;
+	private Integer isLike;
 	private LocalDateTime createdTimeAt;
 	private LocalDateTime updateTimeAt;
 	private StoreOutputDto store;

@@ -1,43 +1,43 @@
 import React from "react";
 import styled from "styled-components";
 import logo from "./logo_match.png";
+import { inject, observer } from "mobx-react";
 
+@inject("userStore")
+@observer
 class Search extends React.Component {
-  constructor(props){
+  constructor(props) {
     super(props);
-    this.state={
-        friendID: "",
-    }
+    this.state = {
+      friendID: "",
+    };
   }
 
   onIDChange = (e) => {
     this.setState({
       friendID: e.target.value,
     });
-    console.log(e.target.value)
+    console.log(this.state.friendID);
   };
 
+  Matching = (e) => {
+    console.log(this.state.frinedID);
+    this.props.userStore.findByEmail(this.state.frinedID);
+  };
 
   render() {
-    const matching = (e) => {
-      e.preventDefault();
-      //아이디를 매칭하는 스토어에 전송
-      // this.props.storeStore.search(this.state.address);
-      // this.props.history.push(
-      //   "/result/" +
-      //     this.state.info.store_name
-      // );
-    };
-
     return (
       <Content>
         <Box1>
           <Img src={logo}></Img>
         </Box1>
         <Box2>
-          <Input onChange={this.onIDChange} placeholder="궁합 상대의 메일을 넣어주세요"></Input>
+          <Input
+            onChange={this.onIDChange}
+            placeholder="궁합 상대의 메일을 넣어주세요"
+          ></Input>
           <EBF>
-              <CButton onClick={matching}>Search</CButton>
+            <CButton onClick={this.Matching}>Search</CButton>
           </EBF>
         </Box2>
       </Content>

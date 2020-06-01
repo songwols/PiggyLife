@@ -29,7 +29,6 @@ class Login extends React.Component {
       password: this.state.password,
     };
     this.props.userStore.login(user);
-    //alert(this.state.username + "님! 반갑습니다!");
   };
   render() {
     return (

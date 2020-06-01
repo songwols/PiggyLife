@@ -36,7 +36,10 @@ const Data = {
       isLike: info.isLike,
       sid: info.sid,
       visited: info.visited,
-    })
+    }),
+  findByEmail: (email) => requests.get(`/user/findByEmail?email=${email}`),
+  signin: (user) =>
+    requests.get(`/sign/signin?email=${user.email}&password=${user.password}`),
 };
 
 export default {

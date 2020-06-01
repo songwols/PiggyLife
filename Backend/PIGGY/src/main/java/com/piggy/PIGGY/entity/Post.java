@@ -83,14 +83,14 @@ public class Post extends DateTime {
 	@Column
 	private Boolean visited;
 	
-	@Column
-	private Boolean isLike;
+	@Column(nullable=false, columnDefinition = "int default 0")
+	private Integer isLike;
 	
 	@OneToMany(mappedBy = "store", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
 	private List<Menu> menues = new ArrayList<>();
 
 	@Builder
-	public Post(User user, Store store, String image, String content, Boolean visited, Boolean isLike) {
+	public Post(User user, Store store, String image, String content, Boolean visited, Integer isLike) {
 		this.user = user;
 		this.store = store;
 		this.image = image;
@@ -99,7 +99,7 @@ public class Post extends DateTime {
 		this.isLike = isLike;
 	}
 	
-	public void update(Store store, String image, String content, Boolean visited, Boolean isLike) {
+	public void update(Store store, String image, String content, Boolean visited, Integer isLike) {
 		this.store = store;
 		this.image = image;
 		this.content = content;

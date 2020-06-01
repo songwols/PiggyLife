@@ -53,7 +53,7 @@ public class User implements UserDetails {
 	private String image;
 	
 	@Column
-	String emailCertify;
+	private String emailCertify;
 
 	@OneToMany(mappedBy = "user", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
 	private List<Post> feeds = new ArrayList<>();
@@ -109,6 +109,13 @@ public class User implements UserDetails {
 	@Override
 	public boolean isEnabled() {
 		return true;
+	}
+	
+	public void update(String email, String password, String nickname, String image) {
+		this.email = email;
+		this.password = password;
+		this.nickname = nickname;
+		this.image = image;
 	}
 
 }

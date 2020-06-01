@@ -16,11 +16,14 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.piggy.PIGGY.dto.ResultDto;
 import com.piggy.PIGGY.dto.SignupDto;
+import com.piggy.PIGGY.dto.UserDto;
 import com.piggy.PIGGY.entity.User;
 import com.piggy.PIGGY.mail.MailUtils;
 import com.piggy.PIGGY.mail.TempKey;
 import com.piggy.PIGGY.service.UserService;
+import com.piggy.PIGGY.util.MapperUtils;
 
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -41,11 +44,9 @@ public class SignRestController {
 	@PostMapping("/signup")
 	public ResponseEntity<Object> signup(@RequestBody SignupDto input) {
 		try {
-			if (uService.emailDuplicateCheck(input.getEmail())) 
-				return new ResponseEntity<Object>("중복된 이메일 입니다.", HttpStatus.ACCEPTED);
-
-			User user = uService.singup(input);
-			return new ResponseEntity<Object>(user, HttpStatus.CREATED);
+			User user = uService.update(input);
+			UserDto userdto = MapperUtils.map(user, UserDto.class);
+			return new ResponseEntity<Object>(userdto, HttpStatus.CREATED);
 		} catch (Exception e) {
 			throw e;
 		}
@@ -55,6 +56,12 @@ public class SignRestController {
 	@PostMapping("/emailSend")
 	public ResponseEntity<Object> emailSend(@RequestParam String email) {
 		try {
+			if (uService.emailDuplicateCheck(email)) 
+				return new ResponseEntity<Object>(new ResultDto(false, -1, "중복된 이메일 입니다."), HttpStatus.ACCEPTED);
+			
+			SignupDto user = new SignupDto(email, "dummy", "dummy", "dummy");
+			uService.signup(user);
+			
 			String authkey = new TempKey().getKey(8, false);
 			MailUtils sendMail;
 			try {
@@ -69,9 +76,9 @@ public class SignRestController {
 			} catch (MessagingException | UnsupportedEncodingException e) {
 				e.printStackTrace();
 			}
-			uService.updateEmail(email, authkey);
 			
-			return new ResponseEntity<Object>("이메일을 성공적으로 보냈습니다.", HttpStatus.OK);
+			uService.updateEmail(email, authkey);
+			return new ResponseEntity<Object>(new ResultDto(true, 1, "이메일을 성공적으로 보냈습니다."), HttpStatus.OK);
 		} catch (Exception e) {
 			throw e;
 		}
@@ -92,9 +99,9 @@ public class SignRestController {
 	@GetMapping(value = "/checkDuplicateEmail")
 	public ResponseEntity<Object> checkDuplicateEmail(@RequestParam String email) {
 		if (uService.emailDuplicateCheck(email)) {
-			return new ResponseEntity<Object>("중복된 이메일 입니다.", HttpStatus.ACCEPTED);
+			return new ResponseEntity<Object>(new ResultDto(false, -1, "중복된 이메일 입니다."), HttpStatus.ACCEPTED);
 		} else {
-			return new ResponseEntity<Object>("사용 가능한 이메일 입니다.", HttpStatus.OK);
+			return new ResponseEntity<Object>(new ResultDto(true, 1, "사용 가능한 이메일 입니다."), HttpStatus.OK);
 		}
 	}
 	
@@ -105,14 +112,14 @@ public class SignRestController {
 		User user = uService.findByEmail(email);
 		if (user != null) {
 			if (user.getEmailCertify().equals("Y")) {
-				return new ResponseEntity<Object>("이미 인증이 완료되었습니다.", HttpStatus.OK);
+				return new ResponseEntity<Object>(new ResultDto(true, 2, "이미 인증이 완료되었습니다."), HttpStatus.OK);
 			}
 			if (user.getEmailCertify().equals(authkey)) {
 				uService.updateEmail(email, "Y");
-				return new ResponseEntity<Object>("인증이 완료되었습니다.", HttpStatus.OK);
+				return new ResponseEntity<Object>(new ResultDto(true, 1, "인증이 완료되었습니다."), HttpStatus.OK);
 			} else
-				return new ResponseEntity<Object>("인증 실패, 코드가 다릅니다.", HttpStatus.ACCEPTED);
+				return new ResponseEntity<Object>(new ResultDto(false, -1, "인증 실패, 코드가 다릅니다."), HttpStatus.ACCEPTED);
 		}
-		return new ResponseEntity<Object>("회원정보를 찾지 못했습니다..", HttpStatus.ACCEPTED);
+		return new ResponseEntity<Object>(new ResultDto(false, -999, "회원정보를 찾지 못했습니다.."), HttpStatus.ACCEPTED);
 	}
 }
