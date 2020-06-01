@@ -53,7 +53,7 @@ public class User implements UserDetails {
 	private String image;
 	
 	@Column
-	String emailCertify;
+	private String emailCertify;
 
 	@OneToMany(mappedBy = "user", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
 	private List<Post> feeds = new ArrayList<>();
