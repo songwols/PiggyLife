@@ -29,7 +29,6 @@ class Login extends React.Component {
       password: this.state.password,
     };
     this.props.userStore.login(user);
-    alert(this.state.username + "님! 반갑습니다!");
   };
   render() {
     return (
@@ -51,9 +50,7 @@ class Login extends React.Component {
             ></PW>
           </InputBox>
           <ButtonBox>
-            <Link to={"/Home"} style={{ textDecoration: "none" }}>
-              <Button onClick={this.Login}>LOGIN</Button>
-            </Link>
+            <Button onClick={this.Login}>LOGIN</Button>
           </ButtonBox>
         </InputFrame>
         <LinkFrame>

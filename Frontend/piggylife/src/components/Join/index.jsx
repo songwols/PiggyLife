@@ -61,7 +61,6 @@ class CJoin extends React.Component {
           password2: this.state.password2,
         };
         this.props.userStore.register(user);
-        alert(this.state.username + "님! 회원가입이 완료되었습니다!");
       } else {
         alert("이메일 인증을 확인해주세요!");
       }
