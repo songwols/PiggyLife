@@ -13,6 +13,6 @@ public class PostInputDto {
 	private String image;
 	private String content;
 	private Boolean visited;
-	private Boolean isLike;
+	private Integer isLike;
 
 }
