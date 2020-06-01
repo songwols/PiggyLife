@@ -31,6 +31,7 @@ const Data = {
   findByEmail: (email) => requests.get(`/user/findByEmail?email=${email}`),
   signin: (user) =>
     requests.get(`/sign/signin?email=${user.email}&password=${user.password}`),
+  findById: (token) => requests.get(`/user/findById?TOKEN=${token}`),
 };
 
 export default {

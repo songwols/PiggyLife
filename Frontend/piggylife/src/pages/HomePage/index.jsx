@@ -4,11 +4,12 @@ import Navbar from "../../components/Navbar";
 import CardLayout from "../../components/CardL";
 import { inject, observer } from "mobx-react";
 
-@inject("storeStore")
+@inject("storeStore", "userStore")
 @observer
 class HomePage extends React.Component {
   componentWillMount() {
     this.props.storeStore.get_mypost();
+    this.props.userStore.whoami(window.sessionStorage.getItem("email"));
   }
 
   render() {
