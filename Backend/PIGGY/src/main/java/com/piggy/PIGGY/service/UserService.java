@@ -3,18 +3,16 @@ package com.piggy.PIGGY.service;
 import java.util.List;
 import java.util.Map;
 
-import org.omg.CORBA.UserException;
 import org.springframework.security.core.userdetails.UserDetailsService;
 
 import com.piggy.PIGGY.dto.SignupDto;
-import com.piggy.PIGGY.dto.UserDto;
 import com.piggy.PIGGY.entity.User;
 
 public interface UserService extends UserDetailsService{
 	
 	public User signup(SignupDto dto);
 	
-	public Map<String, String> signin(String email, String password);
+	public Map<String, Object> signin(String email, String password);
 	
 	public boolean emailDuplicateCheck(String email);
 	
@@ -31,4 +29,5 @@ public interface UserService extends UserDetailsService{
 	public void deleteById(Long uId);
 	
 	public User update(SignupDto dto);
+	
 }

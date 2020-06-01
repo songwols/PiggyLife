@@ -16,6 +16,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.piggy.PIGGY.dto.ResultDto;
+import com.piggy.PIGGY.dto.SignupDto;
 import com.piggy.PIGGY.dto.UserDto;
 import com.piggy.PIGGY.entity.User;
 import com.piggy.PIGGY.service.UserService;
@@ -38,8 +40,8 @@ public class UserRestController {
 	@ApiImplicitParams({
 			@ApiImplicitParam(name = "TOKEN", value = "로그인 성공 후 access_token", required = true, dataType = "String", paramType = "header") })
 	@ApiOperation(value = "회원 단건 조회")
-	@GetMapping("/findById")
-	public ResponseEntity<Object> findById() {
+	@GetMapping("/findUser")
+	public ResponseEntity<Object> findUser() {
 		try {
 			Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 			String uId = authentication.getName();
@@ -78,13 +80,29 @@ public class UserRestController {
 	@ApiImplicitParams({
 		@ApiImplicitParam(name = "TOKEN", value = "로그인 성공 후 access_token", required = true, dataType = "String", paramType = "header") })
 	@ApiOperation(value = "해당 회원 삭제")
-	@DeleteMapping("/deleteById")
-	public ResponseEntity<Object> deleteById() {
+	@DeleteMapping("/deleteUser")
+	public ResponseEntity<Object> deleteUser() {
 		try {
 			Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 			String uId = authentication.getName();
 			uService.deleteById(Long.parseLong(uId));
-			return new ResponseEntity<Object>("삭제되었습니다.", HttpStatus.OK);
+			return new ResponseEntity<Object>(new ResultDto(true, 1, "삭제되었습니다."), HttpStatus.OK);
+		} catch (Exception e) {
+			throw e;
+		}
+	}
+	
+	@ApiOperation(value = "비밀번호수정")
+	@PutMapping("/updatePassword")
+	public ResponseEntity<Object> updatePassword(@RequestParam String email, @RequestParam String password) {
+		try {
+			User user = uService.findByEmail(email);
+			if (!user.getEmailCertify().equals("Y"))
+				return new ResponseEntity<Object>(new ResultDto(false, -1, "이메일 인증이 되지 않은 유저"), HttpStatus.OK);
+			
+			user = uService.updatePassword(user.getUId(), password);
+			UserDto output = MapperUtils.map(user, UserDto.class);
+			return new ResponseEntity<Object>(output, HttpStatus.OK);
 		} catch (Exception e) {
 			throw e;
 		}
@@ -92,13 +110,19 @@ public class UserRestController {
 	
 	@ApiImplicitParams({
 		@ApiImplicitParam(name = "TOKEN", value = "로그인 성공 후 access_token", required = true, dataType = "String", paramType = "header") })
-	@ApiOperation(value = "회원 정보 수정")
-	@PutMapping("/updatePassword/{password}")
-	public ResponseEntity<Object> update(@RequestParam String password) {
+	@ApiOperation(value = "회원 정보 수정, (이미지, 닉네임)")
+	@PutMapping("/update")
+	public ResponseEntity<Object> update(@RequestParam String image, @RequestParam String nickname) {
 		try {
 			Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 			String uId = authentication.getName();
-			User user = uService.updatePassword(Long.parseLong(uId), password);
+
+			UserDetails inputUser = uService.loadUserByUsername(uId);
+			SignupDto dto = MapperUtils.map(inputUser, SignupDto.class);
+			dto.setImage(image);
+			dto.setNickname(nickname);
+			
+			User user = uService.update(dto);
 			UserDto output = MapperUtils.map(user, UserDto.class);
 			return new ResponseEntity<Object>(output, HttpStatus.OK);
 		} catch (Exception e) {

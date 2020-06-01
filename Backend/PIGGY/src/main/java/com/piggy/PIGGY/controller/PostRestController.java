@@ -6,6 +6,8 @@ import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -19,11 +21,14 @@ import org.springframework.web.bind.annotation.RestController;
 import com.piggy.PIGGY.dto.PostAreaStatisticDto;
 import com.piggy.PIGGY.dto.PostInputDto;
 import com.piggy.PIGGY.dto.PostOutputDto;
+import com.piggy.PIGGY.dto.ResultDto;
 import com.piggy.PIGGY.entity.Post;
 import com.piggy.PIGGY.service.PostService;
 import com.piggy.PIGGY.util.MapperUtils;
 
 import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiImplicitParam;
+import io.swagger.annotations.ApiImplicitParams;
 import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
 
@@ -107,12 +112,12 @@ public class PostRestController {
 		try {
 			log.trace("PostRestController - delete", pId);
 			pService.delete(pId);
-			return new ResponseEntity<Object>("삭제완료", HttpStatus.OK);
+			return new ResponseEntity<Object>(new ResultDto(true, 1, "삭제되었습니다."), HttpStatus.OK);
 		} catch (Exception e) {
 			throw e;
 		}
 	}
-	
+
 	@ApiOperation(value = "해당 유저의 지역통계 불러오기")
 	@GetMapping("/getAreaStatistic/{uId}")
 	public ResponseEntity<Object> getAreaStatistic(@PathVariable Long uId){

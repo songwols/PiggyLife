@@ -48,21 +48,22 @@ public class UserServiceImpl implements UserService {
 	}
 
 	@Override
-	public Map<String, String> signin(String email, String password) {
+	public Map<String, Object> signin(String email, String password) {
 		
-		Map<String, String> result = new HashMap<>();
+		Map<String, Object> result = new HashMap<>();
 		User user = uRepo.findByEmail(email).orElseThrow(NoSuchElementException::new);
 		
 		if (!passwordEncoder.matches(password, user.getPassword())) {
-			result.put("code", "-1");
+			result.put("code", -1);
 			result.put("massage", "비밀번호가 일치하지 않습니다.");
 		} else if (!user.getEmailCertify().equals("Y")){
-			System.out.println(user.getEmailCertify());
-			result.put("code", "-2");
-			result.put("massage", "인증되지 않은 회원입니다.");
+			result.put("code", -2);
+			result.put("massage", "이메일 인증이 되지 않은 회원입니다.");
 		} else {
 			result.put("token", jwtProvider.createToken(user.getUsername(), user.getRoles()));
 			result.put("uId", user.getUId().toString());
+			result.put("code", 1);
+			result.put("massage", "로그인 되었습니다.");
 		}
 		
 		return result;
