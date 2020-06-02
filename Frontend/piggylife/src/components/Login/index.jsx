@@ -61,7 +61,7 @@ class Login extends React.Component {
           </L1>
           <L2>
             <Link to={"/findpw"} style={{ textDecoration: "none" }}>
-              비번찾기
+              패스워드재설정
             </Link>
           </L2>
         </LinkFrame>
@@ -156,7 +156,7 @@ const L1 = styled.div`
 `;
 
 const L2 = styled.div`
-  margin-left: 0.3rem;
+  margin-left: 2rem;
 `;
 
 export default Login;

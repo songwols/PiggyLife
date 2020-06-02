@@ -1,8 +1,5 @@
 package com.piggy.PIGGY.entity;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.ColumnResult;
@@ -14,7 +11,6 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.SqlResultSetMapping;
 import javax.persistence.SqlResultSetMappings;
@@ -70,8 +66,7 @@ public class Post extends DateTime {
 	@JoinColumn(name = "uId")
 	private User user;
 	
-	@OneToOne
-	@JoinColumn(name = "sId")
+	@OneToOne(mappedBy = "post", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
 	private Store store;
 	
 	@Column(nullable=false)
@@ -85,9 +80,6 @@ public class Post extends DateTime {
 	
 	@Column(nullable=false, columnDefinition = "int default 0")
 	private Integer isLike;
-	
-	@OneToMany(mappedBy = "store", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-	private List<Menu> menues = new ArrayList<>();
 
 	@Builder
 	public Post(User user, Store store, String image, String content, Boolean visited, Integer isLike) {

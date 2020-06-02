@@ -111,6 +111,11 @@ public class User implements UserDetails {
 		return true;
 	}
 	
+	public void update(String nickname, String image) {
+		this.nickname = nickname;
+		this.image = image;
+	}
+	
 	public void update(String email, String password, String nickname, String image) {
 		this.email = email;
 		this.password = password;

@@ -3,7 +3,7 @@ import agent from "../agent";
 
 export default class StoreStore {
   @observable myposts = [];
-  @observable store_name="";
+  @observable store_name = "";
   @observable storeItems = [];
   @observable mydetailPost = {};
   @observable top10 = [];
@@ -11,7 +11,6 @@ export default class StoreStore {
   @observable similar = [];
   @observable location = [];
   @observable detailPost = {};
-
 
   @computed get mypostslength() {
     return this.myposts.length;
@@ -28,9 +27,10 @@ export default class StoreStore {
 
   @action
   get_mypost(uid) {
-    console.log("내가 작성한 먹킷리스트 불러오기");
+    //console.log("내가 작성한 먹킷리스트 불러오기");
     return agent.Data.get_mypost(uid)
       .then((res) => {
+        //console.log(res.data);
         this.setMyPosts(res.data);
         this.location = [];
         for (var i = 0; i < res.data.length; i++) {
@@ -72,18 +72,18 @@ export default class StoreStore {
     this.myposts = myposts;
   }
 
-  @action search(store_name){
-    this.store_name=store_name;
+  @action search(store_name) {
+    this.store_name = store_name;
     return agent.Data.search(this.store_name)
       .then((res) => {
         // console.log(res.data);
-        this.storeItems=res.data;        
-        if(res.data.length === 0){
-          alert("검색된 데이터가 없습니다.")
+        this.storeItems = res.data;
+        if (res.data.length === 0) {
+          alert("검색된 데이터가 없습니다.");
           window.location.reload();
         }
       })
-      .catch((err) => alert("실패"))
+      .catch((err) => alert("실패"));
   }
 
   @action mydetail(pid){
@@ -92,18 +92,18 @@ export default class StoreStore {
         this.mydetailPost = res.data;
         console.log(res.data);
       })
-      .catch((err) => alert("실패"))
+      .catch((err) => alert("실패"));
   }
 
-  @action upload(data){
-    console.log(data)
+  @action upload(data) {
+    console.log(data);
     const uid = window.sessionStorage.getItem("uid");
-    console.log(uid)
-    return agent.Data.upload(data,uid)
+    console.log(uid);
+    return agent.Data.upload(data, uid)
       .then((res) => {
         window.location.replace("/feed");
       })
-      .catch((err) => alert("업로드 실패!"))
+      .catch((err) => alert("업로드 실패!"));
   }
 
   @action
