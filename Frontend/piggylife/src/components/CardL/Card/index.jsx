@@ -36,7 +36,7 @@ const F = styled.div`
   width: 80px;
   height: 0;
   overflow: hidden;
-  padding-bottom: 25%;
+  padding-bottom: 100%;
   padding-right: 1rem;
   top: 0;
   left: 0;
