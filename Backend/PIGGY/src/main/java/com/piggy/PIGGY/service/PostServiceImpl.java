@@ -95,8 +95,7 @@ public class PostServiceImpl implements PostService {
 
 	@Override
 	public void delete(Long pId) {
-		Post post = pRepo.findById(pId).orElseThrow(NoSuchElementException::new);
-		pRepo.delete(post);
+		pRepo.deleteById(pId);
 	}
 
 	@Override

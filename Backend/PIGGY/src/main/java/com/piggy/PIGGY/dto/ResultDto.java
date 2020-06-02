@@ -11,6 +11,6 @@ public class ResultDto {
 	
 	private Boolean success;
 	private Integer code;
-	private String massage;
+	private String message;
 
 }
