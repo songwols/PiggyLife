@@ -1,6 +1,7 @@
 import React from "react";
 import styled from "styled-components";
 import { inject, observer } from "mobx-react";
+import Map from "../DMap"
 
 @inject("storeStore")
 @observer
@@ -16,6 +17,8 @@ class Mydetail extends React.Component{
             tel: "",
             menu: "등록된 메뉴가 없습니다.",
             memo: "",
+            latitude: "",
+            longitude: "",
             visited: false,
             isLike: 0,
         }
@@ -32,6 +35,8 @@ class Mydetail extends React.Component{
             tel: post.store.tel,
             menu: post.store.menues,
             memo: post.content,
+            latitude: post.store.latitude,
+            longitude: post.store.latitude,
             visited: post.visited,
             isLike: post.isLike,
         })
@@ -60,7 +65,7 @@ class Mydetail extends React.Component{
                 </div>
                 }
                 </Menu>
-                <Map>지도</Map>
+                <Map id={this.props.id} keyword="mydetail"></Map>
                 <Tag>태그</Tag>
                 <Memo>
                     <Text>메모</Text>
@@ -94,12 +99,6 @@ const Menu = styled.div`
     grid-area: "menu";
     margin-top: .5rem;
     // height: 5rem;
-`
-
-const Map = styled.div`
-    grid-area: "map";
-    margin-top: .5rem;
-    height: 10rem;
 `
 
 const Tag = styled.div`
