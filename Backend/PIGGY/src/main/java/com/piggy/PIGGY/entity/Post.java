@@ -75,6 +75,9 @@ public class Post extends DateTime {
 	private Store store;
 	
 	@Column(nullable=false)
+	private String imageName;
+	
+	@Column(nullable=false)
 	private String image;
 	
 	@Column(nullable=false)
@@ -90,17 +93,19 @@ public class Post extends DateTime {
 	private List<Menu> menues = new ArrayList<>();
 
 	@Builder
-	public Post(User user, Store store, String image, String content, Boolean visited, Integer isLike) {
+	public Post(User user, Store store, String imageName, String image, String content, Boolean visited, Integer isLike) {
 		this.user = user;
 		this.store = store;
+		this.imageName = imageName;
 		this.image = image;
 		this.content = content;
 		this.visited = visited;
 		this.isLike = isLike;
 	}
 	
-	public void update(Store store, String image, String content, Boolean visited, Integer isLike) {
+	public void update(Store store, String imageName, String image, String content, Boolean visited, Integer isLike) {
 		this.store = store;
+		this.imageName = imageName;
 		this.image = image;
 		this.content = content;
 		this.visited = visited;

@@ -56,6 +56,7 @@ public class PostServiceImpl implements PostService {
 	    resultMap.put("data", pRepo.save(Post.builder()
 				.user(user)
 				.store(store)
+				.imageName(dto.getImageName())
 				.image(dto.getImage())
 				.content(dto.getContent())
 				.visited(dto.getVisited())
@@ -86,7 +87,7 @@ public class PostServiceImpl implements PostService {
 	public Post update(Long pId, PostInputDto dto) {
 		Post post = pRepo.findById(pId).orElseThrow(NoSuchElementException::new);
 		Store store = sRepo.findById(dto.getSId()).orElseThrow(NoSuchElementException::new);
-		post.update(store, dto.getImage(), dto.getContent(), dto.getVisited(), dto.getIsLike());
+		post.update(store, dto.getImageName(), dto.getImage(), dto.getContent(), dto.getVisited(), dto.getIsLike());
 		return pRepo.save(post);
 	}
 

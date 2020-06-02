@@ -12,11 +12,12 @@ import lombok.NoArgsConstructor;
 public class PostOutputDto {
 	
 	private String image;
+	private String imageName;
 	private String content;
 	private Boolean visited;
 	private Integer isLike;
 	private LocalDateTime createdTimeAt;
 	private LocalDateTime updateTimeAt;
 	private StoreOutputDto store;
-
+	
 }
