@@ -78,7 +78,8 @@ public class Store {
 	private String branch;
 
 	@JsonIgnore
-	@OneToOne(mappedBy = "store", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+	@OneToOne
+	@JoinColumn(name = "pId")
 	private Post post;
 	
 	@ManyToOne
