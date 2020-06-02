@@ -37,6 +37,7 @@ class MapContent extends React.Component {
           center: new kakao.maps.LatLng(33.450701, 126.570667),
           level: 7
         };
+        //map 생성
         const map = new window.kakao.maps.Map(container, options);
         // HTML5의 geolocation으로 사용할 수 있는지 확인
         if (navigator.geolocation) {
