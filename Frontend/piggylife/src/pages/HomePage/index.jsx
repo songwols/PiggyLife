@@ -18,7 +18,7 @@ class HomePage extends React.Component {
       <Frame>
         <List>
           <Mukitlist>
-            <Title>먹킷리스트</Title>
+            <Title>"{nickname}" 님의 먹킷리스트</Title>
             <Div>
               <DCardLayout keyword="mypost"></DCardLayout>
             </Div>
