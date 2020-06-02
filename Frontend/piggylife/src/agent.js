@@ -6,6 +6,8 @@ const requests = {
   get: (url, header) => axios.get(`${API_ROOT}${url}`, { headers: header }),
   post: (url, body, header) =>
     axios.post(`${API_ROOT}${url}`, body, { headers: header }),
+  put: (url, body, header) =>
+    axios.put(`${API_ROOT}${url}`, body, { headers: header }),
 };
 
 const Data = {
@@ -23,10 +25,11 @@ const Data = {
       nickname: user.nickname,
       password: user.password,
     }),
-  signin: (user) =>
-    requests.get(`/sign/signin?email=${user.email}&password=${user.password}`),
   email_send: (email) => requests.post(`/sign/emailSend?email=${email}`),
-  search: (store_name) => requests.get(`/store/findByName?name=${store_name}`),
+  search: (store_name) =>
+    requests.get(`/store/findByName?name=${store_name}`),
+  mypdetail: (pid) =>
+    requests.get(`/post/findById/${pid}`),
   detail: (sid) => requests.get(`/store/findById/${sid}`),
   upload: (info, uid) =>
     requests.post(`/post/create/${uid}`, {
@@ -40,6 +43,10 @@ const Data = {
   signin: (user) =>
     requests.get(`/sign/signin?email=${user.email}&password=${user.password}`),
   findById: (token) => requests.get(`/user/findById?TOKEN=${token}`),
+  updatepw: (user) =>
+    requests.put(
+      `/user/updatePassword?email=${user.email}&password=${user.password}`
+    ),
 };
 
 export default {

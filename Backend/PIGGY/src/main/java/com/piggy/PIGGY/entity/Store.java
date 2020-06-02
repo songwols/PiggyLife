@@ -16,11 +16,9 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
-import javax.persistence.OneToOne;
 import javax.persistence.SqlResultSetMapping;
 
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import com.piggy.PIGGY.dto.StoreTop10Dto;
 
@@ -62,10 +60,10 @@ public class Store {
 	@Column(nullable=false)
 	private String address;
 	
-	@Column(nullable=false)
+	@Column(nullable=false, precision=19, scale=6)
 	private BigDecimal latitude;
 	
-	@Column(nullable=false)
+	@Column(nullable=false, precision=19, scale=6)
 	private BigDecimal longitude;
 	
 	@Column
@@ -77,11 +75,9 @@ public class Store {
 	@Column
 	private String branch;
 
-	@JsonIgnore
-	@OneToOne
-	@JoinColumn(name = "pId")
-	private Post post;
-	
+
+	@OneToMany(mappedBy = "store", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+	private List<Post> posts = new ArrayList<>();
 	@ManyToOne
 	@JoinColumn(name="rId")
 	private Region region;

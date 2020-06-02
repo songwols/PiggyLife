@@ -2,15 +2,20 @@ import { observable, action, computed } from "mobx";
 import agent from "../agent";
 
 export default class StoreStore {
+  @observable posts = [];
   @observable myposts = [];
   @observable store_name = "";
   @observable storeItems = [];
-  @observable detailPost = {};
+  @observable mydetailPost = {};
   @observable top10 = [];
   @observable hotplace = [];
   @observable similar = [];
   @observable location = [];
+  @observable detailPost = {};
 
+  @computed get postslength() {
+    return this.posts.length;
+  }
   @computed get mypostslength() {
     return this.myposts.length;
   }
@@ -24,6 +29,14 @@ export default class StoreStore {
     return this.similar.length;
   }
 
+  @action
+  get_post(uid) {
+    return agent.Data.get_mypost(uid)
+      .then((res) => {
+        this.setPosts(res.data);
+      })
+      .catch((err) => console.log(err));
+  }
   @action
   get_mypost(uid) {
     //console.log("내가 작성한 먹킷리스트 불러오기");
@@ -41,7 +54,6 @@ export default class StoreStore {
       })
       .catch((err) => console.log(err));
   }
-
   @action
   get_top10() {
     return agent.Data.get_top10()
@@ -70,7 +82,10 @@ export default class StoreStore {
   setMyPosts(myposts) {
     this.myposts = myposts;
   }
-
+  @action
+  setPosts(posts) {
+    this.posts = posts;
+  }
   @action search(store_name) {
     this.store_name = store_name;
     return agent.Data.search(this.store_name)
@@ -85,10 +100,10 @@ export default class StoreStore {
       .catch((err) => alert("실패"));
   }
 
-  @action detail(sid) {
-    return agent.Data.detail(sid)
+  @action mydetail(pid){
+    return agent.Data.mypdetail(pid)
       .then((res) => {
-        this.detailPost = res.data;
+        this.mydetailPost = res.data;
         // console.log(res.data);
       })
       .catch((err) => alert("실패"));
@@ -116,5 +131,14 @@ export default class StoreStore {
   @action
   setSimilar(similar) {
     this.similar = similar;
+  }
+
+  @action detail(sid){
+    return agent.Data.detail(sid)
+      .then((res) => {
+        this.detailPost = res.data;
+        // console.log(res.data);
+      })
+      .catch((err) => alert("실패"))
   }
 }

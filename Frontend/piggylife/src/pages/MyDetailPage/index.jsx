@@ -1,18 +1,17 @@
 import React from "react";
 import styled from "styled-components";
-import Detail from "../../components/Detail";
+import Mydetail from "../../components/Mydetail";
 import Navbar from "../../components/Navbar";
 import Top from "../../components/Top"
 
-const DetailPage = ({ match }) => {
+const MyDetailPage = ({ match }) => {
     return(
         <Frame>
             <Top></Top>
-            <Detail id={match.params.sid}></Detail>
+            <Mydetail id={match.params.pid}></Mydetail>
             <Navbar></Navbar>
         </Frame>
     )
-    
 }
 
 const Frame = styled.div`
@@ -22,4 +21,4 @@ const Frame = styled.div`
     grid-template-areas: "top" "content" "navbar";
 `
 
-export default DetailPage;
+export default MyDetailPage;

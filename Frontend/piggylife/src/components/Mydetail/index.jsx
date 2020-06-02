@@ -5,7 +5,7 @@ import Map from "../DMap"
 
 @inject("storeStore")
 @observer
-class Detail extends React.Component{
+class Mydetail extends React.Component{
     constructor(props){
         super(props);
         this.state={
@@ -16,25 +16,31 @@ class Detail extends React.Component{
             address: "",
             tel: "",
             menu: "등록된 메뉴가 없습니다.",
+            memo: "",
+            latitude: "",
+            longitude: "",
             visited: false,
             isLike: 0,
         }
     }
 
     async componentWillMount() {
-        await this.props.storeStore.detail(this.props.id);
-        const post = this.props.storeStore.detailPost;
+        await this.props.storeStore.mydetail(this.props.id);
+        const post = this.props.storeStore.mydetailPost;
         this.setState({
-            store_name: post.name,
-            address: post.address,
-            img: "",
-            category: post.category,
-            tel: post.tel,
-            menu: post.menues,
-            visited: false,
-            isLike: 0,
+            store_name: post.store.name,
+            address: post.store.address,
+            img: "", //post.image
+            category: post.store.category,
+            tel: post.store.tel,
+            menu: post.store.menues,
+            memo: post.content,
+            latitude: post.store.latitude,
+            longitude: post.store.latitude,
+            visited: post.visited,
+            isLike: post.isLike,
         })
-        if(post.menues.length===0){
+        if(post.store.menues.length===0){
             this.setState({
                 menu: "등록된 메뉴가 없습니다.",
             })
@@ -59,8 +65,12 @@ class Detail extends React.Component{
                 </div>
                 }
                 </Menu>
-                <Map id={this.props.id} keyword="detail"></Map>
+                <Map id={this.props.id} keyword="mydetail"></Map>
                 <Tag>태그</Tag>
+                <Memo>
+                    <Text>메모</Text>
+                    <Context>{this.state.memo}</Context> 
+                </Memo>
             </Frame>
         )
     }
@@ -112,4 +122,4 @@ const Context = styled.div`
     height: 2rem;
 `
 
-export default Detail;
+export default Mydetail;
