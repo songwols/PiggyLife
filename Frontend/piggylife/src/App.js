@@ -1,6 +1,7 @@
 import React from "react";
 import { Switch, Route } from "react-router-dom";
 import { createGlobalStyle } from "styled-components";
+import styled from "styled-components";
 
 import LoginPage from "./pages/LoginPage";
 import JoinPage from "./pages/JoinPage";
@@ -18,11 +19,11 @@ import MyDetailPage from "./pages/MyDetailPage";
 
 const App = () => {
   return (
-    <div>
+    <Div>
       <GlobalStyle></GlobalStyle>
       <Switch>
         {window.sessionStorage.getItem("uid") !== null ? 
-        <div>
+        <Div>
           <Route path="/map" component={MapPage} />
           <Route path="/feed" component={FeedPage} />
           <Route path="/home" component={HomePage} />
@@ -34,18 +35,18 @@ const App = () => {
           <Route path="/result" component={MatchingResultPage} />
           <Route path="/mydetail/:pid" component={MyDetailPage} />
           <Route path="/" component={HomePage} />
-        </div>
+        </Div>
         :
-        <div>
+        <Div>
           <Route path="/findpw" component={FindPWPage} />
           <Route path="/join" component={JoinPage} />
           <Route path="/" component={LoginPage} />
-        </div>
+        </Div>
       }
         
         
       </Switch>
-    </div>
+    </Div>
   );
 };
 
@@ -57,5 +58,6 @@ const GlobalStyle = createGlobalStyle`
     
   }
 `;
+const Div = styled.div``
 
 export default App;
