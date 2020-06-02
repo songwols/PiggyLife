@@ -68,6 +68,7 @@ class Detail extends React.Component{
 const Frame = styled.div`
     height: 100%;
     display: grid;
+    padding: 0 15px 0 15px;
     grid-template-rows: repeat(6, auto);
     grid-template-areas: "pic" "info" "menu" "map" "tag" "memo";
 `

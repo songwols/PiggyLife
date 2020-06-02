@@ -2,13 +2,19 @@ import React from "react";
 import styled from "styled-components";
 import back from './back.png'
 import logo from './logo.png'
-import { Link } from 'react-router-dom';
+import { withRouter } from "react-router-dom";
 
+@withRouter
 class Top extends React.Component{
     render(){
+        const goBack = (e) => {
+            e.preventDefault();
+            this.props.history.go(-1);
+          };
+
         return(
             <Frame>
-                <Back><Link to={"/"} style={{ textDecoration: "none" }}><Img1 src={back}></Img1></Link></Back>
+                <Back><Bc onClick={goBack}><Img1 src={back}></Img1></Bc></Back>
                 <Icon><Img2 src={logo}></Img2></Icon>
             </Frame>
         )
@@ -26,6 +32,14 @@ const Back = styled.div`
     display: inline-block;
     margin-top: 25px;
     margin-left: 15px;
+`
+
+const Bc = styled.button`
+    background: none;
+    height: 100%;
+    border: none;
+    outline: none;
+    cursor: pointer;
 `
 
 const Icon = styled.div`
