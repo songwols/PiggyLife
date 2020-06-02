@@ -28,7 +28,7 @@ export default class StoreStore {
   @action
   get_mypost(uid) {
     //console.log("내가 작성한 먹킷리스트 불러오기");
-    return agent.Data.get_mypost(uid)
+    return agent.Data.getMukitlist(uid)
       .then((res) => {
         //console.log(res.data);
         this.setMyPosts(res.data);

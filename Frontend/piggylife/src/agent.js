@@ -10,6 +10,7 @@ const requests = {
 
 const Data = {
   get_mypost: (uid) => requests.get(`/post/findByUser/${uid}`), //url 정해지면 채워넣기
+  getMukitlist: (uid) => requests.get(`/post/getMukitlist/${uid}`),
   get_top10: () => requests.get(`/store/getStoreTop10`),
   email_check: (email) =>
     requests.get(`/sign/checkDuplicateEmail?email=${email}`),
@@ -29,8 +30,9 @@ const Data = {
     requests.get(`/store/findByName?name=${store_name}`),
   mypdetail: (pid) =>
     requests.get(`/post/findById/${pid}`),
+  detail: (sid) => requests.get(`/store/findById/${sid}`),
   upload: (info, uid) =>
-    requests.post(`/post/create/${uid}`,{
+    requests.post(`/post/create/${uid}`, {
       content: info.v_memo,
       image: "",
       isLike: info.isLike,
