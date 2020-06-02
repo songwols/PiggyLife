@@ -9,11 +9,11 @@ import { inject, observer } from "mobx-react";
 @observer
 class HomePage extends React.Component {
   componentWillMount() {
-    //this.props.storeStore.get_mypost(window.sessionStorage.getItem("uid"));
-    //this.props.userStore.whoami(window.sessionStorage.getItem("email"));
+    this.props.userStore.whoami(window.sessionStorage.getItem("email"));
   }
 
   render() {
+    const nickname = this.props.userStore.nickname;
     return (
       <Frame>
         <List>
@@ -32,14 +32,14 @@ class HomePage extends React.Component {
           </Top10>
 
           <Place>
-            <Title>OOO지역에서 가볼만한 곳</Title>
+            <Title>"{nickname}" 님이 자주 방문하는 지역의 추천 맛집</Title>
             <Div>
               <CardLayout keyword="hotplace"></CardLayout>
             </Div>
           </Place>
 
           <User>
-            <Title>OOO님과 비슷한 먹유저들의 MukSpot</Title>
+            <Title>"{nickname}" 님과 비슷한 먹유저들의 MukSpot</Title>
             <Div>
               <CardLayout keyword="similar"></CardLayout>
             </Div>
