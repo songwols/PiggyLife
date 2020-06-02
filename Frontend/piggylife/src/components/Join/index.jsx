@@ -74,7 +74,7 @@ class CJoin extends React.Component {
       showConfirm: !this.state.showConfirm,
     });
 
-    this.props.userStore.email_check(this.state.email);
+    this.props.userStore.email_check(this.state.email, "register");
   };
 
   render() {
