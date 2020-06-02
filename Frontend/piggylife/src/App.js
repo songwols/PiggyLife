@@ -16,7 +16,6 @@ import DetailPage from "./pages/DetailPage";
 import MatchingResultPage from "./pages/MatchingResultPage";
 import MyDetailPage from "./pages/MyDetailPage";
 
-console.log(window.sessionStorage.getItem("uid"))
 const App = () => {
   return (
     <div>
