@@ -21,12 +21,8 @@ class Detail extends React.Component{
     }
 
     async componentWillMount() {
-        // this.props.storeStore.detail(this.props.storeid);
-        console.log(this.props)
-        await this.props.storeStore.detail(111018);
-        //14322
+        await this.props.storeStore.detail(this.props.id);
         const post = this.props.storeStore.detailPost;
-        console.log(post)
         this.setState({
             store_name: post.name,
             address: post.address,

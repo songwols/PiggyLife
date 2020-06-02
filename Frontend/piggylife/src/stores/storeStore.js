@@ -90,7 +90,7 @@ export default class StoreStore {
     return agent.Data.mypdetail(pid)
       .then((res) => {
         this.mydetailPost = res.data;
-        console.log(res.data);
+        // console.log(res.data);
       })
       .catch((err) => alert("실패"));
   }

@@ -2,6 +2,7 @@ import React from "react";
 import styled from "styled-components";
 import Navbar from "../../components/Navbar";
 import CardLayout from "../../components/CardL";
+import DCardLayout from "../../components/DCardL";
 import { inject, observer } from "mobx-react";
 
 @inject("storeStore", "userStore")
@@ -19,7 +20,7 @@ class HomePage extends React.Component {
           <Mukitlist>
             <Title>먹킷리스트</Title>
             <Div>
-              <CardLayout keyword="mypost"></CardLayout>
+              <DCardLayout keyword="mypost"></DCardLayout>
             </Div>
           </Mukitlist>
 

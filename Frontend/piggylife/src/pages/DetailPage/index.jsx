@@ -3,15 +3,14 @@ import styled from "styled-components";
 import Detail from "../../components/Detail";
 import Navbar from "../../components/Navbar";
 
-class DetailPage extends React.Component{
-    render(){
-        return(
-            <Frame>
-                <Detail></Detail>
-                <Navbar></Navbar>
-            </Frame>
-        )
-    }
+const DetailPage = ({ match }) => {
+    return(
+        <Frame>
+            <Detail id={match.params.sid}></Detail>
+            <Navbar></Navbar>
+        </Frame>
+    )
+    
 }
 
 const Frame = styled.div`

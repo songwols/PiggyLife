@@ -22,23 +22,20 @@ class Mydetail extends React.Component{
     }
 
     async componentWillMount() {
-        console.log(this.props)
-        await this.props.storeStore.mydetail(1);
-        //14322
+        await this.props.storeStore.mydetail(this.props.id);
         const post = this.props.storeStore.mydetailPost;
-        console.log(post)
         this.setState({
-            store_name: post.name,
-            address: post.address,
-            img: "",
-            category: post.category,
-            tel: post.tel,
-            menu: post.menues,
-            memo: "",
-            visited: false,
-            isLike: 0,
+            store_name: post.store.name,
+            address: post.store.address,
+            img: "", //post.image
+            category: post.store.category,
+            tel: post.store.tel,
+            menu: post.store.menues,
+            memo: post.content,
+            visited: post.visited,
+            isLike: post.isLike,
         })
-        if(post.menues.length===0){
+        if(post.store.menues.length===0){
             this.setState({
                 menu: "등록된 메뉴가 없습니다.",
             })
@@ -67,6 +64,7 @@ class Mydetail extends React.Component{
                 <Tag>태그</Tag>
                 <Memo>
                     <Text>메모</Text>
+                    <Context>{this.state.memo}</Context> 
                 </Memo>
             </Frame>
         )

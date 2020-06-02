@@ -1,11 +1,11 @@
 import React from "react";
 import styled from "styled-components";
 import { inject, observer } from "mobx-react";
-import Card from "./Card";
+import DCard from "./DCard";
 
 @inject("storeStore")
 @observer
-class CardLayout extends React.Component {
+class DCardLayout extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -16,33 +16,23 @@ class CardLayout extends React.Component {
 
   componentWillMount() {
     const keyword = this.props.keyword;
-    if (keyword === "top10") {
-      this.props.storeStore.get_top10();
-    } else if (keyword === "hotplace") {
-      this.props.storeStore.get_hotplace();
-    } else if (keyword === "similar") {
-      this.props.storeStore.get_similar();
-    }
+    if (keyword === "mypost") {
+      this.props.storeStore.get_mypost(window.sessionStorage.getItem("uid"));
+    } 
   }
 
   render() {
-    if (this.props.keyword === "hotplace") {
-      this.list = this.props.storeStore.hotplace;
-      this.length = this.props.storeStore.hotplacelength;
-    } else if (this.props.keyword === "top10") {
-      this.list = this.props.storeStore.top10;
-      this.length = this.props.storeStore.top10length;
-    } else if (this.props.keyword === "similar") {
-      this.list = this.props.storeStore.similar;
-      this.length = this.props.storeStore.similarlength;
-    }
+    if (this.props.keyword === "mypost") {
+      this.list = this.props.storeStore.myposts;
+      this.length = this.props.storeStore.mypostslength;
+    } 
 
     return (
       <div>
         {this.length !== 0 ? (
           <Frame>
             {this.list.map((item, index) => (
-              <Card key={index} store={item} />
+              <DCard key={index} store={item} />
             ))}
           </Frame>
         ) : (
@@ -54,6 +44,7 @@ class CardLayout extends React.Component {
     );
   }
 }
+
 const Text = styled.div`
   margin-top: 40px;
 `;
@@ -77,4 +68,4 @@ const Frame = styled.div`
   overflow-y: hidden;
 `;
 
-export default CardLayout;
+export default DCardLayout;

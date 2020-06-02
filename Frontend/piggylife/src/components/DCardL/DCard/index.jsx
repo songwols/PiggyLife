@@ -7,11 +7,11 @@ import { inject, observer } from "mobx-react";
 @inject("storeStore")
 @withRouter
 @observer
-class Card extends React.Component {
+class DCard extends React.Component {
   render() {
     const DetailBtn = (e) => {
       e.preventDefault();
-      this.props.history.push("/detail/" + this.props.store.sid);
+      this.props.history.push("/mydetail/" + this.props.store.pid);
     };
 
     return (
@@ -86,4 +86,4 @@ const T = styled.div`
   z-index: 10;
 `;
 
-export default Card;
+export default DCard;

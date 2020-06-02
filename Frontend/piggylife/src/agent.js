@@ -23,8 +23,6 @@ const Data = {
       nickname: user.nickname,
       password: user.password,
     }),
-  signin: (user) =>
-    requests.get(`/sign/signin?email=${user.email}&password=${user.password}`),
   email_send: (email) => requests.post(`/sign/emailSend?email=${email}`),
   search: (store_name) =>
     requests.get(`/store/findByName?name=${store_name}`),
@@ -43,8 +41,6 @@ const Data = {
   signin: (user) =>
     requests.get(`/sign/signin?email=${user.email}&password=${user.password}`),
   findById: (token) => requests.get(`/user/findById?TOKEN=${token}`),
-  detail: (sid) =>
-    requests.get(`/store/findById/${sid}`),
 };
 
 export default {
