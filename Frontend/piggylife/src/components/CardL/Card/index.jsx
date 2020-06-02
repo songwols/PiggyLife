@@ -13,13 +13,14 @@ class Card extends React.Component {
       e.preventDefault();
       this.props.history.push("/detail/" + this.props.store.sid);
     };
+    const store = this.props.store;
 
     return (
       <F>
         <Frame onClick={DetailBtn}>
-          <CardImg src={logo} className="img" />
+          <CardImg src={logo} className="img"></CardImg>
           <Title className="title">
-            <T>제목</T>
+            <T>{store.name}</T>
           </Title>
         </Frame>
       </F>
@@ -53,36 +54,46 @@ const Frame = styled.button`
 `;
 
 const CardImg = styled.img`
-  margin-top: .8rem;
+  margin-top: 0.15rem;
   justify-content: center;
   align-items: center;
   position: absolute;
   /* object-fit: cover; */
   top: 0;
   left: 0;
-  width: 75px;
-  height: 75px;
+  width: 95px;
+  height: 95px;
   float: right;
+  background-color: #cccccc;
+  filter: brightness(75%);
 `;
 
 const Title = styled.div`
   font-size: x-Large;
-  color: black;
+  margin-left: 0.8rem;
+  justify-content: center;
+  align-items: center;
   position: absolute;
   object-fit: cover;
-  display: none;
+  /* display: none; */
   top: 0;
   left: 0;
   width: 100%;
   height: 100%;
+  color: white;
   @media (max-width: 768px) {
   }
 `;
 
 const T = styled.div`
+  white-space: pre-line;
+  width: 70px;
+  height: auto;
+  justify-content: center;
+  align-items: center;
   position: absolute;
-  margin-top: 45%;
-  margin-left: 20%;
+  margin-top: 20%;
+  /* margin-left: 20%; */
   z-index: 10;
 `;
 
