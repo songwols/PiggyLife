@@ -59,11 +59,10 @@ public class SignRestController {
 	@PostMapping("/emailSend")
 	public ResponseEntity<Object> emailSend(@RequestParam String email) {
 		try {
-			if (uService.emailDuplicateCheck(email)) 
-				return new ResponseEntity<Object>(new ResultDto(false, -1, "중복된 이메일 입니다."), HttpStatus.ACCEPTED);
-			
-			SignupDto user = new SignupDto(email, "dummy", "dummy", "dummy");
-			uService.signup(user);
+			if (!uService.emailDuplicateCheck(email)) {
+				SignupDto user = new SignupDto(email, "dummy", "dummy", "dummy");
+				uService.signup(user);
+			}
 			
 			String authkey = new TempKey().getKey(8, false);
 			MailUtils sendMail;

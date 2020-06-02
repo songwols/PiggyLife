@@ -6,6 +6,8 @@ const requests = {
   get: (url, header) => axios.get(`${API_ROOT}${url}`, { headers: header }),
   post: (url, body, header) =>
     axios.post(`${API_ROOT}${url}`, body, { headers: header }),
+  put: (url, body, header) =>
+    axios.put(`${API_ROOT}${url}`, body, { headers: header }),
 };
 
 const Data = {
@@ -41,6 +43,10 @@ const Data = {
   signin: (user) =>
     requests.get(`/sign/signin?email=${user.email}&password=${user.password}`),
   findById: (token) => requests.get(`/user/findById?TOKEN=${token}`),
+  updatepw: (user) =>
+    requests.put(
+      `/user/updatePassword?email=${user.email}&password=${user.password}`
+    ),
 };
 
 export default {
