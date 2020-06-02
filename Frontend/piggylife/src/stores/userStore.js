@@ -9,6 +9,18 @@ export default class UserStore {
   @observable data = "";
 
   @action
+  updatepw(user) {
+    return agent.Data.updatepw(user)
+      .then((res) => {
+        alert("패스워드가 변경되었습니다.");
+        window.location.replace("/");
+      })
+      .catch((err) => {
+        alert("실패하였습니다");
+      });
+  }
+
+  @action
   findByEmail(email) {
     console.log(email);
     return agent.Data.findByEmail(email)
@@ -25,6 +37,7 @@ export default class UserStore {
   logout() {
     window.sessionStorage.removeItem("email");
     window.sessionStorage.removeItem("uid");
+    window.sessionStorage.removeItem("token");
     alert("로그아웃 되었습니다.");
     window.location.replace("/");
   }
@@ -57,9 +70,15 @@ export default class UserStore {
   login(user) {
     return agent.Data.signin(user)
       .then((res) => {
-        window.sessionStorage.setItem("email", user.email);
-        window.sessionStorage.setItem("uid", res.data.uId);
-        window.location.replace("/Home");
+        console.log(res);
+        if (res.data.code === 1) {
+          window.sessionStorage.setItem("email", user.email);
+          window.sessionStorage.setItem("uid", res.data.uId);
+          window.sessionStorage.setItem("token", res.data.token);
+          window.location.replace("/Home");
+        } else {
+          alert(res.data.massage);
+        }
       })
       .catch((err) => {
         alert("이메일과 패스워드를 확인해주세요.");
@@ -68,16 +87,23 @@ export default class UserStore {
   }
 
   @action
-  email_check(email) {
+  email_check(email, where) {
     return agent.Data.email_check(email)
       .then((res) => {
-        return agent.Data.email_send(email)
-          .then((res) => {
-            alert("인증번호를 입력해주세요.");
-          })
-          .catch((err) => {
-            console.log(err);
-          });
+        console.log(res);
+        if (res.data.success === true || where === "pw") {
+          return agent.Data.email_send(email)
+            .then((res) => {
+              alert(res.data.message);
+            })
+            .catch((err) => {
+              alert("중복된 이메일입니다.");
+            });
+        } else {
+          if (where === "register") {
+            alert("중복된 이메일입니다.");
+          }
+        }
       })
       .catch((err) => {
         alert("중복된 이메일입니다.");
@@ -88,7 +114,7 @@ export default class UserStore {
     return agent.Data.code_check(user)
       .then((res) => {
         this.isCheck = true;
-        alert("인증되었습니다.");
+        alert(res.data.message);
       })
       .catch((err) => {
         alert("인증번호를 확인해주세요.");
