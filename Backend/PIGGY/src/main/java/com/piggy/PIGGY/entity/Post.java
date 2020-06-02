@@ -1,17 +1,14 @@
 package com.piggy.PIGGY.entity;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.ColumnResult;
 import javax.persistence.ConstructorResult;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
-import javax.persistence.OneToOne;
 import javax.persistence.SqlResultSetMapping;
 import javax.persistence.SqlResultSetMappings;
 
@@ -66,7 +63,8 @@ public class Post extends DateTime {
 	@JoinColumn(name = "uId")
 	private User user;
 	
-	@OneToOne(mappedBy = "post", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+	@ManyToOne
+	@JoinColumn(name = "sId")
 	private Store store;
 	
 	@Column(nullable=false)
