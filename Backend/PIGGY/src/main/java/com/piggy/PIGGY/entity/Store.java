@@ -62,10 +62,10 @@ public class Store {
 	@Column(nullable=false)
 	private String address;
 	
-	@Column(nullable=false)
+	@Column(nullable=false, precision=19, scale=6)
 	private BigDecimal latitude;
 	
-	@Column(nullable=false)
+	@Column(nullable=false, precision=19, scale=6)
 	private BigDecimal longitude;
 	
 	@Column
@@ -78,8 +78,7 @@ public class Store {
 	private String branch;
 
 	@JsonIgnore
-	@OneToOne
-	@JoinColumn(name = "pId")
+	@OneToOne(mappedBy = "store", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
 	private Post post;
 	
 	@ManyToOne

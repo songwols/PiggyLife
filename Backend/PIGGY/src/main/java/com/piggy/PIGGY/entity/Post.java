@@ -66,7 +66,8 @@ public class Post extends DateTime {
 	@JoinColumn(name = "uId")
 	private User user;
 	
-	@OneToOne(mappedBy = "post", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+	@OneToOne
+	@JoinColumn(name = "sId")
 	private Store store;
 	
 	@Column(nullable=false)
