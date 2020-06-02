@@ -3,10 +3,12 @@ import React from "react";
 import styled from "styled-components";
 import { inject, observer } from "mobx-react";
 import dotenv from "dotenv";
+import { withRouter } from "react-router-dom";
 
 dotenv.config();
 
 @inject("storeStore")
+@withRouter
 @observer
 class MapContent extends React.Component {
   constructor(props){
@@ -16,15 +18,12 @@ class MapContent extends React.Component {
         longitude: "",
     }
   }
-  async componentWillMount(){
-    await this.props.storeStore.get_mypost(sessionStorage.getItem("uid"));
+
+  async componentDidMount() {
+    const script = document.createElement("script");
+    await this.props.storeStore.get_post(sessionStorage.getItem("uid"));
     const list = this.props.storeStore.location;
     console.log(list)
-    
-  }
-
-  componentDidMount() {
-    const script = document.createElement("script");
     script.async = true;
     script.src =
       `https://dapi.kakao.com/v2/maps/sdk.js?appkey=${process.env.REACT_APP_KAKAO_MAP}&autoload=false`;
@@ -46,7 +45,7 @@ class MapContent extends React.Component {
             var lat = position.coords.latitude, // 위도
             lon = position.coords.longitude; // 경도
             var locPosition = new kakao.maps.LatLng(lat, lon), // 마커가 표시될 위치를 geolocation으로 얻어온 좌표로 생성합니다
-            message = '<div style="padding:5px;">현재 여기계시가요?!</div>'; // 인포윈도우에 표시될 내용입니다
+            message = '<div style="padding:5px;">현재 여기계신가요?!</div>'; // 인포윈도우에 표시될 내용입니다
             // 마커와 인포윈도우를 표시합니다
             displayMarker(locPosition, message);
           });
@@ -74,41 +73,54 @@ class MapContent extends React.Component {
           // 지도 중심좌표를 접속위치로 변경
           map.setCenter(locPosition);
         } 
-        //위치배열
-        var positions = [
-          {
-              title: '카카오', 
-              latlng: new kakao.maps.LatLng(33.450705, 126.570677)
-          },
-          {
-              title: '생태연못', 
-              latlng: new kakao.maps.LatLng(33.450936, 126.569477)
-          },
-          {
-              title: '텃밭', 
-              latlng: new kakao.maps.LatLng(33.450879, 126.569940)
-          },
-          {
-              title: '근린공원',
-              latlng: new kakao.maps.LatLng(33.451393, 126.570738)
-          }
-        ];
+
         // 마커 이미지
-        var imageSrc = "https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/markerStar.png"; 
-        for (var i = 0; i < positions.length; i ++) {
+        var visited = "https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/markerStar.png"; 
+        var willvis = "https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/marker_red.png"; 
+
+        for (var i = 0; i < list.length; i ++) {
           // 마커 이미지의 이미지 크기 
           var imageSize = new kakao.maps.Size(24, 35); 
+          var markerImage = null;
           // 마커 이미지를 생성
-          var markerImage = new kakao.maps.MarkerImage(imageSrc, imageSize); 
+          if(list[i].vis === true){
+            markerImage = new kakao.maps.MarkerImage(visited, imageSize); 
+          }
+          else if(list[i].vis === false){
+            markerImage = new kakao.maps.MarkerImage(willvis, imageSize); 
+          }
           // 마커를 생성
           var marker = new kakao.maps.Marker({
             map: map, // 마커를 표시할 지도
-            position: positions[i].latlng, // 마커를 표시할 위치
-            title : positions[i].title, // 마커의 타이틀, 마커에 마우스를 올리면 타이틀이 표시됩니다
-            image : markerImage // 마커 이미지 
+            position: new kakao.maps.LatLng(list[i].lat, list[i].long), // 마커를 표시할 위치
+            title : list[i].name + list[i].address, // 마커의 타이틀, 마커에 마우스를 올리면 타이틀이 표시됩니다
+            image : markerImage, // 마커 이미지 
+            clickable: true,
           });
-        }
-        marker.setMap(map);
+          
+          // 인포윈도우를 생성합니다
+          var infowindow = new kakao.maps.InfoWindow({
+            content : "<a href=/mydetail/"+list[i].pid +">"+list[i].name + "<br>" +list[i].address +"</a>",
+            removable : true,
+            clickable: true,
+          });
+
+          // 마커에 클릭이벤트를 등록합니다
+          kakao.maps.event.addListener(marker, 'click', makeClickListener(map, marker, infowindow));
+          kakao.maps.event.addListener(infowindow, 'click', ClickInfoListener(list[i].pid));
+          }
+          marker.setMap(map);
+          // 인포윈도우를 표시하는 클로저를 만드는 함수입니다 
+          function makeClickListener(map, marker, infowindow) {
+            return function() {
+                infowindow.open(map, marker);
+                console.log("infowindow")
+            };
+          }
+
+          function ClickInfoListener(id) {
+            console.log("dd")
+          }
       });
     };
   }
