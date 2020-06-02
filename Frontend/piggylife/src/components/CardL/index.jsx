@@ -70,7 +70,7 @@ const NFrame = styled.div`
 `;
 
 const Frame = styled.div`
-  width: 100%;
+  width: fit-content;
   padding-left: 5%;
   padding-right: 5%;
   /* grid-area: List; */
