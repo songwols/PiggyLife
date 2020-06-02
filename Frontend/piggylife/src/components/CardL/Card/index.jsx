@@ -36,7 +36,7 @@ const F = styled.div`
   width: 80px;
   height: 0;
   overflow: hidden;
-  padding-bottom: 100%;
+  padding-bottom: 25%;
   padding-right: 1rem;
   top: 0;
   left: 0;
@@ -49,13 +49,12 @@ const Frame = styled.button`
   height: 100%;
   border: none;
   outline: none;
-  border-radius: 0.5rem;
   cursor: pointer;
   padding-right: 3rem;
 `;
 
 const CardImg = styled.img`
-  margin-top: 1rem;
+  margin-top: .8rem;
   justify-content: center;
   align-items: center;
   position: absolute;
