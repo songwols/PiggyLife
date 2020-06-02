@@ -16,24 +16,34 @@ import DetailPage from "./pages/DetailPage";
 import MatchingResultPage from "./pages/MatchingResultPage";
 import MyDetailPage from "./pages/MyDetailPage";
 
+console.log(window.sessionStorage.getItem("uid"))
 const App = () => {
   return (
     <div>
       <GlobalStyle></GlobalStyle>
       <Switch>
-        <Route path="/map" component={MapPage} />
-        <Route path="/feed" component={FeedPage} />
-        <Route path="/home" component={HomePage} />
-        <Route path="/join" component={JoinPage} />
-        <Route path="/write" component={WritePage} />
-        <Route path="/match" component={MatchingPage} />
-        <Route path="/findpw" component={FindPWPage} />
-        <Route path="/more" component={MorePage} />
-        <Route path="/editP" component={EditProPage} />
-        <Route path="/detail/:sid" component={DetailPage} />
-        <Route path="/result" component={MatchingResultPage} />
-        <Route path="/mydetail/:pid" component={MyDetailPage} />
-        <Route path="/" component={LoginPage} />
+        {window.sessionStorage.getItem("uid") !== null ? 
+        <div>
+          <Route path="/map" component={MapPage} />
+          <Route path="/feed" component={FeedPage} />
+          <Route path="/home" component={HomePage} />
+          <Route path="/write" component={WritePage} />
+          <Route path="/match" component={MatchingPage} />
+          <Route path="/more" component={MorePage} />
+          <Route path="/editP" component={EditProPage} />
+          <Route path="/detail/:sid" component={DetailPage} />
+          <Route path="/result" component={MatchingResultPage} />
+          <Route path="/mydetail/:pid" component={MyDetailPage} />
+        </div>
+        :
+        <div>
+          <Route path="/findpw" component={FindPWPage} />
+          <Route path="/join" component={JoinPage} />
+          <Route path="/" component={LoginPage} />
+        </div>
+      }
+        
+        
       </Switch>
     </div>
   );
