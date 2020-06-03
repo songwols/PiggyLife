@@ -1,7 +1,7 @@
 import axios from "axios";
 
-// const API_ROOT = "http://52.78.169.231:8080/PIGGY";
-const API_ROOT = "http://localhost:8080/PIGGY";
+const API_ROOT = "http://52.78.169.231:8080/PIGGY";
+// const API_ROOT = "http://localhost:8080/PIGGY";
 
 const requests = {
   get: (url, header) => axios.get(`${API_ROOT}${url}`, { headers: header }),
@@ -37,7 +37,7 @@ const Data = {
       sid: info.sid,
       visited: info.visited,
     }),
-  postImage: (info) => requests.post(`/post/postImage`, info, {}),
+  postImage: (info,id) => requests.post(`/post/postImage/${id}`, info, {}),
   findByEmail: (email) => requests.get(`/user/findByEmail?email=${email}`),
   signin: (user) =>
     requests.get(`/sign/signin?email=${user.email}&password=${user.password}`),

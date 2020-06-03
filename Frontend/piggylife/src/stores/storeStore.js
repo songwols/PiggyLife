@@ -114,23 +114,23 @@ export default class StoreStore {
       .catch((err) => alert("실패"));
   }
 
-  @action upload(data) {
+  @action upload(data, file) {
     console.log(data);
     const uid = window.sessionStorage.getItem("uid");
-    console.log(uid);
     return agent.Data.upload(data, uid)
       .then((res) => {
-        // this.postImage()
-        // window.location.replace("/feed");
+        console.log(res.data.data.pid);
+        this.postImage(file,res.data.data.pid);
       })
       .catch((err) => alert("업로드 실패!"));
   }
 
-  @action postImage(data) {
-    console.log(data);
-    return agent.Data.postImage(data)
+  @action postImage(data,id) {
+    console.log(id)
+    return agent.Data.postImage(data,id)
       .then((res) => {
         console.log(res);
+        window.location.replace("/feed");
       })
       .catch((err) => console.log(err));
   }

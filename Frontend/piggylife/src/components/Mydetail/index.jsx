@@ -30,7 +30,7 @@ class Mydetail extends React.Component{
         this.setState({
             store_name: post.store.name,
             address: post.store.address,
-            img: "", //post.image
+            img: post.image, //post.image
             category: post.store.category,
             tel: post.store.tel,
             menu: post.store.menues,
@@ -48,9 +48,13 @@ class Mydetail extends React.Component{
       }
     
     render(){
+        console.log(this.state.img)
         return(
             <Frame>
-                <Pic>사진</Pic>
+                <Pic>
+                    { (this.state.img === "" || this.state.img === null ) ? 
+                    <Text>등록된 이미지가 없습니다.</Text> : <Simg src={this.state.img}></Simg>}
+                </Pic>
                 <Info>
                     <Text>{this.state.store_name}</Text>
                     <Text>{this.state.address}</Text>
@@ -76,6 +80,15 @@ class Mydetail extends React.Component{
         )
     }
 }
+const Simg = styled.img`
+  justify-content: center;
+  align-items: center;
+  object-fit: cover;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+`;
 
 const Frame = styled.div`
     height: 100%;
