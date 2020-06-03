@@ -9,11 +9,23 @@ export default class UserStore {
   @observable data = "";
 
   @action
+  checkPwd(user){
+    console.log(user);
+    return agent.Data.checkPwd(user)
+    .then((res)=>{
+      console.log(res.data);
+    }).catch((err)=>{
+      alert("패스워드 확인에 실패하였습니다.");
+    });
+  }
+
+  @action
   updateUser(user){
     console.log(user);
     return agent.Data.updateUser(user)
     .then((res) => {
       console.log(res.data);
+      window.location.replace("/Feed");
     })
     .catch((err) => {
       alert("사용자 정보 업데이트에 실패하였습니다");

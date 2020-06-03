@@ -23,6 +23,7 @@ class EditPro extends React.Component{
             nickname : "",
             image:"",
             token:"",
+            // password:this.props.pass
         }
     }
     async componentWillMount(){
@@ -40,11 +41,11 @@ class EditPro extends React.Component{
         });
     }
     updateInfo=(e)=>{
-        console.log(sessionStorage.getItem("token"))
+        console.log(sessionStorage.getItem("email"))
         this.setState({
             image : "수정이미지",
             nickname : this.state.nickname,
-            token: sessionStorage.getItem("token"),
+            email: sessionStorage.getItem("email"),
         });
         
         this.props.userStore.updateUser(this.state); 
@@ -53,7 +54,8 @@ class EditPro extends React.Component{
         this.setState({
           image : "수정이미지",
           nickname: e.target.value,
-          token: sessionStorage.getItem("token"),
+          email: sessionStorage.getItem("email"),
+          password: e.target.value,
         })
       };
     render(){
@@ -69,13 +71,12 @@ class EditPro extends React.Component{
                 <Input value={this.state.nickname} onChange={this.handleChange}></Input>
                 <Space></Space>
                 PW
-                <Input value="패스워드" type="password" readOnly></Input>
+                <Input value={this.state.nickname} type="password" readonChange={this.handleChange}></Input>
                 <Space></Space>
                 <BF>
                 <SButton onClick={this.toggleConfirm.bind(this)}>탈퇴하기</SButton> &nbsp;
-                {/* <Link to={"/feed"} style={{ textDecoration: "none" }}> */}
-                    <EButton onClick={this.updateInfo}>수정하기</EButton>
-                    {/* </Link> */}
+                <EButton onClick={this.updateInfo}>수정하기</EButton>
+                    
                 </BF>
                 {this.state.confirmS ? (
                 <Secession cancelSecession={this.toggleConfirm.bind(this)}/>

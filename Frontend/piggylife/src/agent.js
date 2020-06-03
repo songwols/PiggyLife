@@ -49,11 +49,18 @@ const Data = {
   updateUser: (user)=>
   requests.put(
     `/user/update?image=${user.image}&nickname=${user.nickname}`,
-    {},
-  {
-   
-    TOKEN:user.token,
-  }
+    {
+      email: user.email,
+      image: user.image,
+      nickname: user.nickname,
+      password: user.password,
+
+    },
+  ),
+  checkPwd: (user)=> requests.post(`/user/checkPassword`,
+  {password:user.currPwd},
+  {TOKEN:user.token}
+  // {TOKEN:sessionStorage.getItem("token")}
   ),
 };
 
