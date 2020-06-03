@@ -50,6 +50,7 @@ public class PostServiceImpl implements PostService {
 		    resultMap.put("success", false);
 		    resultMap.put("code", -1);
 		    resultMap.put("message", "해당 유저는 해당 가게에 대해 이미 작성했습니다.");
+		    return resultMap;
 		}
 		
 		int size = pRepo.findByUser(user).size();
