@@ -1,6 +1,7 @@
 package com.piggy.PIGGY.controller;
 
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -11,16 +12,23 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.multipart.MultipartFile;
 
+import com.piggy.PIGGY.dto.PostImageDto;
+import com.piggy.PIGGY.dto.PostOutputDto;
 import com.piggy.PIGGY.dto.ResultDto;
 import com.piggy.PIGGY.dto.SignupDto;
 import com.piggy.PIGGY.dto.UserDto;
+import com.piggy.PIGGY.entity.Post;
 import com.piggy.PIGGY.entity.User;
+import com.piggy.PIGGY.service.FileService;
 import com.piggy.PIGGY.service.UserService;
 import com.piggy.PIGGY.util.MapperUtils;
 
@@ -37,6 +45,9 @@ public class UserRestController {
 
 	@Autowired
 	private UserService uService;
+	
+	@Autowired
+	private FileService fileService;
 	
 	@ApiImplicitParams({
 			@ApiImplicitParam(name = "TOKEN", value = "로그인 성공 후 access_token", required = true, dataType = "String", paramType = "header") })
@@ -97,7 +108,7 @@ public class UserRestController {
 		@ApiImplicitParam(name = "TOKEN", value = "로그인 성공 후 access_token", required = true, dataType = "String", paramType = "header") })
 	@ApiOperation(value = "비밀번호 확인")
 	@GetMapping("/checkPassword")
-	public ResponseEntity<Object> checkPassword(@RequestParam String password) {
+	public ResponseEntity<Object> checkPassword(@RequestBody String password) {
 		try {
 			Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 			String uId = authentication.getName();
@@ -113,7 +124,7 @@ public class UserRestController {
 	
 	@ApiOperation(value = "비밀번호수정")
 	@PutMapping("/updatePassword")
-	public ResponseEntity<Object> updatePassword(@RequestParam String email, @RequestParam String password) {
+	public ResponseEntity<Object> updatePassword(@RequestParam String email, @RequestBody String password) {
 		try {
 			User user = uService.findByEmail(email);
 			if (!user.getEmailCertify().equals("Y"))
@@ -128,14 +139,33 @@ public class UserRestController {
 	}
 	
 	@ApiOperation(value = "회원 정보 수정, (이미지, 닉네임)")
-	@PutMapping("/update")
-	public ResponseEntity<Object> update(@RequestBody SignupDto dto) {
+	@PutMapping("/update/{uId}")
+	public ResponseEntity<Object> update(@PathVariable Long uId, @RequestBody SignupDto dto) {
 		try {
 			User user = uService.update(dto);
 			UserDto output = MapperUtils.map(user, UserDto.class);
 			return new ResponseEntity<Object>(output, HttpStatus.OK);
 		} catch (Exception e) {
 			throw e;
+		}
+	}
+	
+	@ApiOperation(value = "해당 유저 이미지 수정")
+	@PostMapping("/uploadImage/{uId}")
+	public ResponseEntity<Object> postImage(@PathVariable Long uId , @RequestParam("file") MultipartFile file) {
+		try {
+			Map<String, Object> responseImage = fileService.uploadImage(file, "user");
+			User origin = uService.findById(uId);
+			String originImage = origin.getImageName();
+			String newImageName = responseImage.get("imageName").toString();
+			if(originImage != null && !originImage.equals(newImageName)) {
+				fileService.deleteImage(originImage);
+			}
+			User user = uService.updateImage(uId, responseImage.get("image").toString(), newImageName);
+			UserDto output = MapperUtils.map(user, UserDto.class);
+			return new ResponseEntity<Object>(output, HttpStatus.OK);
+		} catch (Exception e) {
+			return new ResponseEntity<Object>(e.getMessage(), HttpStatus.OK);
 		}
 	}
 }
