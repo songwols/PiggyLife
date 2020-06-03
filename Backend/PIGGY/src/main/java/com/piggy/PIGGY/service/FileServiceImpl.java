@@ -106,26 +106,5 @@ public class FileServiceImpl implements FileService {
 	    	return 0;
 	    }
 	}
-	
-	@Override
-	public List<String> getPromotionImages() throws IOException, ServletException {
-		Resource resource = resourceLoader.getResource("classpath:/piggy-credential.json");
-		Credentials credentials = GoogleCredentials.fromStream(new FileInputStream(resource.getFile()));
-		Storage storage = StorageOptions.newBuilder().setCredentials(credentials).build().getService();
-		String bucketName = "piggy02301";
-		Bucket bucket = storage.get(bucketName);
-		
-		List<String> imageResponse = new ArrayList<>();
-		Page<Blob> blobs = bucket.list(BlobListOption.prefix("promotion"));
-		System.out.println(blobs.toString());
-		for (Blob blob : blobs.iterateAll()) {
-			imageResponse.add(blob.getMediaLink());
-		}
-		if (imageResponse.size() > 0) {
-			imageResponse.remove(0);
-			return imageResponse;
-		}
-		return null;
-	}
 
 }
