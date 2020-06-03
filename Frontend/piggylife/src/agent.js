@@ -26,10 +26,8 @@ const Data = {
       password: user.password,
     }),
   email_send: (email) => requests.post(`/sign/emailSend?email=${email}`),
-  search: (store_name) =>
-    requests.get(`/store/findByName?name=${store_name}`),
-  mypdetail: (pid) =>
-    requests.get(`/post/findById/${pid}`),
+  search: (store_name) => requests.get(`/store/findByName?name=${store_name}`),
+  mypdetail: (pid) => requests.get(`/post/findById/${pid}`),
   detail: (sid) => requests.get(`/store/findById/${sid}`),
   upload: (info, uid) =>
     requests.post(`/post/create/${uid}`, {
@@ -47,6 +45,9 @@ const Data = {
     requests.put(
       `/user/updatePassword?email=${user.email}&password=${user.password}`
     ),
+  getAreaStatistic: (uId) => requests.get(`/post/getAreaStatistic/${uId}`),
+  getCategoryStatistic: (uId) =>
+    requests.get(`/post/getCategoryStatistic/${uId}`),
 };
 
 export default {
