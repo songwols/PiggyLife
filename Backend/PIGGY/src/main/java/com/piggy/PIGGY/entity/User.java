@@ -53,6 +53,9 @@ public class User implements UserDetails {
 	private String image;
 	
 	@Column
+	private String imageName;
+	
+	@Column
 	private String emailCertify;
 
 	@OneToMany(mappedBy = "user", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
@@ -116,11 +119,15 @@ public class User implements UserDetails {
 		this.image = image;
 	}
 	
-	public void update(String email, String password, String nickname, String image) {
+	public void update(String email, String password, String nickname) {
 		this.email = email;
 		this.password = password;
 		this.nickname = nickname;
+	}
+	
+	public void updateImage(String image, String imageName) {
 		this.image = image;
+		this.imageName = imageName;
 	}
 
 }
