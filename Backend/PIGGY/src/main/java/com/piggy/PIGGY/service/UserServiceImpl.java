@@ -97,6 +97,13 @@ public class UserServiceImpl implements UserService {
 		uRepo.updateEmail(email, massage);
 	}
 	
+	@Override
+	public Boolean checkPassword(Long uId, String password) {
+		User user = uRepo.findById(uId).orElseThrow(NoSuchElementException::new);
+		if (passwordEncoder.matches(password, user.getPassword()))
+			return true;
+		return false;
+	}
 
 	@Override
 	public User updatePassword(Long uId, String password) {
@@ -117,5 +124,4 @@ public class UserServiceImpl implements UserService {
 				dto.getNickname(), dto.getImage());
 		return uRepo.save(user);
 	}
-	
 }

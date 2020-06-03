@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
@@ -19,6 +20,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.piggy.PIGGY.dto.ResultDto;
 import com.piggy.PIGGY.dto.SignupDto;
 import com.piggy.PIGGY.dto.UserDto;
+import com.piggy.PIGGY.dto.UserUpdateDto;
 import com.piggy.PIGGY.entity.User;
 import com.piggy.PIGGY.service.UserService;
 import com.piggy.PIGGY.util.MapperUtils;
@@ -91,6 +93,24 @@ public class UserRestController {
 			throw e;
 		}
 	}
+
+	@ApiImplicitParams({
+		@ApiImplicitParam(name = "TOKEN", value = "로그인 성공 후 access_token", required = true, dataType = "String", paramType = "header") })
+	@ApiOperation(value = "비밀번호 확인")
+	@GetMapping("/checkPassword")
+	public ResponseEntity<Object> checkPassword(@RequestParam String password) {
+		try {
+			Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+			String uId = authentication.getName();
+			
+			if(uService.checkPassword(Long.parseLong(uId), password))
+				return new ResponseEntity<Object>(new ResultDto(true, 1, "비밀번호가 확인되었습니다."), HttpStatus.OK);
+			else
+				return new ResponseEntity<Object>(new ResultDto(false, -1, "비밀번호가 틀렸습니다"), HttpStatus.ACCEPTED);
+		} catch (Exception e) {
+			throw e;
+		}
+	}
 	
 	@ApiOperation(value = "비밀번호수정")
 	@PutMapping("/updatePassword")
@@ -108,20 +128,10 @@ public class UserRestController {
 		}
 	}
 	
-	@ApiImplicitParams({
-		@ApiImplicitParam(name = "TOKEN", value = "로그인 성공 후 access_token", required = true, dataType = "String", paramType = "header") })
 	@ApiOperation(value = "회원 정보 수정, (이미지, 닉네임)")
 	@PutMapping("/update")
-	public ResponseEntity<Object> update(@RequestParam String image, @RequestParam String nickname) {
+	public ResponseEntity<Object> update(@RequestBody SignupDto dto) {
 		try {
-			Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-			String uId = authentication.getName();
-
-			UserDetails inputUser = uService.loadUserByUsername(uId);
-			SignupDto dto = MapperUtils.map(inputUser, SignupDto.class);
-			dto.setImage(image);
-			dto.setNickname(nickname);
-			
 			User user = uService.update(dto);
 			UserDto output = MapperUtils.map(user, UserDto.class);
 			return new ResponseEntity<Object>(output, HttpStatus.OK);
