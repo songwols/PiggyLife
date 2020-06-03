@@ -34,6 +34,18 @@ export default class StoreStore {
     return agent.Data.get_mypost(uid)
       .then((res) => {
         this.setPosts(res.data);
+        console.log(res.data);
+        this.location = [];
+        for (var i = 0; i < res.data.length; i++) {
+          this.location = this.location.concat({
+            lat: res.data[i].store.latitude,
+            long: res.data[i].store.longitude,
+            name: res.data[i].store.name,
+            address: res.data[i].store.address,
+            vis: res.data[i].visited,
+            pid: res.data[i].pid,
+          });
+        }
       })
       .catch((err) => console.log(err));
   }
@@ -44,13 +56,6 @@ export default class StoreStore {
       .then((res) => {
         //console.log(res.data);
         this.setMyPosts(res.data);
-        this.location = [];
-        for (var i = 0; i < res.data.length; i++) {
-          this.location = this.location.concat({
-            lat: res.data[i].store.latitude,
-            long: res.data[i].store.longitude,
-          });
-        }
       })
       .catch((err) => console.log(err));
   }

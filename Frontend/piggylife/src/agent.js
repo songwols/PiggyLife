@@ -49,6 +49,9 @@ const Data = {
     requests.put(
       `/user/updatePassword?email=${user.email}&password=${user.password}`
     ),
+  getAreaStatistic: (uId) => requests.get(`/post/getAreaStatistic/${uId}`),
+  getCategoryStatistic: (uId) =>
+    requests.get(`/post/getCategoryStatistic/${uId}`),
 };
 
 export default {

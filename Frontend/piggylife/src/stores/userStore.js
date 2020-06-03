@@ -7,6 +7,7 @@ export default class UserStore {
   @observable nickname = "";
   @observable image = "";
   @observable data = "";
+  @observable ranking = 0;
 
   @action
   updatepw(user) {
