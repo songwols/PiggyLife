@@ -47,6 +47,16 @@ const Data = {
     requests.put(
       `/user/updatePassword?email=${user.email}&password=${user.password}`
     ),
+  postupdate: (data, pid) =>
+      requests.put(
+        `/post/update/${pid}`,{
+          content: data.v_memo,
+          image: "",
+          isLike:data.isLike,
+          sid: data.sid,
+          visited: data.visited,
+        }
+      ),
 };
 
 export default {

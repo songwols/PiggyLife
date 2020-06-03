@@ -16,6 +16,7 @@ import EditProPage from "./pages/EditProPage";
 import DetailPage from "./pages/DetailPage";
 import MatchingResultPage from "./pages/MatchingResultPage";
 import MyDetailPage from "./pages/MyDetailPage";
+import EditDetailPage from "./pages/EditDetailPage";
 
 const App = () => {
   return (
@@ -34,6 +35,7 @@ const App = () => {
           <Route path="/detail/:sid" component={DetailPage} />
           <Route path="/result" component={MatchingResultPage} />
           <Route path="/mydetail/:pid" component={MyDetailPage} />
+          <Route path="/editdetail/:pid" component={EditDetailPage} />
           {/* <Route path="/" component={HomePage} /> */}
         </Div>
         :

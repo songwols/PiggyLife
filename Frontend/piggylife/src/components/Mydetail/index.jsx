@@ -1,9 +1,11 @@
 import React from "react";
 import styled from "styled-components";
 import { inject, observer } from "mobx-react";
+import { withRouter } from "react-router-dom";
 import Map from "../DMap"
 
 @inject("storeStore")
+@withRouter
 @observer
 class Mydetail extends React.Component{
     constructor(props){
@@ -48,6 +50,13 @@ class Mydetail extends React.Component{
       }
     
     render(){
+        const goEdit = (e) => {
+            e.preventDefault();
+            //디테일 받아올 스토어
+           console.log(this.props.id)
+           this.props.history.push("/editdetail/" + this.props.id);
+          };
+
         return(
             <Frame>
                 <Pic>사진</Pic>
@@ -71,6 +80,9 @@ class Mydetail extends React.Component{
                     <Text>메모</Text>
                     <Context>{this.state.memo}</Context> 
                 </Memo>
+                <BFrame>
+                    <OK onClick={goEdit}>수정</OK>
+                </BFrame>
                 <Context/>
             </Frame>
         )
@@ -81,8 +93,8 @@ const Frame = styled.div`
     height: 100%;
     display: grid;
     padding: 0 15px 0 15px;
-    grid-template-rows: repeat(6, auto);
-    grid-template-areas: "pic" "info" "menu" "map" "tag" "memo";
+    grid-template-rows: repeat(8, auto);
+    grid-template-areas: "pic" "info" "menu" "map" "tag" "memo" "button";
 `
 const Pic = styled.div`
     grid-area: "pic";
@@ -121,6 +133,27 @@ const Text = styled.div`
 
 const Context = styled.div`
     height: 2rem;
+`
+const BFrame = styled.div`
+  grid-area: "button";
+  margin-top: .3rem;
+  height: 2rem;
+  text-align: center;
+  display: flex; 
+  align-items: center; 
+  justify-content: center; 
+  -webkit-justify-content: center; 
+  -webkit-align-items: center;
+`
+const OK = styled.button`
+  width: 30%;
+  height: 2rem;
+  color: white;
+  background: none;
+  border: none;
+  outline: none;
+  border-radius: 0.3rem;
+  background-color: #5897A6;
 `
 
 export default Mydetail;

@@ -146,4 +146,15 @@ export default class StoreStore {
       })
       .catch((err) => alert("실패"))
   }
+
+  @action postupdate(data, pid){
+    console.log(data)
+    console.log(pid)
+    return agent.Data.postupdate(data, pid)
+    .then((res) => {
+      console.log(res.data);
+      window.location.replace("/detail/"+pid);
+    })
+    .catch((err) => alert("실패"))
+  }
 }
