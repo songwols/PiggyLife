@@ -34,7 +34,7 @@ const Data = {
   upload: (info, uid) =>
     requests.post(`/post/create/${uid}`, {
       content: info.v_memo,
-      image: "",
+      image: info.file,
       isLike: info.isLike,
       sid: info.sid,
       visited: info.visited,
