@@ -120,11 +120,11 @@ class WriteContent extends React.Component {
     console.log(this.state.file);
     const formData = new FormData();
     formData.append("file", this.state.file);
-    // if (this.state.v_name === "이름을 검색하고 싶으면 여기를 클릭하세요") {
-    //   alert("빈 값이 있습니다.");
-    // } else
-    // this.props.storeStore.upload(this.state);
-    this.props.storeStore.postImage(formData);
+    if (this.state.v_name === "이름을 검색하고 싶으면 여기를 클릭하세요") {
+      alert("빈 값이 있습니다.");
+    } else
+    this.props.storeStore.upload(this.state, formData);
+    // this.props.storeStore.postImage(formData);
   };
 
   g_changeColor = (e) => {
@@ -207,9 +207,9 @@ class WriteContent extends React.Component {
             name="store_img"
             onChange={this.handleFileOnChange}
           ></Pic>
-          <form encType="multipart/form-data">
+          {/* <form encType="multipart/form-data">
             <input type="file" onChange={this.handleFileOnChange}></input>
-          </form>
+          </form> */}
           {profile_preview}
         </PF>
         {this.state.show ? (
