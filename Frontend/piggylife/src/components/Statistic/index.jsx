@@ -11,6 +11,7 @@ class Statistic extends React.Component {
       area: {},
       category: [],
       ranking: 0,
+      rname: "",
       num: 0,
       best: {
         area: "",
@@ -33,6 +34,7 @@ class Statistic extends React.Component {
     this.area = this.props.statisticStore.areaList;
     this.category = this.props.statisticStore.categoryList;
     this.ranking = this.props.userStore.ranking;
+    this.rname = this.props.userStore.rname;
     this.num = this.props.storeStore.postslength;
     this.best = this.props.statisticStore.bestarea;
     console.log(this.category);
@@ -41,7 +43,9 @@ class Statistic extends React.Component {
         <LevelGraph>레벨그래프</LevelGraph>
         <Level>
           <Div>당신의 돼지력은</Div>
-          <Piggy>랭킹 {this.ranking} 이름정해야함</Piggy>
+          <Piggy>
+            Lv.{this.ranking} {this.rname}
+          </Piggy>
           <Div>입니다</Div>
         </Level>
         <Placer>

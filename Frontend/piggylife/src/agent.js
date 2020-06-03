@@ -1,7 +1,7 @@
 import axios from "axios";
 
-// const API_ROOT = "http://52.78.169.231:8080/PIGGY";
-const API_ROOT = "http://localhost:8080/PIGGY";
+const API_ROOT = "http://52.78.169.231:8080/PIGGY";
+// const API_ROOT = "http://localhost:8080/PIGGY";
 
 const requests = {
   get: (url, header) => axios.get(`${API_ROOT}${url}`, { headers: header }),

@@ -31,5 +31,9 @@ public interface UserService extends UserDetailsService{
 	public void deleteById(Long uId);
 	
 	public User update(SignupDto dto);
+
+	public User updateImage(Long uId, String image, String imageName);
+	
+	public User findById(Long uId);
 	
 }
