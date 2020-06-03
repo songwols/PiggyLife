@@ -15,6 +15,7 @@ import org.springframework.stereotype.Service;
 
 import com.piggy.PIGGY.dto.PostAreaStatisticDto;
 import com.piggy.PIGGY.dto.PostCategoryStatisticDto;
+import com.piggy.PIGGY.dto.PostImageDto;
 import com.piggy.PIGGY.dto.PostInputDto;
 import com.piggy.PIGGY.dto.PostOutputDto;
 import com.piggy.PIGGY.entity.Post;
@@ -66,7 +67,6 @@ public class PostServiceImpl implements PostService {
 	    PostOutputDto output = MapperUtils.map(pRepo.save(Post.builder()
 				.user(user)
 				.store(store)
-				.image(dto.getImage())
 				.content(dto.getContent())
 				.visited(dto.getVisited())
 				.isLike(dto.getIsLike())
@@ -100,7 +100,7 @@ public class PostServiceImpl implements PostService {
 	public Post update(Long pId, PostInputDto dto) {
 		Post post = pRepo.findById(pId).orElseThrow(NoSuchElementException::new);
 		Store store = sRepo.findById(dto.getSId()).orElseThrow(NoSuchElementException::new);
-		post.update(store, dto.getImage(), dto.getContent(), dto.getVisited(), dto.getIsLike());
+		post.update(store, dto.getContent(), dto.getVisited(), dto.getIsLike());
 		return pRepo.save(post);
 	}
 
@@ -149,6 +149,13 @@ public class PostServiceImpl implements PostService {
 		User user = uRepo.findById(uId).orElseThrow(NoSuchElementException::new);
 		List<Post> list = pRepo.findByUserAndVisited(user, visited);
 		return list;
+	}
+	
+	@Override
+	public Post updateImage(Long pId, PostImageDto dto) {
+		Post post = pRepo.findById(pId).orElseThrow(NoSuchElementException::new);
+		post.updateImg(dto.getImage(), dto.getImageName());
+		return pRepo.save(post);
 	}
 
 }
