@@ -46,6 +46,9 @@ class WriteContent extends React.Component{
             sid: "",
             will:false,
             went:false,
+            sid: "",
+            file: "",
+            previewURL: "",
         }
         this.g_changeColor = this.g_changeColor.bind(this);
         this.n_changeColor = this.n_changeColor.bind(this);
@@ -58,7 +61,7 @@ class WriteContent extends React.Component{
         this.setState({
             v_name: post.store.name,
             v_address: post.store.address,
-            v_img: "", //post.image
+            v_img: post.image, //post.image
             v_category: post.store.category,
             v_tel: post.store.tel,
             v_menu: post.store.menues,
@@ -68,6 +71,7 @@ class WriteContent extends React.Component{
             visited: post.visited,
             isLike: post.isLike,
             sid: post.store.sid,
+            previewURL: post.image,
         })
         if(post.visited==true){
             this.setState({
@@ -145,8 +149,9 @@ class WriteContent extends React.Component{
     };
       
       goRegister = (e) => {
-        this.props.storeStore.postupdate(this.state, this.props.id);
-          
+        const formData = new FormData();
+        formData.append("file", this.state.file);
+        this.props.storeStore.postupdate(this.state, formData, this.props.id);
       }
 
       g_changeColor = (e) =>{
@@ -156,11 +161,44 @@ class WriteContent extends React.Component{
     n_changeColor = (e) =>{
         this.setState({n_color: e, g_color: "gray", n_show: true, g_show: false, isLike: -1,})
     }
+    handleFileOnChange = (e) => {
+        e.preventDefault();
+        console.log(e.target.files);
+        let reader = new FileReader();
+        let file = e.target.files[0];
+        reader.onloadend = () => {
+          this.setState({
+            file: file,
+            previewURL: reader.result,
+          });
+        };
+        reader.readAsDataURL(file);
+      };
 
     render(){
+        let profile_preview = null;
+        if (this.state.file !== "") {
+            profile_preview = (
+                <PvImg className="profile_preview" src={this.state.previewURL}></PvImg>
+            );
+        }
+        else if(this.v_img !== ""){
+            profile_preview = (
+                <PvImg className="profile_preview" src={this.state.previewURL}></PvImg>
+            );
+        }
         return(
             <Content>
-                <Pic type="file"></Pic>
+            <PF>
+                <Pic 
+                encType="multipart/form-data"
+                type="file"
+                accept="image/jpg,impge/png,image/jpeg,image/gif"
+                name="store_img"
+                onChange={this.handleFileOnChange}
+                ></Pic>
+                {profile_preview}
+                </PF>
                 {this.state.show ? (
                 <ICFrame>
                     <Div onClick={() => this.g_changeColor("#5897A6")}>
@@ -199,6 +237,21 @@ class WriteContent extends React.Component{
     }
 }
 
+const PF = styled.div`
+  height: auto;
+`;
+
+const PvImg = styled.img`
+  justify-content: center;
+  align-items: center;
+  // position: absolute;
+  object-fit: cover;
+  top: 0;
+  left: 0;
+  width: 95%;
+  height: 5rem;
+`;
+
 const TextD = styled.div`
     padding-left: .3rem;
     margin-top: .3rem;
@@ -231,7 +284,7 @@ const Content = styled.div`
     padding: 10% 10% 5% 10%;
 `
 const Pic = styled.input`
-    height: 5rem;
+    height: 2rem;
     border-style: solid;
     border-width: 0.05rem;
     border-color: gray;

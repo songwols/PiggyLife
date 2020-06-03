@@ -46,15 +46,9 @@ const Data = {
     requests.put(
       `/user/updatePassword?email=${user.email}&password=${user.password}`
     ),
-  postupdate: (data, pid) =>
+  postupdate: (data, file, pid) =>
       requests.put(
-        `/post/update/${pid}`,{
-          content: data.v_memo,
-          image: "",
-          isLike:data.isLike,
-          sid: data.sid,
-          visited: data.visited,
-        }
+        `/post/update/${pid}?content=${data.v_memo}&isLike=${data.isLike}&visited=${data.visited}`,file,{}
       ),
   getAreaStatistic: (uId) => requests.get(`/post/getAreaStatistic/${uId}`),
   getCategoryStatistic: (uId) =>
