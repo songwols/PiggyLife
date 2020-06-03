@@ -1,6 +1,7 @@
 import axios from "axios";
 
 const API_ROOT = "http://52.78.169.231:8080/PIGGY";
+// const API_ROOT = "http://localhost:8080/PIGGY";
 
 const requests = {
   get: (url, header) => axios.get(`${API_ROOT}${url}`, { headers: header }),
@@ -8,6 +9,8 @@ const requests = {
     axios.post(`${API_ROOT}${url}`, body, { headers: header }),
   put: (url, body, header) =>
     axios.put(`${API_ROOT}${url}`, body, { headers: header }),
+  delete: (url, header) =>
+    axios.delete(`${API_ROOT}${url}`, { headers: header }),
 };
 
 const Data = {
@@ -25,19 +28,18 @@ const Data = {
       nickname: user.nickname,
       password: user.password,
     }),
-  signin: (user) =>
-    requests.get(`/sign/signin?email=${user.email}&password=${user.password}`),
   email_send: (email) => requests.post(`/sign/emailSend?email=${email}`),
   search: (store_name) => requests.get(`/store/findByName?name=${store_name}`),
+  mypdetail: (pid) => requests.get(`/post/findById/${pid}`),
   detail: (sid) => requests.get(`/store/findById/${sid}`),
   upload: (info, uid) =>
     requests.post(`/post/create/${uid}`, {
       content: info.v_memo,
-      image: "",
       isLike: info.isLike,
       sid: info.sid,
       visited: info.visited,
     }),
+  postImage: (info, id) => requests.post(`/post/postImage/${id}`, info, {}),
   findByEmail: (email) => requests.get(`/user/findByEmail?email=${email}`),
   signin: (user) =>
     requests.get(`/sign/signin?email=${user.email}&password=${user.password}`),
@@ -54,7 +56,22 @@ const Data = {
       password: user.password,
     }),
   checkPwd: (user, token) =>
-    requests.post(`/user/checkPassword`, user.currPwd, { TOKEN: token }),
+    requests.post(
+      `/user/checkPassword`,
+      { password: user.currPwd },
+      { TOKEN: token }
+    ),
+
+  postupdate: (data, file, pid) =>
+    requests.put(
+      `/post/update/${pid}?content=${data.v_memo}&isLike=${data.isLike}&visited=${data.visited}`,
+      file,
+      {}
+    ),
+  getAreaStatistic: (uId) => requests.get(`/post/getAreaStatistic/${uId}`),
+  getCategoryStatistic: (uId) =>
+    requests.get(`/post/getCategoryStatistic/${uId}`),
+  postdelete: (pid) => requests.delete(`/post/delete/${pid}`),
 };
 
 export default {

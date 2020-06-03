@@ -24,10 +24,16 @@ public interface UserService extends UserDetailsService{
 	
 	public void updateEmail(String email, String massage);
 	
+	public Boolean checkPassword(Long uId, String password);
+	
 	public User updatePassword(Long uId, String password);
 	
 	public void deleteById(Long uId);
 	
 	public User update(SignupDto dto);
+
+	public User updateImage(Long uId, String image, String imageName);
+	
+	public User findById(Long uId);
 	
 }

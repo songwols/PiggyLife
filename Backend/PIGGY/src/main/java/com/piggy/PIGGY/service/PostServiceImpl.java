@@ -15,6 +15,7 @@ import org.springframework.stereotype.Service;
 
 import com.piggy.PIGGY.dto.PostAreaStatisticDto;
 import com.piggy.PIGGY.dto.PostCategoryStatisticDto;
+import com.piggy.PIGGY.dto.PostImageDto;
 import com.piggy.PIGGY.dto.PostInputDto;
 import com.piggy.PIGGY.dto.PostOutputDto;
 import com.piggy.PIGGY.entity.Post;
@@ -44,6 +45,15 @@ public class PostServiceImpl implements PostService {
 	public Map<String, Object> create(Long uId, PostInputDto dto) {
 		User user = uRepo.findById(uId).orElseThrow(NoSuchElementException::new);
 		Store store = sRepo.findById(dto.getSId()).orElseThrow(NoSuchElementException::new);
+		Map<String, Object> resultMap = new HashMap<String, Object>();
+		
+		if(pRepo.findByUserAndStore(user, store).orElse(null) != null) {
+		    resultMap.put("success", false);
+		    resultMap.put("code", -1);
+		    resultMap.put("message", "해당 유저는 해당 가게에 대해 이미 작성했습니다.");
+		    return resultMap;
+		}
+		
 		int size = pRepo.findByUser(user).size();
 		int status = 0;
 		if(size <= 100) {
@@ -54,16 +64,17 @@ public class PostServiceImpl implements PostService {
 				status = uRepo.updateRanking(nextRank, uId);
 			}
 		}
-	    Map<String, Object> resultMap = new HashMap<String, Object>();
 	    PostOutputDto output = MapperUtils.map(pRepo.save(Post.builder()
 				.user(user)
 				.store(store)
-				.image(dto.getImage())
 				.content(dto.getContent())
 				.visited(dto.getVisited())
 				.isLike(dto.getIsLike())
 				.build()), PostOutputDto.class);
 	    
+	    resultMap.put("success", true);
+	    resultMap.put("code", 1);
+	    resultMap.put("message", "게시글 작성 완료");
 	    resultMap.put("data", output);
 	    resultMap.put("status", status);
 		return resultMap;
@@ -89,7 +100,7 @@ public class PostServiceImpl implements PostService {
 	public Post update(Long pId, PostInputDto dto) {
 		Post post = pRepo.findById(pId).orElseThrow(NoSuchElementException::new);
 		Store store = sRepo.findById(dto.getSId()).orElseThrow(NoSuchElementException::new);
-		post.update(store, dto.getImage(), dto.getContent(), dto.getVisited(), dto.getIsLike());
+		post.update(store, dto.getContent(), dto.getVisited(), dto.getIsLike());
 		return pRepo.save(post);
 	}
 
@@ -138,6 +149,13 @@ public class PostServiceImpl implements PostService {
 		User user = uRepo.findById(uId).orElseThrow(NoSuchElementException::new);
 		List<Post> list = pRepo.findByUserAndVisited(user, visited);
 		return list;
+	}
+	
+	@Override
+	public Post updateImage(Long pId, PostImageDto dto) {
+		Post post = pRepo.findById(pId).orElseThrow(NoSuchElementException::new);
+		post.updateImg(dto.getImage(), dto.getImageName());
+		return pRepo.save(post);
 	}
 
 }

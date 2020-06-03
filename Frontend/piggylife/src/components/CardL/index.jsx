@@ -18,8 +18,6 @@ class CardLayout extends React.Component {
     const keyword = this.props.keyword;
     if (keyword === "top10") {
       this.props.storeStore.get_top10();
-    } else if (keyword === "mypost") {
-      this.props.storeStore.get_mypost(window.sessionStorage.getItem("uid"));
     } else if (keyword === "hotplace") {
       this.props.storeStore.get_hotplace();
     } else if (keyword === "similar") {
@@ -28,10 +26,7 @@ class CardLayout extends React.Component {
   }
 
   render() {
-    if (this.props.keyword === "mypost") {
-      this.list = this.props.storeStore.myposts;
-      this.length = this.props.storeStore.mypostslength;
-    } else if (this.props.keyword === "hotplace") {
+    if (this.props.keyword === "hotplace") {
       this.list = this.props.storeStore.hotplace;
       this.length = this.props.storeStore.hotplacelength;
     } else if (this.props.keyword === "top10") {

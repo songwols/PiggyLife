@@ -40,7 +40,6 @@ public class UserServiceImpl implements UserService {
 				.email(dto.getEmail())
 				.password(passwordEncoder.encode(dto.getPassword()))
 				.nickname(dto.getNickname())
-				.image(dto.getImage())
 				.emailCertify("email_send_require")
 				.ranking(1)
 				.roles(Collections.singletonList("EMAIL_USER"))
@@ -97,6 +96,13 @@ public class UserServiceImpl implements UserService {
 		uRepo.updateEmail(email, massage);
 	}
 	
+	@Override
+	public Boolean checkPassword(Long uId, String password) {
+		User user = uRepo.findById(uId).orElseThrow(NoSuchElementException::new);
+		if (passwordEncoder.matches(password, user.getPassword()))
+			return true;
+		return false;
+	}
 
 	@Override
 	public User updatePassword(Long uId, String password) {
@@ -113,9 +119,19 @@ public class UserServiceImpl implements UserService {
 	@Override
 	public User update(SignupDto dto) {
 		User user = uRepo.findByEmail(dto.getEmail()).orElseThrow(NoSuchElementException::new);
-		user.update(dto.getEmail(), passwordEncoder.encode(dto.getPassword()),
-				dto.getNickname(), dto.getImage());
+		user.update(dto.getEmail(), passwordEncoder.encode(dto.getPassword()),dto.getNickname());
 		return uRepo.save(user);
 	}
-	
+
+	@Override
+	public User updateImage(Long uId, String image, String imageName) {
+		User user = uRepo.findById(uId).orElseThrow(NoSuchElementException::new);
+		user.updateImage(image, imageName);
+		return uRepo.save(user);
+	}
+
+	@Override
+	public User findById(Long uId) {
+		return uRepo.findById(uId).orElseThrow(NoSuchElementException::new);
+	}
 }

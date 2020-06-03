@@ -7,6 +7,8 @@ export default class UserStore {
   @observable nickname = "";
   @observable image = "";
   @observable data = "";
+  @observable ranking = 0;
+  @observable rname = "";
 
   @action
   checkPwd(user) {
@@ -77,6 +79,29 @@ export default class UserStore {
         this.image = res.data.image;
         this.nickname = res.data.nickname;
         this.ranking = res.data.ranking;
+        if (this.ranking === 0) {
+          this.rname = "아기돼지";
+        } else if (this.ranking === 1) {
+          this.rname = "어린이돼지";
+        } else if (this.ranking === 2) {
+          this.rname = "청년돼지";
+        } else if (this.ranking === 3) {
+          this.rname = "평민돼지";
+        } else if (this.ranking === 4) {
+          this.rname = "기사돼지";
+        } else if (this.ranking === 5) {
+          this.rname = "남작돼지";
+        } else if (this.ranking === 6) {
+          this.rname = "자작돼지";
+        } else if (this.ranking === 7) {
+          this.rname = "백작돼지";
+        } else if (this.ranking === 8) {
+          this.rname = "후작돼지 ";
+        } else if (this.ranking === 9) {
+          this.rname = "공작돼지 ";
+        } else if (this.ranking === 10) {
+          this.rname = "로얄돼지";
+        }
       })
       .catch((err) => {
         console.log(err);

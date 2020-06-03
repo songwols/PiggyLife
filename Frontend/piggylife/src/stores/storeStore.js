@@ -6,11 +6,12 @@ export default class StoreStore {
   @observable myposts = [];
   @observable store_name = "";
   @observable storeItems = [];
-  @observable detailPost = {};
+  @observable mydetailPost = {};
   @observable top10 = [];
   @observable hotplace = [];
   @observable similar = [];
   @observable location = [];
+  @observable detailPost = {};
 
   @computed get postslength() {
     return this.posts.length;
@@ -33,6 +34,18 @@ export default class StoreStore {
     return agent.Data.get_mypost(uid)
       .then((res) => {
         this.setPosts(res.data);
+        console.log(res.data);
+        this.location = [];
+        for (var i = 0; i < res.data.length; i++) {
+          this.location = this.location.concat({
+            lat: res.data[i].store.latitude,
+            long: res.data[i].store.longitude,
+            name: res.data[i].store.name,
+            address: res.data[i].store.address,
+            vis: res.data[i].visited,
+            pid: res.data[i].pid,
+          });
+        }
       })
       .catch((err) => console.log(err));
   }
@@ -43,13 +56,6 @@ export default class StoreStore {
       .then((res) => {
         //console.log(res.data);
         this.setMyPosts(res.data);
-        this.location = [];
-        for (var i = 0; i < res.data.length; i++) {
-          this.location = this.location.concat({
-            lat: res.data[i].store.latitude,
-            long: res.data[i].store.longitude,
-          });
-        }
       })
       .catch((err) => console.log(err));
   }
@@ -99,24 +105,34 @@ export default class StoreStore {
       .catch((err) => alert("실패"));
   }
 
-  @action detail(sid) {
-    return agent.Data.detail(sid)
+  @action mydetail(pid) {
+    return agent.Data.mypdetail(pid)
       .then((res) => {
-        this.detailPost = res.data;
+        this.mydetailPost = res.data;
         // console.log(res.data);
       })
       .catch((err) => alert("실패"));
   }
 
-  @action upload(data) {
+  @action upload(data, file) {
     console.log(data);
     const uid = window.sessionStorage.getItem("uid");
-    console.log(uid);
     return agent.Data.upload(data, uid)
       .then((res) => {
-        window.location.replace("/feed");
+        console.log(res.data.data.pid);
+        this.postImage(file,res.data.data.pid);
       })
       .catch((err) => alert("업로드 실패!"));
+  }
+
+  @action postImage(data,id) {
+    console.log(id)
+    return agent.Data.postImage(data,id)
+      .then((res) => {
+        console.log(res);
+        window.location.replace("/feed");
+      })
+      .catch((err) => console.log(err));
   }
 
   @action
@@ -130,5 +146,33 @@ export default class StoreStore {
   @action
   setSimilar(similar) {
     this.similar = similar;
+  }
+
+  @action detail(sid) {
+    return agent.Data.detail(sid)
+      .then((res) => {
+        this.detailPost = res.data;
+        // console.log(res.data);
+      })
+      .catch((err) => alert("실패"));
+  }
+
+  @action postupdate(data, file, pid){
+    console.log(data)
+    console.log(pid)
+    return agent.Data.postupdate(data, file, pid)
+    .then((res) => {
+      console.log(res.data);
+      window.location.replace("/mydetail/"+pid);
+    })
+    .catch((err) => alert("실패"))
+  }
+
+  @action postdelete(pid) {
+    return agent.Data.postdelete(pid)
+      .then((res) => {
+        window.location.replace("/feed");
+      })
+      .catch((err) => alert("실패"));
   }
 }
