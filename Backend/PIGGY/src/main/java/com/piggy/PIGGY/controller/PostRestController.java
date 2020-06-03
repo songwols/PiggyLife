@@ -50,6 +50,7 @@ public class PostRestController {
 		}
 		
 	}
+	
 	@ApiOperation(value = "모든 Post 불러오기")
 	@GetMapping("/findAll")
 	public ResponseEntity<Object> findAll(){
