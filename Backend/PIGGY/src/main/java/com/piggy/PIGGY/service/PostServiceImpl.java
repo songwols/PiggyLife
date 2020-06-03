@@ -44,6 +44,15 @@ public class PostServiceImpl implements PostService {
 	public Map<String, Object> create(Long uId, PostInputDto dto) {
 		User user = uRepo.findById(uId).orElseThrow(NoSuchElementException::new);
 		Store store = sRepo.findById(dto.getSId()).orElseThrow(NoSuchElementException::new);
+		Map<String, Object> resultMap = new HashMap<String, Object>();
+		
+		if(pRepo.findByUserAndStore(user, store).orElse(null) != null) {
+		    resultMap.put("success", false);
+		    resultMap.put("code", -1);
+		    resultMap.put("message", "해당 유저는 해당 가게에 대해 이미 작성했습니다.");
+		    return resultMap;
+		}
+		
 		int size = pRepo.findByUser(user).size();
 		int status = 0;
 		if(size <= 100) {
@@ -54,7 +63,6 @@ public class PostServiceImpl implements PostService {
 				status = uRepo.updateRanking(nextRank, uId);
 			}
 		}
-	    Map<String, Object> resultMap = new HashMap<String, Object>();
 	    PostOutputDto output = MapperUtils.map(pRepo.save(Post.builder()
 				.user(user)
 				.store(store)
@@ -64,6 +72,9 @@ public class PostServiceImpl implements PostService {
 				.isLike(dto.getIsLike())
 				.build()), PostOutputDto.class);
 	    
+	    resultMap.put("success", true);
+	    resultMap.put("code", 1);
+	    resultMap.put("message", "게시글 작성 완료");
 	    resultMap.put("data", output);
 	    resultMap.put("status", status);
 		return resultMap;
