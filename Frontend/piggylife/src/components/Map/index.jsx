@@ -107,7 +107,6 @@ class MapContent extends React.Component {
 
           // 마커에 클릭이벤트를 등록합니다
           kakao.maps.event.addListener(marker, 'click', makeClickListener(map, marker, infowindow));
-          kakao.maps.event.addListener(infowindow, 'click', ClickInfoListener(list[i].pid));
           }
           marker.setMap(map);
           // 인포윈도우를 표시하는 클로저를 만드는 함수입니다 
@@ -116,10 +115,6 @@ class MapContent extends React.Component {
                 infowindow.open(map, marker);
                 console.log("infowindow")
             };
-          }
-
-          function ClickInfoListener(id) {
-            console.log("dd")
           }
       });
     };
