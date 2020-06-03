@@ -16,12 +16,14 @@ import org.springframework.stereotype.Service;
 import com.piggy.PIGGY.dto.PostAreaStatisticDto;
 import com.piggy.PIGGY.dto.PostCategoryStatisticDto;
 import com.piggy.PIGGY.dto.PostInputDto;
+import com.piggy.PIGGY.dto.PostOutputDto;
 import com.piggy.PIGGY.entity.Post;
 import com.piggy.PIGGY.entity.Store;
 import com.piggy.PIGGY.entity.User;
 import com.piggy.PIGGY.repository.PostRepository;
 import com.piggy.PIGGY.repository.StoreRepository;
 import com.piggy.PIGGY.repository.UserRepository;
+import com.piggy.PIGGY.util.MapperUtils;
 
 @Service
 public class PostServiceImpl implements PostService {
@@ -53,7 +55,7 @@ public class PostServiceImpl implements PostService {
 			}
 		}
 	    Map<String, Object> resultMap = new HashMap<String, Object>();
-	    resultMap.put("data", pRepo.save(Post.builder()
+	    PostOutputDto output = MapperUtils.map(pRepo.save(Post.builder()
 				.user(user)
 				.store(store)
 				.imageName(dto.getImageName())
@@ -61,8 +63,9 @@ public class PostServiceImpl implements PostService {
 				.content(dto.getContent())
 				.visited(dto.getVisited())
 				.isLike(dto.getIsLike())
-				.build()
-		));
+				.build()), PostOutputDto.class);
+	    
+	    resultMap.put("data", output);
 	    resultMap.put("status", status);
 		return resultMap;
 	}

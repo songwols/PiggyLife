@@ -1,5 +1,6 @@
 package com.piggy.PIGGY.controller;
 
+import java.io.File;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -22,6 +23,7 @@ import org.springframework.web.multipart.MultipartFile;
 import com.piggy.PIGGY.dto.PostAreaStatisticDto;
 import com.piggy.PIGGY.dto.PostInputDto;
 import com.piggy.PIGGY.dto.PostOutputDto;
+import com.piggy.PIGGY.dto.ResultDto;
 import com.piggy.PIGGY.entity.Post;
 import com.piggy.PIGGY.service.FileService;
 import com.piggy.PIGGY.service.PostService;
@@ -49,12 +51,11 @@ public class PostRestController {
 	public ResponseEntity<Object> create(@PathVariable Long uId, @RequestBody PostInputDto dto){
 		try {
 			log.trace("PostRestController - create", dto);
+			System.out.println(dto);
 			Map<String, Object> responseImage = fileService.uploadImage(dto.getFile(), "post");
-			
 			dto.setImageName(responseImage.get("imageName").toString());
 			dto.setImage(responseImage.get("image").toString());
-			System.out.println(dto.getFile().getName());
-			System.out.println(dto.getFile().getOriginalFilename());
+			
 			Map<String, Object> output = pService.create(uId, dto);
 			return new ResponseEntity<Object>(output, HttpStatus.OK);
 		} catch (Exception e) {
@@ -135,12 +136,12 @@ public class PostRestController {
 			Post post = pService.findById(pId);
 			fileService.deleteImage(post.getImageName());
 			pService.delete(pId);
-			return new ResponseEntity<Object>("삭제완료", HttpStatus.OK);
+			return new ResponseEntity<Object>(new ResultDto(true, 1, "삭제되었습니다."), HttpStatus.OK);
 		} catch (Exception e) {
 			return new ResponseEntity<Object>(e.getMessage(), HttpStatus.CONFLICT);
 		}
 	}
-	
+
 	@ApiOperation(value = "해당 유저의 지역통계 불러오기")
 	@GetMapping("/getAreaStatistic/{uId}")
 	public ResponseEntity<Object> getAreaStatistic(@PathVariable Long uId){

@@ -40,11 +40,14 @@ public class SignRestController {
 	@Autowired
 	private JavaMailSender mailSender;
 
-	@ApiOperation(value = "회원가입, (인증 이메일까지 동시에 보냄)")
+	@ApiOperation(value = "회원가입")
 	@PostMapping("/signup")
 	public ResponseEntity<Object> signup(@RequestBody SignupDto input) {
 		try {
 			User user = uService.update(input);
+			if (!user.getEmailCertify().equals("Y"))
+				return new ResponseEntity<Object>(new ResultDto(false, -1, "이메일 인증이 되지 않은 유저"), HttpStatus.ACCEPTED);
+			
 			UserDto userdto = MapperUtils.map(user, UserDto.class);
 			return new ResponseEntity<Object>(userdto, HttpStatus.CREATED);
 		} catch (Exception e) {
@@ -56,11 +59,10 @@ public class SignRestController {
 	@PostMapping("/emailSend")
 	public ResponseEntity<Object> emailSend(@RequestParam String email) {
 		try {
-			if (uService.emailDuplicateCheck(email)) 
-				return new ResponseEntity<Object>(new ResultDto(false, -1, "중복된 이메일 입니다."), HttpStatus.ACCEPTED);
-			
-			SignupDto user = new SignupDto(email, "dummy", "dummy", "dummy");
-			uService.signup(user);
+			if (!uService.emailDuplicateCheck(email)) {
+				SignupDto user = new SignupDto(email, "dummy", "dummy", "dummy");
+				uService.signup(user);
+			}
 			
 			String authkey = new TempKey().getKey(8, false);
 			MailUtils sendMail;
@@ -88,7 +90,6 @@ public class SignRestController {
 	@GetMapping("/signin")
 	public ResponseEntity<Object> signin(@RequestParam String email, @RequestParam String password) {
 		try {
-			System.out.println(email + " : " + password);
 			return new ResponseEntity<Object>(uService.signin(email, password), HttpStatus.OK);
 		} catch (Exception e) {
 			throw e;

@@ -17,10 +17,23 @@ class MapContent extends React.Component {
     }
   }
   async componentWillMount(){
-    await this.props.storeStore.get_mypost(sessionStorage.getItem("uid"));
-    const list = this.props.storeStore.location;
-    console.log(list)
-    
+    if(this.props.keyword === "detail"){
+      await this.props.storeStore.detail(this.props.id);
+      const post = this.props.storeStore.detailPost;
+      this.setState({
+        latitude: post.latitude,
+        longitude: post.longitude,
+      })
+    }
+    else if(this.props.keyword === "mydetail"){
+      await this.props.storeStore.mydetail(this.props.id);
+      const mpost = this.props.storeStore.mydetailPost;
+      this.setState({
+        latitude: mpost.store.latitude,
+        longitude: mpost.store.longitude,
+    })
+    }
+       
   }
 
   componentDidMount() {
@@ -33,16 +46,19 @@ class MapContent extends React.Component {
     script.onload = () => {
       kakao.maps.load(() => {
         let container = document.getElementById("Mymap");
+        const lati= this.state.latitude;
+        const long= this.state.longitude;
         let options = {
-          center: new kakao.maps.LatLng(37.506502, 127.053617),
-          level: 7
+          center: new kakao.maps.LatLng(lati, long),
+          level: 7,
         };
 
         const map = new window.kakao.maps.Map(container, options);
 
         const markerPosition  = new kakao.maps.LatLng(
-          (37.19, 127.38)
+          this.state.latitude, this.state.longitude
         ); 
+        
         const marker = new kakao.maps.Marker({position: markerPosition});
 
         marker.setMap(map);
@@ -58,7 +74,7 @@ class MapContent extends React.Component {
 
 const MapContents = styled.div`
   width: 100%;
-  height: 92vh;
+  height: 46vh;
 `;
 
 

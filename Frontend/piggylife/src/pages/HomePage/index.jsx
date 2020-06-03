@@ -2,14 +2,15 @@ import React from "react";
 import styled from "styled-components";
 import Navbar from "../../components/Navbar";
 import CardLayout from "../../components/CardL";
+import DCardLayout from "../../components/DCardL";
 import { inject, observer } from "mobx-react";
 
 @inject("storeStore", "userStore")
 @observer
 class HomePage extends React.Component {
   componentWillMount() {
-    this.props.storeStore.get_mypost();
-    this.props.userStore.whoami(window.sessionStorage.getItem("email"));
+    //this.props.storeStore.get_mypost(window.sessionStorage.getItem("uid"));
+    //this.props.userStore.whoami(window.sessionStorage.getItem("email"));
   }
 
   render() {
@@ -19,7 +20,7 @@ class HomePage extends React.Component {
           <Mukitlist>
             <Title>먹킷리스트</Title>
             <Div>
-              <CardLayout keyword="mypost"></CardLayout>
+              <DCardLayout keyword="mypost"></DCardLayout>
             </Div>
           </Mukitlist>
 
@@ -56,8 +57,12 @@ const Title = styled.div`
 
 const Div = styled.div`
   background-color: #f2e9e4;
-  width: 100%;
+  width: 100vw;
   height: 100px;
+  /* display: flex; */
+  white-space: nowrap;
+  overflow-x: scroll;
+  overflow-y: hidden;
 `;
 
 const Mukitlist = styled.div`

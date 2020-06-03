@@ -11,6 +11,7 @@ import lombok.NoArgsConstructor;
 @Data
 public class PostOutputDto {
 	
+	private Long pId;
 	private String image;
 	private String imageName;
 	private String content;

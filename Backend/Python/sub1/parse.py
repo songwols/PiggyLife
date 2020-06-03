@@ -27,15 +27,6 @@ store_columns = (
     "category",  # 음식점 카테고리
 )
 
-review_columns = (
-    "id",  # 리뷰 고유번호
-    "store",  # 음식점 고유번호
-    "user",  # 유저 고유번호
-    "score",  # 평점
-    "content",  # 리뷰 내용
-    "reg_time",  # 리뷰 등록 시간
-)
-
 # menu
 menu_columns = (
     "store",  # 음식점 고유 번호
@@ -43,18 +34,6 @@ menu_columns = (
     "price",  # 가격
 )
 
-# user
-user_columns = (
-    "id",  # user id
-    "gender",  # 성별
-    "age",  # 나이
-    "email",  # 이메일
-    "pwd",  # 패스워드
-    "create_account",  # 계정 개설일
-    "update_account",  # 계정 수정일
-    "tag",  # 관심사
-    "nick_name",  # 닉네임
-)
 
 # region_tags
 region_tags_cloumns = (
@@ -65,10 +44,6 @@ region_tags_cloumns = (
 
 
 def import_data(data_path=DATA_FILE):
-    """
-    Req. 1-1-1 음식점 데이터 파일을 읽어서 Pandas DataFrame 형태로 저장합니다
-    """
-
     try:
         with open(data_path, encoding="utf-8") as f:
             data = json.loads(f.read())
@@ -77,12 +52,7 @@ def import_data(data_path=DATA_FILE):
         exit(1)
 
     stores = []  # 음식점 테이블
-    reviews = []  # 리뷰 테이블
     menus = []  # 메뉴 테이블
-    users = []  # user 테이블
-    user_set = set()
-    year = datetime.today().year  # 올해 년도
-    idx = 0
     region_tags = []  # 지역구 테이블
     region_dict = {"서울특별시": 0, "부산광역시": 1, "대구광역시": 2, "인천광역시": 3, "광주광역시": 4,
                    "대전광역시": 5, "울산광역시": 6, "세종특별자치시": 7, "경기도": 8, "강원도": 9, "충청북도": 10,
@@ -262,14 +232,15 @@ def import_data(data_path=DATA_FILE):
             # print("too short")
             continue        
         
-        if region_dict.get(region[0]):
+        if type(region_dict.get(region[0]))== int and region_dict.get(region[0])>=0  :
             #구역 코드 넣기
             #세종특별자치시 예외처리
-            if region[0] != '세종특별자치시':
-                region_tag = region[0]+'|'+region[1]
-            else:
+            if region[0] == '세종특별자치시':
                 region_tag = region[0]+'|'
+            else:
+                region_tag = region[0]+'|'+region[1]
 
+                
             #구역 id => r_id 넣기
             if region_tag in region_list:
                 r_id = region_list.index(region_tag)+1
@@ -291,56 +262,19 @@ def import_data(data_path=DATA_FILE):
                     "|".join(categories),
                 ]
             )
-            for review in d["review_list"]:
-                r = review["review_info"]
-                u = review["writer_info"]  # user
-                reviews.append(
-                    [r["id"], d["id"], u["id"], r["score"],
-                     r["content"], r["reg_time"]]
+            for menu in d["menu_list"]:
+                if menu["price"] == None:
+                    continue
+                menus.append(
+                    [d["id"], menu["menu"], menu["price"]]
                 )
-                # users내에 user가 존재하면 넣지않는다 --> 중복 데이터제거필요 && age 나이 계산
-                if u["id"] not in user_set:
-                    # 이메일 생성
-                    email = "guest" + str(idx) +"@example.com"  # 임의 이메일 생성
-                    nick_name = "User" + str(idx)  # 임의 닉네임 생성
-                    idx = idx + 1
-                    pwd = create_pwd()  # 임의 패스워드 생성
-                    default_year = int(r["reg_time"][0:4])
-                    if default_year >= 1970 and default_year <= 2015:
-                        create_account = "2015" + r["reg_time"][4:]  # 리뷰일 기준으로 임의 생성
-                        update_account = "2015" + r["reg_time"][4:]  # 리뷰일 기준으로 임의 생성
-                    else:
-                        create_account = r["reg_time"]  # 리뷰일 기준으로 임의 생성
-                        update_account = r["reg_time"]  # 리뷰일 기준으로 임의 생성
-
-                    age = (year-int(u["born_year"])) if int(u["born_year"]) > 0 and int(u["born_year"]) < year else 0
-                    users.append(
-                        [u["id"], u["gender"], age, email, pwd,create_account, update_account, None, nick_name],
-                    )
-                    user_set.add(u["id"])             
-
-                for menu in d["menu_list"]:
-                    menus.append(
-                        [d["id"], menu["menu"], menu["price"]]
-                    )
 
     store_frame = pd.DataFrame(data=stores, columns=store_columns)
-    review_frame = pd.DataFrame(data=reviews, columns=review_columns)
     menu_frame = pd.DataFrame(data=menus, columns=menu_columns)
-    user_frame = pd.DataFrame(data=users, columns=user_columns)
     region_tag_frame = pd.DataFrame(
         data=region_tags, columns=region_tags_cloumns)
 
-    return {"stores": store_frame, "reviews": review_frame, "menus": menu_frame, "users": user_frame, "region_tags": region_tag_frame}
-
-
-def create_pwd():
-    _LENGTH = 10  # 10자리
-    string_pool = string.ascii_letters + string.digits + string.punctuation  # 소문자
-    result = ""  # 결과값
-    for i in range(_LENGTH):
-        result += random.choice(string_pool)  # 랜덤한 문자열 하나 선택
-    return result
+    return {"stores": store_frame, "menus": menu_frame, "region_tags": region_tag_frame}
 
 
 def dump_dataframes(dataframes):
@@ -372,19 +306,9 @@ def main():
     print(data["stores"].size)
     print(f"\n{separater}\n\n")
 
-    print("[리뷰]")
-    print(f"{separater}\n")
-    print(data["reviews"].head())
-    print(f"\n{separater}\n\n")
-
     print("[메뉴]")
     print(f"{separater}\n")
     print(data["menus"].head())
-    print(f"\n{separater}\n\n")
-
-    print("[사용자]")
-    print(f"{separater}\n")
-    print(data["users"].head())
     print(f"\n{separater}\n\n")
 
     print("[구역 태그]")
