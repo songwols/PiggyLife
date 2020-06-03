@@ -21,6 +21,7 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.piggy.PIGGY.dto.PostAreaStatisticDto;
+import com.piggy.PIGGY.dto.PostImageDto;
 import com.piggy.PIGGY.dto.PostInputDto;
 import com.piggy.PIGGY.dto.PostOutputDto;
 import com.piggy.PIGGY.dto.ResultDto;
@@ -51,11 +52,6 @@ public class PostRestController {
 	public ResponseEntity<Object> create(@PathVariable Long uId, @RequestBody PostInputDto dto){
 		try {
 			log.trace("PostRestController - create", dto);
-			System.out.println(dto);
-			Map<String, Object> responseImage = fileService.uploadImage(dto.getFile(), "post");
-			dto.setImageName(responseImage.get("imageName").toString());
-			dto.setImage(responseImage.get("image").toString());
-			
 			Map<String, Object> output = pService.create(uId, dto);
 			return new ResponseEntity<Object>(output, HttpStatus.OK);
 		} catch (Exception e) {
@@ -108,18 +104,10 @@ public class PostRestController {
 	
 	@ApiOperation(value = "해당 피드 업데이트")
 	@PutMapping("/update/{pId}")
-	public ResponseEntity<Object> update(@PathVariable Long pId, @RequestBody PostInputDto dto,
-										@RequestParam(value="file", required=false) MultipartFile file){
+	public ResponseEntity<Object> update(@PathVariable Long pId, @RequestBody PostInputDto dto){
 		try {
 			log.trace("PostRestController - update", dto);
 			Post post = pService.findById(pId);
-			String originImageNmae = post.getImageName();
-			String newImageName = dto.getImageName();
-			if(newImageName != null && !originImageNmae.equals(newImageName)) {
-				fileService.deleteImage(originImageNmae);
-				Map<String, Object> responseImage = fileService.uploadImage(file, "post");
-				dto.setImage(responseImage.get("image").toString());
-			}
 			post = pService.update(pId, dto);
 			PostOutputDto output = MapperUtils.map(post, PostOutputDto.class);
 			return new ResponseEntity<Object>(output, HttpStatus.OK);
@@ -197,6 +185,18 @@ public class PostRestController {
 			return new ResponseEntity<Object>(status, HttpStatus.OK);
 		} catch (Exception e) {
 			return new ResponseEntity<Object>(e.getMessage(), HttpStatus.CONFLICT);
+		}
+	}
+	
+	@PostMapping("/postImage/{pId}")
+	public ResponseEntity<Object> postImage(@PathVariable Long pId , @RequestParam("file") MultipartFile file) {
+		try {
+			Map<String, Object> responseImage = fileService.uploadImage(file, "post");
+			PostImageDto dto = new PostImageDto(pId, responseImage.get("image").toString(), responseImage.get("imageName").toString());
+			pService.updateImage(pId, dto);
+			return new ResponseEntity<Object>(1, HttpStatus.OK);
+		} catch (Exception e) {
+			return new ResponseEntity<Object>(e.getMessage(), HttpStatus.OK);
 		}
 	}
 	

@@ -33,11 +33,14 @@ const Data = {
   upload: (info, uid) =>
     requests.post(`/post/create/${uid}`, {
       content: info.v_memo,
-      image: "",
+      file: info.file,
       isLike: info.isLike,
       sid: info.sid,
       visited: info.visited,
+      image: "",
+      imageName: "",
     }),
+  postImage: (info) => requests.post(`/post/postImage`, info, {}),
   findByEmail: (email) => requests.get(`/user/findByEmail?email=${email}`),
   signin: (user) =>
     requests.get(`/sign/signin?email=${user.email}&password=${user.password}`),

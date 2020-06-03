@@ -100,7 +100,7 @@ export default class StoreStore {
       .catch((err) => alert("실패"));
   }
 
-  @action mydetail(pid){
+  @action mydetail(pid) {
     return agent.Data.mypdetail(pid)
       .then((res) => {
         this.mydetailPost = res.data;
@@ -120,6 +120,15 @@ export default class StoreStore {
       .catch((err) => alert("업로드 실패!"));
   }
 
+  @action postImage(data) {
+    console.log(data);
+    return agent.Data.postImage(data)
+      .then((res) => {
+        console.log(res);
+      })
+      .catch((err) => console.log(err));
+  }
+
   @action
   setTop10(top10) {
     this.top10 = top10;
@@ -133,12 +142,12 @@ export default class StoreStore {
     this.similar = similar;
   }
 
-  @action detail(sid){
+  @action detail(sid) {
     return agent.Data.detail(sid)
       .then((res) => {
         this.detailPost = res.data;
         // console.log(res.data);
       })
-      .catch((err) => alert("실패"))
+      .catch((err) => alert("실패"));
   }
 }

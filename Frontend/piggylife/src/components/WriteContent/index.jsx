@@ -50,6 +50,8 @@ class WriteContent extends React.Component {
       g_show: false,
       n_show: false,
       sid: "",
+      file: "",
+      previewURL: "",
     };
     this.g_changeColor = this.g_changeColor.bind(this);
     this.n_changeColor = this.n_changeColor.bind(this);
@@ -115,12 +117,14 @@ class WriteContent extends React.Component {
   }
 
   goRegister = (e) => {
-    console.log(this.props.userStore.uid);
-    if (this.state.v_name === "이름을 검색하고 싶으면 여기를 클릭하세요") {
-      alert("빈 값이 있습니다.");
-    } else {
-      this.props.storeStore.upload(this.state);
-    }
+    console.log(this.state.file);
+    const formData = new FormData();
+    formData.append("file", this.state.file);
+    // if (this.state.v_name === "이름을 검색하고 싶으면 여기를 클릭하세요") {
+    //   alert("빈 값이 있습니다.");
+    // } else
+    // this.props.storeStore.upload(this.state);
+    this.props.storeStore.postImage(formData);
   };
 
   g_changeColor = (e) => {
@@ -143,7 +147,27 @@ class WriteContent extends React.Component {
     });
   };
 
+  handleFileOnChange = (e) => {
+    e.preventDefault();
+    console.log(e.target.files);
+    let reader = new FileReader();
+    let file = e.target.files[0];
+    reader.onloadend = () => {
+      this.setState({
+        file: file,
+        previewURL: reader.result,
+      });
+    };
+    reader.readAsDataURL(file);
+  };
+
   render() {
+    let profile_preview = null;
+    if (this.state.file !== "") {
+      profile_preview = (
+        <PvImg className="profile_preview" src={this.state.previewURL}></PvImg>
+      );
+    }
     const getDetail = async (e) => {
       e.preventDefault();
       //디테일 받아올 스토어
@@ -175,8 +199,19 @@ class WriteContent extends React.Component {
 
     return (
       <Content>
-        {this.state.detail.length === 0 ? <div></div> : <div></div>}
-        <Pic type="file"></Pic>
+        <PF>
+          <Pic
+            encType="multipart/form-data"
+            type="file"
+            accept="image/jpg,impge/png,image/jpeg,image/gif"
+            name="store_img"
+            onChange={this.handleFileOnChange}
+          ></Pic>
+          <form encType="multipart/form-data">
+            <input type="file" onChange={this.handleFileOnChange}></input>
+          </form>
+          {profile_preview}
+        </PF>
         {this.state.show ? (
           <ICFrame>
             <Div onClick={() => this.g_changeColor("#5897A6")}>
@@ -300,8 +335,22 @@ const Content = styled.div`
   height: 100%;
   padding: 10% 10% 5% 10%;
 `;
-const Pic = styled.input`
+
+const PF = styled.div`
+  height: auto;
+`;
+const PvImg = styled.img`
+  justify-content: center;
+  align-items: center;
+  // position: absolute;
+  object-fit: cover;
+  top: 0;
+  left: 0;
+  width: 95%;
   height: 5rem;
+`;
+
+const Pic = styled.input`
   border-style: solid;
   border-width: 0.05rem;
   border-color: gray;

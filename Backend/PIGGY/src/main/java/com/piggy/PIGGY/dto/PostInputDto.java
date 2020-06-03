@@ -12,11 +12,8 @@ import lombok.NoArgsConstructor;
 public class PostInputDto {
 	
 	private Long sId;
-	private String image;
-	private String imageName;
 	private String content;
 	private Boolean visited;
 	private Integer isLike;
-	private MultipartFile file;
 
 }
