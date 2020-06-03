@@ -104,11 +104,22 @@ public class PostRestController {
 	
 	@ApiOperation(value = "해당 피드 업데이트")
 	@PutMapping("/update/{pId}")
-	public ResponseEntity<Object> update(@PathVariable Long pId, @RequestBody PostInputDto dto){
+	public ResponseEntity<Object> update(@PathVariable Long pId, 
+			@RequestParam String content,
+			@RequestParam Integer isLike,
+			@RequestParam("file") MultipartFile file){
 		try {
-			log.trace("PostRestController - update", dto);
+			log.trace("PostRestController - update");
 			Post post = pService.findById(pId);
+			PostInputDto dto = new PostInputDto(post.getStore().getSId(), content, post.getVisited(), isLike);
 			post = pService.update(pId, dto);
+			
+			if(!file.getName().equals(post.getImageName())) {
+				fileService.deleteImage(post.getImageName());
+				Map<String, Object> responseImage = fileService.uploadImage(file, "post");
+				PostImageDto imageDto = new PostImageDto(pId, responseImage.get("image").toString(), responseImage.get("imageName").toString());
+				post = pService.updateImage(pId, imageDto);
+			}
 			PostOutputDto output = MapperUtils.map(post, PostOutputDto.class);
 			return new ResponseEntity<Object>(output, HttpStatus.OK);
 		} catch (Exception e) {
@@ -166,35 +177,16 @@ public class PostRestController {
 			throw e;
 		}
 	}
-	
-	@PostMapping("/uploadImage/{uId}")
-	public ResponseEntity<Object> uploadImage(@PathVariable Long uId, @RequestParam("file") MultipartFile file){
-		try {
-			log.trace("PostRestController - uploadImage", file);
-			Map<String, Object> responseImage = fileService.uploadImage(file, "post");
-			return new ResponseEntity<Object>(responseImage, HttpStatus.OK);
-		} catch (Exception e) {
-			return new ResponseEntity<Object>(e.getMessage(), HttpStatus.CONFLICT);
-		}
-	}
-	
-	@DeleteMapping("/deleteImage/{uId}")
-	public ResponseEntity<Object> deleteImage(@RequestParam("imageName") String imageName){
-		try {
-			int status = fileService.deleteImage(imageName);
-			return new ResponseEntity<Object>(status, HttpStatus.OK);
-		} catch (Exception e) {
-			return new ResponseEntity<Object>(e.getMessage(), HttpStatus.CONFLICT);
-		}
-	}
-	
+
+	@ApiOperation(value = "해당 포스트에 이미지 업로드")
 	@PostMapping("/postImage/{pId}")
 	public ResponseEntity<Object> postImage(@PathVariable Long pId , @RequestParam("file") MultipartFile file) {
 		try {
 			Map<String, Object> responseImage = fileService.uploadImage(file, "post");
 			PostImageDto dto = new PostImageDto(pId, responseImage.get("image").toString(), responseImage.get("imageName").toString());
-			pService.updateImage(pId, dto);
-			return new ResponseEntity<Object>(1, HttpStatus.OK);
+			Post post = pService.updateImage(pId, dto);
+			PostOutputDto output = MapperUtils.map(post, PostOutputDto.class);
+			return new ResponseEntity<Object>(output, HttpStatus.OK);
 		} catch (Exception e) {
 			return new ResponseEntity<Object>(e.getMessage(), HttpStatus.OK);
 		}
