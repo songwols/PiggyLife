@@ -57,10 +57,9 @@ const Data = {
 
     },
   ),
-  checkPwd: (user)=> requests.post(`/user/checkPassword`,
+  checkPwd: (user,token)=> requests.post(`/user/checkPassword`,
   {password:user.currPwd},
-  {TOKEN:user.token}
-  // {TOKEN:sessionStorage.getItem("token")}
+  {TOKEN:token}
   ),
 };
 

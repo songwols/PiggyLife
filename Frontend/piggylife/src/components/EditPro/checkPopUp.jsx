@@ -9,18 +9,18 @@ class CheckPopUp extends React.Component{
       super(props);
       this.state={
         currPwd : "",
-        token:sessionStorage.getItem("token"),
+        // token:sessionStorage.getItem("token"),
       }
     }
     currentPwd = (e)=>{
       this.setState({
         currPwd: e.target.value,
-      });      
+      });
     }
     checkPwd = (e)=>{
       this.setState({
         currPwd : this.state.currPwd,
-        token: sessionStorage.getItem("token"),
+        // token: sessionStorage.getItem("token"),
       });
       this.props.userStore.checkPwd(this.state); 
     };

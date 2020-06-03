@@ -10,8 +10,8 @@ export default class UserStore {
 
   @action
   checkPwd(user){
-    console.log(user);
-    return agent.Data.checkPwd(user)
+    console.log(user.currPwd);
+    return agent.Data.checkPwd(user,sessionStorage.getItem("token"))
     .then((res)=>{
       console.log(res.data);
     }).catch((err)=>{
