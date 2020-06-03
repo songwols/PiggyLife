@@ -34,6 +34,7 @@ class Mydetail extends React.Component{
     }
 
     async componentWillMount() {
+        window.scrollTo(0, 0);
         await this.props.storeStore.mydetail(this.props.id);
         const post = this.props.storeStore.mydetailPost;
         this.setState({
