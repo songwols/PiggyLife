@@ -28,6 +28,12 @@ spring:
           starttls:
             enable: true
         debug: true
+  servlet:
+      multipart:
+          enabled: true
+          maxFileSize: 10MB
+          maxRequestSize: 10MB
+          
 #  jwt:
 #    secret: govlepel@$&
     
