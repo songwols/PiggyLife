@@ -71,6 +71,7 @@ class Mydetail extends React.Component{
                     <Text>메모</Text>
                     <Context>{this.state.memo}</Context> 
                 </Memo>
+                <Context/>
             </Frame>
         )
     }

@@ -1,6 +1,7 @@
 import axios from "axios";
 
-const API_ROOT = "http://52.78.169.231:8080/PIGGY";
+// const API_ROOT = "http://52.78.169.231:8080/PIGGY";
+const API_ROOT = "http://localhost:8080/PIGGY";
 
 const requests = {
   get: (url, header) => axios.get(`${API_ROOT}${url}`, { headers: header }),
@@ -26,19 +27,17 @@ const Data = {
       password: user.password,
     }),
   email_send: (email) => requests.post(`/sign/emailSend?email=${email}`),
-  search: (store_name) =>
-    requests.get(`/store/findByName?name=${store_name}`),
-  mypdetail: (pid) =>
-    requests.get(`/post/findById/${pid}`),
+  search: (store_name) => requests.get(`/store/findByName?name=${store_name}`),
+  mypdetail: (pid) => requests.get(`/post/findById/${pid}`),
   detail: (sid) => requests.get(`/store/findById/${sid}`),
   upload: (info, uid) =>
     requests.post(`/post/create/${uid}`, {
       content: info.v_memo,
-      image: info.file,
       isLike: info.isLike,
       sid: info.sid,
       visited: info.visited,
     }),
+  postImage: (info) => requests.post(`/post/postImage`, info, {}),
   findByEmail: (email) => requests.get(`/user/findByEmail?email=${email}`),
   signin: (user) =>
     requests.get(`/sign/signin?email=${user.email}&password=${user.password}`),
@@ -47,6 +46,9 @@ const Data = {
     requests.put(
       `/user/updatePassword?email=${user.email}&password=${user.password}`
     ),
+  getAreaStatistic: (uId) => requests.get(`/post/getAreaStatistic/${uId}`),
+  getCategoryStatistic: (uId) =>
+    requests.get(`/post/getCategoryStatistic/${uId}`),
 };
 
 export default {

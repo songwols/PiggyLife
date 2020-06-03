@@ -34,6 +34,18 @@ export default class StoreStore {
     return agent.Data.get_mypost(uid)
       .then((res) => {
         this.setPosts(res.data);
+        console.log(res.data);
+        this.location = [];
+        for (var i = 0; i < res.data.length; i++) {
+          this.location = this.location.concat({
+            lat: res.data[i].store.latitude,
+            long: res.data[i].store.longitude,
+            name: res.data[i].store.name,
+            address: res.data[i].store.address,
+            vis: res.data[i].visited,
+            pid: res.data[i].pid,
+          });
+        }
       })
       .catch((err) => console.log(err));
   }
@@ -44,13 +56,6 @@ export default class StoreStore {
       .then((res) => {
         //console.log(res.data);
         this.setMyPosts(res.data);
-        this.location = [];
-        for (var i = 0; i < res.data.length; i++) {
-          this.location = this.location.concat({
-            lat: res.data[i].store.latitude,
-            long: res.data[i].store.longitude,
-          });
-        }
       })
       .catch((err) => console.log(err));
   }
@@ -100,7 +105,7 @@ export default class StoreStore {
       .catch((err) => alert("실패"));
   }
 
-  @action mydetail(pid){
+  @action mydetail(pid) {
     return agent.Data.mypdetail(pid)
       .then((res) => {
         this.mydetailPost = res.data;
@@ -115,9 +120,19 @@ export default class StoreStore {
     console.log(uid);
     return agent.Data.upload(data, uid)
       .then((res) => {
-        window.location.replace("/feed");
+        // this.postImage()
+        // window.location.replace("/feed");
       })
       .catch((err) => alert("업로드 실패!"));
+  }
+
+  @action postImage(data) {
+    console.log(data);
+    return agent.Data.postImage(data)
+      .then((res) => {
+        console.log(res);
+      })
+      .catch((err) => console.log(err));
   }
 
   @action
@@ -133,12 +148,12 @@ export default class StoreStore {
     this.similar = similar;
   }
 
-  @action detail(sid){
+  @action detail(sid) {
     return agent.Data.detail(sid)
       .then((res) => {
         this.detailPost = res.data;
         // console.log(res.data);
       })
-      .catch((err) => alert("실패"))
+      .catch((err) => alert("실패"));
   }
 }

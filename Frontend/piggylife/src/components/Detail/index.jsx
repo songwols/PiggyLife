@@ -61,6 +61,7 @@ class Detail extends React.Component{
                 </Menu>
                 <Map id={this.props.id} keyword="detail"></Map>
                 <Tag>태그</Tag>
+                <Context/>
             </Frame>
         )
     }

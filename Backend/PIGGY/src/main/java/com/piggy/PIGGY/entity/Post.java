@@ -62,11 +62,13 @@ public class Post extends DateTime {
 	@ManyToOne
 	@JoinColumn(name = "uId")
 	private User user;
-	
 
 	@ManyToOne
 	@JoinColumn(name = "sId")
 	private Store store;
+	
+	@Column
+	private String imageName;
 	
 	@Column(nullable=false)
 	private String image;
@@ -81,21 +83,24 @@ public class Post extends DateTime {
 	private Integer isLike;
 
 	@Builder
-	public Post(User user, Store store, String image, String content, Boolean visited, Integer isLike) {
+	public Post(User user, Store store, String content, Boolean visited, Integer isLike) {
 		this.user = user;
 		this.store = store;
-		this.image = image;
 		this.content = content;
 		this.visited = visited;
 		this.isLike = isLike;
 	}
 	
-	public void update(Store store, String image, String content, Boolean visited, Integer isLike) {
+	public void update(Store store, String content, Boolean visited, Integer isLike) {
 		this.store = store;
-		this.image = image;
 		this.content = content;
 		this.visited = visited;
 		this.isLike = isLike;
+	}
+	
+	public void updateImg(String image, String imageName) {
+		this.image = image;
+		this.imageName = imageName;
 	}
 	
 }
