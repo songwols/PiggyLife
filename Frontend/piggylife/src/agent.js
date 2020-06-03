@@ -9,6 +9,7 @@ const requests = {
     axios.post(`${API_ROOT}${url}`, body, { headers: header }),
   put: (url, body, header) =>
     axios.put(`${API_ROOT}${url}`, body, { headers: header }),
+  delete: (url, header) => axios.delete(`${API_ROOT}${url}`, { headers: header }),
 };
 
 const Data = {
@@ -46,9 +47,15 @@ const Data = {
     requests.put(
       `/user/updatePassword?email=${user.email}&password=${user.password}`
     ),
+  postupdate: (data, file, pid) =>
+      requests.put(
+        `/post/update/${pid}?content=${data.v_memo}&isLike=${data.isLike}&visited=${data.visited}`,file,{}
+      ),
   getAreaStatistic: (uId) => requests.get(`/post/getAreaStatistic/${uId}`),
   getCategoryStatistic: (uId) =>
     requests.get(`/post/getCategoryStatistic/${uId}`),
+  postdelete: (pid) =>
+      requests.delete(`/post/delete/${pid}`),
 };
 
 export default {
