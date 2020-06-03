@@ -167,4 +167,12 @@ export default class StoreStore {
     })
     .catch((err) => alert("실패"))
   }
+
+  @action postdelete(pid) {
+    return agent.Data.postdelete(pid)
+      .then((res) => {
+        window.location.replace("/feed");
+      })
+      .catch((err) => alert("실패"));
+  }
 }

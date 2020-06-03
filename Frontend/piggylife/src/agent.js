@@ -9,6 +9,7 @@ const requests = {
     axios.post(`${API_ROOT}${url}`, body, { headers: header }),
   put: (url, body, header) =>
     axios.put(`${API_ROOT}${url}`, body, { headers: header }),
+  delete: (url, header) => axios.delete(`${API_ROOT}${url}`, { headers: header }),
 };
 
 const Data = {
@@ -53,6 +54,8 @@ const Data = {
   getAreaStatistic: (uId) => requests.get(`/post/getAreaStatistic/${uId}`),
   getCategoryStatistic: (uId) =>
     requests.get(`/post/getCategoryStatistic/${uId}`),
+  postdelete: (pid) =>
+      requests.delete(`/post/delete/${pid}`),
 };
 
 export default {
