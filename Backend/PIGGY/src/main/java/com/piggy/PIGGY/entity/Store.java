@@ -19,6 +19,7 @@ import javax.persistence.OneToMany;
 import javax.persistence.SqlResultSetMapping;
 
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import com.piggy.PIGGY.dto.StoreTop10Dto;
 
@@ -75,9 +76,10 @@ public class Store {
 	@Column
 	private String branch;
 
-
+	@JsonIgnore
 	@OneToMany(mappedBy = "store", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
 	private List<Post> posts = new ArrayList<>();
+	
 	@ManyToOne
 	@JoinColumn(name="rId")
 	private Region region;

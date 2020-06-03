@@ -42,6 +42,10 @@ dependencies {
 	compile group: 'org.modelmapper', name: 'modelmapper', version: '2.3.7'
 	compile group: 'com.sun.mail', name: 'javax.mail', version: '1.6.2'
 	compile group: 'org.springframework.boot', name: 'spring-boot-starter-mail', version: '2.3.0.RELEASE'
+	
+	//implementation 'org.springframework.cloud:spring-cloud-gcp-starter-storage'
+	compile 'com.google.cloud:google-cloud-examples:0.20.0-alpha'
+	compile 'com.google.auth:google-auth-library-oauth2-http:0.6.0'
 }
 
 test {

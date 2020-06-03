@@ -105,7 +105,7 @@ export default class StoreStore {
       .catch((err) => alert("실패"));
   }
 
-  @action mydetail(pid){
+  @action mydetail(pid) {
     return agent.Data.mypdetail(pid)
       .then((res) => {
         this.mydetailPost = res.data;
@@ -114,15 +114,25 @@ export default class StoreStore {
       .catch((err) => alert("실패"));
   }
 
-  @action upload(data) {
+  @action upload(data, file) {
     console.log(data);
     const uid = window.sessionStorage.getItem("uid");
-    console.log(uid);
     return agent.Data.upload(data, uid)
       .then((res) => {
-        window.location.replace("/feed");
+        console.log(res.data.data.pid);
+        this.postImage(file,res.data.data.pid);
       })
       .catch((err) => alert("업로드 실패!"));
+  }
+
+  @action postImage(data,id) {
+    console.log(id)
+    return agent.Data.postImage(data,id)
+      .then((res) => {
+        console.log(res);
+        window.location.replace("/feed");
+      })
+      .catch((err) => console.log(err));
   }
 
   @action
@@ -138,13 +148,13 @@ export default class StoreStore {
     this.similar = similar;
   }
 
-  @action detail(sid){
+  @action detail(sid) {
     return agent.Data.detail(sid)
       .then((res) => {
         this.detailPost = res.data;
         // console.log(res.data);
       })
-      .catch((err) => alert("실패"))
+      .catch((err) => alert("실패"));
   }
 
   @action postupdate(data, pid){
