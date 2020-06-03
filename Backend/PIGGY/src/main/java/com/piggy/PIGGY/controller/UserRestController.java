@@ -20,7 +20,6 @@ import org.springframework.web.bind.annotation.RestController;
 import com.piggy.PIGGY.dto.ResultDto;
 import com.piggy.PIGGY.dto.SignupDto;
 import com.piggy.PIGGY.dto.UserDto;
-import com.piggy.PIGGY.dto.UserUpdateDto;
 import com.piggy.PIGGY.entity.User;
 import com.piggy.PIGGY.service.UserService;
 import com.piggy.PIGGY.util.MapperUtils;
