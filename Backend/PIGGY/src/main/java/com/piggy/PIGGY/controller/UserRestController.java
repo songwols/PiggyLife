@@ -11,6 +11,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -96,8 +97,8 @@ public class UserRestController {
 	@ApiImplicitParams({
 		@ApiImplicitParam(name = "TOKEN", value = "로그인 성공 후 access_token", required = true, dataType = "String", paramType = "header") })
 	@ApiOperation(value = "비밀번호 확인")
-	@GetMapping("/checkPassword")
-	public ResponseEntity<Object> checkPassword(@RequestParam String password) {
+	@PostMapping("/checkPassword")
+	public ResponseEntity<Object> checkPassword(@RequestBody String password) {
 		try {
 			Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 			String uId = authentication.getName();
@@ -113,7 +114,7 @@ public class UserRestController {
 	
 	@ApiOperation(value = "비밀번호수정")
 	@PutMapping("/updatePassword")
-	public ResponseEntity<Object> updatePassword(@RequestParam String email, @RequestParam String password) {
+	public ResponseEntity<Object> updatePassword(@RequestParam String email, @RequestBody String password) {
 		try {
 			User user = uService.findByEmail(email);
 			if (!user.getEmailCertify().equals("Y"))

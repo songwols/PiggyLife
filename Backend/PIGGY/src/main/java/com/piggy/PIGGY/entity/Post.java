@@ -70,7 +70,7 @@ public class Post extends DateTime {
 	@Column
 	private String imageName;
 	
-	@Column(nullable=false)
+	@Column
 	private String image;
 	
 	@Column(nullable=false)
