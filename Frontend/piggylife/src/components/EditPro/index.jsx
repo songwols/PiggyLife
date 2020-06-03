@@ -3,6 +3,7 @@ import styled from "styled-components";
 import { Link } from "react-router-dom";
 import { Pencil } from "@styled-icons/boxicons-regular/Pencil";
 import Secession from "./secession"
+import {inject,observer} from "mobx-react"
 
 export const PencilIncon = styled(Pencil)`
     width: 1rem;
@@ -12,19 +13,49 @@ export const PencilIncon = styled(Pencil)`
     opacity: 50%;
 `;
 
-
+@inject("userStore")
+@observer
 class EditPro extends React.Component{
     constructor(props){
         super(props);
         this.state={
             confirmS : false,
+            nickname : "",
+            image:"",
+            token:"",
         }
+    }
+    async componentWillMount(){
+        const email = sessionStorage.getItem("email")
+        await this.props.userStore.whoami(email)
+        console.log(this.props.userStore.nickname)
+        const nname = this.props.userStore.nickname;
+        this.setState({
+            nickname: nname,
+        })
     }
     toggleConfirm() {
         this.setState({
             confirmS: !this.state.confirmS,
         });
     }
+    updateInfo=(e)=>{
+        console.log(sessionStorage.getItem("token"))
+        this.setState({
+            image : "수정이미지",
+            nickname : this.state.nickname,
+            token: sessionStorage.getItem("token"),
+        });
+        
+        this.props.userStore.updateUser(this.state); 
+    };
+    handleChange = (e) => {
+        this.setState({
+          image : "수정이미지",
+          nickname: e.target.value,
+          token: sessionStorage.getItem("token"),
+        })
+      };
     render(){
         return(
             <Frame>
@@ -32,17 +63,19 @@ class EditPro extends React.Component{
                 <E type="file"></E>
                 <Space></Space>
                 EMAIL
-                <Input value="이메일@ssafy.com" readOnly></Input>
+                <Input value={this.props.userStore.email} readOnly></Input>
                 <Space></Space>
                 닉네임
-                <Input value="ssafy"></Input>
+                <Input value={this.state.nickname} onChange={this.handleChange}></Input>
                 <Space></Space>
                 PW
-                <Input value="패스워드" type="password"></Input>
+                <Input value="패스워드" type="password" readOnly></Input>
                 <Space></Space>
                 <BF>
                 <SButton onClick={this.toggleConfirm.bind(this)}>탈퇴하기</SButton> &nbsp;
-                <Link to={"/feed"} style={{ textDecoration: "none" }}><EButton>수정하기</EButton></Link>
+                {/* <Link to={"/feed"} style={{ textDecoration: "none" }}> */}
+                    <EButton onClick={this.updateInfo}>수정하기</EButton>
+                    {/* </Link> */}
                 </BF>
                 {this.state.confirmS ? (
                 <Secession cancelSecession={this.toggleConfirm.bind(this)}/>

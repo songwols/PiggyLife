@@ -9,6 +9,20 @@ export default class UserStore {
   @observable data = "";
 
   @action
+  updateUser(user){
+    console.log(user);
+    return agent.Data.updateUser(user)
+    .then((res) => {
+      console.log(res.data);
+    })
+    .catch((err) => {
+      alert("사용자 정보 업데이트에 실패하였습니다");
+    });
+
+  }
+
+
+  @action
   updatepw(user) {
     return agent.Data.updatepw(user)
       .then((res) => {

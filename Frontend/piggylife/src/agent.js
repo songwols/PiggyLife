@@ -6,8 +6,8 @@ const requests = {
   get: (url, header) => axios.get(`${API_ROOT}${url}`, { headers: header }),
   post: (url, body, header) =>
     axios.post(`${API_ROOT}${url}`, body, { headers: header }),
-  put: (url, body, header) =>
-    axios.put(`${API_ROOT}${url}`, body, { headers: header }),
+  put: (url,body, header) =>
+    axios.put(`${API_ROOT}${url}`, body,{ headers: header }),
 };
 
 const Data = {
@@ -41,11 +41,20 @@ const Data = {
   findByEmail: (email) => requests.get(`/user/findByEmail?email=${email}`),
   signin: (user) =>
     requests.get(`/sign/signin?email=${user.email}&password=${user.password}`),
-  findById: (token) => requests.get(`/user/findById?TOKEN=${token}`),
+  findById: (token) => requests.get(`/user/findUser`),
   updatepw: (user) =>
     requests.put(
       `/user/updatePassword?email=${user.email}&password=${user.password}`
     ),
+  updateUser: (user)=>
+  requests.put(
+    `/user/update?image=${user.image}&nickname=${user.nickname}`,
+    {},
+  {
+   
+    TOKEN:user.token,
+  }
+  ),
 };
 
 export default {
