@@ -1,8 +1,8 @@
 import React from "react";
 import styled from "styled-components";
-import { Link } from "react-router-dom";
 import { Pencil } from "@styled-icons/boxicons-regular/Pencil";
 import Secession from "./secession"
+import {inject,observer} from "mobx-react"
 
 export const PencilIncon = styled(Pencil)`
     width: 1rem;
@@ -12,37 +12,115 @@ export const PencilIncon = styled(Pencil)`
     opacity: 50%;
 `;
 
-
+@inject("userStore")
+@observer
 class EditPro extends React.Component{
     constructor(props){
         super(props);
         this.state={
             confirmS : false,
+            nickname : "",
+            image:"",
+            password: "",
+            email: window.sessionStorage.getItem("email"),
+            file: "",
+            previewURL: "",
         }
+    }
+    async componentWillMount(){
+        const email = window.sessionStorage.getItem("email")
+        await this.props.userStore.whoami(email)
+        const nname = this.props.userStore.nickname;
+        const nimage = this.props.userStore.image;
+        this.setState({
+            nickname: nname,
+            previewURL: nimage,
+        })
     }
     toggleConfirm() {
         this.setState({
             confirmS: !this.state.confirmS,
         });
     }
+    updateInfo=(e)=>{
+        var formData = "";
+        if(this.state.file!==""){
+            formData = new FormData();
+            formData.append("file", this.state.file);
+        }
+        else{
+            formData = null;
+        }
+
+        this.props.userStore.updateUser(this.state, formData); 
+    };
+
+    handleChange = (e) => {
+        this.setState({
+          image : "",
+          nickname: e.target.value,
+          email: this.state.email,
+          password: this.state.password,
+        })
+      };
+      passwordChange = (e) => {
+        this.setState({
+          image : "",
+          nickname: this.state.nickname,
+          email: this.state.email,
+          password: e.target.value,
+        })
+      };
+      handleFileOnChange = (e) => {
+        e.preventDefault();
+        let reader = new FileReader();
+        let file = e.target.files[0];
+        reader.onloadend = () => {
+          this.setState({
+            file: file,
+            previewURL: reader.result,
+          });
+        };
+        reader.readAsDataURL(file);
+      };
+      
     render(){
+        let profile_preview = null;
+        if (this.state.previewURL === "") {
+            profile_preview = (
+                <ProfileImage src="https://image.flaticon.com/icons/svg/747/747376.svg"></ProfileImage>
+            );
+        }
+        else {
+            profile_preview = (
+                <ProfileImage src={this.state.previewURL}></ProfileImage>
+            );
+        }
+        
         return(
             <Frame>
-                <ProfileImage src="https://image.flaticon.com/icons/svg/747/747376.svg"></ProfileImage>
-                <E type="file"></E>
+                {/* <ProfileImage src="https://image.flaticon.com/icons/svg/747/747376.svg"></ProfileImage> */}
+                {profile_preview}
+                <E encType="multipart/form-data"
+                type="file"
+                accept="image/jpg,impge/png,image/jpeg,image/gif"
+                name="profile_img"
+                onChange={this.handleFileOnChange}
+                ></E>
                 <Space></Space>
                 EMAIL
-                <Input value="이메일@ssafy.com" readOnly></Input>
+                <Input value={this.state.email} readOnly></Input>
                 <Space></Space>
                 닉네임
-                <Input value="ssafy"></Input>
+                <Input value={this.state.nickname} onChange={this.handleChange}></Input>
                 <Space></Space>
                 PW
-                <Input value="패스워드" type="password"></Input>
+                <Input value={this.state.password} type="password" onChange={this.passwordChange}></Input>
                 <Space></Space>
                 <BF>
                 <SButton onClick={this.toggleConfirm.bind(this)}>탈퇴하기</SButton> &nbsp;
-                <Link to={"/feed"} style={{ textDecoration: "none" }}><EButton>수정하기</EButton></Link>
+                <EButton onClick={this.updateInfo}>수정하기</EButton>
+                    
                 </BF>
                 {this.state.confirmS ? (
                 <Secession cancelSecession={this.toggleConfirm.bind(this)}/>

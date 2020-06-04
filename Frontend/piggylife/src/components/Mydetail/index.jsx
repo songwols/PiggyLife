@@ -34,6 +34,7 @@ class Mydetail extends React.Component{
     }
 
     async componentWillMount() {
+        window.scrollTo(0, 0);
         await this.props.storeStore.mydetail(this.props.id);
         const post = this.props.storeStore.mydetailPost;
         this.setState({
@@ -59,14 +60,11 @@ class Mydetail extends React.Component{
     render(){
         const goEdit = (e) => {
             e.preventDefault();
-            //디테일 받아올 스토어
-           console.log(this.props.id)
            this.props.history.push("/editdetail/" + this.props.id);
           };
 
         const goDelete = (e) => {
             e.preventDefault();
-            console.log(this.props.id)
             this.props.storeStore.postdelete(this.props.id);
         };
 
@@ -168,7 +166,7 @@ const Memo = styled.div`
 `
 
 const Text = styled.div`
-    height: 2rem;
+    min-height: 2rem;
     font-size: larger;
 `
 

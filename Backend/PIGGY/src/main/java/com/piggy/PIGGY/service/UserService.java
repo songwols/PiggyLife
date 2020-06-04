@@ -5,6 +5,7 @@ import java.util.Map;
 
 import org.springframework.security.core.userdetails.UserDetailsService;
 
+import com.piggy.PIGGY.dto.SigninDto;
 import com.piggy.PIGGY.dto.SignupDto;
 import com.piggy.PIGGY.entity.User;
 
@@ -12,7 +13,7 @@ public interface UserService extends UserDetailsService{
 	
 	public User signup(SignupDto dto);
 	
-	public Map<String, Object> signin(String email, String password);
+	public Map<String, Object> signin(SigninDto dto);
 	
 	public boolean emailDuplicateCheck(String email);
 	

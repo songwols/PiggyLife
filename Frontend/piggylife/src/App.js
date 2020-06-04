@@ -22,9 +22,9 @@ const App = () => {
   return (
     <Div>
       <GlobalStyle></GlobalStyle>
-      <Switch>
+      
         {window.sessionStorage.getItem("uid") !== null ? 
-        <Div>
+      <Switch>
           <Route path="/map" component={MapPage} />
           <Route path="/feed" component={FeedPage} />
           <Route path="/home" component={HomePage} />
@@ -36,18 +36,15 @@ const App = () => {
           <Route path="/result" component={MatchingResultPage} />
           <Route path="/mydetail/:pid" component={MyDetailPage} />
           <Route path="/editdetail/:pid" component={EditDetailPage} />
-          {/* <Route path="/" component={HomePage} /> */}
-        </Div>
+          <Route path="/" component={HomePage} />
+          </Switch>
         :
-        <Div>
+        <Switch>
           <Route path="/findpw" component={FindPWPage} />
           <Route path="/join" component={JoinPage} />
           <Route path="/" component={LoginPage} />
-        </Div>
+         </Switch>
       }
-        
-        
-      </Switch>
     </Div>
   );
 };

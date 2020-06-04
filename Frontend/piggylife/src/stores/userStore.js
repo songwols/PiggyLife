@@ -11,6 +11,52 @@ export default class UserStore {
   @observable rname = "";
 
   @action
+  checkPwd(user) {
+    console.log(user.currPwd);
+    return agent.Data.checkPwd(user, sessionStorage.getItem("token"))
+      .then((res) => {
+        if(res.data.code===1){
+          window.location.replace("/EditP");
+        }
+        else{
+          alert(res.data.message);
+        }
+        
+      })
+      .catch((err) => {
+        console.log(err);
+        alert("패스워드 확인에 실패하였습니다.");
+      });
+  }
+
+  @action
+  updateUser(user, file) {
+    return agent.Data.updateUser(user, sessionStorage.getItem("uid"))
+      .then((res) => {
+        if (file !== null) {
+          this.profileImage(file, sessionStorage.getItem("uid"));
+        }
+        window.location.replace("/Feed");
+      })
+      .catch((err) => {
+        alert("사용자 정보 업데이트에 실패하였습니다");
+      });
+  }
+
+  @action profileImage(data, id) {
+    return agent.Data.profileImage(data, id)
+      .then((res) => {
+        if (res.status === 200) {
+          this.image = res.data.image;
+          window.location.replace("/feed");
+        } else {
+          alert(res.data.message);
+        }
+      })
+      .catch((err) => console.log(err));
+  }
+
+  @action
   updatepw(user) {
     return agent.Data.updatepw(user)
       .then((res) => {
@@ -18,6 +64,7 @@ export default class UserStore {
         window.location.replace("/");
       })
       .catch((err) => {
+        console.log(err);
         alert("실패하였습니다");
       });
   }
@@ -95,7 +142,6 @@ export default class UserStore {
   login(user) {
     return agent.Data.signin(user)
       .then((res) => {
-        console.log(res);
         if (res.data.code === 1) {
           window.sessionStorage.setItem("email", user.email);
           window.sessionStorage.setItem("uid", res.data.uId);
@@ -106,7 +152,7 @@ export default class UserStore {
         }
       })
       .catch((err) => {
-        alert("이메일과 패스워드를 확인해주세요.");
+        alert("로그인에 실패하였습니다.");
         console.log(err);
       });
   }
@@ -115,7 +161,6 @@ export default class UserStore {
   email_check(email, where) {
     return agent.Data.email_check(email)
       .then((res) => {
-        console.log(res);
         if (res.data.success === true || where === "pw") {
           return agent.Data.email_send(email)
             .then((res) => {

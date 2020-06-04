@@ -2,20 +2,27 @@ import React from "react";
 import styled from "styled-components";
 import { Link } from "react-router-dom";
 import { inject, observer } from "mobx-react";
-
+import CheckPopUp from "../EditPro/checkPopUp";
 @inject("userStore")
 @observer
 class More extends React.Component {
+  state={
+    click : false
+   };
+  CheckPwdPopUp = (e)=>{
+    this.setState({
+      click: !this.state.click
+    })
+  }
   Logout = (e) => {
     this.props.userStore.logout();
   };
+
   render() {
     return (
       <Frame>
         <BF>
-          <Link to={"/editP"} style={{ textDecoration: "none" }}>
-            <Button>프로필 수정</Button>
-          </Link>
+          <Button onClick={this.CheckPwdPopUp}>프로필 수정</Button>
         </BF>
         <Space></Space>
         <BF>
@@ -27,6 +34,9 @@ class More extends React.Component {
             <Button>고객센터</Button>
           </a>
         </BF>
+        {this.state.click ? (
+            <CheckPopUp cancelCheck={this.CheckPwdPopUp.bind(this)}/>
+          ) : null}
       </Frame>
     );
   }
@@ -40,7 +50,7 @@ const Frame = styled.div`
   grid-area: "content";
   // height: 100%;
   padding: 10%;
-  margin-top: 45%;
+  margin-top: 20%;
   // display: flex;
   // align-items: center;
   // justify-content: center;

@@ -4,6 +4,7 @@ import { Email } from "@styled-icons/material-outlined/Email";
 import { PersonOutline } from "@styled-icons/evaicons-outline/PersonOutline";
 import { Link } from "react-router-dom";
 import { DotsVerticalRounded } from "@styled-icons/boxicons-regular/DotsVerticalRounded";
+import { inject,observer } from "mobx-react";
 
 export const More = styled(DotsVerticalRounded)`
   width: 2rem;
@@ -24,21 +25,40 @@ export const PersonIcon = styled(PersonOutline)`
   height: 1rem;
   margin-right: 1rem;
 `;
-
+@inject("userStore")
+@observer
 class Profile extends React.Component {
+  constructor(props){
+    super(props);
+    this.state={
+        image:"",
+    }
+}
+
+  async componentWillMount(){
+    const email = sessionStorage.getItem("email")
+    await this.props.userStore.whoami(email)
+    const img = this.props.userStore.image
+    this.setState({
+      image: img,
+    })
+  }
+
   render() {
     return (
       <Frame>
         <Div>
-          <ProfileImage src="https://image.flaticon.com/icons/svg/747/747376.svg"></ProfileImage>
+          {this.state.image!=="" ? 
+          <ProfileImage src={this.props.userStore.image}></ProfileImage> : 
+          <ProfileImage src="https://image.flaticon.com/icons/svg/747/747376.svg"></ProfileImage>}
           <Info>
             <Nickname>
               <PersonIcon></PersonIcon>
-              Nickname
+              {this.props.userStore.nickname}
             </Nickname>
             <Emaildiv>
               <EmailIcon></EmailIcon>
-              ssafy@ssafy.com
+              {this.props.userStore.email}
             </Emaildiv>
           </Info>
         </Div>
@@ -70,7 +90,7 @@ const Div = styled.div`
 `;
 
 const Info = styled.div`
-  margin-left: 3rem;
+  margin-left: 0.5rem;
   align-items: center;
 `;
 

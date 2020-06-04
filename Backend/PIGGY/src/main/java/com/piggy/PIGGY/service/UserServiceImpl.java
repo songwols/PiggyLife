@@ -12,6 +12,7 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import com.piggy.PIGGY.dto.SigninDto;
 import com.piggy.PIGGY.dto.SignupDto;
 import com.piggy.PIGGY.entity.User;
 import com.piggy.PIGGY.repository.UserRepository;
@@ -47,12 +48,12 @@ public class UserServiceImpl implements UserService {
 	}
 
 	@Override
-	public Map<String, Object> signin(String email, String password) {
+	public Map<String, Object> signin(SigninDto dto) {
 		
 		Map<String, Object> result = new HashMap<>();
-		User user = uRepo.findByEmail(email).orElseThrow(NoSuchElementException::new);
+		User user = uRepo.findByEmail(dto.getEmail()).orElseThrow(NoSuchElementException::new);
 		
-		if (!passwordEncoder.matches(password, user.getPassword())) {
+		if (!passwordEncoder.matches(dto.getPassword(), user.getPassword())) {
 			result.put("code", -1);
 			result.put("massage", "비밀번호가 일치하지 않습니다.");
 		} else if (!user.getEmailCertify().equals("Y")){
@@ -119,7 +120,13 @@ public class UserServiceImpl implements UserService {
 	@Override
 	public User update(SignupDto dto) {
 		User user = uRepo.findByEmail(dto.getEmail()).orElseThrow(NoSuchElementException::new);
-		user.update(dto.getEmail(), passwordEncoder.encode(dto.getPassword()),dto.getNickname());
+		String pwd = "";
+		if(dto.getPassword().equals("")) {
+			pwd = user.getPassword();
+		}else {
+			pwd = passwordEncoder.encode(dto.getPassword());
+		}
+		user.update(dto.getEmail(), pwd ,dto.getNickname());
 		return uRepo.save(user);
 	}
 
