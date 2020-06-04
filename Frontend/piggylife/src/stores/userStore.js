@@ -16,7 +16,13 @@ export default class UserStore {
     return agent.Data.checkPwd(user, sessionStorage.getItem("token"))
       .then((res) => {
         console.log(res.data);
-        window.location.replace("/EditP");
+        if(res.data.code===1){
+          window.location.replace("/EditP");
+        }
+        else{
+          alert(res.data.message);
+        }
+        
       })
       .catch((err) => {
         console.log(err);
