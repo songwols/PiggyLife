@@ -17,7 +17,7 @@ const MyDetailPage = ({ match }) => {
 const Frame = styled.div`
     height: 100%;
     display: grid;
-    grid-template-rows: auto 8vh;
+    grid-template-rows: auto auto 8vh;
     grid-template-areas: "top" "content" "navbar";
 `
 

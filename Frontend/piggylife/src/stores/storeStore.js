@@ -114,22 +114,23 @@ export default class StoreStore {
       .catch((err) => alert("실패"));
   }
 
-  @action upload(data) {
+  @action upload(data, file) {
     console.log(data);
     const uid = window.sessionStorage.getItem("uid");
-    console.log(uid);
     return agent.Data.upload(data, uid)
       .then((res) => {
-        window.location.replace("/feed");
+        console.log(res.data.data.pid);
+        this.postImage(file,res.data.data.pid);
       })
       .catch((err) => alert("업로드 실패!"));
   }
 
-  @action postImage(data) {
-    console.log(data);
-    return agent.Data.postImage(data)
+  @action postImage(data,id) {
+    console.log(id)
+    return agent.Data.postImage(data,id)
       .then((res) => {
         console.log(res);
+        window.location.replace("/feed");
       })
       .catch((err) => console.log(err));
   }
@@ -152,6 +153,25 @@ export default class StoreStore {
       .then((res) => {
         this.detailPost = res.data;
         // console.log(res.data);
+      })
+      .catch((err) => alert("실패"));
+  }
+
+  @action postupdate(data, file, pid){
+    console.log(data)
+    console.log(pid)
+    return agent.Data.postupdate(data, file, pid)
+    .then((res) => {
+      console.log(res.data);
+      window.location.replace("/mydetail/"+pid);
+    })
+    .catch((err) => alert("실패"))
+  }
+
+  @action postdelete(pid) {
+    return agent.Data.postdelete(pid)
+      .then((res) => {
+        window.location.replace("/feed");
       })
       .catch((err) => alert("실패"));
   }

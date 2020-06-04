@@ -11,13 +11,42 @@ export default class UserStore {
   @observable rname = "";
 
   @action
+  checkPwd(user) {
+    console.log(user.currPwd);
+    return agent.Data.checkPwd(user, sessionStorage.getItem("token"))
+      .then((res) => {
+        console.log(res.data);
+        window.location.replace("/EditP");
+      })
+      .catch((err) => {
+        console.log(err);
+        alert("패스워드 확인에 실패하였습니다.");
+      });
+  }
+
+  @action
+  updateUser(user) {
+    console.log(user);
+    return agent.Data.updateUser(user)
+      .then((res) => {
+        console.log(res.data);
+        window.location.replace("/Feed");
+      })
+      .catch((err) => {
+        alert("사용자 정보 업데이트에 실패하였습니다");
+      });
+  }
+
+  @action
   updatepw(user) {
     return agent.Data.updatepw(user)
       .then((res) => {
+        //console.log(res);
         alert("패스워드가 변경되었습니다.");
         window.location.replace("/");
       })
       .catch((err) => {
+        console.log(err);
         alert("실패하였습니다");
       });
   }
@@ -106,7 +135,7 @@ export default class UserStore {
         }
       })
       .catch((err) => {
-        alert("이메일과 패스워드를 확인해주세요.");
+        alert("로그인에 실패하였습니다.");
         console.log(err);
       });
   }

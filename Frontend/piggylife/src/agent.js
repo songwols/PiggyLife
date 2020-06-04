@@ -9,6 +9,8 @@ const requests = {
     axios.post(`${API_ROOT}${url}`, body, { headers: header }),
   put: (url, body, header) =>
     axios.put(`${API_ROOT}${url}`, body, { headers: header }),
+  delete: (url, header) =>
+    axios.delete(`${API_ROOT}${url}`, { headers: header }),
 };
 
 const Data = {
@@ -33,25 +35,47 @@ const Data = {
   upload: (info, uid) =>
     requests.post(`/post/create/${uid}`, {
       content: info.v_memo,
-      file: info.file,
       isLike: info.isLike,
       sid: info.sid,
       visited: info.visited,
-      image: "",
-      imageName: "",
     }),
-  postImage: (info) => requests.post(`/post/postImage`, info, {}),
+  postImage: (info, id) => requests.post(`/post/postImage/${id}`, info, {}),
   findByEmail: (email) => requests.get(`/user/findByEmail?email=${email}`),
   signin: (user) =>
-    requests.get(`/sign/signin?email=${user.email}&password=${user.password}`),
-  findById: (token) => requests.get(`/user/findById?TOKEN=${token}`),
+    requests.post(`/sign/signin`, {
+      email: user.email,
+      password: user.password,
+    }),
+  findById: (token) => requests.get(`/user/findUser`),
   updatepw: (user) =>
+    requests.put(`/user/updatePassword`, {
+      email: user.email,
+      password: user.password,
+    }),
+  updateUser: (user) =>
+    requests.put(`/user/update?image=${user.image}&nickname=${user.nickname}`, {
+      email: user.email,
+      image: user.image,
+      nickname: user.nickname,
+      password: user.password,
+    }),
+  checkPwd: (user, token) =>
+    requests.post(
+      `/user/checkPassword`,
+      { email: user.email, password: user.currPwd },
+      { TOKEN: token }
+    ),
+
+  postupdate: (data, file, pid) =>
     requests.put(
-      `/user/updatePassword?email=${user.email}&password=${user.password}`
+      `/post/update/${pid}?content=${data.v_memo}&isLike=${data.isLike}&visited=${data.visited}`,
+      file,
+      {}
     ),
   getAreaStatistic: (uId) => requests.get(`/post/getAreaStatistic/${uId}`),
   getCategoryStatistic: (uId) =>
     requests.get(`/post/getCategoryStatistic/${uId}`),
+  postdelete: (pid) => requests.delete(`/post/delete/${pid}`),
 };
 
 export default {
