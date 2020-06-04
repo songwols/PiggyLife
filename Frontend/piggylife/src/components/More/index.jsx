@@ -50,7 +50,7 @@ const Frame = styled.div`
   grid-area: "content";
   // height: 100%;
   padding: 10%;
-  margin-top: 45%;
+  margin-top: 20%;
   // display: flex;
   // align-items: center;
   // justify-content: center;

@@ -1,5 +1,6 @@
 import React from "react";
 import styled from "styled-components";
+import LevelGraph from "../LevelGraph";
 import { inject, observer } from "mobx-react";
 
 @inject("statisticStore", "userStore", "storeStore")
@@ -12,12 +13,17 @@ class Statistic extends React.Component {
       category: [],
       ranking: 0,
       rname: "",
-      num: 0,
       best: {
         area: "",
         city: "",
         cnt: "",
       },
+      startnum: 0,
+      mylength: 0,
+      remainnum: 0,
+      goalnum: 0,
+      done: 0,
+      todo: 0,
     };
   }
   componentWillMount() {
@@ -35,12 +41,53 @@ class Statistic extends React.Component {
     this.category = this.props.statisticStore.categoryList;
     this.ranking = this.props.userStore.ranking;
     this.rname = this.props.userStore.rname;
-    this.num = this.props.storeStore.postslength;
+    this.mylength = this.props.storeStore.postslength;
     this.best = this.props.statisticStore.bestarea;
-    console.log(this.category);
+    if (this.ranking === 0) {
+      this.goalnum = 10;
+      this.startnum = 0;
+    } else if (this.ranking === 1) {
+      this.goalnum = 20;
+      this.startnum = 10;
+    } else if (this.ranking === 2) {
+      this.goalnum = 30;
+      this.startnum = 20;
+    } else if (this.ranking === 3) {
+      this.goalnum = 50;
+      this.startnum = 30;
+    } else if (this.ranking === 4) {
+      this.goalnum = 70;
+      this.startnum = 50;
+    } else if (this.ranking === 5) {
+      this.goalnum = 90;
+      this.startnum = 70;
+    } else if (this.ranking === 6) {
+      this.goalnum = 120;
+      this.startnum = 90;
+    } else if (this.ranking === 7) {
+      this.goalnum = 150;
+      this.startnum = 120;
+    } else if (this.ranking === 8) {
+      this.goalnum = 180;
+      this.startnum = 150;
+    } else if (this.ranking === 9) {
+      this.goalnum = 230;
+      this.startnum = 180;
+    }
+    this.remainnum = this.goalnum - this.mylength;
+    this.done =
+      (21.5 / (this.goalnum - this.startnum)) *
+        (this.mylength - this.startnum) +
+      "rem";
+    this.todo =
+      (21.5 / (this.goalnum - this.startnum)) * this.remainnum + "rem";
     return (
       <Frame>
-        <LevelGraph>레벨그래프</LevelGraph>
+        <LevelGraph
+          done={this.done}
+          todo={this.todo}
+          ranking={this.ranking}
+        ></LevelGraph>
         <Level>
           <Div>당신의 돼지력은</Div>
           <Piggy>
@@ -66,16 +113,6 @@ class Statistic extends React.Component {
 const Frame = styled.div`
   margin: 1rem;
   overflow: hidden;
-`;
-const LevelGraph = styled.div`
-  justify-content: center;
-  text-align: center;
-  align-items: center;
-
-  background-color: #f2e9e4;
-  height: 3rem;
-  margin-top: 0.3rem;
-  margin-bottom: 0.3rem;
 `;
 const Level = styled.div`
   border-radius: 0.5rem;
