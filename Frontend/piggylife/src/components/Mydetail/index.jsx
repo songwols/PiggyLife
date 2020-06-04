@@ -124,7 +124,7 @@ class Mydetail extends React.Component{
 const Simg = styled.img`
   justify-content: center;
   align-items: center;
-  object-fit: cover;
+//   object-fit: cover;
   top: 0;
   left: 0;
   width: 100%;
