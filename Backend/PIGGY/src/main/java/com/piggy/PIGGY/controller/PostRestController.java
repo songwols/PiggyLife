@@ -107,19 +107,24 @@ public class PostRestController {
 	public ResponseEntity<Object> update(@PathVariable Long pId, 
 			@RequestParam String content,
 			@RequestParam Integer isLike,
+			@RequestParam Boolean visited,
 			@RequestParam("file") MultipartFile file){
 		try {
 			log.trace("PostRestController - update");
 			Post post = pService.findById(pId);
-			PostInputDto dto = new PostInputDto(post.getStore().getSId(), content, post.getVisited(), isLike);
+			PostInputDto dto = new PostInputDto(post.getStore().getSId(), content, visited, isLike);
 			post = pService.update(pId, dto);
-			
-			if(!file.getName().equals(post.getImageName())) {
+			System.out.println(post);
+			if(post.getImageName()!=null) {
 				fileService.deleteImage(post.getImageName());
+			}
+			if(!file.getName().equals(post.getImageName())) {
 				Map<String, Object> responseImage = fileService.uploadImage(file, "post");
 				PostImageDto imageDto = new PostImageDto(pId, responseImage.get("image").toString(), responseImage.get("imageName").toString());
 				post = pService.updateImage(pId, imageDto);
+				System.out.println("update : "+ post);
 			}
+			System.out.println(post);
 			PostOutputDto output = MapperUtils.map(post, PostOutputDto.class);
 			return new ResponseEntity<Object>(output, HttpStatus.OK);
 		} catch (Exception e) {
@@ -133,7 +138,9 @@ public class PostRestController {
 		try {
 			log.trace("PostRestController - delete", pId);
 			Post post = pService.findById(pId);
-			fileService.deleteImage(post.getImageName());
+			if(post.getImageName()!=null) {
+				fileService.deleteImage(post.getImageName());
+			}
 			pService.delete(pId);
 			return new ResponseEntity<Object>(new ResultDto(true, 1, "삭제되었습니다."), HttpStatus.OK);
 		} catch (Exception e) {

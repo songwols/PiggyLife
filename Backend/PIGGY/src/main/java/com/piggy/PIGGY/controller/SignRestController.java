@@ -1,6 +1,7 @@
 package com.piggy.PIGGY.controller;
 
 import java.io.UnsupportedEncodingException;
+import java.util.Map;
 
 import javax.mail.MessagingException;
 
@@ -17,6 +18,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.piggy.PIGGY.dto.ResultDto;
+import com.piggy.PIGGY.dto.SigninDto;
 import com.piggy.PIGGY.dto.SignupDto;
 import com.piggy.PIGGY.dto.UserDto;
 import com.piggy.PIGGY.entity.User;
@@ -87,10 +89,10 @@ public class SignRestController {
 	}
 	
 	@ApiOperation(value = "로그인")
-	@GetMapping("/signin")
-	public ResponseEntity<Object> signin(@RequestParam String email, @RequestParam String password) {
+	@PostMapping("/signin")
+	public ResponseEntity<Object> signin(@RequestBody SigninDto dto) {
 		try {
-			return new ResponseEntity<Object>(uService.signin(email, password), HttpStatus.OK);
+			return new ResponseEntity<Object>(uService.signin(dto), HttpStatus.OK);
 		} catch (Exception e) {
 			throw e;
 		}
