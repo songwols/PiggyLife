@@ -115,27 +115,33 @@ export default class StoreStore {
   }
 
   @action upload(data, file) {
-    console.log(data);
-    console.log(file)
-    console.log(file.length);
     const uid = window.sessionStorage.getItem("uid");
     return agent.Data.upload(data, uid)
       .then((res) => {
-        console.log(res.data.data.pid);
-        if(file!==null){
-          console.log("여기야?")
-          this.postImage(file,res.data.data.pid);
+        console.log(res.data);
+        if (res.data.code === 1) {
+          if(file!==null){
+            this.postImage(file, res.data.data.pid);
+          }
+          window.location.replace("/feed");
+        } else {
+          alert(res.data.message);
         }
       })
-      .catch((err) => alert("업로드 실패!"));
+      .catch((err) => console.log(err));
   }
 
-  @action postImage(data,id) {
-    console.log(id)
-    return agent.Data.postImage(data,id)
+  @action postImage(data, id) {
+    console.log(id);
+    return agent.Data.postImage(data, id)
       .then((res) => {
         console.log(res);
-        window.location.replace("/feed");
+        if (res.status === 200) {
+          window.location.replace("/feed");
+        } else {
+          console.log(res);
+          alert(res.data.message);
+        }
       })
       .catch((err) => console.log(err));
   }
@@ -162,15 +168,15 @@ export default class StoreStore {
       .catch((err) => alert("실패"));
   }
 
-  @action postupdate(data, file, pid){
-    console.log(data)
-    console.log(pid)
+  @action postupdate(data, file, pid) {
+    console.log(data);
+    console.log(pid);
     return agent.Data.postupdate(data, file, pid)
-    .then((res) => {
-      console.log(res.data);
-      window.location.replace("/mydetail/"+pid);
-    })
-    .catch((err) => alert("실패"))
+      .then((res) => {
+        console.log(res.data);
+        window.location.replace("/mydetail/" + pid);
+      })
+      .catch((err) => alert("실패"));
   }
 
   @action postdelete(pid) {
