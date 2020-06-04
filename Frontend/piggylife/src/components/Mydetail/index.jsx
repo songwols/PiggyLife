@@ -60,14 +60,11 @@ class Mydetail extends React.Component{
     render(){
         const goEdit = (e) => {
             e.preventDefault();
-            //디테일 받아올 스토어
-           console.log(this.props.id)
            this.props.history.push("/editdetail/" + this.props.id);
           };
 
         const goDelete = (e) => {
             e.preventDefault();
-            console.log(this.props.id)
             this.props.storeStore.postdelete(this.props.id);
         };
 

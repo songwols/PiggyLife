@@ -1,6 +1,5 @@
 import React from "react";
 import styled from "styled-components";
-import { Link } from "react-router-dom";
 import { Pencil } from "@styled-icons/boxicons-regular/Pencil";
 import Secession from "./secession"
 import {inject,observer} from "mobx-react"
@@ -22,7 +21,7 @@ class EditPro extends React.Component{
             confirmS : false,
             nickname : "",
             image:"",
-            password:"",
+            password: "",
             email: window.sessionStorage.getItem("email"),
             file: "",
             previewURL: "",
@@ -31,7 +30,6 @@ class EditPro extends React.Component{
     async componentWillMount(){
         const email = window.sessionStorage.getItem("email")
         await this.props.userStore.whoami(email)
-        console.log(this.props.userStore.nickname)
         const nname = this.props.userStore.nickname;
         const nimage = this.props.userStore.image;
         this.setState({
@@ -75,7 +73,6 @@ class EditPro extends React.Component{
       };
       handleFileOnChange = (e) => {
         e.preventDefault();
-        console.log(e.target.files);
         let reader = new FileReader();
         let file = e.target.files[0];
         reader.onloadend = () => {
@@ -89,8 +86,7 @@ class EditPro extends React.Component{
       
     render(){
         let profile_preview = null;
-        if (this.state.file === "") {
-            console.log("여기")
+        if (this.state.previewURL === "") {
             profile_preview = (
                 <ProfileImage src="https://image.flaticon.com/icons/svg/747/747376.svg"></ProfileImage>
             );

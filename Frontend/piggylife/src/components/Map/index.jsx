@@ -25,7 +25,6 @@ class MapContent extends React.Component {
     const script = document.createElement("script");
     await this.props.storeStore.get_post(sessionStorage.getItem("uid"));
     const list = this.props.storeStore.location;
-    console.log(list)
     script.async = true;
     script.src =
       `https://dapi.kakao.com/v2/maps/sdk.js?appkey=${process.env.REACT_APP_KAKAO_MAP}&autoload=false`;
@@ -123,7 +122,6 @@ class MapContent extends React.Component {
           function makeClickListener(map, marker, infowindow) {
             return function() {
                 infowindow.open(map, marker);
-                console.log("infowindow")
             };
           }
       });

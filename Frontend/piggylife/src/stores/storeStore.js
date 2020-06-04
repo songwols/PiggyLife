@@ -34,7 +34,6 @@ export default class StoreStore {
     return agent.Data.get_mypost(uid)
       .then((res) => {
         this.setPosts(res.data);
-        console.log(res.data);
         this.location = [];
         for (var i = 0; i < res.data.length; i++) {
           this.location = this.location.concat({
@@ -51,10 +50,8 @@ export default class StoreStore {
   }
   @action
   get_mypost(uid) {
-    //console.log("내가 작성한 먹킷리스트 불러오기");
     return agent.Data.getMukitlist(uid)
       .then((res) => {
-        //console.log(res.data);
         this.setMyPosts(res.data);
       })
       .catch((err) => console.log(err));
@@ -95,7 +92,6 @@ export default class StoreStore {
     this.store_name = store_name;
     return agent.Data.search(this.store_name)
       .then((res) => {
-        // console.log(res.data);
         this.storeItems = res.data;
         if (res.data.length === 0) {
           alert("검색된 데이터가 없습니다.");
