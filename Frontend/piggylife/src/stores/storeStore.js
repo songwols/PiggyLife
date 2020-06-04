@@ -76,12 +76,12 @@ export default class StoreStore {
     //    .catch((err) => console.log(err));
   }
   @action
-  get_similar() {
-    //  return agent.Data.get_similar()
-    //    .then((res) => {
-    //      this.setSimilar(res.data);
-    //    })
-    //    .catch((err) => console.log(err));
+  get_similar(uId) {
+    return agent.Data.get_similar(uId)
+      .then((res) => {
+        this.setSimilar(res.data);
+      })
+      .catch((err) => console.log(err));
   }
   @action
   setMyPosts(myposts) {
@@ -120,7 +120,10 @@ export default class StoreStore {
       .then((res) => {
         console.log(res.data);
         if (res.data.code === 1) {
-          this.postImage(file, res.data.data.pid);
+          if (file !== null) {
+            this.postImage(file, res.data.data.pid);
+          }
+          window.location.replace("/feed");
         } else {
           alert(res.data.message);
         }

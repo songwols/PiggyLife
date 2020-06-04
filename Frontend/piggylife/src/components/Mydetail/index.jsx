@@ -169,7 +169,7 @@ const Memo = styled.div`
 `
 
 const Text = styled.div`
-    height: 2rem;
+    min-height: 2rem;
     font-size: larger;
 `
 
