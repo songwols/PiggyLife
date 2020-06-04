@@ -22,17 +22,21 @@ class EditPro extends React.Component{
             confirmS : false,
             nickname : "",
             image:"",
-            token:"",
-            // password:this.props.pass
+            password:"",
+            email: window.sessionStorage.getItem("email"),
+            file: "",
+            previewURL: "",
         }
     }
     async componentWillMount(){
-        const email = sessionStorage.getItem("email")
+        const email = window.sessionStorage.getItem("email")
         await this.props.userStore.whoami(email)
         console.log(this.props.userStore.nickname)
         const nname = this.props.userStore.nickname;
+        const nimage = this.props.userStore.image;
         this.setState({
             nickname: nname,
+            previewURL: nimage,
         })
     }
     toggleConfirm() {
@@ -41,37 +45,81 @@ class EditPro extends React.Component{
         });
     }
     updateInfo=(e)=>{
-        console.log(sessionStorage.getItem("email"))
-        this.setState({
-            image : "수정이미지",
-            nickname : this.state.nickname,
-            email: sessionStorage.getItem("email"),
-        });
-        
-        this.props.userStore.updateUser(this.state); 
+        var formData = "";
+        if(this.state.file!==""){
+            formData = new FormData();
+            formData.append("file", this.state.file);
+        }
+        else{
+            formData = null;
+        }
+
+        this.props.userStore.updateUser(this.state, formData); 
     };
+
     handleChange = (e) => {
         this.setState({
-          image : "수정이미지",
+          image : "",
           nickname: e.target.value,
-          email: sessionStorage.getItem("email"),
+          email: this.state.email,
+          password: this.state.password,
+        })
+      };
+      passwordChange = (e) => {
+        this.setState({
+          image : "",
+          nickname: this.state.nickname,
+          email: this.state.email,
           password: e.target.value,
         })
       };
+      handleFileOnChange = (e) => {
+        e.preventDefault();
+        console.log(e.target.files);
+        let reader = new FileReader();
+        let file = e.target.files[0];
+        reader.onloadend = () => {
+          this.setState({
+            file: file,
+            previewURL: reader.result,
+          });
+        };
+        reader.readAsDataURL(file);
+      };
+      
     render(){
+        let profile_preview = null;
+        if (this.state.file === "") {
+            console.log("여기")
+            profile_preview = (
+                <ProfileImage src="https://image.flaticon.com/icons/svg/747/747376.svg"></ProfileImage>
+            );
+        }
+        else {
+            profile_preview = (
+                <ProfileImage src={this.state.previewURL}></ProfileImage>
+            );
+        }
+        
         return(
             <Frame>
-                <ProfileImage src="https://image.flaticon.com/icons/svg/747/747376.svg"></ProfileImage>
-                <E type="file"></E>
+                {/* <ProfileImage src="https://image.flaticon.com/icons/svg/747/747376.svg"></ProfileImage> */}
+                {profile_preview}
+                <E encType="multipart/form-data"
+                type="file"
+                accept="image/jpg,impge/png,image/jpeg,image/gif"
+                name="profile_img"
+                onChange={this.handleFileOnChange}
+                ></E>
                 <Space></Space>
                 EMAIL
-                <Input value={this.props.userStore.email} readOnly></Input>
+                <Input value={this.state.email} readOnly></Input>
                 <Space></Space>
                 닉네임
                 <Input value={this.state.nickname} onChange={this.handleChange}></Input>
                 <Space></Space>
                 PW
-                <Input value={this.state.nickname} type="password" readonChange={this.handleChange}></Input>
+                <Input value={this.state.password} type="password" onChange={this.passwordChange}></Input>
                 <Space></Space>
                 <BF>
                 <SButton onClick={this.toggleConfirm.bind(this)}>탈퇴하기</SButton> &nbsp;

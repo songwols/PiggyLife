@@ -31,16 +31,34 @@ export default class UserStore {
   }
 
   @action
-  updateUser(user) {
+  updateUser(user, file) {
     console.log(user);
-    return agent.Data.updateUser(user)
+    return agent.Data.updateUser(user, sessionStorage.getItem("uid"))
       .then((res) => {
         console.log(res.data);
+        if (res.data.code === 1) {
+          this.profileImage(file, sessionStorage.getItem("uid"));
+        }
         window.location.replace("/Feed");
       })
       .catch((err) => {
         alert("사용자 정보 업데이트에 실패하였습니다");
       });
+  }
+
+  @action profileImage(data, id) {
+    console.log(id);
+    return agent.Data.profileImage(data, id)
+      .then((res) => {
+        console.log(res);
+        if (res.status === 200) {
+          window.location.replace("/feed");
+        } else {
+          console.log(res);
+          alert(res.data.message);
+        }
+      })
+      .catch((err) => console.log(err));
   }
 
   @action

@@ -52,8 +52,8 @@ const Data = {
       email: user.email,
       password: user.password,
     }),
-  updateUser: (user) =>
-    requests.put(`/user/update?image=${user.image}&nickname=${user.nickname}`, {
+  updateUser: (user,uid) =>
+    requests.put(`/user/update/${uid}`, {
       email: user.email,
       image: user.image,
       nickname: user.nickname,
@@ -76,6 +76,7 @@ const Data = {
   getCategoryStatistic: (uId) =>
     requests.get(`/post/getCategoryStatistic/${uId}`),
   postdelete: (pid) => requests.delete(`/post/delete/${pid}`),
+  profileImage: (file, uid) => requests.post(`/user/uploadImage/${uid}`, file, {}),
 };
 
 export default {
