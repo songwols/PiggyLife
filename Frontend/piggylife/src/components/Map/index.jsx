@@ -4,6 +4,8 @@ import styled from "styled-components";
 import { inject, observer } from "mobx-react";
 import dotenv from "dotenv";
 import { withRouter } from "react-router-dom";
+import will from './will.png'
+import went from './went.png'
 
 dotenv.config();
 
@@ -34,7 +36,7 @@ class MapContent extends React.Component {
         let container = document.getElementById("Mymap");
         let options = {
           center: new kakao.maps.LatLng(33.450701, 126.570667),
-          level: 7
+          level: 5
         };
         //map 생성
         const map = new window.kakao.maps.Map(container, options);
@@ -75,19 +77,26 @@ class MapContent extends React.Component {
         } 
 
         // 마커 이미지
-        var visited = "https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/markerStar.png"; 
-        var willvis = "https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/marker_red.png"; 
+        var visited = went; 
+        var willvis = will; 
+        var all_Place=[];
+        var visited_Place=[];
+        var willvis_Place=[];
 
         for (var i = 0; i < list.length; i ++) {
           // 마커 이미지의 이미지 크기 
-          var imageSize = new kakao.maps.Size(24, 35); 
+          var imageSize = new kakao.maps.Size(35, 35); 
           var markerImage = null;
           // 마커 이미지를 생성
           if(list[i].vis === true){
             markerImage = new kakao.maps.MarkerImage(visited, imageSize); 
+            all_Place = [new kakao.maps.LatLng(list[i].lat, list[i].long)];
+            visited_Place = [new kakao.maps.LatLng(list[i].lat, list[i].long)];
           }
           else if(list[i].vis === false){
             markerImage = new kakao.maps.MarkerImage(willvis, imageSize); 
+            all_Place = [new kakao.maps.LatLng(list[i].lat, list[i].long)];
+            willvis_Place = [new kakao.maps.LatLng(list[i].lat, list[i].long)];
           }
           // 마커를 생성
           var marker = new kakao.maps.Marker({
@@ -107,7 +116,8 @@ class MapContent extends React.Component {
 
           // 마커에 클릭이벤트를 등록합니다
           kakao.maps.event.addListener(marker, 'click', makeClickListener(map, marker, infowindow));
-          }
+        }
+
           marker.setMap(map);
           // 인포윈도우를 표시하는 클로저를 만드는 함수입니다 
           function makeClickListener(map, marker, infowindow) {
