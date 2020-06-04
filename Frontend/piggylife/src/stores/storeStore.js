@@ -116,11 +116,16 @@ export default class StoreStore {
 
   @action upload(data, file) {
     console.log(data);
+    console.log(file)
+    console.log(file.length);
     const uid = window.sessionStorage.getItem("uid");
     return agent.Data.upload(data, uid)
       .then((res) => {
         console.log(res.data.data.pid);
-        this.postImage(file,res.data.data.pid);
+        if(file!==null){
+          console.log("여기야?")
+          this.postImage(file,res.data.data.pid);
+        }
       })
       .catch((err) => alert("업로드 실패!"));
   }
