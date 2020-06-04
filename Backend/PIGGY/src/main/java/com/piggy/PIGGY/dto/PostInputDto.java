@@ -10,9 +10,8 @@ import lombok.NoArgsConstructor;
 public class PostInputDto {
 	
 	private Long sId;
-	private String image;
 	private String content;
 	private Boolean visited;
-	private Boolean isLike;
+	private Integer isLike;
 
 }

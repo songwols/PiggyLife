@@ -1,24 +1,110 @@
 import React from "react";
 import styled from "styled-components";
-import { Link } from "react-router-dom";
+import LevelGraph from "../LevelGraph";
+import { inject, observer } from "mobx-react";
 
+@inject("statisticStore", "userStore", "storeStore")
+@observer
 class Statistic extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      area: {},
+      category: [],
+      ranking: 0,
+      rname: "",
+      best: {
+        area: "",
+        city: "",
+        cnt: "",
+      },
+      startnum: 0,
+      mylength: 0,
+      remainnum: 0,
+      goalnum: 0,
+      done: 0,
+      todo: 0,
+    };
+  }
+  componentWillMount() {
+    this.props.statisticStore.getAreaStatistic(
+      window.sessionStorage.getItem("uid")
+    );
+    this.props.statisticStore.getCategoryStatistic(
+      window.sessionStorage.getItem("uid")
+    );
+    this.props.userStore.whoami(window.sessionStorage.getItem("email"));
+    this.props.storeStore.get_post(window.sessionStorage.getItem("uid"));
+  }
   render() {
+    this.area = this.props.statisticStore.areaList;
+    this.category = this.props.statisticStore.categoryList;
+    this.ranking = this.props.userStore.ranking;
+    this.rname = this.props.userStore.rname;
+    this.mylength = this.props.storeStore.postslength;
+    this.best = this.props.statisticStore.bestarea;
+    if (this.ranking === 0) {
+      this.goalnum = 10;
+      this.startnum = 0;
+    } else if (this.ranking === 1) {
+      this.goalnum = 20;
+      this.startnum = 10;
+    } else if (this.ranking === 2) {
+      this.goalnum = 30;
+      this.startnum = 20;
+    } else if (this.ranking === 3) {
+      this.goalnum = 50;
+      this.startnum = 30;
+    } else if (this.ranking === 4) {
+      this.goalnum = 70;
+      this.startnum = 50;
+    } else if (this.ranking === 5) {
+      this.goalnum = 90;
+      this.startnum = 70;
+    } else if (this.ranking === 6) {
+      this.goalnum = 120;
+      this.startnum = 90;
+    } else if (this.ranking === 7) {
+      this.goalnum = 150;
+      this.startnum = 120;
+    } else if (this.ranking === 8) {
+      this.goalnum = 180;
+      this.startnum = 150;
+    } else if (this.ranking === 9) {
+      this.goalnum = 230;
+      this.startnum = 180;
+    }
+    this.remainnum = this.goalnum - this.mylength;
+    this.done =
+      (21.5 / (this.goalnum - this.startnum)) *
+        (this.mylength - this.startnum) +
+      "rem";
+    this.todo =
+      (21.5 / (this.goalnum - this.startnum)) * this.remainnum + "rem";
     return (
       <Frame>
-        <LevelGraph>레벨그래프? 들어갈자리</LevelGraph>
+        <LevelGraph
+          done={this.done}
+          todo={this.todo}
+          ranking={this.ranking}
+        ></LevelGraph>
         <Level>
           <Div>당신의 돼지력은</Div>
-          <Piggy>걷기 시작한 아기돼지</Piggy>
+          <Piggy>
+            Lv.{this.ranking} {this.rname}
+          </Piggy>
           <Div>입니다</Div>
         </Level>
         <Placer>
           <Div>당신은</Div>
-          <Piggy> 동탄 스타벅스 카페순이</Piggy>
-          <Div>입니다</Div>
+          <Piggy>
+            {" "}
+            "{this.best.city} {this.best.area}" 를
+          </Piggy>
+          <Div>자주 방문하는 돼지입니다</Div>
         </Placer>
-        <Place>장소 통계 들어갈 자리</Place>
-        <Category>카테고리 통계 들어갈 자리</Category>
+        <Place>장소통계</Place>
+        <Category>카테고리통계</Category>
       </Frame>
     );
   }
@@ -26,16 +112,7 @@ class Statistic extends React.Component {
 
 const Frame = styled.div`
   margin: 1rem;
-`;
-const LevelGraph = styled.div`
-  justify-content: center;
-  text-align: center;
-  align-items: center;
-
-  background-color: #f2e9e4;
-  height: 3rem;
-  margin-top: 0.3rem;
-  margin-bottom: 0.3rem;
+  overflow: hidden;
 `;
 const Level = styled.div`
   border-radius: 0.5rem;

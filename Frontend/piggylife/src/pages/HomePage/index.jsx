@@ -1,50 +1,48 @@
 import React from "react";
 import styled from "styled-components";
 import Navbar from "../../components/Navbar";
+import CardLayout from "../../components/CardL";
+import DCardLayout from "../../components/DCardL";
+import { inject, observer } from "mobx-react";
 
+@inject("storeStore", "userStore")
+@observer
 class HomePage extends React.Component {
+  componentWillMount() {
+    this.props.userStore.whoami(window.sessionStorage.getItem("email"));
+  }
+
   render() {
+    const nickname = this.props.userStore.nickname;
     return (
       <Frame>
         <List>
           <Mukitlist>
-            <Title>먹킷리스트</Title>
-            <Div></Div>
-            {/* {returns ? (
-              returns.map((item, index) => <Card key={index} store={item} />)
-            ) : (
-              <></>
-            )} */}
+            <Title>"{nickname}" 님의 먹킷리스트</Title>
+            <Div>
+              <DCardLayout keyword="mypost"></DCardLayout>
+            </Div>
           </Mukitlist>
 
           <Top10>
             <Title>이 달의 MukSpot-TOP10</Title>
-            <Div></Div>
-            {/* {returns ? (
-              returns.map((item, index) => <Card key={index} store={item} />)
-            ) : (
-              <></>
-            )} */}
+            <Div>
+              <CardLayout keyword="top10"></CardLayout>
+            </Div>
           </Top10>
 
           <Place>
-            <Title>OOO지역에서 가볼만한 곳</Title>
-            <Div></Div>
-            {/* {returns ? (
-              returns.map((item, index) => <Card key={index} store={item} />)
-            ) : (
-              <></>
-            )} */}
+            <Title>"{nickname}" 님이 자주 방문하는 지역의 추천 맛집</Title>
+            <Div>
+              <CardLayout keyword="hotplace"></CardLayout>
+            </Div>
           </Place>
 
           <User>
-            <Title>OOO님과 비슷한 먹유저들의 MukSpot</Title>
-            <Div></Div>
-            {/* {returns ? (
-              returns.map((item, index) => <Card key={index} store={item} />)
-            ) : (
-              <></>
-            )} */}
+            <Title>"{nickname}" 님과 비슷한 먹유저들의 MukSpot</Title>
+            <Div>
+              <CardLayout keyword="similar"></CardLayout>
+            </Div>
           </User>
         </List>
         <Navbar></Navbar>
@@ -59,8 +57,12 @@ const Title = styled.div`
 
 const Div = styled.div`
   background-color: #f2e9e4;
-  width: 100%;
+  width: 100vw;
   height: 100px;
+  /* display: flex; */
+  white-space: nowrap;
+  overflow-x: scroll;
+  overflow-y: hidden;
 `;
 
 const Mukitlist = styled.div`

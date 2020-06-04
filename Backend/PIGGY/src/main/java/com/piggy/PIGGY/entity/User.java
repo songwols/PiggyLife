@@ -14,6 +14,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -36,6 +37,9 @@ public class User implements UserDetails {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long uId;
+	
+	@OneToOne(mappedBy="user", cascade=CascadeType.ALL)
+	private Recommend recommend;
 
 	@Column(nullable = false, unique = true)
 	private String email;
@@ -53,7 +57,10 @@ public class User implements UserDetails {
 	private String image;
 	
 	@Column
-	String emailCertify;
+	private String imageName;
+	
+	@Column
+	private String emailCertify;
 
 	@OneToMany(mappedBy = "user", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
 	private List<Post> feeds = new ArrayList<>();
@@ -109,6 +116,22 @@ public class User implements UserDetails {
 	@Override
 	public boolean isEnabled() {
 		return true;
+	}
+	
+	public void update(String nickname, String image) {
+		this.nickname = nickname;
+		this.image = image;
+	}
+	
+	public void update(String email, String password, String nickname) {
+		this.email = email;
+		this.password = password;
+		this.nickname = nickname;
+	}
+	
+	public void updateImage(String image, String imageName) {
+		this.image = image;
+		this.imageName = imageName;
 	}
 
 }

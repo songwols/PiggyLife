@@ -1,9 +1,10 @@
 spring:
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
-    url: jdbc:mysql://127.0.0.1:3306/piggy?serverTimezone=UTC&characterEncoding=utf8
-    username: root
-    password: 1234
+    url: jdbc:mysql://52.78.169.231:3306/piggy?serverTimezone=UTC&characterEncoding=utf8
+#    url: jdbc:mysql://localhost:3306/piggy?serverTimezone=UTC&characterEncoding=utf8
+    username: piggy
+    password: piggy
   jpa:
     properties:
       hibernate:
@@ -27,13 +28,19 @@ spring:
           starttls:
             enable: true
         debug: true
+  servlet:
+      multipart:
+          enabled: true
+          maxFileSize: 10MB
+          maxRequestSize: 10MB
+          
 #  jwt:
 #    secret: govlepel@$&
     
 server:
   servlet:
-    context-path: /Piggy
-  port: 8090
+    context-path: /PIGGY
+  port: 8080
 
 logging:
   level:
