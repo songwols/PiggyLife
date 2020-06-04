@@ -119,12 +119,12 @@ class WriteContent extends React.Component {
   goRegister = (e) => {
     console.log(this.state.file);
     var formData = "";
-    if(this.state.file===null){
+    if(this.state.file!==""){
       formData = new FormData();
       formData.append("file", this.state.file);
     }
     else{
-      formData = "";
+      formData = null;
     }
     console.log(formData)
     if (this.state.v_name === "이름을 검색하고 싶으면 여기를 클릭하세요") {
