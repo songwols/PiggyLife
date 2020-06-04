@@ -1,21 +1,48 @@
 package com.piggy.PIGGY.entity;
 
 import java.math.BigDecimal;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
+import javax.persistence.ColumnResult;
+import javax.persistence.ConstructorResult;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.OneToOne;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
+import javax.persistence.SqlResultSetMapping;
+
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
+import com.piggy.PIGGY.dto.StoreTop10Dto;
 
 import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
+@SqlResultSetMapping(
+		name="Store.Top10",
+		classes={
+				@ConstructorResult(
+						targetClass=StoreTop10Dto.class,
+						columns={
+								@ColumnResult(name="sId",type=Long.class),
+								@ColumnResult(name="name",type=String.class),
+								@ColumnResult(name="image",type=String.class),
+								@ColumnResult(name="cnt",type=Integer.class)
+						}
+						)
+		}
+		)
+@JsonIdentityInfo(generator = ObjectIdGenerators.IntSequenceGenerator.class)
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Getter
 @Entity
@@ -25,34 +52,49 @@ public class Store {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long sId;
 	
-	@Column
+	@Column(nullable=false)
 	private String name;
 	
 	@Column
 	private String tel;
 	
-	@Column
+	@Column(nullable=false)
 	private String address;
 	
-	@Column
+	@Column(nullable=false, precision=19, scale=6)
 	private BigDecimal latitude;
 	
-	@Column
+	@Column(nullable=false, precision=19, scale=6)
 	private BigDecimal longitude;
 	
 	@Column
 	private String category;
+	
+	@Column
+	private String image;
+	
+	@Column
+	private String branch;
 
-	@OneToOne(mappedBy = "store", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-	private Post post;
+	@JsonIgnore
+	@OneToMany(mappedBy = "store", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+	private List<Post> posts = new ArrayList<>();
+	
+	@ManyToOne
+	@JoinColumn(name="rId")
+	private Region region;
+	
+	@OneToMany(mappedBy = "store", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+	private List<Menu> menues = new ArrayList<>();
 
 	@Builder
-	public Store(String name, String tel, String address, BigDecimal latitude, BigDecimal longitude, String category) {
+	public Store(String name, String tel, String address, BigDecimal latitude, BigDecimal longitude, String category, String branch) {
 		this.name = name;
 		this.tel = tel;
 		this.address = address;
 		this.latitude = latitude;
 		this.longitude = longitude;
 		this.category = category;
+		this.branch = branch;
 	}
 }

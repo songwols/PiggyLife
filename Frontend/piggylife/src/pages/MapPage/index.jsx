@@ -1,12 +1,13 @@
 import React from "react";
 import styled from "styled-components";
+import Map from "../../components/Map"
 import Navbar from "../../components/Navbar";
 
 class MapPage extends React.Component {
   render() {
     return (
       <Frame>
-        <Map>여기에카카오맵이들어갈거</Map>
+        <Map></Map>
         <Navbar></Navbar>
       </Frame>
     );
@@ -16,7 +17,5 @@ class MapPage extends React.Component {
 const Frame = styled.div`
   height: 100vh;
 `;
-
-const Map = styled.div``;
 
 export default MapPage;

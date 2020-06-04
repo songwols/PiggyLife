@@ -1,36 +1,90 @@
 import React from "react";
 import styled from "styled-components";
+import { inject, observer } from "mobx-react";
 import List from "./list";
 
+@inject("storeStore")
+@observer
 class Search extends React.Component{
     constructor(props){
       super(props);
       this.state={
           showList : false,
+          store_name:"",
+          address: "",
+          stores: [],
+          detail: [],
       }
     }
+
+    onNameChange = (e) => {
+      this.setState({
+        store_name: e.target.value,
+      });
+    };
 
     toggleList() {
       this.setState({
         showList: !this.state.showList,
       });
     }
+    addressChange(e) {
+      this.setState({
+        address: e.target.value,
+      });
+    };
 
     render(){
+      const getDetail = async (e) => {
+        e.preventDefault();
+        //디테일 받아올 스토어
+        console.log(this.state.address)
+        await this.props.storeStore.detail(this.state.address);
+        const getD = this.props.storeStore.detailPost;
+        this.setState({
+          detail: getD,
+        })
+
+        this.setState({
+          showList: !this.state.showList,
+        })
+      };
+      const searching = async (e) => {
+        e.preventDefault();
+        //리스트 정보 받아올 스토어
+        console.log("searching")
+        await this.props.storeStore.search(this.state.store_name);
+
+        this.setState({
+          showList: !this.state.showList,
+        })
+      };
+      const lst=this.props.storeStore.storeItems;
+
         return(
             <Popup>
                 <PopupInner>
                   <Box>
                     <Title>가게 이름 검색</Title>
-                    <Searching></Searching>
+                    <Searching value={this.state.store_name} onChange={this.onNameChange}></Searching>
                     <BFrame>
                       <Cancel onClick={this.props.cancelSearch}>닫기</Cancel>&nbsp;
-                      <OK onClick={this.toggleList.bind(this)}>검색</OK>
+                      <OK onClick={searching} >검색</OK>
                     </BFrame>
                   </Box>
                 </PopupInner>
                 {this.state.showList ? (
-                <List cancelList={this.toggleList.bind(this)}/>
+                  <PopupInner>
+                  <SFrame>
+                  <Select onChange={this.addressChange.bind(this)}>
+                    {lst.map((item, index) => <Option key={index} value={index}>{item.name} - {item.address}</Option>)}
+                  </Select>
+                  </SFrame>
+                  <BFrame>
+                    <Cancel onClick={this.props.cancelSearch} value={this.state.detail}>닫기</Cancel>&nbsp;
+                    <OK onClick={getDetail}>확인</OK>
+                  </BFrame>
+              </PopupInner>
                 ) : null}
             </Popup>
         )
@@ -116,17 +170,6 @@ const Searching = styled.input`
   border-right: hidden;
 `
 
-const BFrame = styled.div`
-  grid-area: "bframe";
-  margin-top: .3rem;
-  height: 2rem;
-  text-align: center;
-  display: flex; 
-  align-items: center; 
-  justify-content: center; 
-  -webkit-justify-content: center; 
-  -webkit-align-items: center;
-`
 
 const Cancel = styled.button`
   width: 30%;
@@ -148,6 +191,39 @@ const OK = styled.button`
   outline: none;
   border-radius: 0.3rem;
   background-color: #5897A6;
+`
+const SFrame = styled.div`
+    margin: 60% 10% 45% 10%;
+    height: 4rem;
+    width: 80%;
+    background-color: #ffe8bd;
+    text-align: center;
+    display: flex; 
+    align-items: center; 
+    justify-content: center; 
+`
+
+const Select = styled.select`
+    height: 2rem;
+    width: 80%;
+`
+
+const Option = styled.option`
+    height: 2rem;
+    width: 80%;
+    overflow:scroll;
+`
+
+const BFrame = styled.div`
+  grid-area: "bframe";
+  margin-top: .3rem;
+  height: 2rem;
+  text-align: center;
+  display: flex; 
+  align-items: center; 
+  justify-content: center; 
+  -webkit-justify-content: center; 
+  -webkit-align-items: center;
 `
 
 export default Search;
