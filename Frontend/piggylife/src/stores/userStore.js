@@ -16,6 +16,7 @@ export default class UserStore {
     return agent.Data.checkPwd(user, sessionStorage.getItem("token"))
       .then((res) => {
         console.log(res.data);
+        window.location.replace("/EditP");
       })
       .catch((err) => {
         console.log(err);
@@ -40,9 +41,9 @@ export default class UserStore {
   updatepw(user) {
     return agent.Data.updatepw(user)
       .then((res) => {
-        console.log(res);
-        //alert("패스워드가 변경되었습니다.");
-        //window.location.replace("/");
+        //console.log(res);
+        alert("패스워드가 변경되었습니다.");
+        window.location.replace("/");
       })
       .catch((err) => {
         console.log(err);

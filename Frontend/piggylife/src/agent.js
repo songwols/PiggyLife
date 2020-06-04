@@ -42,10 +42,14 @@ const Data = {
   postImage: (info, id) => requests.post(`/post/postImage/${id}`, info, {}),
   findByEmail: (email) => requests.get(`/user/findByEmail?email=${email}`),
   signin: (user) =>
-    requests.get(`/sign/signin?email=${user.email}&password=${user.password}`),
+    requests.post(`/sign/signin`, {
+      email: user.email,
+      password: user.password,
+    }),
   findById: (token) => requests.get(`/user/findUser`),
   updatepw: (user) =>
-    requests.put(`/user/updatePassword?email=${user.email}`, {
+    requests.put(`/user/updatePassword`, {
+      email: user.email,
       password: user.password,
     }),
   updateUser: (user) =>
@@ -58,7 +62,7 @@ const Data = {
   checkPwd: (user, token) =>
     requests.post(
       `/user/checkPassword`,
-      { password: user.currPwd },
+      { email: user.email, password: user.currPwd },
       { TOKEN: token }
     ),
 
