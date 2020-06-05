@@ -57,7 +57,7 @@ public class StoreServiceImpl implements StoreService {
 
 	@Override
 	public List<Store> findByName(String name) {
-		return sRepo.findByNameContaining(name);
+		return sRepo.findByNameContainingOrderByNameAscAddressAsc(name);
 	}
 
 }
