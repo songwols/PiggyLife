@@ -12,7 +12,6 @@ export default class UserStore {
 
   @action
   checkPwd(user) {
-    console.log(user.currPwd);
     return agent.Data.checkPwd(user, sessionStorage.getItem("token"))
       .then((res) => {
         if(res.data.code===1){
@@ -71,8 +70,6 @@ export default class UserStore {
 
   @action
   findByEmail(email) {
-    console.log(email);
-    console.log(sessionStorage.getItem("email"));
     return agent.Data.findByEmail(email)
       .then((res) => {
         alert("매칭을 시작합니다!");

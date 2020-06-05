@@ -89,8 +89,8 @@ export default class StoreStore {
       .catch((err) => console.log(err));
   }
   @action
-  get_for2(myid, fid) {
-    // return agent.Data.get_for2(myid, fid)
+  get_for2(mid, fid) {
+    // return agent.Data.get_for2(mid, fid)
     //   .then((res) => {
     //     this.for2=res.data;
     //   })
@@ -153,14 +153,11 @@ export default class StoreStore {
   }
 
   @action postImage(data, id) {
-    console.log(id);
     return agent.Data.postImage(data, id)
       .then((res) => {
-        console.log(res);
         if (res.status === 200) {
           window.location.replace("/feed");
         } else {
-          console.log(res);
           alert(res.data.message);
         }
       })
@@ -190,11 +187,8 @@ export default class StoreStore {
   }
 
   @action postupdate(data, file, pid) {
-    console.log(data);
-    console.log(pid);
     return agent.Data.postupdate(data, file, pid)
       .then((res) => {
-        console.log(res.data);
         window.location.replace("/mydetail/" + pid);
       })
       .catch((err) => alert("실패"));

@@ -52,6 +52,8 @@ class WriteContent extends React.Component {
       sid: "",
       file: "",
       previewURL: "",
+      will: true,
+      went: false,
     };
     this.g_changeColor = this.g_changeColor.bind(this);
     this.n_changeColor = this.n_changeColor.bind(this);
@@ -62,6 +64,8 @@ class WriteContent extends React.Component {
       show: true,
       visited: true,
       isLike: 1,
+      will: false,
+      went: true,
     });
   }
   nonIcon() {
@@ -69,6 +73,8 @@ class WriteContent extends React.Component {
       show: false,
       isLike: 0,
       visited: false,
+      will: true,
+      went: false,
     });
   }
   toggleSearch() {
@@ -139,6 +145,8 @@ class WriteContent extends React.Component {
       g_show: true,
       n_show: false,
       isLike: 1,
+      will: false,
+      went: true,
     });
   };
 
@@ -149,6 +157,8 @@ class WriteContent extends React.Component {
       n_show: true,
       g_show: false,
       isLike: -1,
+      will: false,
+      went: true,
     });
   };
 
@@ -216,19 +226,7 @@ class WriteContent extends React.Component {
           </form> */}
           {profile_preview}
         </PF>
-        {this.state.show ? (
-          <ICFrame>
-            <Div onClick={() => this.g_changeColor("#5897A6")}>
-              <Good style={{ color: this.state.g_color }} />
-              좋아요
-            </Div>
-
-            <Div onClick={() => this.n_changeColor("#F28379")}>
-              <NGood style={{ color: this.state.n_color }} />
-              싫어요
-            </Div>
-          </ICFrame>
-        ) : null}
+        
         <FF onClick={this.toggleSearch.bind(this)}>
           <Input value={this.state.v_name} readOnly></Input>
         </FF>
@@ -253,18 +251,31 @@ class WriteContent extends React.Component {
         <CheckDiv>
           <label>
             <BF onClick={this.nonIcon.bind(this)}>
-              <CK type="radio" name="group" value="will" defaultChecked />
+              <CK type="radio" name="group" value="will" checked={this.state.will} />
             </BF>
             갈 곳
           </label>
           &nbsp;
           <label>
             <BF onClick={this.showIcon.bind(this)}>
-              <CK type="radio" name="group" value="went" />
+              <CK type="radio" name="group" value="went" checked={this.state.went} />
             </BF>
             간 곳
           </label>
         </CheckDiv>
+        {this.state.show ? (
+          <ICFrame>
+            <Div onClick={() => this.g_changeColor("#5897A6")}>
+              <Good style={{ color: this.state.g_color }} />
+              좋아요
+            </Div>
+            <Div onClick={() => this.n_changeColor("#F28379")}>
+              <NGood style={{ color: this.state.n_color }} />
+              싫어요
+            </Div>
+          </ICFrame>
+        ) : null}
+        <Space/>
         <EBF>
           <CButton onClick={this.goRegister}>등록</CButton>
         </EBF>
@@ -310,6 +321,9 @@ class WriteContent extends React.Component {
   }
 }
 
+const Space = styled.div`
+  height: 2rem;
+`
 const TextD = styled.div`
   padding-left: 0.3rem;
   margin-top: 0.3rem;

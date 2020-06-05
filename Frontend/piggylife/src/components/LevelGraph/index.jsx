@@ -16,8 +16,8 @@ class LevelGraph extends React.Component {
     };
   }
   render() {
-    console.log(this.props.todo);
-    console.log(this.props.done);
+    // console.log(this.props.todo);
+    // console.log(this.props.done);
     return (
       <Frame>
         <Level>

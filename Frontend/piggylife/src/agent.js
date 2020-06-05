@@ -78,6 +78,7 @@ const Data = {
     requests.get(`/post/getCategoryStatistic/${uId}`),
   postdelete: (pid) => requests.delete(`/post/delete/${pid}`),
   profileImage: (file, uid) => requests.post(`/user/uploadImage/${uid}`, file, {}),
+  get_for2: (mid, fid) => requests.get(`/recommend/findMatch?selfEmail=${mid}&friendEmail=${fid}`),
 };
 
 export default {
