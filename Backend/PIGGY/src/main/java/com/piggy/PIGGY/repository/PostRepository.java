@@ -17,5 +17,10 @@ public interface PostRepository extends JpaRepository<Post, Long>{
 	List<Post> findByUser(User user);
 
 	List<Post> findByUserAndVisited(User user, boolean visited);
+<<<<<<< HEAD
 
+=======
+	
+	List<Post> findByUserOrderByCreatedTimeAtDesc(User user);
+>>>>>>> branch 'develop' of https://lab.ssafy.com/s02-final/s02p31a301.git
 }

@@ -8,5 +8,5 @@ import com.piggy.PIGGY.entity.Store;
 
 public interface StoreRepository extends JpaRepository<Store, Long> {
 
-	List<Store> findByNameContaining(String name);
+	List<Store> findByNameContainingOrderByNameAscAddressAsc(String name);
 }

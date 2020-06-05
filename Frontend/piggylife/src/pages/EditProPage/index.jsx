@@ -2,7 +2,6 @@ import React from "react";
 import styled from "styled-components";
 import EditPro from "../../components/EditPro";
 import Navbar from "../../components/Navbar";
-import { Link } from "react-router-dom";
 
 class EditProPage extends React.Component{
     render(){

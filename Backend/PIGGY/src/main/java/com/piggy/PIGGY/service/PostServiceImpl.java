@@ -93,7 +93,7 @@ public class PostServiceImpl implements PostService {
 	@Override
 	public List<Post> findByUser(Long uId) {
 		User user = uRepo.findById(uId).orElseThrow(NoSuchElementException::new);
-		return pRepo.findByUser(user);
+		return pRepo.findByUserOrderByCreatedTimeAtDesc(user);
 	}
 
 	@Override

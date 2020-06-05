@@ -12,6 +12,8 @@ export default class StoreStore {
   @observable similar = [];
   @observable location = [];
   @observable detailPost = {};
+  @observable for2 = [];
+  @observable newplace = [];
 
   @computed get postslength() {
     return this.posts.length;
@@ -27,6 +29,12 @@ export default class StoreStore {
   }
   @computed get similarlength() {
     return this.similar.length;
+  }
+  @computed get for2length() {
+    return this.for2.length;
+  }
+  @computed get newplacelength() {
+    return this.newplace.length;
   }
 
   @action
@@ -81,6 +89,23 @@ export default class StoreStore {
       .catch((err) => console.log(err));
   }
   @action
+  get_for2(mid, fid) {
+    // return agent.Data.get_for2(mid, fid)
+    //   .then((res) => {
+    //     this.for2=res.data;
+    //   })
+    //   .catch((err) => console.log(err));
+  }
+  @action
+  get_newplace() {
+    // return agent.Data.get_newplace()
+    //   .then((res) => {
+    //     this.newplace=res.data;
+    //   })
+    //   .catch((err) => console.log(err));
+  }
+
+  @action
   setMyPosts(myposts) {
     this.myposts = myposts;
   }
@@ -128,14 +153,11 @@ export default class StoreStore {
   }
 
   @action postImage(data, id) {
-    console.log(id);
     return agent.Data.postImage(data, id)
       .then((res) => {
-        console.log(res);
         if (res.status === 200) {
           window.location.replace("/feed");
         } else {
-          console.log(res);
           alert(res.data.message);
         }
       })
@@ -165,11 +187,8 @@ export default class StoreStore {
   }
 
   @action postupdate(data, file, pid) {
-    console.log(data);
-    console.log(pid);
     return agent.Data.postupdate(data, file, pid)
       .then((res) => {
-        console.log(res.data);
         window.location.replace("/mydetail/" + pid);
       })
       .catch((err) => alert("실패"));

@@ -22,6 +22,10 @@ class CardLayout extends React.Component {
       this.props.storeStore.get_hotplace();
     } else if (keyword === "similar") {
       this.props.storeStore.get_similar(window.sessionStorage.getItem("uid"));
+    }else if (keyword === "recommendfor2") {
+      // this.props.storeStore.get_for2(window.sessionStorage.getItem("email"), this.props.fid);
+    }else if (keyword === "new_place") {
+      // this.props.storeStore.get_newplace(window.sessionStorage.getItem("email"), this.props.fid);
     }
   }
 
@@ -35,6 +39,14 @@ class CardLayout extends React.Component {
     } else if (this.props.keyword === "similar") {
       this.list = this.props.storeStore.similar;
       this.length = this.props.storeStore.similarlength;
+    } else if (this.props.keyword === "recommendfor2") {
+      // this.list = this.props.storeStore.for2;
+      // this.length = this.props.storeStore.for2length;
+      this.length=0;
+    } else if (this.props.keyword === "new_place") {
+      // this.list = this.props.storeStore.newplace;
+      // this.length = this.props.storeStore.newplacelength;
+      this.length=0;
     }
 
     return (

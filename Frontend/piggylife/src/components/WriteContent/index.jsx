@@ -52,6 +52,8 @@ class WriteContent extends React.Component {
       sid: "",
       file: "",
       previewURL: "",
+      will: true,
+      went: false,
     };
     this.g_changeColor = this.g_changeColor.bind(this);
     this.n_changeColor = this.n_changeColor.bind(this);
@@ -62,6 +64,8 @@ class WriteContent extends React.Component {
       show: true,
       visited: true,
       isLike: 1,
+      will: false,
+      went: true,
     });
   }
   nonIcon() {
@@ -69,6 +73,8 @@ class WriteContent extends React.Component {
       show: false,
       isLike: 0,
       visited: false,
+      will: true,
+      went: false,
     });
   }
   toggleSearch() {
@@ -93,6 +99,14 @@ class WriteContent extends React.Component {
     }
   }
 
+  toggleClose() {
+    this.setState({
+      searchShow: !this.state.searchShow,
+      click: 0,
+      store_name: "",
+    });
+  }
+
   VMemoChange = (e) => {
     this.setState({
       v_memo: e.target.value,
@@ -113,6 +127,26 @@ class WriteContent extends React.Component {
   addressChange(e) {
     this.setState({
       address: e.target.value,
+    });
+  }
+
+  willChange = (e) => {
+    this.setState({
+      show: false,
+      isLike: 0,
+      visited: false,
+      will: e.target.value,
+      went: false,
+    });
+  }
+
+  wentChange = (e) => {
+    this.setState({
+      show: true,
+      visited: true,
+      isLike: 1,
+      will: false,
+      went: e.target.value,
     });
   }
 
@@ -139,6 +173,8 @@ class WriteContent extends React.Component {
       g_show: true,
       n_show: false,
       isLike: 1,
+      will: false,
+      went: true,
     });
   };
 
@@ -149,6 +185,8 @@ class WriteContent extends React.Component {
       n_show: true,
       g_show: false,
       isLike: -1,
+      will: false,
+      went: true,
     });
   };
 
@@ -216,19 +254,7 @@ class WriteContent extends React.Component {
           </form> */}
           {profile_preview}
         </PF>
-        {this.state.show ? (
-          <ICFrame>
-            <Div onClick={() => this.g_changeColor("#5897A6")}>
-              <Good style={{ color: this.state.g_color }} />
-              좋아요
-            </Div>
-
-            <Div onClick={() => this.n_changeColor("#F28379")}>
-              <NGood style={{ color: this.state.n_color }} />
-              싫어요
-            </Div>
-          </ICFrame>
-        ) : null}
+        
         <FF onClick={this.toggleSearch.bind(this)}>
           <Input value={this.state.v_name} readOnly></Input>
         </FF>
@@ -253,18 +279,31 @@ class WriteContent extends React.Component {
         <CheckDiv>
           <label>
             <BF onClick={this.nonIcon.bind(this)}>
-              <CK type="radio" name="group" value="will" defaultChecked />
+              <CK type="radio" name="group" value="will" checked={this.state.will} onChange={this.willChange}/>
             </BF>
             갈 곳
           </label>
           &nbsp;
           <label>
             <BF onClick={this.showIcon.bind(this)}>
-              <CK type="radio" name="group" value="went" />
+              <CK type="radio" name="group" value="went" checked={this.state.went} onChange={this.wentChange}/>
             </BF>
             간 곳
           </label>
         </CheckDiv>
+        {this.state.show ? (
+          <ICFrame>
+            <Div onClick={() => this.g_changeColor("#5897A6")}>
+              <Good style={{ color: this.state.g_color }} />
+              좋아요
+            </Div>
+            <Div onClick={() => this.n_changeColor("#F28379")}>
+              <NGood style={{ color: this.state.n_color }} />
+              싫어요
+            </Div>
+          </ICFrame>
+        ) : null}
+        <Space/>
         <EBF>
           <CButton onClick={this.goRegister}>등록</CButton>
         </EBF>
@@ -272,6 +311,7 @@ class WriteContent extends React.Component {
           // <Search cancelSearch={this.toggleSearch.bind(this)} saveD={this.toggleDetailSave.bind(this)}/>
           <Popup>
             <PopupInner>
+              <Close onClick={this.toggleClose.bind(this)}>X</Close>
               <Box>
                 <Title>가게 이름 검색</Title>
                 <Searching
@@ -283,8 +323,10 @@ class WriteContent extends React.Component {
                   &nbsp;
                   <OK onClick={searching}>검색</OK>
                 </BFrame>
+                <Notice>*가게 이름을 입력하고 검색을 눌러 정보 선택 후, 저장을 눌러주세요.</Notice>
+            
               </Box>
-            </PopupInner>
+              </PopupInner>
             {this.state.showList ? (
               <PopupInner>
                 <SFrame>
@@ -310,9 +352,23 @@ class WriteContent extends React.Component {
   }
 }
 
+const Space = styled.div`
+  height: 2rem;
+`
+
+const Close = styled.button`
+  background: none;
+  border: none;
+  outline: none;
+  float: right;
+  font-size: xx-large;
+  margin: .3rem .5rem;
+`
+
+
 const TextD = styled.div`
   padding-left: 0.3rem;
-  margin-top: 0.3rem;
+  margin-top: 0.4rem;
   height: 2rem;
   border-style: solid;
   border-width: 0.05rem;
@@ -325,7 +381,7 @@ const TextD = styled.div`
 
 const ML = styled.div`
   padding-left: 0.3rem;
-  margin-top: 0.3rem;
+  margin-top: 0.4rem;
   border-style: solid;
   border-width: 0.05rem;
   border-radius: 0.3rem;
@@ -372,7 +428,7 @@ const FF = styled.button`
 
 const Input = styled.input`
   font-size: 1rem;
-  margin-top: 0.3rem;
+  margin-top: 0.4rem;
   width: 95%;
   padding-left: 0.3rem;
   background: none;
@@ -389,7 +445,7 @@ const TextArea = styled.textarea`
   display: block;
   font-size: 1rem;
   resize: none;
-  margin-top: 0.3rem;
+  margin-top: 0.4rem;
   width: 95%;
   padding-left: 0.3rem;
   background: none;
@@ -404,7 +460,7 @@ const TextArea = styled.textarea`
 `;
 const CheckDiv = styled.div`
   width: 95%;
-  margin-top: 0.3rem;
+  margin-top: 0.4rem;
   height: 2rem;
   text-align: center;
 `;
@@ -423,7 +479,7 @@ const EBF = styled.div`
 `;
 
 const CButton = styled.button`
-  margin-top: 0.3rem;
+  margin-top: 0.4rem;
   width: 30%;
   height: 2rem;
   color: white;
@@ -475,13 +531,21 @@ const PopupInner = styled.div`
 
 const Box = styled.div`
   margin: 45% 10% 45% 10%;
-  height: 40%;
+  height: 60%;
   width: 80%;
   background-color: #ffe8bd;
   display: grid;
-  grid-template-rows: repeat(3, 1fr);
-  grid-template-areas: "title" "searching" "bframe";
+  grid-template-rows: repeat(4, 1fr);
+  grid-template-areas: "title" "searching" "bframe" "notice";
 `;
+
+const Notice = styled.div`
+  padding-top: .2rem;
+  grid-area: notice;
+  background-color: white;
+  font-size: smaller;
+`
+
 const Title = styled.div`
   grid-area: "title";
   display: flex;
@@ -494,7 +558,7 @@ const Title = styled.div`
 const Searching = styled.input`
   grid-area: "searching";
   font-size: 1rem;
-  margin-top: 0.3rem;
+  margin-top: 0.4rem;
   margin-left: 0.4rem;
   width: 90%;
   padding-left: 0.3rem;
@@ -555,7 +619,7 @@ const Option = styled.option`
 
 const BFrame = styled.div`
   grid-area: "bframe";
-  margin-top: 0.3rem;
+  margin-top: 0.4rem;
   height: 2rem;
   text-align: center;
   display: flex;

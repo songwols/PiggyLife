@@ -128,12 +128,12 @@ const Bottom = styled.div`
   justify-content: center;
   align-items: center; */
 `;
-const Feed = styled.div`
-  display: grid;
-  height: 92vh;
-  grid-template-rows: 150px auto;
-  grid-template-areas: "Profile" "Content";
-`;
+// const Feed = styled.div`
+//   display: grid;
+//   height: 92vh;
+//   grid-template-rows: 150px auto;
+//   grid-template-areas: "Profile" "Content";
+// `;
 const Content = styled.div`
   // display: grid;
   // grid-template-rows: 55px auto;

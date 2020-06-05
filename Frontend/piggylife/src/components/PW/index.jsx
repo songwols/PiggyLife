@@ -1,7 +1,6 @@
 import React from "react";
 import styled from "styled-components";
 import Confirm from "../Join/confirm";
-import { Link } from "react-router-dom";
 import { inject, observer } from "mobx-react";
 
 @inject("userStore")

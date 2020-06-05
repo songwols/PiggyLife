@@ -21,8 +21,6 @@ import com.piggy.PIGGY.repository.StoreRepository;
 import com.piggy.PIGGY.repository.UserRepository;
 import com.piggy.PIGGY.util.MapperUtils;
 
-import jep.Jep;
-
 @Service
 public class RecommendServiceImpl implements RecommendService{
 

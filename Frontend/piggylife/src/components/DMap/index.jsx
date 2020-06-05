@@ -3,6 +3,7 @@ import React from "react";
 import styled from "styled-components";
 import { inject, observer } from "mobx-react";
 import dotenv from "dotenv";
+import currentimg from './current.png'
 
 dotenv.config();
 
@@ -44,6 +45,8 @@ class MapContent extends React.Component {
     document.head.appendChild(script);
 
     script.onload = () => {
+      // 마커 이미지
+      var current = currentimg; 
       kakao.maps.load(() => {
         let container = document.getElementById("Mymap");
         const lati= this.state.latitude;
@@ -59,7 +62,10 @@ class MapContent extends React.Component {
           this.state.latitude, this.state.longitude
         ); 
         
-        const marker = new kakao.maps.Marker({position: markerPosition});
+        const marker = new kakao.maps.Marker({
+          position: markerPosition,
+          image : new kakao.maps.MarkerImage(current, new kakao.maps.Size(40, 40))
+        });
 
         marker.setMap(map);
       });

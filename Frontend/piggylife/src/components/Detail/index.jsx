@@ -13,7 +13,6 @@ class Detail extends React.Component{
             address: "",
             img: "",
             category: "",
-            address: "",
             tel: "",
             menu: "등록된 메뉴가 없습니다.",
             visited: false,
@@ -99,14 +98,8 @@ const Tag = styled.div`
     height: 5rem;
 `
 
-const Memo = styled.div`
-    grid-area: "memo";
-    margin-top: .5rem;
-    height: 7rem;
-`
-
 const Text = styled.div`
-    height: 2rem;
+    min-height: 2rem;
     font-size: larger;
 `
 

@@ -1,4 +1,4 @@
-import { observable, action, reaction } from "mobx";
+import { observable, action } from "mobx";
 import agent from "../agent";
 
 export default class UserStore {
@@ -12,7 +12,6 @@ export default class UserStore {
 
   @action
   checkPwd(user) {
-    console.log(user.currPwd);
     return agent.Data.checkPwd(user, sessionStorage.getItem("token"))
       .then((res) => {
         if(res.data.code===1){
@@ -71,11 +70,10 @@ export default class UserStore {
 
   @action
   findByEmail(email) {
-    console.log(email);
     return agent.Data.findByEmail(email)
       .then((res) => {
         alert("매칭을 시작합니다!");
-        window.location.replace("/Result");
+        window.location.replace("/Result/"+email);
       })
       .catch((err) => {
         alert("존재하지 않는 이메일입니다.");

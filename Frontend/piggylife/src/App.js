@@ -2,6 +2,7 @@ import React from "react";
 import { Switch, Route } from "react-router-dom";
 import { createGlobalStyle } from "styled-components";
 import styled from "styled-components";
+import mainFont from './Fonts/mago.ttf';
 
 import LoginPage from "./pages/LoginPage";
 import JoinPage from "./pages/JoinPage";
@@ -33,7 +34,7 @@ const App = () => {
           <Route path="/more" component={MorePage} />
           <Route path="/editP" component={EditProPage} />
           <Route path="/detail/:sid" component={DetailPage} />
-          <Route path="/result" component={MatchingResultPage} />
+          <Route path="/result/:fid" component={MatchingResultPage} />
           <Route path="/mydetail/:pid" component={MyDetailPage} />
           <Route path="/editdetail/:pid" component={EditDetailPage} />
           <Route path="/" component={HomePage} />
@@ -50,7 +51,12 @@ const App = () => {
 };
 
 const GlobalStyle = createGlobalStyle`
-
+@font-face {
+  font-family: 'Pontano Sans';
+  src: url(${mainFont}) format('truetype');
+  font-weight: normal;
+  font-style: normal;
+}
   body{
     width: 100%;
     height: 100%;
