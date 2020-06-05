@@ -3,6 +3,8 @@ import ReactDOM from "react-dom";
 import { BrowserRouter } from "react-router-dom";
 import { Provider } from "mobx-react";
 import "./index.css";
+// import .ttf
+import './Fonts/mago.ttf';
 import App from "./App";
 import RootStore from "./stores";
 import * as serviceWorker from "./serviceWorker";
