@@ -120,7 +120,13 @@ public class UserServiceImpl implements UserService {
 	@Override
 	public User update(SignupDto dto) {
 		User user = uRepo.findByEmail(dto.getEmail()).orElseThrow(NoSuchElementException::new);
-		user.update(dto.getEmail(), passwordEncoder.encode(dto.getPassword()),dto.getNickname());
+		String pwd = "";
+		if(dto.getPassword().equals("")) {
+			pwd = user.getPassword();
+		}else {
+			pwd = passwordEncoder.encode(dto.getPassword());
+		}
+		user.update(dto.getEmail(), pwd ,dto.getNickname());
 		return uRepo.save(user);
 	}
 

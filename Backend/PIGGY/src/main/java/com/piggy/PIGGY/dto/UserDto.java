@@ -13,5 +13,6 @@ public class UserDto {
 	private String nickname;
 	private Integer ranking;
 	private String image;
+	private String imageName;
 	
 }

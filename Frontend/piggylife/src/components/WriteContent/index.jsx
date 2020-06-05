@@ -117,7 +117,6 @@ class WriteContent extends React.Component {
   }
 
   goRegister = (e) => {
-    console.log(this.state.file);
     var formData = "";
     if(this.state.file!==""){
       formData = new FormData();
@@ -126,7 +125,6 @@ class WriteContent extends React.Component {
     else{
       formData = null;
     }
-    console.log(formData)
     if (this.state.v_name === "이름을 검색하고 싶으면 여기를 클릭하세요") {
       alert("빈 값이 있습니다.");
     } else
@@ -156,7 +154,6 @@ class WriteContent extends React.Component {
 
   handleFileOnChange = (e) => {
     e.preventDefault();
-    console.log(e.target.files);
     let reader = new FileReader();
     let file = e.target.files[0];
     reader.onloadend = () => {

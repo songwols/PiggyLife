@@ -28,15 +28,29 @@ export const PersonIcon = styled(PersonOutline)`
 @inject("userStore")
 @observer
 class Profile extends React.Component {
+  constructor(props){
+    super(props);
+    this.state={
+        image:"",
+    }
+}
+
   async componentWillMount(){
     const email = sessionStorage.getItem("email")
     await this.props.userStore.whoami(email)
+    const img = this.props.userStore.image
+    this.setState({
+      image: img,
+    })
   }
+
   render() {
     return (
       <Frame>
         <Div>
-          <ProfileImage src="https://image.flaticon.com/icons/svg/747/747376.svg"></ProfileImage>
+          {this.state.image!=="" ? 
+          <ProfileImage src={this.props.userStore.image}></ProfileImage> : 
+          <ProfileImage src="https://image.flaticon.com/icons/svg/747/747376.svg"></ProfileImage>}
           <Info>
             <Nickname>
               <PersonIcon></PersonIcon>

@@ -57,7 +57,6 @@ class WriteContent extends React.Component{
     async componentWillMount() {
         await this.props.storeStore.mydetail(this.props.id);
         const post = this.props.storeStore.mydetailPost;
-        console.log(post)
         this.setState({
             v_name: post.store.name,
             v_address: post.store.address,
@@ -163,7 +162,6 @@ class WriteContent extends React.Component{
     }
     handleFileOnChange = (e) => {
         e.preventDefault();
-        console.log(e.target.files);
         let reader = new FileReader();
         let file = e.target.files[0];
         reader.onloadend = () => {
