@@ -3,6 +3,7 @@ import styled from "styled-components";
 import { inject, observer } from "mobx-react";
 import { Like } from "@styled-icons/boxicons-regular/Like";
 import { Dislike } from "@styled-icons/boxicons-regular/Dislike";
+import loading from './loading.gif'
 
 export const Good = styled(Like)`
   width: 30px;
@@ -54,6 +55,7 @@ class WriteContent extends React.Component {
       previewURL: "",
       will: true,
       went: false,
+      loading: false,
     };
     this.g_changeColor = this.g_changeColor.bind(this);
     this.n_changeColor = this.n_changeColor.bind(this);
@@ -203,7 +205,36 @@ class WriteContent extends React.Component {
     reader.readAsDataURL(file);
   };
 
+  searching = async (e) => {
+    //여기에 로딩
+    e.preventDefault();
+    this.setState({
+      loading: true
+    });
+    await this.props.storeStore.search(this.state.store_name);
+    const addr = this.props.storeStore.storeItems;
+    this.setState({
+      showList: !this.state.showList,
+      click: 3,
+      loading: false,
+    });
+    if (addr[0] !== undefined) {
+      this.setState({
+        address: addr[0].sid,
+      });
+    }
+  };
+
   render() {
+    if (this.state.loading) {
+      return (<Popup>
+        <PopupInner>
+        <LIF>
+          <LI src={loading}></LI>
+        </LIF>
+        </PopupInner>
+      </Popup>);
+    }
     let profile_preview = null;
     if (this.state.file !== "") {
       profile_preview = (
@@ -222,20 +253,6 @@ class WriteContent extends React.Component {
       this.setState({
         showList: !this.state.showList,
       });
-    };
-    const searching = async (e) => {
-      e.preventDefault();
-      await this.props.storeStore.search(this.state.store_name);
-      const addr = this.props.storeStore.storeItems;
-      this.setState({
-        showList: !this.state.showList,
-        click: 3,
-      });
-      if (addr[0] !== undefined) {
-        this.setState({
-          address: addr[0].sid,
-        });
-      }
     };
     const lst = this.props.storeStore.storeItems;
 
@@ -321,7 +338,7 @@ class WriteContent extends React.Component {
                 <BFrame>
                   <Cancel onClick={this.toggleSearch.bind(this)}>저장</Cancel>
                   &nbsp;
-                  <OK onClick={searching}>검색</OK>
+                  <OK onClick={this.searching}>검색</OK>
                 </BFrame>
                 <Notice>*가게 이름을 입력하고 검색을 눌러 정보 선택 후, 저장을 눌러주세요.</Notice>
             
@@ -364,7 +381,22 @@ const Close = styled.button`
   font-size: xx-large;
   margin: .3rem .5rem;
 `
+const LIF = styled.div`
+  margin: 45% 10% 45% 10%;
+  height: 60%;
+  width: 80%;
+`
 
+const LI = styled.img`
+justify-content: center;
+  align-items: center;
+  // position: absolute;
+  object-fit: cover;
+  top: 0;
+  left: 0;
+  width: 95%;
+  // height: 5rem;
+`
 
 const TextD = styled.div`
   padding-left: 0.3rem;
