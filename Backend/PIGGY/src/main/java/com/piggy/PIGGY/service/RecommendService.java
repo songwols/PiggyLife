@@ -7,8 +7,10 @@ import com.piggy.PIGGY.entity.Store;
 
 public interface RecommendService {
 
-	public List<Recommend> findAll();
+	public List<Recommend> findAllRecommend();
 
-	public List<Store> findById(Long uId);
+	public List<Store> findRecommend(Long uId);
+	
+	public List<Store> findMatch(String selfEmail, String friendEmail);
 	
 }
