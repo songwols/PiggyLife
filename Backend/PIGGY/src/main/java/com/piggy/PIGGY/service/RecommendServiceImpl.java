@@ -8,6 +8,8 @@ import java.util.Random;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.piggy.PIGGY.dto.MatchDto;
+import com.piggy.PIGGY.dto.StoreOutputDto;
 import com.piggy.PIGGY.entity.Match;
 import com.piggy.PIGGY.entity.MatchId;
 import com.piggy.PIGGY.entity.Recommend;
@@ -17,6 +19,7 @@ import com.piggy.PIGGY.repository.MatchRepository;
 import com.piggy.PIGGY.repository.RecommendRepository;
 import com.piggy.PIGGY.repository.StoreRepository;
 import com.piggy.PIGGY.repository.UserRepository;
+import com.piggy.PIGGY.util.MapperUtils;
 
 import jep.Jep;
 
@@ -43,41 +46,33 @@ public class RecommendServiceImpl implements RecommendService{
 	@Override
 	public List<Store> findRecommend(Long uId) {
 		Recommend recommend = rRepo.findById(uId).orElseThrow(NoSuchElementException::new);
-		String[] lists = recommend.getStores().split(",");
-
-		List<Integer> numbers = getRandom(lists.length);
-		List<Store> stores = new ArrayList<>();
-		for (Integer number : numbers) {
-			stores.add(sRepo.findById(Long.parseLong(lists[number])).orElseThrow(NoSuchElementException::new));
-		}
-		
+		List<Store> stores = getStores(recommend.getStores());
 		return stores;
 	}
 	
 	@Override
-	public List<Store> findMatch(String selfEmail, String friendEmail) {
+	public MatchDto findMatch(String selfEmail, String friendEmail) {
 		
 		User self = uRepo.findByEmail(selfEmail).orElseThrow(NoSuchElementException::new);
 		User friend = uRepo.findByEmail(friendEmail).orElseThrow(NoSuchElementException::new);
 		
 		MatchId mId = new MatchId(self.getUId(), friend.getUId());
 		Match match = mRepo.findById(mId).orElseThrow(NoSuchElementException::new);
-		String[] lists = match.getStores().split(",");
+		List<Store> recommendStores = getStores(match.getRecommendStores());
+		List<Store> newStores = getStores(match.getNewStores());
+		List<StoreOutputDto> recommendStoresDto = MapperUtils.mapAll(recommendStores, StoreOutputDto.class);
+		List<StoreOutputDto> newStoresDto = MapperUtils.mapAll(newStores, StoreOutputDto.class);
 		
-		List<Integer> numbers = getRandom(lists.length);
-		List<Store> stores = new ArrayList<>();
-		for (Integer number : numbers) {
-			stores.add(sRepo.findById(Long.parseLong(lists[number])).orElseThrow(NoSuchElementException::new));
-		}
 		
-		return stores;
+		MatchDto dto = new MatchDto(newStoresDto, recommendStoresDto, match.getSimilarity());
+		
+		return dto;
 	}
 	
 	public List<Integer> getRandom(int length) {
 		
 		List<Integer> numbers = new ArrayList<>();
 		Random r = new Random();
-		
 		int size = 10;
 		for (int i = 0; i < (length < 10 ? length : size); i++) {
 			int n = r.nextInt(length);
@@ -87,6 +82,16 @@ public class RecommendServiceImpl implements RecommendService{
 				i--;
 		}
 		return numbers;
+	}
+	
+	public List<Store> getStores(String storesStr){
+		String[] lists = storesStr.split(",");
+		List<Integer> numbers = getRandom(lists.length);
+		List<Store> stores = new ArrayList<>();
+		for (Integer number : numbers) {
+			stores.add(sRepo.findById(Long.parseLong(lists[number])).orElseThrow(NoSuchElementException::new));
+		}
+		return stores;
 	}
 
 }

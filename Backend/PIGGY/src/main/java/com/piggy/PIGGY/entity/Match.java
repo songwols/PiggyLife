@@ -1,5 +1,6 @@
 package com.piggy.PIGGY.entity;
 
+import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
 import javax.persistence.Column;
@@ -26,7 +27,13 @@ public class Match {
 	private Long friend;
 	
 	@Column
-	private String stores;
+	private String newStores;
+	
+	@Column
+	private String recommendStores;
+	
+	@Column
+	private BigDecimal similarity;
 	
 	@Column
 	private LocalDateTime updateTimeAt;
