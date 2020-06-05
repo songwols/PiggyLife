@@ -34,7 +34,7 @@ const App = () => {
           <Route path="/more" component={MorePage} />
           <Route path="/editP" component={EditProPage} />
           <Route path="/detail/:sid" component={DetailPage} />
-          <Route path="/result" component={MatchingResultPage} />
+          <Route path="/result/:fid" component={MatchingResultPage} />
           <Route path="/mydetail/:pid" component={MyDetailPage} />
           <Route path="/editdetail/:pid" component={EditDetailPage} />
           <Route path="/" component={HomePage} />
