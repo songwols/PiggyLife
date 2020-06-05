@@ -1,11 +1,11 @@
 package com.piggy.PIGGY.controller;
 
-import java.io.File;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Required;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -108,23 +108,20 @@ public class PostRestController {
 			@RequestParam String content,
 			@RequestParam Integer isLike,
 			@RequestParam Boolean visited,
-			@RequestParam("file") MultipartFile file){
+			@RequestParam(value="file", required=false) MultipartFile file){
 		try {
 			log.trace("PostRestController - update");
 			Post post = pService.findById(pId);
 			PostInputDto dto = new PostInputDto(post.getStore().getSId(), content, visited, isLike);
 			post = pService.update(pId, dto);
-			System.out.println(post);
-			if(post.getImageName()!=null) {
+			if(file != null && post.getImageName()!=null) {
 				fileService.deleteImage(post.getImageName());
 			}
-			if(!file.getName().equals(post.getImageName())) {
+			if(file != null && !file.getName().equals(post.getImageName())) {
 				Map<String, Object> responseImage = fileService.uploadImage(file, "post");
 				PostImageDto imageDto = new PostImageDto(pId, responseImage.get("image").toString(), responseImage.get("imageName").toString());
 				post = pService.updateImage(pId, imageDto);
-				System.out.println("update : "+ post);
 			}
-			System.out.println(post);
 			PostOutputDto output = MapperUtils.map(post, PostOutputDto.class);
 			return new ResponseEntity<Object>(output, HttpStatus.OK);
 		} catch (Exception e) {

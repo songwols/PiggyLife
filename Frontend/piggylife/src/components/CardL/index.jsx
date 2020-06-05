@@ -21,7 +21,7 @@ class CardLayout extends React.Component {
     } else if (keyword === "hotplace") {
       this.props.storeStore.get_hotplace();
     } else if (keyword === "similar") {
-      this.props.storeStore.get_similar();
+      this.props.storeStore.get_similar(window.sessionStorage.getItem("uid"));
     }
   }
 

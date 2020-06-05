@@ -15,7 +15,6 @@ export default class UserStore {
     console.log(user.currPwd);
     return agent.Data.checkPwd(user, sessionStorage.getItem("token"))
       .then((res) => {
-        console.log(res.data);
         if(res.data.code===1){
           window.location.replace("/EditP");
         }
@@ -31,11 +30,12 @@ export default class UserStore {
   }
 
   @action
-  updateUser(user) {
-    console.log(user);
-    return agent.Data.updateUser(user)
+  updateUser(user, file) {
+    return agent.Data.updateUser(user, sessionStorage.getItem("uid"))
       .then((res) => {
-        console.log(res.data);
+        if (file !== null) {
+          this.profileImage(file, sessionStorage.getItem("uid"));
+        }
         window.location.replace("/Feed");
       })
       .catch((err) => {
@@ -43,11 +43,23 @@ export default class UserStore {
       });
   }
 
+  @action profileImage(data, id) {
+    return agent.Data.profileImage(data, id)
+      .then((res) => {
+        if (res.status === 200) {
+          this.image = res.data.image;
+          window.location.replace("/feed");
+        } else {
+          alert(res.data.message);
+        }
+      })
+      .catch((err) => console.log(err));
+  }
+
   @action
   updatepw(user) {
     return agent.Data.updatepw(user)
       .then((res) => {
-        //console.log(res);
         alert("패스워드가 변경되었습니다.");
         window.location.replace("/");
       })
@@ -60,10 +72,11 @@ export default class UserStore {
   @action
   findByEmail(email) {
     console.log(email);
+    console.log(sessionStorage.getItem("email"));
     return agent.Data.findByEmail(email)
       .then((res) => {
         alert("매칭을 시작합니다!");
-        window.location.replace("/Result");
+        window.location.replace("/Result/"+email);
       })
       .catch((err) => {
         alert("존재하지 않는 이메일입니다.");
@@ -130,7 +143,6 @@ export default class UserStore {
   login(user) {
     return agent.Data.signin(user)
       .then((res) => {
-        console.log(res);
         if (res.data.code === 1) {
           window.sessionStorage.setItem("email", user.email);
           window.sessionStorage.setItem("uid", res.data.uId);
@@ -150,7 +162,6 @@ export default class UserStore {
   email_check(email, where) {
     return agent.Data.email_check(email)
       .then((res) => {
-        console.log(res);
         if (res.data.success === true || where === "pw") {
           return agent.Data.email_send(email)
             .then((res) => {

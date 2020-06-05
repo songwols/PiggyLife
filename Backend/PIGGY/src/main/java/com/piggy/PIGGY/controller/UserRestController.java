@@ -150,17 +150,20 @@ public class UserRestController {
 	
 	@ApiOperation(value = "해당 유저 이미지 수정")
 	@PostMapping("/uploadImage/{uId}")
-	public ResponseEntity<Object> postImage(@PathVariable Long uId , @RequestParam("file") MultipartFile file) {
+	public ResponseEntity<Object> uploadImage(@PathVariable Long uId , @RequestParam(value="file", required=false) MultipartFile file) {
 		try {
-			Map<String, Object> responseImage = fileService.uploadImage(file, "user");
 			User origin = uService.findById(uId);
-			String originImage = origin.getImageName();
-			String newImageName = responseImage.get("imageName").toString();
-			if(originImage != null && !originImage.equals(newImageName)) {
-				fileService.deleteImage(originImage);
+			UserDto output = MapperUtils.map(origin, UserDto.class);
+			if(file != null) {
+				Map<String, Object> responseImage = fileService.uploadImage(file, "user");
+				String originImage = origin.getImageName();
+				String newImageName = responseImage.get("imageName").toString();
+				if(originImage != null && !originImage.equals(newImageName)) {
+					fileService.deleteImage(originImage);
+				}
+				User user = uService.updateImage(uId, responseImage.get("image").toString(), newImageName);
+				output = MapperUtils.map(user, UserDto.class);
 			}
-			User user = uService.updateImage(uId, responseImage.get("image").toString(), newImageName);
-			UserDto output = MapperUtils.map(user, UserDto.class);
 			return new ResponseEntity<Object>(output, HttpStatus.OK);
 		} catch (Exception e) {
 			return new ResponseEntity<Object>(e.getMessage(), HttpStatus.OK);

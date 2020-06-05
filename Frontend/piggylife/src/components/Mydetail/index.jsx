@@ -60,14 +60,11 @@ class Mydetail extends React.Component{
     render(){
         const goEdit = (e) => {
             e.preventDefault();
-            //디테일 받아올 스토어
-           console.log(this.props.id)
            this.props.history.push("/editdetail/" + this.props.id);
           };
 
         const goDelete = (e) => {
             e.preventDefault();
-            console.log(this.props.id)
             this.props.storeStore.postdelete(this.props.id);
         };
 
@@ -97,11 +94,12 @@ class Mydetail extends React.Component{
                     <Text>메모</Text>
                     <Context>{this.state.memo}</Context> 
                 </Memo>
+                <Space/>
                 <BFrame>
                     <Cancel onClick={this.toggleConfirm.bind(this)}>삭제</Cancel>&nbsp;
                     <OK onClick={goEdit}>수정</OK>
                 </BFrame>
-                <Context/>
+                <Space/>
                 {this.state.confirmS ? (
                     <Popup>
                         <PopupInner>
@@ -132,11 +130,11 @@ const Simg = styled.img`
 `;
 
 const Frame = styled.div`
-    height: 100%;
+    // height: 100%;
     display: grid;
-    padding: 0 15px 0 15px;
+    padding: 0 15px 2rem 15px;
     grid-template-rows: repeat(8, auto);
-    grid-template-areas: "pic" "info" "menu" "map" "tag" "memo" "button";
+    grid-template-areas: "pic" "info" "menu" "map" "tag" "memo" "space" "button";
 `
 const Pic = styled.div`
     grid-area: "pic";
@@ -159,23 +157,29 @@ const Menu = styled.div`
 const Tag = styled.div`
     grid-area: "tag";
     margin-top: .5rem;
-    height: 5rem;
+    min-height: 5rem;
 `
 
 const Memo = styled.div`
     grid-area: "memo";
     margin-top: .5rem;
-    height: 7rem;
+    min-height: 7rem;
 `
 
 const Text = styled.div`
-    height: 2rem;
+    min-height: 2rem;
     font-size: larger;
 `
 
 const Context = styled.div`
-    height: 2rem;
+    min-height: 2rem;
 `
+
+const Space = styled.div`
+    height: 2rem;
+    grid-area: space;
+`
+
 const BFrame = styled.div`
   grid-area: "button";
   margin-top: .3rem;

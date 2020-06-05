@@ -34,7 +34,6 @@ export default class StoreStore {
     return agent.Data.get_mypost(uid)
       .then((res) => {
         this.setPosts(res.data);
-        console.log(res.data);
         this.location = [];
         for (var i = 0; i < res.data.length; i++) {
           this.location = this.location.concat({
@@ -51,10 +50,8 @@ export default class StoreStore {
   }
   @action
   get_mypost(uid) {
-    //console.log("내가 작성한 먹킷리스트 불러오기");
     return agent.Data.getMukitlist(uid)
       .then((res) => {
-        //console.log(res.data);
         this.setMyPosts(res.data);
       })
       .catch((err) => console.log(err));
@@ -76,12 +73,12 @@ export default class StoreStore {
     //    .catch((err) => console.log(err));
   }
   @action
-  get_similar() {
-    //  return agent.Data.get_similar()
-    //    .then((res) => {
-    //      this.setSimilar(res.data);
-    //    })
-    //    .catch((err) => console.log(err));
+  get_similar(uId) {
+    return agent.Data.get_similar(uId)
+      .then((res) => {
+        this.setSimilar(res.data);
+      })
+      .catch((err) => console.log(err));
   }
   @action
   setMyPosts(myposts) {
@@ -95,7 +92,6 @@ export default class StoreStore {
     this.store_name = store_name;
     return agent.Data.search(this.store_name)
       .then((res) => {
-        // console.log(res.data);
         this.storeItems = res.data;
         if (res.data.length === 0) {
           alert("검색된 데이터가 없습니다.");
@@ -115,22 +111,33 @@ export default class StoreStore {
   }
 
   @action upload(data, file) {
-    console.log(data);
     const uid = window.sessionStorage.getItem("uid");
     return agent.Data.upload(data, uid)
       .then((res) => {
-        console.log(res.data.data.pid);
-        this.postImage(file,res.data.data.pid);
+        console.log(res.data);
+        if (res.data.code === 1) {
+          if (file !== null) {
+            this.postImage(file, res.data.data.pid);
+          }
+          window.location.replace("/feed");
+        } else {
+          alert(res.data.message);
+        }
       })
-      .catch((err) => alert("업로드 실패!"));
+      .catch((err) => console.log(err));
   }
 
-  @action postImage(data,id) {
-    console.log(id)
-    return agent.Data.postImage(data,id)
+  @action postImage(data, id) {
+    console.log(id);
+    return agent.Data.postImage(data, id)
       .then((res) => {
         console.log(res);
-        window.location.replace("/feed");
+        if (res.status === 200) {
+          window.location.replace("/feed");
+        } else {
+          console.log(res);
+          alert(res.data.message);
+        }
       })
       .catch((err) => console.log(err));
   }
@@ -157,15 +164,15 @@ export default class StoreStore {
       .catch((err) => alert("실패"));
   }
 
-  @action postupdate(data, file, pid){
-    console.log(data)
-    console.log(pid)
+  @action postupdate(data, file, pid) {
+    console.log(data);
+    console.log(pid);
     return agent.Data.postupdate(data, file, pid)
-    .then((res) => {
-      console.log(res.data);
-      window.location.replace("/mydetail/"+pid);
-    })
-    .catch((err) => alert("실패"))
+      .then((res) => {
+        console.log(res.data);
+        window.location.replace("/mydetail/" + pid);
+      })
+      .catch((err) => alert("실패"));
   }
 
   @action postdelete(pid) {

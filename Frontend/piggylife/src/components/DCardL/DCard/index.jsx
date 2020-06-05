@@ -14,7 +14,6 @@ class DCard extends React.Component {
       this.props.history.push("/mydetail/" + this.props.store.pid);
     };
     const store = this.props.store;
-    console.log(store.store.name);
     return (
       <F>
         <Frame onClick={DetailBtn}>
