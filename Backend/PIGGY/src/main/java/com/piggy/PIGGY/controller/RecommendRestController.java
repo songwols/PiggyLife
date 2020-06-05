@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.piggy.PIGGY.dto.MatchDto;
 import com.piggy.PIGGY.dto.StoreOutputDto;
 import com.piggy.PIGGY.entity.Recommend;
 import com.piggy.PIGGY.entity.Store;
@@ -56,8 +57,7 @@ public class RecommendRestController {
 	@GetMapping("/findMatch")
 	public ResponseEntity<Object> findMatch(@RequestParam String selfEmail, @RequestParam String friendEmail){
 		try {
-			List<Store> stores = rService.findMatch(selfEmail, friendEmail);
-			List<StoreOutputDto> output = MapperUtils.mapAll(stores, StoreOutputDto.class);
+			MatchDto output = rService.findMatch(selfEmail, friendEmail);
 			return new ResponseEntity<Object>(output, HttpStatus.OK);
 		} catch (Exception e) {
 			throw e;
