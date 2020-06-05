@@ -17,7 +17,7 @@ const Data = {
   get_mypost: (uid) => requests.get(`/post/findByUser/${uid}`), //url 정해지면 채워넣기
   getMukitlist: (uid) => requests.get(`/post/getMukitlist/${uid}`),
   get_top10: () => requests.get(`/store/getStoreTop10`),
-  get_similar: (uId) => requests.get(`/recommend/findById?uId=${uId}`),
+  get_similar: (uId) => requests.get(`/recommend/findRecommend?uId=${uId}`),
   email_check: (email) =>
     requests.get(`/sign/checkDuplicateEmail?email=${email}`),
   code_check: (user) =>
@@ -78,6 +78,7 @@ const Data = {
     requests.get(`/post/getCategoryStatistic/${uId}`),
   postdelete: (pid) => requests.delete(`/post/delete/${pid}`),
   profileImage: (file, uid) => requests.post(`/user/uploadImage/${uid}`, file, {}),
+  get_for2: (mid, fid) => requests.get(`/recommend/findMatch?selfEmail=${mid}&friendEmail=${fid}`),
 };
 
 export default {

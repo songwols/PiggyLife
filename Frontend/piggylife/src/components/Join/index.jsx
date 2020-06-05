@@ -1,7 +1,6 @@
 import React from "react";
 import styled from "styled-components";
 import Confirm from "./confirm";
-import { Link } from "react-router-dom";
 import Check from "./check";
 import { inject, observer } from "mobx-react";
 

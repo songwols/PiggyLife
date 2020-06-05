@@ -3,6 +3,7 @@ import styled from "styled-components";
 import icon from "./clipboard.png";
 import { inject, observer } from "mobx-react";
 import UserInfo from "../../components/MatchingContent/userInfo";
+import CardLayout from "../../components/CardL";
 
 @inject("userStore")
 @observer
@@ -41,13 +42,17 @@ class MatchingResult extends React.Component {
                 </Info>
                 <Blank></Blank>
                 <BothMukSpotlist>
-                    <Title>두분을 위한 MukSpot은 여기!</Title>
-                    <Cards></Cards>
+                    <Title>두 분을 위한 MukSpot은 여기!</Title>
+                    <Div>
+                      <CardLayout keyword="recommendfor2" fid={this.props.id}></CardLayout>
+                    </Div>
                 </BothMukSpotlist>
                 <Blank></Blank>
                 <NewMukSpotlist>
                     <Title>새로운 곳은 어떤가요?</Title>
-                    <Cards></Cards>
+                    <Div>
+                      <CardLayout keyword="new_place" fid={this.props.id}></CardLayout>
+                    </Div>
                 </NewMukSpotlist>
         </Content>
         )
@@ -89,10 +94,17 @@ const Title = styled.div`
 `;
 const BothMukSpotlist = styled.div``;
 const NewMukSpotlist = styled.div``;
-const Cards = styled.div`
-  background-color: #ffe8bd;
-  height: 90%;
+
+const Div = styled.div`
+  background-color: #f2e9e4;
+  width: 100vw;
+  height: 100px;
+  /* display: flex; */
+  white-space: nowrap;
+  overflow-x: scroll;
+  overflow-y: hidden;
 `;
+
 const Blank = styled.div``;
 
 export default MatchingResult;

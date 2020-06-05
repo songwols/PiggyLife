@@ -1,6 +1,5 @@
 import React from "react";
 import styled from "styled-components";
-import { Link } from 'react-router-dom';
 import { inject, observer } from "mobx-react";
 @inject("userStore")
 @observer
@@ -9,7 +8,6 @@ class CheckPopUp extends React.Component{
       super(props);
       this.state={
         currPwd : "",
-        // token:sessionStorage.getItem("token"),
       }
     }
     currentPwd = (e)=>{
@@ -20,7 +18,6 @@ class CheckPopUp extends React.Component{
     checkPwd = (e)=>{
       this.setState({
         currPwd : this.state.currPwd,
-        // token: sessionStorage.getItem("token"),
       });
       this.props.userStore.checkPwd(this.state); 
     };
@@ -145,17 +142,6 @@ const OK = styled.button`
   border-radius: 0.3rem;
   background-color: #5897A6;
 `
-const SFrame = styled.div`
-    margin: 60% 10% 45% 10%;
-    height: 4rem;
-    width: 80%;
-    background-color: #ffe8bd;
-    text-align: center;
-    display: flex; 
-    align-items: center; 
-    justify-content: center; 
-`
-
 const BFrame = styled.div`
   grid-area: "bframe";
   margin-top: .3rem;
