@@ -12,6 +12,8 @@ export default class StoreStore {
   @observable similar = [];
   @observable location = [];
   @observable detailPost = {};
+  @observable for2 = [];
+  @observable newplace = [];
 
   @computed get postslength() {
     return this.posts.length;
@@ -27,6 +29,12 @@ export default class StoreStore {
   }
   @computed get similarlength() {
     return this.similar.length;
+  }
+  @computed get for2length() {
+    return this.for2.length;
+  }
+  @computed get newplacelength() {
+    return this.newplace.length;
   }
 
   @action
@@ -80,6 +88,23 @@ export default class StoreStore {
       })
       .catch((err) => console.log(err));
   }
+  @action
+  get_for2(myid, fid) {
+    // return agent.Data.get_for2(myid, fid)
+    //   .then((res) => {
+    //     this.for2=res.data;
+    //   })
+    //   .catch((err) => console.log(err));
+  }
+  @action
+  get_newplace() {
+    // return agent.Data.get_newplace()
+    //   .then((res) => {
+    //     this.newplace=res.data;
+    //   })
+    //   .catch((err) => console.log(err));
+  }
+
   @action
   setMyPosts(myposts) {
     this.myposts = myposts;

@@ -46,7 +46,6 @@ class WriteContent extends React.Component{
             sid: "",
             will:false,
             went:false,
-            sid: "",
             file: "",
             previewURL: "",
         }
@@ -72,12 +71,12 @@ class WriteContent extends React.Component{
             sid: post.store.sid,
             previewURL: post.image,
         })
-        if(post.visited==true){
+        if(post.visited===true){
             this.setState({
                 show: true,
                 went: true,
             })
-            if(post.isLike==1){
+            if(post.isLike===1){
                 this.setState({
                     g_color: "#5897A6", 
                     n_color: "gray", 

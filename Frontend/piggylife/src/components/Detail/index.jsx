@@ -13,7 +13,6 @@ class Detail extends React.Component{
             address: "",
             img: "",
             category: "",
-            address: "",
             tel: "",
             menu: "등록된 메뉴가 없습니다.",
             visited: false,
