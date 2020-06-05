@@ -99,6 +99,12 @@ class WriteContent extends React.Component {
     }
   }
 
+  toggleClose() {
+    this.setState({
+      searchShow: !this.state.searchShow,
+    });
+  }
+
   VMemoChange = (e) => {
     this.setState({
       v_memo: e.target.value,
@@ -119,6 +125,26 @@ class WriteContent extends React.Component {
   addressChange(e) {
     this.setState({
       address: e.target.value,
+    });
+  }
+
+  willChange = (e) => {
+    this.setState({
+      show: false,
+      isLike: 0,
+      visited: false,
+      will: e.target.value,
+      went: false,
+    });
+  }
+
+  wentChange = (e) => {
+    this.setState({
+      show: true,
+      visited: true,
+      isLike: 1,
+      will: false,
+      went: e.target.value,
     });
   }
 
@@ -251,14 +277,14 @@ class WriteContent extends React.Component {
         <CheckDiv>
           <label>
             <BF onClick={this.nonIcon.bind(this)}>
-              <CK type="radio" name="group" value="will" checked={this.state.will} />
+              <CK type="radio" name="group" value="will" checked={this.state.will} onChange={this.willChange}/>
             </BF>
             갈 곳
           </label>
           &nbsp;
           <label>
             <BF onClick={this.showIcon.bind(this)}>
-              <CK type="radio" name="group" value="went" checked={this.state.went} />
+              <CK type="radio" name="group" value="went" checked={this.state.went} onChange={this.wentChange}/>
             </BF>
             간 곳
           </label>
@@ -283,6 +309,7 @@ class WriteContent extends React.Component {
           // <Search cancelSearch={this.toggleSearch.bind(this)} saveD={this.toggleDetailSave.bind(this)}/>
           <Popup>
             <PopupInner>
+              <Close onClick={this.toggleClose.bind(this)}>X</Close>
               <Box>
                 <Title>가게 이름 검색</Title>
                 <Searching
@@ -294,8 +321,11 @@ class WriteContent extends React.Component {
                   &nbsp;
                   <OK onClick={searching}>검색</OK>
                 </BFrame>
+                <Notice>*가게 이름을 입력하고 검색을 눌러주세요.
+              해당 가게 정보를 선택 후, 저장을 눌러주세요.</Notice>
+            
               </Box>
-            </PopupInner>
+              </PopupInner>
             {this.state.showList ? (
               <PopupInner>
                 <SFrame>
@@ -324,6 +354,17 @@ class WriteContent extends React.Component {
 const Space = styled.div`
   height: 2rem;
 `
+
+const Close = styled.button`
+  background: none;
+  border: none;
+  outline: none;
+  float: right;
+  font-size: xx-large;
+  margin: .3rem .5rem;
+`
+
+
 const TextD = styled.div`
   padding-left: 0.3rem;
   margin-top: 0.3rem;
@@ -489,13 +530,21 @@ const PopupInner = styled.div`
 
 const Box = styled.div`
   margin: 45% 10% 45% 10%;
-  height: 40%;
+  height: 60%;
   width: 80%;
   background-color: #ffe8bd;
   display: grid;
-  grid-template-rows: repeat(3, 1fr);
-  grid-template-areas: "title" "searching" "bframe";
+  grid-template-rows: repeat(4, 1fr);
+  grid-template-areas: "title" "searching" "bframe" "notice";
 `;
+
+const Notice = styled.div`
+  padding-top: .2rem;
+  grid-area: notice;
+  background-color: white;
+  font-size: smaller;
+`
+
 const Title = styled.div`
   grid-area: "title";
   display: flex;
