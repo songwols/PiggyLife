@@ -6,6 +6,7 @@ import UserInfo from "../../components/MatchingContent/userInfo";
 import CardLayout from "../../components/CardL";
 
 @inject("userStore")
+@inject("storeStore")
 @observer
 class MatchingResult extends React.Component {
     constructor(props) {
@@ -36,7 +37,7 @@ class MatchingResult extends React.Component {
                     <UserInfo id={sessionStorage.getItem("email")}></UserInfo>
                     <Score>
                     <Icon src={icon}></Icon>
-                    <div>70%</div>
+                    <div>{this.props.storeStore.similarity}</div>
                     </Score>
                     <UserInfo id={this.props.id}></UserInfo>
                 </Info>
@@ -74,7 +75,7 @@ const Info = styled.div`
   grid-template-columns: 2fr 1fr 2fr;
 `;
 const Score = styled.span`
-  margin-top: 25px;
+  margin-top: 50%;
   text-align: center;
 `;
 const Icon = styled.img`
