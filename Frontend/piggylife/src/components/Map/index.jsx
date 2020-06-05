@@ -6,6 +6,7 @@ import dotenv from "dotenv";
 import { withRouter } from "react-router-dom";
 import will from './will.png'
 import went from './went.png'
+import currentimg from './current.png'
 
 dotenv.config();
 
@@ -55,12 +56,15 @@ class MapContent extends React.Component {
           message = 'geolocation을 사용할수 없어요..'
           displayMarker(locPosition, message);
         }
+        // 마커 이미지
+        var current = currentimg; 
         // 지도에 마커와 인포윈도우를 표시하는 함수
         function displayMarker(locPosition, message) {
           // 마커를 생성합니다
           var marker = new kakao.maps.Marker({  
             map: map, 
-            position: locPosition
+            position: locPosition,
+            image : new kakao.maps.MarkerImage(current, new kakao.maps.Size(40, 40)),
           }); 
           var iwContent = message, // 인포윈도우에 표시할 내용
           iwRemoveable = true;
@@ -78,9 +82,6 @@ class MapContent extends React.Component {
         // 마커 이미지
         var visited = went; 
         var willvis = will; 
-        var all_Place=[];
-        var visited_Place=[];
-        var willvis_Place=[];
 
         for (var i = 0; i < list.length; i ++) {
           // 마커 이미지의 이미지 크기 
@@ -89,13 +90,9 @@ class MapContent extends React.Component {
           // 마커 이미지를 생성
           if(list[i].vis === true){
             markerImage = new kakao.maps.MarkerImage(visited, imageSize); 
-            all_Place = [new kakao.maps.LatLng(list[i].lat, list[i].long)];
-            visited_Place = [new kakao.maps.LatLng(list[i].lat, list[i].long)];
           }
           else if(list[i].vis === false){
             markerImage = new kakao.maps.MarkerImage(willvis, imageSize); 
-            all_Place = [new kakao.maps.LatLng(list[i].lat, list[i].long)];
-            willvis_Place = [new kakao.maps.LatLng(list[i].lat, list[i].long)];
           }
           // 마커를 생성
           var marker = new kakao.maps.Marker({
