@@ -17,12 +17,10 @@ class Search extends React.Component {
     this.setState({
       friendID: e.target.value,
     });
-    console.log(this.state.friendID);
   };
 
   Matching = (e) => {
     const email = this.state.friendID;
-    console.log(email);
     this.props.userStore.findByEmail(email);
   };
 
