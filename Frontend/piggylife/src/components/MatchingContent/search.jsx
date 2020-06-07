@@ -21,7 +21,11 @@ class Search extends React.Component {
 
   Matching = (e) => {
     const email = this.state.friendID;
-    this.props.userStore.findByEmail(email);
+    if (email === window.sessionStorage.getItem("email")) {
+      alert("자기 자신과는 매칭할 수 없습니다!");
+    } else {
+      this.props.userStore.findByEmail(email);
+    }
   };
 
   render() {
