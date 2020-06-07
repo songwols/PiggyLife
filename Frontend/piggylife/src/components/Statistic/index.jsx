@@ -2,6 +2,7 @@ import React from "react";
 import styled from "styled-components";
 import LevelGraph from "../LevelGraph";
 import PlaceGraph from "../PlaceGraph";
+import CategoryGraph from "../CategoryGraph";
 import { inject, observer } from "mobx-react";
 
 @inject("statisticStore", "userStore", "storeStore")
@@ -106,9 +107,11 @@ class Statistic extends React.Component {
           <Div>자주 방문하는 돼지입니다</Div>
         </Placer>
         <Place>
-          <PlaceGraph area={this.area}></PlaceGraph>
+          <PlaceGraph></PlaceGraph>
         </Place>
-        <Category>카테고리통계</Category>
+        <Category>
+          <CategoryGraph></CategoryGraph>
+        </Category>
       </Frame>
     );
   }
@@ -142,9 +145,11 @@ const Place = styled.div`
   background-color: #f2e9e4;
   margin-top: 0.3rem;
   margin-bottom: 0.3rem;
+  position: relative;
+  z-index: -3;
 `;
 const Category = styled.div`
-  height: 100px;
+  height: 220px;
   background-color: #f2e9e4;
   margin-top: 0.3rem;
   margin-bottom: 0.3rem;

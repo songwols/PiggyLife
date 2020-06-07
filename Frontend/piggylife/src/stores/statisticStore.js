@@ -33,7 +33,6 @@ export default class StatisticStore {
     city: "",
     cnt: 0,
   };
-
   @observable categoryList = [];
 
   @action

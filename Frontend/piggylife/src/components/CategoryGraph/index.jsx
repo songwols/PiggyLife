@@ -4,7 +4,7 @@ import { inject, observer } from "mobx-react";
 
 @inject("statisticStore", "userStore")
 @observer
-class PlaceGraph extends React.Component {
+class CategoryGraph extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -40,62 +40,32 @@ class PlaceGraph extends React.Component {
     this.nickname = this.props.userStore.nickname;
     return (
       <Frame>
-        <Title>"{this.nickname}" 님이 자주 방문한 장소 Top5</Title>
+        <Title>"{this.nickname}" 님이 자주 찾는 카테고리 Top5</Title>
         <Graph>
           <Grid>
             <FirstGrid>
-              <First
-                style={{ height: this.size * this.area1.cnt + "px" }}
-              ></First>
+              <First style={{ height: "120px" }}></First>
             </FirstGrid>
             <SecondGrid>
-              <Second
-                style={{ height: this.size * this.area2.cnt + "px" }}
-              ></Second>
+              <Second style={{ height: "100px" }}></Second>
             </SecondGrid>
             <ThirdGrid>
-              <Third
-                style={{ height: this.size * this.area3.cnt + "px" }}
-              ></Third>
+              <Third style={{ height: "80px" }}></Third>
             </ThirdGrid>
             <FourthGrid>
-              <Fourth
-                style={{ height: this.size * this.area4.cnt + "px" }}
-              ></Fourth>
+              <Fourth style={{ height: "80px" }}></Fourth>
             </FourthGrid>
             <FifthGrid>
-              <Fifth
-                style={{ height: this.size * this.area5.cnt + "px" }}
-              ></Fifth>
+              <Fifth style={{ height: "50px" }}></Fifth>
             </FifthGrid>
           </Grid>
         </Graph>
         <Place>
-          <FirstPlace>
-            {this.area1.city}
-            <br></br>
-            {this.area1.area}
-          </FirstPlace>
-          <SecondPlace>
-            {this.area2.city}
-            <br></br>
-            {this.area2.area}
-          </SecondPlace>
-          <ThirdPlace>
-            {this.area3.city}
-            <br></br>
-            {this.area3.area}
-          </ThirdPlace>
-          <FourthPlace>
-            {this.area4.city}
-            <br></br>
-            {this.area4.area}
-          </FourthPlace>
-          <FifthPlace>
-            {this.area5.city}
-            <br></br>
-            {this.area5.area}
-          </FifthPlace>
+          <FirstPlace>한식</FirstPlace>
+          <SecondPlace>중식</SecondPlace>
+          <ThirdPlace>양식</ThirdPlace>
+          <FourthPlace>치킨</FourthPlace>
+          <FifthPlace>일식</FifthPlace>
         </Place>
       </Frame>
     );
@@ -117,27 +87,27 @@ const Place = styled.div`
   grid-template-areas: "FirstPlace SecondPlace ThirdPlace FourthPlace Fifthlace";
 `;
 const FirstPlace = styled.div`
-  font-size: 0.7rem;
+  font-size: 1rem;
   width: 100%;
   height: inherit;
 `;
 const SecondPlace = styled.div`
-  font-size: 0.7rem;
+  font-size: 1rem;
   width: 100%;
   height: inherit;
 `;
 const ThirdPlace = styled.div`
-  font-size: 0.7rem;
+  font-size: 1rem;
   width: 100%;
   height: inherit;
 `;
 const FourthPlace = styled.div`
-  font-size: 0.7rem;
+  font-size: 1rem;
   width: 100%;
   height: inherit;
 `;
 const FifthPlace = styled.div`
-  font-size: 0.7rem;
+  font-size: 1rem;
   width: 100%;
   height: inherit;
 `;
@@ -149,8 +119,6 @@ const Frame = styled.div`
   text-align: center;
   align-items: center;
   display: block;
-  position: relative;
-  z-index: -2;
 `;
 const Graph = styled.div`
   height: 150px;
@@ -202,36 +170,36 @@ const FifthGrid = styled.div`
 const First = styled.div`
   margin-left: 0.75rem;
   width: 2rem;
-  background-color: #ea3e2e;
+  background-color: #2c4c54;
   position: absolute;
   bottom: 0px;
 `;
 const Second = styled.div`
   margin-left: 0.75rem;
   width: 2rem;
-  background-color: #ef695d;
+  background-color: #467986;
   position: absolute;
   bottom: 0px;
 `;
 const Third = styled.div`
   margin-left: 0.75rem;
   width: 2rem;
-  background-color: #f28379;
+  background-color: #69a2b0;
   position: absolute;
   bottom: 0px;
 `;
 const Fourth = styled.div`
   margin-left: 0.75rem;
   width: 2rem;
-  background-color: #f6a9a2;
+  background-color: #9bc1ca;
   position: absolute;
   bottom: 0px;
 `;
 const Fifth = styled.div`
   margin-left: 0.75rem;
   width: 2rem;
-  background-color: #fad4d1;
+  background-color: #cde0e5;
   position: absolute;
   bottom: 0px;
 `;
-export default PlaceGraph;
+export default CategoryGraph;
