@@ -11,38 +11,38 @@ export default class ColorStore {
 
   @action
   setMyFeedColor(color) {
-    localStorage.setItem("myfeed", color);
+    window.sessionStorage.setItem("myfeed", color);
     this.myfeed = color;
   }
   @action
   setStatisticColor(color) {
-    localStorage.setItem("statistic", color);
+    window.sessionStorage.setItem("statistic", color);
     this.statistic = color;
   }
   @action
   setHomeColor(color) {
-    localStorage.setItem("home", color);
+    window.sessionStorage.setItem("home", color);
     this.home = color;
   }
 
   @action
   setFeedColor(color) {
-    localStorage.setItem("feed", color);
+    window.sessionStorage.setItem("feed", color);
     this.feed = color;
   }
   @action
   setPostColor(color) {
-    localStorage.setItem("post", color);
+    window.sessionStorage.setItem("post", color);
     this.post = color;
   }
   @action
   setMapColor(color) {
-    localStorage.setItem("map", color);
+    window.sessionStorage.setItem("map", color);
     this.map = color;
   }
   @action
   setMatchColor(color) {
-    localStorage.setItem("match", color);
+    window.sessionStorage.setItem("match", color);
     this.match = color;
   }
   constructor(root) {
