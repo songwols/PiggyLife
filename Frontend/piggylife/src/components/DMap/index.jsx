@@ -17,7 +17,7 @@ class MapContent extends React.Component {
         longitude: "",
     }
   }
-  async componentWillMount(){
+  async UNSAFE_componentWillMount(){
     if(this.props.keyword === "detail"){
       await this.props.storeStore.detail(this.props.id);
       const post = this.props.storeStore.detailPost;

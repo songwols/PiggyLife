@@ -15,7 +15,7 @@ class UserInfo extends React.Component {
     };
   }
 
-  async componentWillMount() {
+  async UNSAFE_componentWillMount() {
     await this.props.userStore.whoami(this.props.id);
     this.setState({
       Name: this.props.userStore.nickname,

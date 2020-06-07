@@ -17,7 +17,7 @@ class MatchingResult extends React.Component {
     };
   }
 
-  async componentWillMount() {
+  async UNSAFE_componentWillMount() {
     await this.props.userStore.whoami(sessionStorage.getItem("email"));
     this.setState({
       myName: this.props.userStore.nickname,

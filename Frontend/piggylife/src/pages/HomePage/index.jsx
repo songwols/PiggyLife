@@ -8,7 +8,7 @@ import { inject, observer } from "mobx-react";
 @inject("storeStore", "userStore")
 @observer
 class HomePage extends React.Component {
-  componentWillMount() {
+  UNSAFE_componentWillMount() {
     this.props.userStore.whoami(window.sessionStorage.getItem("email"));
   }
 
