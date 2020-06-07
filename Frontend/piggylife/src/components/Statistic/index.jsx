@@ -79,18 +79,18 @@ class Statistic extends React.Component {
     }
     this.remainnum = this.goalnum - this.mylength;
     this.done =
-      (21.5 / (this.goalnum - this.startnum)) *
-        (this.mylength - this.startnum) +
-      "rem";
-    this.todo =
-      (21.5 / (this.goalnum - this.startnum)) * this.remainnum + "rem";
+      (100 / (this.goalnum - this.startnum)) * (this.mylength - this.startnum) +
+      "%";
+    this.todo = (100 / (this.goalnum - this.startnum)) * this.remainnum + "%";
     return (
       <Frame>
-        <LevelGraph
-          done={this.done}
-          todo={this.todo}
-          ranking={this.ranking}
-        ></LevelGraph>
+        <LFrame>
+          <LevelGraph
+            done={this.done}
+            todo={this.todo}
+            ranking={this.ranking}
+          ></LevelGraph>
+        </LFrame>
         <Level>
           <Div style={{ paddingTop: "0.75rem" }}>당신의 돼지력은</Div>
           <Piggy>
@@ -117,6 +117,10 @@ class Statistic extends React.Component {
   }
 }
 
+const LFrame = styled.div`
+  height: 4rem;
+  width: 100%;
+`;
 const Frame = styled.div`
   margin: 1rem;
   overflow: hidden;
