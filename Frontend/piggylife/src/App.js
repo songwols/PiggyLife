@@ -1,8 +1,9 @@
 import React from "react";
 import { Switch, Route } from "react-router-dom";
 import { createGlobalStyle } from "styled-components";
+import { inject, observer } from "mobx-react";
 import styled from "styled-components";
-import mainFont from './Fonts/mago.ttf';
+import mainFont from "./Fonts/mago.ttf";
 
 import LoginPage from "./pages/LoginPage";
 import JoinPage from "./pages/JoinPage";
@@ -19,36 +20,49 @@ import MatchingResultPage from "./pages/MatchingResultPage";
 import MyDetailPage from "./pages/MyDetailPage";
 import EditDetailPage from "./pages/EditDetailPage";
 
-const App = () => {
-  return (
-    <Div>
-      <GlobalStyle></GlobalStyle>
-      
-        {window.sessionStorage.getItem("uid") !== null ? 
-      <Switch>
-          <Route path="/map" component={MapPage} />
-          <Route path="/feed" component={FeedPage} />
-          <Route path="/home" component={HomePage} />
-          <Route path="/write" component={WritePage} />
-          <Route path="/match" component={MatchingPage} />
-          <Route path="/more" component={MorePage} />
-          <Route path="/editP" component={EditProPage} />
-          <Route path="/detail/:sid" component={DetailPage} />
-          <Route path="/result/:fid" component={MatchingResultPage} />
-          <Route path="/mydetail/:pid" component={MyDetailPage} />
-          <Route path="/editdetail/:pid" component={EditDetailPage} />
-          <Route path="/" component={HomePage} />
+@inject("colorStore")
+@observer
+class App extends React.Component {
+  // componentWillMount() {
+  //   localStorage.setItem("home", "#5897A6");
+  //   localStorage.setItem("feed", "#cccccc");
+  //   localStorage.setItem("post", "#cccccc");
+  //   localStorage.setItem("map", "#cccccc");
+  //   localStorage.setItem("match", "#cccccc");
+  //   localStorage.setItem("myfeed", "#5897A6");
+  //   localStorage.setItem("statistic", "#cccccc");
+  // }
+  render() {
+    return (
+      <Div>
+        <GlobalStyle></GlobalStyle>
+
+        {window.sessionStorage.getItem("uid") !== null ? (
+          <Switch>
+            <Route path="/map" component={MapPage} />
+            <Route path="/feed" component={FeedPage} />
+            <Route path="/home" component={HomePage} />
+            <Route path="/write" component={WritePage} />
+            <Route path="/match" component={MatchingPage} />
+            <Route path="/more" component={MorePage} />
+            <Route path="/editP" component={EditProPage} />
+            <Route path="/detail/:sid" component={DetailPage} />
+            <Route path="/result/:fid" component={MatchingResultPage} />
+            <Route path="/mydetail/:pid" component={MyDetailPage} />
+            <Route path="/editdetail/:pid" component={EditDetailPage} />
+            <Route path="/" component={HomePage} />
           </Switch>
-        :
-        <Switch>
-          <Route path="/findpw" component={FindPWPage} />
-          <Route path="/join" component={JoinPage} />
-          <Route path="/" component={LoginPage} />
-         </Switch>
-      }
-    </Div>
-  );
-};
+        ) : (
+          <Switch>
+            <Route path="/findpw" component={FindPWPage} />
+            <Route path="/join" component={JoinPage} />
+            <Route path="/" component={LoginPage} />
+          </Switch>
+        )}
+      </Div>
+    );
+  }
+}
 
 const GlobalStyle = createGlobalStyle`
 @font-face {
@@ -63,6 +77,6 @@ const GlobalStyle = createGlobalStyle`
     
   }
 `;
-const Div = styled.div``
+const Div = styled.div``;
 
 export default App;

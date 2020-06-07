@@ -54,6 +54,8 @@ class Navbar extends React.Component {
     this.props.colorStore.setPostColor("#cccccc");
     this.props.colorStore.setMapColor("#cccccc");
     this.props.colorStore.setMatchColor("#cccccc");
+    this.props.colorStore.setMyFeedColor("#5897A6");
+    this.props.colorStore.setStatisticColor("#cccccc");
   };
   FeedClick = (e) => {
     this.props.colorStore.setHomeColor("#cccccc");
@@ -61,6 +63,8 @@ class Navbar extends React.Component {
     this.props.colorStore.setPostColor("#cccccc");
     this.props.colorStore.setMapColor("#cccccc");
     this.props.colorStore.setMatchColor("#cccccc");
+    this.props.colorStore.setMyFeedColor("#5897A6");
+    this.props.colorStore.setStatisticColor("#cccccc");
   };
   PostClick = (e) => {
     this.props.colorStore.setHomeColor("#cccccc");
@@ -68,6 +72,8 @@ class Navbar extends React.Component {
     this.props.colorStore.setPostColor("#5897A6");
     this.props.colorStore.setMapColor("#cccccc");
     this.props.colorStore.setMatchColor("#cccccc");
+    this.props.colorStore.setMyFeedColor("#5897A6");
+    this.props.colorStore.setStatisticColor("#cccccc");
   };
   MapClick = (e) => {
     this.props.colorStore.setHomeColor("#cccccc");
@@ -75,6 +81,8 @@ class Navbar extends React.Component {
     this.props.colorStore.setPostColor("#cccccc");
     this.props.colorStore.setMapColor("#5897A6");
     this.props.colorStore.setMatchColor("#cccccc");
+    this.props.colorStore.setMyFeedColor("#5897A6");
+    this.props.colorStore.setStatisticColor("#cccccc");
   };
   MatchClick = (e) => {
     this.props.colorStore.setHomeColor("#cccccc");
@@ -82,6 +90,8 @@ class Navbar extends React.Component {
     this.props.colorStore.setPostColor("#cccccc");
     this.props.colorStore.setMapColor("#cccccc");
     this.props.colorStore.setMatchColor("#5897A6");
+    this.props.colorStore.setMyFeedColor("#5897A6");
+    this.props.colorStore.setStatisticColor("#cccccc");
   };
   render() {
     return (
@@ -90,7 +100,7 @@ class Navbar extends React.Component {
           <Link to={"/Home"} style={{ textDecoration: "none" }}>
             <Home
               onClick={this.HomeClick}
-              color={this.props.colorStore.home}
+              color={localStorage.getItem("home")}
             ></Home>
           </Link>
         </HOME>
@@ -98,7 +108,7 @@ class Navbar extends React.Component {
           <Link to={"/Feed"} style={{ textDecoration: "none" }}>
             <Feed
               onClick={this.FeedClick}
-              color={this.props.colorStore.feed}
+              color={localStorage.getItem("feed")}
             ></Feed>
           </Link>
         </FEED>
@@ -106,7 +116,7 @@ class Navbar extends React.Component {
           <Link to={"/Write"} style={{ textDecoration: "none" }}>
             <Post
               onClick={this.PostClick}
-              color={this.props.colorStore.post}
+              color={localStorage.getItem("post")}
             ></Post>
           </Link>
         </POST>
@@ -114,7 +124,7 @@ class Navbar extends React.Component {
           <Link to={"/Map"} style={{ textDecoration: "none" }}>
             <MapIcon
               onClick={this.MapClick}
-              color={this.props.colorStore.map}
+              color={localStorage.getItem("map")}
             ></MapIcon>
           </Link>
         </MAP>
@@ -123,7 +133,7 @@ class Navbar extends React.Component {
           <Link to={"/Match"} style={{ textDecoration: "none" }}>
             <Muk
               onClick={this.MatchClick}
-              color={this.props.colorStore.match}
+              color={localStorage.getItem("match")}
             ></Muk>
           </Link>
         </Match>

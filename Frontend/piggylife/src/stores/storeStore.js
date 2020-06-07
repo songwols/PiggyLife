@@ -14,7 +14,7 @@ export default class StoreStore {
   @observable detailPost = {};
   @observable for2 = [];
   @observable newplace = [];
-  @observable similarity="";
+  @observable similarity = "";
 
   @computed get postslength() {
     return this.posts.length;
@@ -70,6 +70,7 @@ export default class StoreStore {
     return agent.Data.get_top10()
       .then((res) => {
         this.setTop10(res.data);
+        console.log(res.data);
       })
       .catch((err) => console.log(err));
   }
@@ -95,7 +96,7 @@ export default class StoreStore {
       .then((res) => {
         this.setFor2(res.data.recommendStores);
         this.setNewPlace(res.data.newStores);
-        this.similarity=res.data.similarity;
+        this.similarity = res.data.similarity;
       })
       .catch((err) => console.log(err));
   }
@@ -198,7 +199,7 @@ export default class StoreStore {
   }
 
   @action postupdate(data, file, pid) {
-    console.log(data)
+    console.log(data);
     return agent.Data.postupdate(data, file, pid)
       .then((res) => {
         window.location.replace("/mydetail/" + pid);
