@@ -195,7 +195,8 @@ export default class StoreStore {
   }
 
   @action postupdate(data, file, pid) {
-    return agent.Data.postupdate(data, file, pid)
+    var pars = encodeURIComponent(data.v_memo);
+    return agent.Data.postupdate(data, file, pid, pars)
       .then((res) => {
         window.location.replace("/mydetail/" + pid);
       })

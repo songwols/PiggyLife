@@ -66,9 +66,9 @@ const Data = {
       { TOKEN: token }
     ),
 
-  postupdate: (data, file, pid) =>
+  postupdate: (data, file, pid, memo) =>
     requests.put(
-      `/post/update/${pid}?content=${data.v_memo}&isLike=${data.isLike}&visited=${data.visited}`,
+      `/post/update/${pid}?content=${memo}&isLike=${data.isLike}&visited=${data.visited}`,
       file,
       {}
     ),
