@@ -78,6 +78,7 @@ const Info = styled.div`
   display: grid;
   grid-template-areas: "UserInfo Score UserInfo";
   grid-template-columns: 2fr 1fr 2fr;
+  background-color: #f2e9e4;
 `;
 const Score = styled.span`
   margin-top: 50%;
@@ -94,9 +95,11 @@ const Icon = styled.img`
 const TopText = styled.div`
   align-self: center;
   margin-left: 1rem;
+  font-size: 1.5rem;
 `;
 const Title = styled.div`
   margin-left: 1rem;
+  font-size: 1.5rem;
 `;
 const BothMukSpotlist = styled.div``;
 const NewMukSpotlist = styled.div``;
