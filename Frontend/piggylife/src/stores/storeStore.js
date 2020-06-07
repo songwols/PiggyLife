@@ -198,6 +198,7 @@ export default class StoreStore {
   }
 
   @action postupdate(data, file, pid) {
+    console.log(data)
     return agent.Data.postupdate(data, file, pid)
       .then((res) => {
         window.location.replace("/mydetail/" + pid);
