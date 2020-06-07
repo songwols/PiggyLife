@@ -31,7 +31,7 @@ class LevelGraph extends React.Component {
   }
 }
 const Level = styled.div`
-  width: 21.5rem;
+  width: 91vw;
   height: 1rem;
   display: grid;
   grid-template-columns: 1fr 1fr;
@@ -63,7 +63,7 @@ const Frame = styled.div`
   z-index: 1;
   justify-content: center;
   align-items: center;
-  width: 21.5rem;
+  width: 100%;
   background-color: ${(props) => props.done};
   height: 4rem;
   display: grid;
