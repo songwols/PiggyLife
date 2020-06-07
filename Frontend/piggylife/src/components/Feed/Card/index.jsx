@@ -1,6 +1,7 @@
 import React from "react";
 import styled from "styled-components";
 import logo from './logo.png'
+import dft from './default.png'
 import { withRouter } from "react-router-dom";
 import { inject, observer } from "mobx-react";
 
@@ -18,9 +19,15 @@ class Card extends React.Component{
             <Frame onClick={DetailBtn}>
             <F>
                 {(this.props.store.image===null || this.props.store.image==="") ? 
-                <CardImg src={logo}></CardImg>
+                    <div>
+                    {this.props.store.visited===true?<CoverImg src={logo}></CoverImg>:null}
+                    <CardImg src={dft}></CardImg>
+                    </div>
                 :
-                <CardImg src={this.props.store.image}></CardImg>
+                    <div>
+                    {this.props.store.visited===true?<CoverImg src={logo}></CoverImg>:null}
+                    <CardImg src={this.props.store.image}></CardImg>
+                    </div>
                 } 
             </F>
             </Frame>
@@ -61,5 +68,15 @@ const CardImg = styled.img`
     height: 100%;
     // position: relative;
 `;
+
+const CoverImg = styled.img`
+    position: absolute;
+    object-fit: cover;
+    top: 0;
+    right: 0;
+    width: 30%;
+    height: 30%;
+    z-index:10;
+`
 
 export default Card;
