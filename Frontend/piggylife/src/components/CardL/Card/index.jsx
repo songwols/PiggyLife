@@ -23,7 +23,7 @@ class Card extends React.Component {
         || this.props.store.image==="image") ? 
         <CardImg src={dft} />
          : 
-         <CardImg src={store.image}></CardImg>} 
+         <CardImg src={dft}></CardImg>} 
           
           <Title className="title">
             <T>{store.name}</T>
