@@ -17,7 +17,6 @@ class Confirm extends React.Component {
     });
   };
   CodeCheck = (e) => {
-    //alert(this.state.code);
     const user = {
       email: this.props.email,
       code: this.state.code,

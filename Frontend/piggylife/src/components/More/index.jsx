@@ -5,14 +5,14 @@ import CheckPopUp from "../EditPro/checkPopUp";
 @inject("userStore")
 @observer
 class More extends React.Component {
-  state={
-    click : false
-   };
-  CheckPwdPopUp = (e)=>{
+  state = {
+    click: false,
+  };
+  CheckPwdPopUp = (e) => {
     this.setState({
-      click: !this.state.click
-    })
-  }
+      click: !this.state.click,
+    });
+  };
   Logout = (e) => {
     this.props.userStore.logout();
   };
@@ -34,8 +34,8 @@ class More extends React.Component {
           </a>
         </BF>
         {this.state.click ? (
-            <CheckPopUp cancelCheck={this.CheckPwdPopUp.bind(this)}/>
-          ) : null}
+          <CheckPopUp cancelCheck={this.CheckPwdPopUp.bind(this)} />
+        ) : null}
       </Frame>
     );
   }
@@ -47,12 +47,8 @@ const Space = styled.div`
 
 const Frame = styled.div`
   grid-area: "content";
-  // height: 100%;
   padding: 10%;
   margin-top: 20%;
-  // display: flex;
-  // align-items: center;
-  // justify-content: center;
 `;
 
 const BF = styled.div`

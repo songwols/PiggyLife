@@ -39,7 +39,6 @@ export default class StatisticStore {
   getAreaStatistic(uId) {
     return agent.Data.getAreaStatistic(uId)
       .then((res) => {
-        //console.log(res);
         this.areaList = res.data;
         this.bestarea = res.data[0];
         if (res.data.length > 0) {

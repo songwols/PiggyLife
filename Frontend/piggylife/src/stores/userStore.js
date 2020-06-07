@@ -14,16 +14,13 @@ export default class UserStore {
   checkPwd(user) {
     return agent.Data.checkPwd(user, sessionStorage.getItem("token"))
       .then((res) => {
-        if(res.data.code===1){
+        if (res.data.code === 1) {
           window.location.replace("/EditP");
-        }
-        else{
+        } else {
           alert(res.data.message);
         }
-        
       })
       .catch((err) => {
-        console.log(err);
         alert("패스워드 확인에 실패하였습니다.");
       });
   }
@@ -34,8 +31,7 @@ export default class UserStore {
       .then((res) => {
         if (file !== null) {
           this.profileImage(file, sessionStorage.getItem("uid"));
-        }
-        else window.location.replace("/Feed");
+        } else window.location.replace("/Feed");
       })
       .catch((err) => {
         alert("사용자 정보 업데이트에 실패하였습니다");
@@ -52,7 +48,7 @@ export default class UserStore {
           alert(res.data.message);
         }
       })
-      .catch((err) => console.log(err));
+      .catch((err) => alert("실패하였습니다"));
   }
 
   @action
@@ -63,7 +59,6 @@ export default class UserStore {
         window.location.replace("/");
       })
       .catch((err) => {
-        console.log(err);
         alert("실패하였습니다");
       });
   }
@@ -73,7 +68,7 @@ export default class UserStore {
     return agent.Data.findByEmail(email)
       .then((res) => {
         alert("매칭을 시작합니다!");
-        window.location.replace("/Result/"+email);
+        window.location.replace("/Result/" + email);
       })
       .catch((err) => {
         alert("존재하지 않는 이메일입니다.");
@@ -121,7 +116,7 @@ export default class UserStore {
         }
       })
       .catch((err) => {
-        console.log(err);
+        alert("실패하였습니다");
       });
   }
 
@@ -151,7 +146,6 @@ export default class UserStore {
       })
       .catch((err) => {
         alert("로그인에 실패하였습니다.");
-        console.log(err);
       });
   }
 

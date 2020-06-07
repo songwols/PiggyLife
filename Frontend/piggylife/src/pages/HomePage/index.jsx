@@ -59,27 +59,18 @@ const Div = styled.div`
   background-color: #f2e9e4;
   width: 100vw;
   height: 100px;
-  /* display: flex; */
   white-space: nowrap;
   overflow-x: scroll;
   overflow-y: hidden;
 `;
 
-const Mukitlist = styled.div`
-  /* background-color: #5897a6; */
-`;
+const Mukitlist = styled.div``;
 
-const Top10 = styled.div`
-  /* background-color: #f28379; */
-`;
+const Top10 = styled.div``;
 
-const Place = styled.div`
-  /* background-color: #5897a6; */
-`;
+const Place = styled.div``;
 
-const User = styled.div`
-  /* background-color: #f28379; */
-`;
+const User = styled.div``;
 
 const Frame = styled.div`
   height: 100vh;

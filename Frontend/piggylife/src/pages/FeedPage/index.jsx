@@ -73,7 +73,6 @@ class FeedPage extends React.Component {
               <Statistic></Statistic>
             )}
           </Bottom>
-          {/* state로 true면 피드, false면 통계 */}
         </Content>
         <Navbar></Navbar>
       </Frame>
@@ -123,21 +122,7 @@ const Tab = styled.div`
   border-bottom: solid 1px;
   border-color: #e6e6e6;
 `;
-const Bottom = styled.div`
-  /* display: flex;
-  justify-content: center;
-  align-items: center; */
-`;
-// const Feed = styled.div`
-//   display: grid;
-//   height: 92vh;
-//   grid-template-rows: 150px auto;
-//   grid-template-areas: "Profile" "Content";
-// `;
-const Content = styled.div`
-  // display: grid;
-  // grid-template-rows: 55px auto;
-  // grid-template-areas: "Tab" "Bottom";
-`;
+const Bottom = styled.div``;
+const Content = styled.div``;
 
 export default FeedPage;

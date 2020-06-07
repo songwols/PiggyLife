@@ -8,33 +8,36 @@ class UserInfo extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-        Name: "",
-        Image:"",
-        Level: "",
-        RName: "",
+      Name: "",
+      Image: "",
+      Level: "",
+      RName: "",
     };
   }
 
-  async componentWillMount(){
+  async componentWillMount() {
     await this.props.userStore.whoami(this.props.id);
     this.setState({
-        Name: this.props.userStore.nickname,
-        Image: this.props.userStore.image,
-        Level: this.props.userStore.ranking,
-        RName: this.props.userStore.rname,
-    })
+      Name: this.props.userStore.nickname,
+      Image: this.props.userStore.image,
+      Level: this.props.userStore.ranking,
+      RName: this.props.userStore.rname,
+    });
   }
 
   render() {
     return (
       <Content>
         <div>{this.state.Name} 님</div>
-        {this.state.Image==="" ? 
-        <Img src="https://image.flaticon.com/icons/svg/747/747376.svg"></Img>
-        :
-        <Img src={this.state.Image}></Img> }
-        
-        <Level>lv.{this.state.Level} {this.state.RName}</Level>
+        {this.state.Image === "" ? (
+          <Img src="https://image.flaticon.com/icons/svg/747/747376.svg"></Img>
+        ) : (
+          <Img src={this.state.Image}></Img>
+        )}
+
+        <Level>
+          lv.{this.state.Level} {this.state.RName}
+        </Level>
         <Type>일식파</Type>
         <Type>한식파</Type>
         <Type>디저트파</Type>
@@ -45,7 +48,6 @@ class UserInfo extends React.Component {
 const Content = styled.span`
   height: 100%;
   width: 100%;
-  // padding: 15%;
   text-align: center;
   justify-content: center;
   align-items: center;

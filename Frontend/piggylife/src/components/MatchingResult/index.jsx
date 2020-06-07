@@ -9,55 +9,60 @@ import CardLayout from "../../components/CardL";
 @inject("storeStore")
 @observer
 class MatchingResult extends React.Component {
-    constructor(props) {
-        super(props);
-        this.state = {
-            myName: "",
-            fName: "",
-        };
-      }
+  constructor(props) {
+    super(props);
+    this.state = {
+      myName: "",
+      fName: "",
+    };
+  }
 
-    async componentWillMount(){
-        await this.props.userStore.whoami(sessionStorage.getItem("email"));
-        this.setState({
-            myName: this.props.userStore.nickname,
-            myLevel: this.props.userStore.ranking,
-        })
-        await this.props.userStore.whoami(this.props.id);
-        this.setState({
-            myName: this.state.myName,
-            fName: this.props.userStore.nickname,
-        })
-    }
-    render(){
-        return(
-            <Content>
-                <TopText>{this.state.myName} 님과 {this.state.fName} 님의 먹궁합 결과는</TopText>
-                <Info>
-                    <UserInfo id={sessionStorage.getItem("email")}></UserInfo>
-                    <Score>
-                    <Icon src={icon}></Icon>
-                    <div>{this.props.storeStore.similarity}</div>
-                    </Score>
-                    <UserInfo id={this.props.id}></UserInfo>
-                </Info>
-                <Blank></Blank>
-                <BothMukSpotlist>
-                    <Title>두 분을 위한 MukSpot은 여기!</Title>
-                    <Div>
-                      <CardLayout keyword="recommendfor2" fid={this.props.id}></CardLayout>
-                    </Div>
-                </BothMukSpotlist>
-                <Blank></Blank>
-                <NewMukSpotlist>
-                    <Title>새로운 곳은 어떤가요?</Title>
-                    <Div>
-                      <CardLayout keyword="new_place" fid={this.props.id}></CardLayout>
-                    </Div>
-                </NewMukSpotlist>
-        </Content>
-        )
-    }
+  async componentWillMount() {
+    await this.props.userStore.whoami(sessionStorage.getItem("email"));
+    this.setState({
+      myName: this.props.userStore.nickname,
+      myLevel: this.props.userStore.ranking,
+    });
+    await this.props.userStore.whoami(this.props.id);
+    this.setState({
+      myName: this.state.myName,
+      fName: this.props.userStore.nickname,
+    });
+  }
+  render() {
+    return (
+      <Content>
+        <TopText>
+          {this.state.myName} 님과 {this.state.fName} 님의 먹궁합 결과는
+        </TopText>
+        <Info>
+          <UserInfo id={sessionStorage.getItem("email")}></UserInfo>
+          <Score>
+            <Icon src={icon}></Icon>
+            <div>{this.props.storeStore.similarity}</div>
+          </Score>
+          <UserInfo id={this.props.id}></UserInfo>
+        </Info>
+        <Blank></Blank>
+        <BothMukSpotlist>
+          <Title>두 분을 위한 MukSpot은 여기!</Title>
+          <Div>
+            <CardLayout
+              keyword="recommendfor2"
+              fid={this.props.id}
+            ></CardLayout>
+          </Div>
+        </BothMukSpotlist>
+        <Blank></Blank>
+        <NewMukSpotlist>
+          <Title>새로운 곳은 어떤가요?</Title>
+          <Div>
+            <CardLayout keyword="new_place" fid={this.props.id}></CardLayout>
+          </Div>
+        </NewMukSpotlist>
+      </Content>
+    );
+  }
 }
 
 const Content = styled.div`
@@ -100,7 +105,6 @@ const Div = styled.div`
   background-color: #f2e9e4;
   width: 100vw;
   height: 100px;
-  /* display: flex; */
   white-space: nowrap;
   overflow-x: scroll;
   overflow-y: hidden;

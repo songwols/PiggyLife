@@ -55,7 +55,7 @@ export default class StoreStore {
           });
         }
       })
-      .catch((err) => console.log(err));
+      .catch((err) => alert("실패하였습니다"));
   }
   @action
   get_mypost(uid) {
@@ -63,16 +63,15 @@ export default class StoreStore {
       .then((res) => {
         this.setMyPosts(res.data);
       })
-      .catch((err) => console.log(err));
+      .catch((err) => alert("실패하였습니다"));
   }
   @action
   get_top10() {
     return agent.Data.get_top10()
       .then((res) => {
         this.setTop10(res.data);
-        console.log(res.data);
       })
-      .catch((err) => console.log(err));
+      .catch((err) => alert("실패하였습니다"));
   }
   @action
   get_hotplace() {
@@ -88,7 +87,7 @@ export default class StoreStore {
       .then((res) => {
         this.setSimilar(res.data);
       })
-      .catch((err) => console.log(err));
+      .catch((err) => alert("실패하였습니다"));
   }
   @action
   get_for2(mid, fid) {
@@ -98,7 +97,7 @@ export default class StoreStore {
         this.setNewPlace(res.data.newStores);
         this.similarity = res.data.similarity;
       })
-      .catch((err) => console.log(err));
+      .catch((err) => alert("실패하였습니다"));
   }
   @action
   get_newplace() {
@@ -106,7 +105,7 @@ export default class StoreStore {
     //   .then((res) => {
     //     this.newplace=res.data;
     //   })
-    //   .catch((err) => console.log(err));
+    //   .catch((err) => alert("실패하였습니다"););
   }
 
   @action
@@ -134,7 +133,6 @@ export default class StoreStore {
     return agent.Data.mypdetail(pid)
       .then((res) => {
         this.mydetailPost = res.data;
-        // console.log(res.data);
       })
       .catch((err) => alert("실패"));
   }
@@ -143,7 +141,6 @@ export default class StoreStore {
     const uid = window.sessionStorage.getItem("uid");
     return agent.Data.upload(data, uid)
       .then((res) => {
-        console.log(res.data);
         if (res.data.code === 1) {
           if (file !== null) {
             this.postImage(file, res.data.data.pid);
@@ -153,7 +150,7 @@ export default class StoreStore {
           alert(res.data.message);
         }
       })
-      .catch((err) => console.log(err));
+      .catch((err) => alert("실패하였습니다"));
   }
 
   @action postImage(data, id) {
@@ -165,7 +162,7 @@ export default class StoreStore {
           alert(res.data.message);
         }
       })
-      .catch((err) => console.log(err));
+      .catch((err) => alert("실패하였습니다"));
   }
 
   @action
@@ -193,13 +190,11 @@ export default class StoreStore {
     return agent.Data.detail(sid)
       .then((res) => {
         this.detailPost = res.data;
-        // console.log(res.data);
       })
       .catch((err) => alert("실패"));
   }
 
   @action postupdate(data, file, pid) {
-    console.log(data);
     return agent.Data.postupdate(data, file, pid)
       .then((res) => {
         window.location.replace("/mydetail/" + pid);

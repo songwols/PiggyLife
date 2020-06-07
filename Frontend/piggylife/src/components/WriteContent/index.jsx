@@ -3,7 +3,7 @@ import styled from "styled-components";
 import { inject, observer } from "mobx-react";
 import { Like } from "@styled-icons/boxicons-regular/Like";
 import { Dislike } from "@styled-icons/boxicons-regular/Dislike";
-import loading from './loading.gif'
+import loading from "./loading.gif";
 
 export const Good = styled(Like)`
   width: 30px;
@@ -140,7 +140,7 @@ class WriteContent extends React.Component {
       will: e.target.value,
       went: false,
     });
-  }
+  };
 
   wentChange = (e) => {
     this.setState({
@@ -150,22 +150,19 @@ class WriteContent extends React.Component {
       will: false,
       went: e.target.value,
     });
-  }
+  };
 
   goRegister = (e) => {
     var formData = "";
-    if(this.state.file!==""){
+    if (this.state.file !== "") {
       formData = new FormData();
       formData.append("file", this.state.file);
-    }
-    else{
+    } else {
       formData = null;
     }
     if (this.state.v_name === "이름을 검색하고 싶으면 여기를 클릭하세요") {
       alert("빈 값이 있습니다.");
-    } else
-    this.props.storeStore.upload(this.state, formData);
-    // this.props.storeStore.postImage(formData);
+    } else this.props.storeStore.upload(this.state, formData);
   };
 
   g_changeColor = (e) => {
@@ -209,7 +206,7 @@ class WriteContent extends React.Component {
     //여기에 로딩
     e.preventDefault();
     this.setState({
-      loading: true
+      loading: true,
     });
     await this.props.storeStore.search(this.state.store_name);
     const addr = this.props.storeStore.storeItems;
@@ -227,13 +224,15 @@ class WriteContent extends React.Component {
 
   render() {
     if (this.state.loading) {
-      return (<Popup>
-        <PopupInner>
-        <LIF>
-          <LI src={loading}></LI>
-        </LIF>
-        </PopupInner>
-      </Popup>);
+      return (
+        <Popup>
+          <PopupInner>
+            <LIF>
+              <LI src={loading}></LI>
+            </LIF>
+          </PopupInner>
+        </Popup>
+      );
     }
     let profile_preview = null;
     if (this.state.file !== "") {
@@ -266,19 +265,15 @@ class WriteContent extends React.Component {
             name="store_img"
             onChange={this.handleFileOnChange}
           ></Pic>
-          {/* <form encType="multipart/form-data">
-            <input type="file" onChange={this.handleFileOnChange}></input>
-          </form> */}
           {profile_preview}
         </PF>
-        
+
         <FF onClick={this.toggleSearch.bind(this)}>
           <Input value={this.state.v_name} readOnly></Input>
         </FF>
         <Input value={this.state.v_category} readOnly></Input>
         <Input value={this.state.v_address} readOnly></Input>
         <Input value={this.state.v_tel} readOnly></Input>
-        {/* <TextArea value={this.state.v_menu} readOnly></TextArea> */}
         {this.state.v_menu === "메뉴" ? (
           <TextD>{this.state.v_menu}</TextD>
         ) : (
@@ -296,14 +291,26 @@ class WriteContent extends React.Component {
         <CheckDiv>
           <label>
             <BF onClick={this.nonIcon.bind(this)}>
-              <CK type="radio" name="group" value="will" checked={this.state.will} onChange={this.willChange}/>
+              <CK
+                type="radio"
+                name="group"
+                value="will"
+                checked={this.state.will}
+                onChange={this.willChange}
+              />
             </BF>
             갈 곳
           </label>
           &nbsp;
           <label>
             <BF onClick={this.showIcon.bind(this)}>
-              <CK type="radio" name="group" value="went" checked={this.state.went} onChange={this.wentChange}/>
+              <CK
+                type="radio"
+                name="group"
+                value="went"
+                checked={this.state.went}
+                onChange={this.wentChange}
+              />
             </BF>
             간 곳
           </label>
@@ -320,12 +327,11 @@ class WriteContent extends React.Component {
             </Div>
           </ICFrame>
         ) : null}
-        <Space/>
+        <Space />
         <EBF>
           <CButton onClick={this.goRegister}>등록</CButton>
         </EBF>
         {this.state.searchShow ? (
-          // <Search cancelSearch={this.toggleSearch.bind(this)} saveD={this.toggleDetailSave.bind(this)}/>
           <Popup>
             <PopupInner>
               <Close onClick={this.toggleClose.bind(this)}>X</Close>
@@ -340,10 +346,12 @@ class WriteContent extends React.Component {
                   &nbsp;
                   <OK onClick={this.searching}>검색</OK>
                 </BFrame>
-                <Notice>*가게 이름을 입력하고 검색을 눌러 정보 선택 후, 저장을 눌러주세요.</Notice>
-            
+                <Notice>
+                  *가게 이름을 입력하고 검색을 눌러 정보 선택 후, 저장을
+                  눌러주세요.
+                </Notice>
               </Box>
-              </PopupInner>
+            </PopupInner>
             {this.state.showList ? (
               <PopupInner>
                 <SFrame>
@@ -371,7 +379,7 @@ class WriteContent extends React.Component {
 
 const Space = styled.div`
   height: 2rem;
-`
+`;
 
 const Close = styled.button`
   background: none;
@@ -379,24 +387,22 @@ const Close = styled.button`
   outline: none;
   float: right;
   font-size: xx-large;
-  margin: .3rem .5rem;
-`
+  margin: 0.3rem 0.5rem;
+`;
 const LIF = styled.div`
   margin: 45% 10% 45% 10%;
   height: 60%;
   width: 80%;
-`
+`;
 
 const LI = styled.img`
   justify-content: center;
   align-items: center;
-  // position: absolute;
   object-fit: cover;
   top: 0;
   left: 0;
   width: 95%;
-  // height: 5rem;
-`
+`;
 
 const TextD = styled.div`
   padding-left: 0.3rem;
@@ -434,7 +440,6 @@ const PF = styled.div`
 const PvImg = styled.img`
   justify-content: center;
   align-items: center;
-  // position: absolute;
   object-fit: cover;
   top: 0;
   left: 0;
@@ -572,11 +577,11 @@ const Box = styled.div`
 `;
 
 const Notice = styled.div`
-  padding-top: .2rem;
+  padding-top: 0.2rem;
   grid-area: notice;
   background-color: white;
   font-size: smaller;
-`
+`;
 
 const Title = styled.div`
   grid-area: "title";

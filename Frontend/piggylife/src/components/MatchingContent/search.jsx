@@ -71,7 +71,6 @@ const Img = styled.img`
   margin: auto;
 `;
 const Box2 = styled.div`
-  // width: 100%;
   background-color: #ffe8bd;
   border-radius: 0.5rem;
   padding: 5% 10% 5% 10%;
@@ -95,7 +94,6 @@ const Input = styled.input`
 
 const EBF = styled.div`
   text-align: center;
-  // width: 95%;
 `;
 
 const CButton = styled.button`

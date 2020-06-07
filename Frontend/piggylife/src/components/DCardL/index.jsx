@@ -18,14 +18,14 @@ class DCardLayout extends React.Component {
     const keyword = this.props.keyword;
     if (keyword === "mypost") {
       this.props.storeStore.get_mypost(window.sessionStorage.getItem("uid"));
-    } 
+    }
   }
 
   render() {
     if (this.props.keyword === "mypost") {
       this.list = this.props.storeStore.myposts;
       this.length = this.props.storeStore.mypostslength;
-    } 
+    }
 
     return (
       <div>
@@ -59,9 +59,6 @@ const Frame = styled.div`
   width: fit-content;
   padding-left: 5%;
   padding-right: 5%;
-  /* grid-area: List; */
-  /* grid-column-gap: 3%;
-  grid-template-columns: repeat(auto-fit, 29%); */
   display: flex;
   white-space: nowrap;
   overflow-x: scroll;

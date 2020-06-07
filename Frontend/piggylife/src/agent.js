@@ -1,7 +1,6 @@
 import axios from "axios";
 
 const API_ROOT = "http://52.78.169.231:8080/PIGGY";
-// const API_ROOT = "http://localhost:8080/PIGGY";
 
 const requests = {
   get: (url, header) => axios.get(`${API_ROOT}${url}`, { headers: header }),
@@ -53,7 +52,7 @@ const Data = {
       email: user.email,
       password: user.password,
     }),
-  updateUser: (user,uid) =>
+  updateUser: (user, uid) =>
     requests.put(`/user/update/${uid}`, {
       email: user.email,
       image: user.image,
@@ -77,8 +76,10 @@ const Data = {
   getCategoryStatistic: (uId) =>
     requests.get(`/post/getCategoryStatistic/${uId}`),
   postdelete: (pid) => requests.delete(`/post/delete/${pid}`),
-  profileImage: (file, uid) => requests.post(`/user/uploadImage/${uid}`, file, {}),
-  get_for2: (mid, fid) => requests.get(`/recommend/findMatch?selfEmail=${mid}&friendEmail=${fid}`),
+  profileImage: (file, uid) =>
+    requests.post(`/user/uploadImage/${uid}`, file, {}),
+  get_for2: (mid, fid) =>
+    requests.get(`/recommend/findMatch?selfEmail=${mid}&friendEmail=${fid}`),
 };
 
 export default {

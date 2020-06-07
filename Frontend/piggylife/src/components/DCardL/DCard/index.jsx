@@ -17,12 +17,12 @@ class DCard extends React.Component {
     return (
       <F>
         <Frame onClick={DetailBtn}>
-        {(this.props.store.image===null || this.props.store.image==="") ? 
-        <CardImg src={dft} className="img" />
-        :
-        <CardImg src={this.props.store.image} className="img" />  
-        }
-          
+          {this.props.store.image === null || this.props.store.image === "" ? (
+            <CardImg src={dft} className="img" />
+          ) : (
+            <CardImg src={this.props.store.image} className="img" />
+          )}
+
           <Title className="title">
             <T>{store.store.name}</T>
           </Title>
@@ -62,7 +62,6 @@ const CardImg = styled.img`
   justify-content: center;
   align-items: center;
   position: absolute;
-  /* object-fit: cover; */
   top: 0;
   left: 0;
   width: 95px;
@@ -97,7 +96,6 @@ const T = styled.div`
   align-items: center;
   position: absolute;
   margin-top: 30%;
-  /* margin-left: 20%; */
   z-index: 10;
   font-size: 1.3rem;
 `;

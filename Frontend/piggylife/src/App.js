@@ -3,7 +3,6 @@ import { Switch, Route } from "react-router-dom";
 import { createGlobalStyle } from "styled-components";
 import { inject, observer } from "mobx-react";
 import styled from "styled-components";
-import mainFont from "./Fonts/mago.ttf";
 
 import LoginPage from "./pages/LoginPage";
 import JoinPage from "./pages/JoinPage";
@@ -23,15 +22,6 @@ import EditDetailPage from "./pages/EditDetailPage";
 @inject("colorStore")
 @observer
 class App extends React.Component {
-  // componentWillMount() {
-  //   localStorage.setItem("home", "#5897A6");
-  //   localStorage.setItem("feed", "#cccccc");
-  //   localStorage.setItem("post", "#cccccc");
-  //   localStorage.setItem("map", "#cccccc");
-  //   localStorage.setItem("match", "#cccccc");
-  //   localStorage.setItem("myfeed", "#5897A6");
-  //   localStorage.setItem("statistic", "#cccccc");
-  // }
   render() {
     return (
       <Div>
@@ -65,12 +55,7 @@ class App extends React.Component {
 }
 
 const GlobalStyle = createGlobalStyle`
-@font-face {
-  font-family: 'Pontano Sans';
-  src: url(${mainFont}) format('truetype');
-  font-weight: normal;
-  font-style: normal;
-}
+
   body{
     width: 100%;
     height: 100%;
