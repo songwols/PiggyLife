@@ -15,19 +15,19 @@ class Card extends React.Component{
         };
 
         return(
-            <F>
             <Frame onClick={DetailBtn}>
+            <F>
               <CardImg src={logo}></CardImg>
+            </F>
             </Frame>
-          </F>
         )
     }
 }
 
 const F=styled.div`
-    border: .5px solid black;
-    // z-index:-1;
-    // position: relative;
+    // border: .5px solid black;
+    z-index:-1;
+    position: relative;
     display: block;
     width: 100%;
     height: 0;
@@ -44,15 +44,18 @@ const Frame=styled.button`
     outline: none;
     // border-radius: 0.5rem;
     cursor: pointer;
+    padding: 0;
+    // position: relative;
 `;
 
 const CardImg = styled.img`
-    // position: absolute;
+    position: absolute;
     object-fit: cover;
     top: 0;
     left: 0;
     width: 100%;
-    // height: 100%;
+    height: 100%;
+    // position: relative;
 `;
 
 export default Card;
