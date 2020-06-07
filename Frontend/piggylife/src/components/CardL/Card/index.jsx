@@ -95,6 +95,7 @@ const T = styled.div`
   margin-top: 20%;
   /* margin-left: 20%; */
   z-index: 10;
+  font-size: 1.3rem;
 `;
 
 export default Card;
