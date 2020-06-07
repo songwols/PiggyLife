@@ -17,7 +17,7 @@ class Card extends React.Component{
         return(
             <F>
             <Frame onClick={DetailBtn}>
-              <CardImg src={logo} className="img" />
+              <CardImg src={logo}></CardImg>
             </Frame>
           </F>
         )
