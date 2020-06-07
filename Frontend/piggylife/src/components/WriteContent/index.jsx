@@ -388,7 +388,7 @@ const LIF = styled.div`
 `
 
 const LI = styled.img`
-justify-content: center;
+  justify-content: center;
   align-items: center;
   // position: absolute;
   object-fit: cover;

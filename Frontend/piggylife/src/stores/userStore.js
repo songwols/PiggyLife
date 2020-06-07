@@ -35,7 +35,7 @@ export default class UserStore {
         if (file !== null) {
           this.profileImage(file, sessionStorage.getItem("uid"));
         }
-        window.location.replace("/Feed");
+        else window.location.replace("/Feed");
       })
       .catch((err) => {
         alert("사용자 정보 업데이트에 실패하였습니다");
