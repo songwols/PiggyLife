@@ -40,7 +40,7 @@ class PlaceGraph extends React.Component {
     this.nickname = this.props.userStore.nickname;
     return (
       <Frame>
-        <Title>"{this.nickname}" 님이 자주 방문한 장소 Top5</Title>
+        <Title>"{this.nickname}" 님이 자주 찾는 장소 Top5</Title>
         <Graph>
           <Grid>
             <FirstGrid>
