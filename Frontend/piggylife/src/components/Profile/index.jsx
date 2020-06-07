@@ -105,12 +105,11 @@ const ProfileImage = styled.img`
   justify-content: center;
   align-items: center;
   text-align: center;
-  width: 6rem;
-  height: 6rem;
+  width: 6.5rem;
+  height: 6.5rem;
   object-fit: cover;
   border-radius: 50%;
-  border-color: gray;
-  border-style: solid;
+  border: 1.5px solid #CCCCCC;
 `;
 
 export default Profile;

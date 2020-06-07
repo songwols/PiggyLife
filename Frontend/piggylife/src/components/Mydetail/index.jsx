@@ -139,17 +139,29 @@ const Pic = styled.div`
     grid-area: "pic";
     margin-top: .5rem;
     height: 10rem;
+    display: flex; 
+    align-items: center; 
+    justify-content: center; 
+    border: .5px solid #CCCCCC;
+    border-radius: .5rem;
 `
 
 const Info = styled.div`
     grid-area: "info";
     margin-top: .5rem;
+    background-color: #F2E9E4;
+    border-radius: .5rem;
+    padding-left: .5rem;
     // height: 5rem;
 `
 
 const Menu = styled.div`
     grid-area: "menu";
     margin-top: .5rem;
+    margin-bottom: .5rem;
+    background-color: #F2E9E4;
+    border-radius: .5rem;
+    padding-left: .5rem;
     // height: 5rem;
 `
 
@@ -157,12 +169,18 @@ const Tag = styled.div`
     grid-area: "tag";
     margin-top: .5rem;
     min-height: 5rem;
+    background-color: #F2E9E4;
+    border-radius: .5rem;
+    padding-left: .5rem;
 `
 
 const Memo = styled.div`
     grid-area: "memo";
     margin-top: .5rem;
     min-height: 7rem;
+    background-color: #F2E9E4;
+    border-radius: .5rem;
+    padding-left: .5rem;
 `
 
 const Text = styled.div`

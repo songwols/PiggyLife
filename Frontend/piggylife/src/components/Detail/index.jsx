@@ -44,7 +44,8 @@ class Detail extends React.Component{
     render(){
         return(
             <Frame>
-                <Pic>사진</Pic>
+                <Pic>{ (this.state.img === "" || this.state.img === null ) ? 
+                    <Text>등록된 이미지가 없습니다.</Text> : <Simg src={this.state.img}></Simg>}</Pic>
                 <Info>
                     <Text>{this.state.store_name}</Text>
                     <Text>{this.state.address}</Text>
@@ -66,6 +67,15 @@ class Detail extends React.Component{
         )
     }
 }
+const Simg = styled.img`
+  justify-content: center;
+  align-items: center;
+//   object-fit: cover;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+`;
 
 const Frame = styled.div`
     height: 100%;
@@ -78,17 +88,29 @@ const Pic = styled.div`
     grid-area: "pic";
     margin-top: .5rem;
     height: 10rem;
+    display: flex; 
+    align-items: center; 
+    justify-content: center; 
+    border: .5px solid #CCCCCC;
+    border-radius: .5rem;
 `
 
 const Info = styled.div`
     grid-area: "info";
     margin-top: .5rem;
+    background-color: #F2E9E4;
+    border-radius: .5rem;
+    padding-left: .5rem;
     // height: 5rem;
 `
 
 const Menu = styled.div`
     grid-area: "menu";
     margin-top: .5rem;
+    margin-bottom: .5rem;
+    background-color: #F2E9E4;
+    border-radius: .5rem;
+    padding-left: .5rem;
     // height: 5rem;
 `
 
@@ -96,6 +118,9 @@ const Tag = styled.div`
     grid-area: "tag";
     margin-top: .5rem;
     height: 5rem;
+    background-color: #F2E9E4;
+    border-radius: .5rem;
+    padding-left: .5rem;
 `
 
 const Text = styled.div`

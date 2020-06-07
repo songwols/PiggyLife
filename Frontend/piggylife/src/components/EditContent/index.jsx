@@ -196,17 +196,6 @@ class WriteContent extends React.Component{
                 ></Pic>
                 {profile_preview}
                 </PF>
-                {this.state.show ? (
-                <ICFrame>
-                    <Div onClick={() => this.g_changeColor("#5897A6")}>
-                    <Good style={{color: this.state.g_color}}/>좋아요
-                    </Div>
-
-                    <Div onClick={() => this.n_changeColor("#F28379")}>
-                    <NGood style={{color: this.state.n_color}}/>싫어요
-                    </Div>
-                </ICFrame>
-                ) : null}
                 <Input value={this.state.v_name} readOnly></Input>
                 <Input value={this.state.v_category} readOnly></Input>
                 <Input value={this.state.v_address} readOnly></Input>
@@ -228,11 +217,27 @@ class WriteContent extends React.Component{
                         <CK type="radio" name="group" value="went" checked={this.state.went} onChange={this.wentChange}/>
                         </BF>간 곳</label>            
                 </CheckDiv>
+                {this.state.show ? (
+                <ICFrame>
+                    <Div onClick={() => this.g_changeColor("#5897A6")}>
+                    <Good style={{color: this.state.g_color}}/>좋아요
+                    </Div>
+
+                    <Div onClick={() => this.n_changeColor("#F28379")}>
+                    <NGood style={{color: this.state.n_color}}/>싫어요
+                    </Div>
+                </ICFrame>
+                ) : null}
+                <Space/>
                 <EBF><CButton onClick={this.goRegister}>완료</CButton></EBF>
             </Content>
         )
     }
 }
+
+const Space = styled.div`
+  height: 2rem;
+`
 
 const PF = styled.div`
   height: auto;
