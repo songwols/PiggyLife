@@ -133,7 +133,9 @@ class MapContent extends React.Component {
 
 const MapContents = styled.div`
   width: 100%;
-  height: 92vh;
+  height: 90vh;
+  position: relative;
+  z-index: -1;
 `;
 
 

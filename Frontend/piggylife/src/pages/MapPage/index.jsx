@@ -16,6 +16,9 @@ class MapPage extends React.Component {
 
 const Frame = styled.div`
   height: 100vh;
+  display: grid;
+  grid-template-rows: auto 8vh;
+  grid-template-areas: "map" "navbar";
 `;
 
 export default MapPage;
