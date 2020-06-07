@@ -92,19 +92,19 @@ class Statistic extends React.Component {
           ranking={this.ranking}
         ></LevelGraph>
         <Level>
-          <Div>당신의 돼지력은</Div>
+          <Div style={{ paddingTop: "0.75rem" }}>당신의 돼지력은</Div>
           <Piggy>
             Lv.{this.ranking} {this.rname}
           </Piggy>
           <Div>입니다</Div>
         </Level>
         <Placer>
-          <Div>당신은</Div>
+          <Div style={{ paddingTop: "0.7rem" }}>당신은</Div>
           <Piggy>
             {" "}
             "{this.best.city} {this.best.area}" 를
           </Piggy>
-          <Div>자주 방문하는 돼지입니다</Div>
+          <Div>자주 방문하는 {this.rname}입니다</Div>
         </Placer>
         <Place>
           <PlaceGraph></PlaceGraph>
@@ -122,7 +122,6 @@ const Frame = styled.div`
   overflow: hidden;
 `;
 const Level = styled.div`
-  border-radius: 0.5rem;
   background-color: #f28379;
   margin-top: 0.3rem;
   margin-bottom: 0.3rem;
@@ -137,7 +136,6 @@ const Placer = styled.div`
   background-color: #5897a6;
   margin-top: 0.3rem;
   margin-bottom: 0.3rem;
-  border-radius: 0.5rem;
   color: white;
 `;
 const Place = styled.div`
