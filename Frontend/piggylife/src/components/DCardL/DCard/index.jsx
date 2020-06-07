@@ -1,6 +1,6 @@
 import React from "react";
 import styled from "styled-components";
-import logo from "./logo.png";
+import dft from "./default.png";
 import { withRouter } from "react-router-dom";
 import { inject, observer } from "mobx-react";
 
@@ -17,7 +17,12 @@ class DCard extends React.Component {
     return (
       <F>
         <Frame onClick={DetailBtn}>
-          <CardImg src={logo} className="img" />
+        {(this.props.store.image===null || this.props.store.image==="") ? 
+        <CardImg src={dft} className="img" />
+        :
+        <CardImg src={this.props.store.image} className="img" />  
+        }
+          
           <Title className="title">
             <T>{store.store.name}</T>
           </Title>

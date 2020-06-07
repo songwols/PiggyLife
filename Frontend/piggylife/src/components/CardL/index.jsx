@@ -46,13 +46,12 @@ class CardLayout extends React.Component {
       this.list = this.props.storeStore.newplace;
       this.length = this.props.storeStore.newplacelength;
     }
-
     return (
       <div>
         {this.length !== 0 ? (
           <Frame>
             {this.list.map((item, index) => (
-              <Card key={index} store={item} />
+              <Card key={index} store={item} keyword={this.props.keyword}/>
             ))}
           </Frame>
         ) : (

@@ -1,6 +1,6 @@
 import React from "react";
 import styled from "styled-components";
-import logo from "./logo.png";
+import dft from "./default.png";
 import { withRouter } from "react-router-dom";
 import { inject, observer } from "mobx-react";
 
@@ -13,12 +13,18 @@ class Card extends React.Component {
       e.preventDefault();
       this.props.history.push("/detail/" + this.props.store.sid);
     };
-    const store = this.props.store;
-
+    var store = this.props.store;
+    
     return (
       <F>
         <Frame onClick={DetailBtn}>
-          <CardImg src={logo} className="img"></CardImg>
+        {(this.props.store.image===null 
+        || this.props.store.image===""
+        || this.props.store.image==="image") ? 
+        <CardImg src={dft} />
+         : 
+         <CardImg src={store.image}></CardImg>} 
+          
           <Title className="title">
             <T>{store.name}</T>
           </Title>
