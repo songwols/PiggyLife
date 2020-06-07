@@ -17,7 +17,11 @@ class Card extends React.Component{
         return(
             <Frame onClick={DetailBtn}>
             <F>
-              <CardImg src={logo}></CardImg>
+                {(this.props.store.image===null || this.props.store.image==="") ? 
+                <CardImg src={logo}></CardImg>
+                :
+                <CardImg src={this.props.store.image}></CardImg>
+                } 
             </F>
             </Frame>
         )
