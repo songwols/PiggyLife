@@ -23,7 +23,7 @@ export const NGood = styled(Dislike)`
 `;
 
 @inject("storeStore")
-@inject("userStore")
+@inject("userStore", "colorStore")
 @observer
 class WriteContent extends React.Component {
   constructor(props) {
@@ -162,7 +162,14 @@ class WriteContent extends React.Component {
     }
     if (this.state.v_name === "이름을 검색하고 싶으면 여기를 클릭하세요") {
       alert("빈 값이 있습니다.");
-    } else this.props.storeStore.upload(this.state, formData);
+    } else {
+      this.props.colorStore.setHomeColor("#cccccc");
+      this.props.colorStore.setFeedColor("#5897A6");
+      this.props.colorStore.setPostColor("#cccccc");
+      this.props.colorStore.setMapColor("#cccccc");
+      this.props.colorStore.setMatchColor("#cccccc");
+      this.props.storeStore.upload(this.state, formData);
+    }
   };
 
   g_changeColor = (e) => {
