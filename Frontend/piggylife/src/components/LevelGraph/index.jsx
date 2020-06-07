@@ -54,29 +54,20 @@ const NextLevel = styled.div`
 `;
 const Done = styled.div`
   height: 2rem;
-  /* position: relative; */
-  /* z-index: -1; */
   background-color: #f25e3d;
 `;
 const Todo = styled.div`
-  /* display: inline; */
   height: 2rem;
-  /* position: relative; */
-  /* z-index: 10; */
   background-color: #f2e9e4;
   float: left;
 `;
 const Frame = styled.div`
-  /* position: relative; */
   z-index: 1;
   justify-content: center;
-  /* text-align: center; */
   align-items: center;
   width: 21.5rem;
   background-color: ${(props) => props.done};
   height: 4rem;
-  /* margin-top: 0.3rem; */
-  /* margin-bottom: 0.3rem; */
   display: grid;
   grid-template-rows: 1fr 1.5fr;
   grid-template-areas: "Level" "Graph";
