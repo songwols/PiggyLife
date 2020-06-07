@@ -35,7 +35,7 @@ class Profile extends React.Component {
     }
 }
 
-  async componentWillMount(){
+  async UNSAFE_componentWillMount(){
     const email = sessionStorage.getItem("email")
     await this.props.userStore.whoami(email)
     const img = this.props.userStore.image

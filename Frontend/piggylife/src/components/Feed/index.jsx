@@ -17,7 +17,7 @@ class FeedCompo extends React.Component {
     count: 1,
   };
 
-  componentWillMount() {
+  UNSAFE_componentWillMount() {
     this.props.storeStore.get_post(window.sessionStorage.getItem("uid"));
   }
 

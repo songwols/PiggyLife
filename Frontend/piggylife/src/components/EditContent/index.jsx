@@ -53,7 +53,7 @@ class WriteContent extends React.Component {
     this.n_changeColor = this.n_changeColor.bind(this);
   }
 
-  async componentWillMount() {
+  async UNSAFE_componentWillMount() {
     await this.props.storeStore.mydetail(this.props.id);
     const post = this.props.storeStore.mydetailPost;
     this.setState({

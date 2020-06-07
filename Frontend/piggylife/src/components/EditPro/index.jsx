@@ -26,7 +26,7 @@ class EditPro extends React.Component {
       previewURL: "",
     };
   }
-  async componentWillMount() {
+  async UNSAFE_componentWillMount() {
     const email = window.sessionStorage.getItem("email");
     await this.props.userStore.whoami(email);
     const nname = this.props.userStore.nickname;

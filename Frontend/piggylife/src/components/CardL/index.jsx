@@ -14,7 +14,7 @@ class CardLayout extends React.Component {
     };
   }
 
-  componentWillMount() {
+  UNSAFE_componentWillMount() {
     const keyword = this.props.keyword;
     if (keyword === "top10") {
       this.props.storeStore.get_top10();

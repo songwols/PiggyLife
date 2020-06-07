@@ -14,7 +14,7 @@ class DCardLayout extends React.Component {
     };
   }
 
-  componentWillMount() {
+  UNSAFE_componentWillMount() {
     const keyword = this.props.keyword;
     if (keyword === "mypost") {
       this.props.storeStore.get_mypost(window.sessionStorage.getItem("uid"));
