@@ -151,8 +151,7 @@ const ProfileImage = styled.img`
     height: 6rem;
     object-fit: cover;
     border-radius: 50%;
-    border-color: gray;
-    border-style: solid;
+    border: 1.5px solid #CCCCCC;
 `;
 
 const E = styled.input`
