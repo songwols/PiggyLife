@@ -18,6 +18,7 @@ class FeedCompo extends React.Component {
   };
 
   UNSAFE_componentWillMount() {
+    window.scrollTo(0, 0);
     this.props.storeStore.get_post(window.sessionStorage.getItem("uid"));
   }
 
