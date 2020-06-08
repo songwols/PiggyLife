@@ -22,7 +22,7 @@ export const GraphIcon = styled(Graph)`
   align-items: center;
 `;
 
-@inject("colorStore")
+@inject("colorStore", "userStore")
 @observer
 class FeedPage extends React.Component {
   constructor(props) {
@@ -33,7 +33,9 @@ class FeedPage extends React.Component {
       statistic: false,
     };
   }
-
+  async UNSAFE_componentWillMount() {
+    this.props.userStore.whoami(window.sessionStorage.getItem("email"));
+  }
   FeedClick = (e) => {
     this.setState({
       feed: true,
@@ -55,7 +57,7 @@ class FeedPage extends React.Component {
     return (
       <Frame>
         <Top>
-          <Profile></Profile>
+          <Profile ranking={this.props.userStore.ranking}></Profile>
           <Tab>
             <FeedTab onClick={this.FeedClick}>
               <Grid color={this.props.colorStore.myfeed}></Grid>

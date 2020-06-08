@@ -1,6 +1,13 @@
 import React from "react";
 import styled from "styled-components";
 import { inject, observer } from "mobx-react";
+import 기사돼지 from "../Statistic/기사돼지.png";
+import 남작돼지 from "../Statistic/남작돼지.png";
+import 로얄돼지 from "../Statistic/로얄돼지.png";
+import 아기돼지 from "../Statistic/아기돼지.png";
+import 어린돼지 from "../Statistic/어린돼지.png";
+import 청년돼지 from "../Statistic/청년돼지.png";
+import 평민돼지 from "../Statistic/평민돼지.png";
 
 @inject("userStore", "statisticStore")
 @observer
@@ -24,6 +31,7 @@ class UserInfo extends React.Component {
         category_group: "",
         count: 0,
       },
+      ranking: 0,
     };
   }
 
@@ -44,11 +52,34 @@ class UserInfo extends React.Component {
   }
 
   render() {
+    if (this.state.Level === 0) {
+      this.img = 아기돼지;
+    } else if (this.state.Level === 1) {
+      this.img = 어린돼지;
+    } else if (this.state.Level === 2) {
+      this.img = 청년돼지;
+    } else if (this.state.Level === 3) {
+      this.img = 평민돼지;
+    } else if (this.state.Level === 4) {
+      this.img = 기사돼지;
+    } else if (this.state.Level === 5) {
+      this.img = 남작돼지;
+    } else if (this.state.Level === 6) {
+      //this.img = 자작돼지;
+    } else if (this.state.Level === 7) {
+      // this.img = 백작돼지;
+    } else if (this.state.Level === 8) {
+      //this.img = 후작돼지;
+    } else if (this.state.Level === 9) {
+      // this.img = 공작돼지;
+    } else if (this.state.Level === 10) {
+      this.img = 로얄돼지;
+    }
     return (
       <Content>
         <div>{this.state.Name} 님</div>
-        {this.state.Image === "" ? (
-          <Img src="https://image.flaticon.com/icons/svg/747/747376.svg"></Img>
+        {this.state.Image === "" || this.state.Image === null ? (
+          <Img src={this.img}></Img>
         ) : (
           <Img src={this.state.Image}></Img>
         )}
