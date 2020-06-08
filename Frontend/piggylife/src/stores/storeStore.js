@@ -157,6 +157,7 @@ export default class StoreStore {
     return agent.Data.postImage(data, id)
       .then((res) => {
         if (res.status === 200) {
+          this.get_post(sessionStorage.getItem("uid"));
           window.location.replace("/feed");
         } else {
           alert(res.data.message);
