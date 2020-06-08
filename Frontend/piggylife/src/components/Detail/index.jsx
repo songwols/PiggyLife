@@ -17,6 +17,9 @@ class Detail extends React.Component {
       menu: "등록된 메뉴가 없습니다.",
       visited: false,
       isLike: 0,
+      v_memo: "",
+      sid: "",
+      file: null,
     };
   }
 
@@ -33,6 +36,7 @@ class Detail extends React.Component {
       menu: post.menues,
       visited: false,
       isLike: 0,
+      sid: this.props.id,
     });
     if (post.menues.length === 0) {
       this.setState({
@@ -42,6 +46,11 @@ class Detail extends React.Component {
   }
 
   render() {
+    const putMypost = (e) => {
+      e.preventDefault();
+      this.props.storeStore.upload(this.state, this.state.file);
+    };
+
     return (
       <Frame>
         <Pic>
@@ -82,8 +91,11 @@ class Detail extends React.Component {
           :
           <div></div>
         }
-          
         </Tag>
+        <Context />
+        <BFrame>
+          <OK onClick={putMypost}>담기</OK>
+        </BFrame>
         <Context />
       </Frame>
     );
@@ -160,5 +172,27 @@ const Hash = styled.span`
   padding: .2rem .5rem .2rem .5rem;
   margin-right: 1rem;
 `
+const BFrame = styled.div`
+  grid-area: "button";
+  margin-top: 0.3rem;
+  height: 2rem;
+  text-align: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  -webkit-justify-content: center;
+  -webkit-align-items: center;
+`;
+
+const OK = styled.button`
+  width: 30%;
+  height: 2rem;
+  color: white;
+  background: none;
+  border: none;
+  outline: none;
+  border-radius: 0.3rem;
+  background-color: #5897a6;
+`;
 
 export default Detail;
