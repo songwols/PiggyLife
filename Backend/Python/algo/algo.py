@@ -5,8 +5,6 @@ import numpy as np
 import data
 import recommend
 
-
-
 print("########## algorithm start ##########")
 stores = data.getStore()
 posts = data.getPost()
@@ -30,9 +28,7 @@ data.save_recommendation(df)
 df = recommend.convert_area(svd_preds, posts, stores)
 data.save_area(df)
 
-df = recommend.convert_matching(svd_preds, posts)
+df = recommend.convert_matching(svd_preds, posts, stores)
 data.save_matching(df)
-
-
 
 print("########## algorithm end ##########")
