@@ -39,7 +39,10 @@ public class User implements UserDetails {
 	private Long uId;
 	
 	@OneToOne(mappedBy="user", cascade=CascadeType.ALL)
-	private Recommend recommend;
+	private UserRecommend uRecommend;
+	
+	@OneToOne(mappedBy="user", cascade=CascadeType.ALL)
+	private AreaRecommend aRecommend;
 
 	@Column(nullable = false, unique = true)
 	private String email;

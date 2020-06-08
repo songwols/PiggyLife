@@ -35,7 +35,14 @@ def save_recommendation(df):
     print("########## insert recommendation ##########")
     engine = create_engine("mysql+pymysql://piggy:" + "piggy" + "@52.78.169.231:3306/piggy?charset=utf8", encoding='utf-8')
     conn = engine.connect()
-    df.to_sql(name="recommend", con=engine, if_exists='replace', index=False)
+    df.to_sql(name="user_recommend", con=engine, if_exists='replace', index=False)
+    conn.close()
+
+def save_area(df):
+    print("########## insert area ##########")
+    engine = create_engine("mysql+pymysql://piggy:" + "piggy" + "@52.78.169.231:3306/piggy?charset=utf8", encoding='utf-8')
+    conn = engine.connect()
+    df.to_sql(name="area_recommend", con=engine, if_exists='replace', index=False)
     conn.close()
 
 def save_matching(df):
