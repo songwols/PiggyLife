@@ -84,7 +84,7 @@ const Data = {
     requests.get(`/recommend/findMatch?selfEmail=${mid}&friendEmail=${fid}`),
   get_hotplace: (uId) =>
     requests.get(`/recommend/findAreaRecommend?uId=${uId}`),
-  deleteUser: (token) => requests.delete(`/user/deleteUser?TOKEN=${token}`),
+  deleteUser: (token) => requests.delete(`/user/deleteUser`, { TOKEN: token }),
 };
 
 export default {
