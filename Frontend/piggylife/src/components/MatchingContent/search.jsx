@@ -64,7 +64,7 @@ class Search extends React.Component {
             name="friendId"
           ></Input>
           <EBF>
-            <CButton onClick={this.Matching}>Search</CButton>
+            <CButton onClick={this.Matching}>매칭</CButton>
           </EBF>
         </Box2>
       </Content>
@@ -172,7 +172,7 @@ const PopupInner = styled.div`
   }
 `;
 const LIF = styled.div`
-  margin: 20% 10% 45% 10%;
+  margin: 23% 10% 45% 10%;
   height: 60%;
   width: 80%;
 `;

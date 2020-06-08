@@ -400,7 +400,7 @@ const Close = styled.button`
   margin: 0.3rem 0.5rem;
 `;
 const LIF = styled.div`
-  margin: 20% 10% 45% 10%;
+  margin: 23% 10% 45% 10%;
   height: 60%;
   width: 80%;
 `;
