@@ -11,9 +11,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.piggy.PIGGY.dto.AreaRecommendDto;
 import com.piggy.PIGGY.dto.MatchDto;
 import com.piggy.PIGGY.dto.StoreOutputDto;
-import com.piggy.PIGGY.entity.Recommend;
+import com.piggy.PIGGY.entity.UserRecommend;
 import com.piggy.PIGGY.entity.Store;
 import com.piggy.PIGGY.service.RecommendService;
 import com.piggy.PIGGY.util.MapperUtils;
@@ -34,7 +35,7 @@ public class RecommendRestController {
 	@GetMapping("/findAllRecommend")
 	public ResponseEntity<Object> findAllRecommend(){
 		try {
-			List<Recommend> recos = rService.findAllRecommend();
+			List<UserRecommend> recos = rService.findAllRecommend();
 			return new ResponseEntity<Object>(recos, HttpStatus.OK);
 		} catch (Exception e) {
 			throw e;
@@ -42,11 +43,22 @@ public class RecommendRestController {
 	}
 	
 	@ApiOperation(value = "해당 유저 추천 불러오기")
-	@GetMapping("/findRecommend")
-	public ResponseEntity<Object> findRecommend(@RequestParam Long uId){
+	@GetMapping("/findUserRecommend")
+	public ResponseEntity<Object> findUserRecommend(@RequestParam Long uId){
 		try {
-			List<Store> stores = rService.findRecommend(uId);
+			List<Store> stores = rService.findUserRecommend(uId);
 			List<StoreOutputDto> output = MapperUtils.mapAll(stores, StoreOutputDto.class);
+			return new ResponseEntity<Object>(output, HttpStatus.OK);
+		} catch (Exception e) {
+			throw e;
+		}
+	}
+	
+	@ApiOperation(value = "해당 유저 추천 불러오기")
+	@GetMapping("/findAreaRecommend")
+	public ResponseEntity<Object> findAreaRecommend(@RequestParam Long uId){
+		try {
+			AreaRecommendDto output = rService.findAreaRecommend(uId);
 			return new ResponseEntity<Object>(output, HttpStatus.OK);
 		} catch (Exception e) {
 			throw e;

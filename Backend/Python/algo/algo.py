@@ -27,7 +27,12 @@ svd_preds = pd.DataFrame(svd_user_predicted_ratings, columns=user_store_rating.c
 df = recommend.convert_recommend(svd_preds, posts)
 data.save_recommendation(df)
 
+df = recommend.convert_area(svd_preds, posts, stores)
+data.save_area(df)
+
 df = recommend.convert_matching(svd_preds, posts)
 data.save_matching(df)
+
+
 
 print("########## algorithm end ##########")
