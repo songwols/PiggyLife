@@ -44,8 +44,6 @@ class UserInfo2 extends React.Component {
   }
 
   render() {
-    console.log(this.props.statisticStore.cate1.category_group);
-    console.log(this.state.cate1);
     return (
       <Content>
         <div>{this.state.Name} 님</div>
