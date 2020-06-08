@@ -30,6 +30,7 @@ class Statistic extends React.Component {
     };
   }
   UNSAFE_componentWillMount() {
+    window.scrollTo(0, 0);
     this.props.statisticStore.getAreaStatistic(
       window.sessionStorage.getItem("uid")
     );

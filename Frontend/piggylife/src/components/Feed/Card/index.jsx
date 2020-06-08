@@ -9,6 +9,9 @@ import { inject, observer } from "mobx-react";
 @withRouter
 @observer
 class Card extends React.Component {
+  async UNSAFE_componentWillMount() {
+    window.scrollTo(0, 0);
+  }
   render() {
     const DetailBtn = (e) => {
       e.preventDefault();
