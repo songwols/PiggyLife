@@ -4,7 +4,14 @@ import { Email } from "@styled-icons/material-outlined/Email";
 import { PersonOutline } from "@styled-icons/evaicons-outline/PersonOutline";
 import { Link } from "react-router-dom";
 import { DotsVerticalRounded } from "@styled-icons/boxicons-regular/DotsVerticalRounded";
-import { inject,observer } from "mobx-react";
+import { inject, observer } from "mobx-react";
+import 기사돼지 from "../Statistic/기사돼지.png";
+import 남작돼지 from "../Statistic/남작돼지.png";
+import 로얄돼지 from "../Statistic/로얄돼지.png";
+import 아기돼지 from "../Statistic/아기돼지.png";
+import 어린돼지 from "../Statistic/어린돼지.png";
+import 청년돼지 from "../Statistic/청년돼지.png";
+import 평민돼지 from "../Statistic/평민돼지.png";
 
 export const More = styled(DotsVerticalRounded)`
   width: 2rem;
@@ -28,29 +35,55 @@ export const PersonIcon = styled(PersonOutline)`
 @inject("userStore")
 @observer
 class Profile extends React.Component {
-  constructor(props){
+  constructor(props) {
     super(props);
-    this.state={
-        image:"",
-    }
-}
+    this.state = {
+      image: "",
+      img: "",
+    };
+  }
 
-  async UNSAFE_componentWillMount(){
-    const email = sessionStorage.getItem("email")
-    await this.props.userStore.whoami(email)
-    const img = this.props.userStore.image
+  async UNSAFE_componentWillMount() {
+    const email = sessionStorage.getItem("email");
+    await this.props.userStore.whoami(email);
+    const img = this.props.userStore.image;
     this.setState({
       image: img,
-    })
+    });
   }
 
   render() {
+    if (this.ranking === 0) {
+      this.img = 아기돼지;
+    } else if (this.ranking === 1) {
+      this.img = 어린돼지;
+    } else if (this.ranking === 2) {
+      this.img = 청년돼지;
+    } else if (this.ranking === 3) {
+      this.img = 평민돼지;
+    } else if (this.ranking === 4) {
+      this.img = 기사돼지;
+    } else if (this.ranking === 5) {
+      this.img = 남작돼지;
+    } else if (this.ranking === 6) {
+      //this.img = 자작돼지;
+    } else if (this.ranking === 7) {
+      // this.img = 백작돼지;
+    } else if (this.ranking === 8) {
+      //this.img = 후작돼지;
+    } else if (this.ranking === 9) {
+      // this.img = 공작돼지;
+    } else if (this.ranking === 10) {
+      this.img = 로얄돼지;
+    }
     return (
       <Frame>
         <Div>
-          {this.state.image!=="" ? 
-          <ProfileImage src={this.props.userStore.image}></ProfileImage> : 
-          <ProfileImage src="https://image.flaticon.com/icons/svg/747/747376.svg"></ProfileImage>}
+          {this.state.image !== "" ? (
+            <ProfileImage src={this.props.userStore.image}></ProfileImage>
+          ) : (
+            <ProfileImage src={this.img}></ProfileImage>
+          )}
           <Info>
             <Nickname>
               <PersonIcon></PersonIcon>
@@ -109,7 +142,7 @@ const ProfileImage = styled.img`
   height: 6.5rem;
   object-fit: cover;
   border-radius: 50%;
-  border: 1.5px solid #CCCCCC;
+  border: 1.5px solid #cccccc;
 `;
 
 export default Profile;
