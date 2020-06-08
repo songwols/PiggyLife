@@ -56,9 +56,21 @@ class UserInfo extends React.Component {
         <Level>
           lv.{this.state.Level} {this.state.RName}
         </Level>
-        <Type>{this.state.cate1.category_group}파</Type>
-        <Type>{this.state.cate2.category_group}파</Type>
-        <Type>{this.state.cate3.category_group}파</Type>
+        {this.state.cate1.category_group !== "" ? (
+          <Type>{this.state.cate1.category_group}파</Type>
+        ) : (
+          <></>
+        )}
+        {this.state.cate2.category_group !== "" ? (
+          <Type>{this.state.cate2.category_group}파</Type>
+        ) : (
+          <></>
+        )}
+        {this.state.cate3.category_group !== "" ? (
+          <Type>{this.state.cate3.category_group}파</Type>
+        ) : (
+          <></>
+        )}
       </Content>
     );
   }
