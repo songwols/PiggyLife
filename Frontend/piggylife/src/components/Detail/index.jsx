@@ -12,7 +12,7 @@ class Detail extends React.Component {
       store_name: "",
       address: "",
       img: "",
-      category: "",
+      category: [],
       tel: "",
       menu: "등록된 메뉴가 없습니다.",
       visited: false,
@@ -27,8 +27,8 @@ class Detail extends React.Component {
     this.setState({
       store_name: post.name,
       address: post.address,
-      img: "",
-      category: post.category,
+      img: post.image,
+      category: [...post.category.split('|')],
       tel: post.tel,
       menu: post.menues,
       visited: false,
@@ -45,7 +45,7 @@ class Detail extends React.Component {
     return (
       <Frame>
         <Pic>
-          {this.state.img === "" || this.state.img === null ? (
+          {this.state.img === "" || this.state.img === null || this.state.img === "image" ? (
             <Text>등록된 이미지가 없습니다.</Text>
           ) : (
             <Simg src={this.state.img}></Simg>
@@ -72,7 +72,18 @@ class Detail extends React.Component {
           )}
         </Menu>
         <Map id={this.props.id} keyword="detail"></Map>
-        <Tag>태그</Tag>
+        <Tag>
+          {this.state.category.length !== 0 ? 
+          <div>{this.state.category.map((item, index) => (
+            <Hash key={index}>
+              {item}
+            </Hash>
+          ))}</div>
+          :
+          <div></div>
+        }
+          
+        </Tag>
         <Context />
       </Frame>
     );
@@ -125,6 +136,7 @@ const Menu = styled.div`
 const Tag = styled.div`
   grid-area: "tag";
   margin-top: 0.5rem;
+  padding-top: .7rem;
   height: 5rem;
   background-color: #f2e9e4;
   border-radius: 0.5rem;
@@ -139,5 +151,14 @@ const Text = styled.div`
 const Context = styled.div`
   height: 2rem;
 `;
+
+const Hash = styled.span`
+  height: 2rem;
+  width: auto;
+  background: #CCCCCC;
+  border-radius: .5rem;
+  padding: .2rem .5rem .2rem .5rem;
+  margin-right: 1rem;
+`
 
 export default Detail;

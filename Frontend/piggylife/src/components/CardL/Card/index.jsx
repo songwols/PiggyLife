@@ -14,7 +14,6 @@ class Card extends React.Component {
       this.props.history.push("/detail/" + this.props.store.sid);
     };
     var store = this.props.store;
-    
     return (
       <F>
         <Frame onClick={DetailBtn}>
@@ -23,7 +22,7 @@ class Card extends React.Component {
         || this.props.store.image==="image") ? 
         <CardImg src={dft} />
          : 
-         <CardImg src={dft}></CardImg>} 
+         <CardImg src={store.image}></CardImg>} 
           
           <Title className="title">
             <T>{store.name}</T>

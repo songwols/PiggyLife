@@ -14,16 +14,16 @@ class CardLayout extends React.Component {
     };
   }
 
-  UNSAFE_componentWillMount() {
+  async UNSAFE_componentWillMount() {
     const keyword = this.props.keyword;
     if (keyword === "top10") {
-      this.props.storeStore.get_top10();
+      await this.props.storeStore.get_top10();
     } else if (keyword === "hotplace") {
-      this.props.storeStore.get_hotplace();
+      await this.props.storeStore.get_hotplace(window.sessionStorage.getItem("uid"));
     } else if (keyword === "similar") {
-      this.props.storeStore.get_similar(window.sessionStorage.getItem("uid"));
+      await this.props.storeStore.get_similar(window.sessionStorage.getItem("uid"));
     }else if (keyword === "recommendfor2") {
-      this.props.storeStore.get_for2(window.sessionStorage.getItem("email"), this.props.fid);
+      await this.props.storeStore.get_for2(window.sessionStorage.getItem("email"), this.props.fid);
     }else if (keyword === "new_place") {
       // this.props.storeStore.get_newplace(window.sessionStorage.getItem("email"), this.props.fid);
     }
