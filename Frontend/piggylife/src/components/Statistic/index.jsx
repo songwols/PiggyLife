@@ -129,11 +129,13 @@ class Statistic extends React.Component {
         </Level>
         <Placer>
           <Div1>
-            <br></br>"{this.nickname}" 님이 자주 찾는 장소는
+            <br></br>"{this.nickname}" 님이 지금까지 작성하신 포스트 : "
+            {this.mylength}
+            개"
           </Div1>
           <Div>
             {" "}
-            "{this.best.city} {this.best.area}" 입니다.<br></br>
+            다음 레벨까지 "{this.remainnum}개" 남았습니다.<br></br>
           </Div>
         </Placer>
         <Place>
