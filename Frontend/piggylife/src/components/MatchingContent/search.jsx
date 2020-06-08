@@ -151,8 +151,8 @@ const PopupInner = styled.div`
   position: absolute;
   left: 20%;
   right: 20%;
-  top: 20%;
-  bottom: 20%;
+  top: 30%;
+  bottom: 30%;
   margin: auto;
   background: white;
 
@@ -172,7 +172,7 @@ const PopupInner = styled.div`
   }
 `;
 const LIF = styled.div`
-  margin: 45% 10% 45% 10%;
+  margin: 20% 10% 45% 10%;
   height: 60%;
   width: 80%;
 `;

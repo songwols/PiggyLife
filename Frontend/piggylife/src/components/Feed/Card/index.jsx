@@ -1,7 +1,7 @@
 import React from "react";
 import styled from "styled-components";
 import dft from "./default.png";
-import stamp from "./스탬프y.png";
+import stamp from "./네온1.png";
 import { withRouter } from "react-router-dom";
 import { inject, observer } from "mobx-react";
 
