@@ -27,6 +27,7 @@ class EditPro extends React.Component {
     };
   }
   async UNSAFE_componentWillMount() {
+    window.scrollTo(0, 0);
     const email = window.sessionStorage.getItem("email");
     await this.props.userStore.whoami(email);
     const nname = this.props.userStore.nickname;
