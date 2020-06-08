@@ -77,7 +77,7 @@ const Data = {
     requests.get(`/post/getCategoryStatistic/${uId}`),
   getCategoryStatisticByEmail: (email) =>
     requests.get(`/post/getCategoryStatisticByEmail?email=${email}`),
-  postdelete: (pid) => requests.delete(`/post/delete/${pid}`),
+  postdelete: (pid,uid) => requests.delete(`/post/delete/${pid}?uId=${uid}`),
   profileImage: (file, uid) =>
     requests.post(`/user/uploadImage/${uid}`, file, {}),
   get_for2: (mid, fid) =>

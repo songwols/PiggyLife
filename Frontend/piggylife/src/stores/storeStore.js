@@ -205,7 +205,7 @@ export default class StoreStore {
   }
 
   @action postdelete(pid) {
-    return agent.Data.postdelete(pid)
+    return agent.Data.postdelete(pid, sessionStorage.getItem("uid"))
       .then((res) => {
         window.location.replace("/feed");
       })
