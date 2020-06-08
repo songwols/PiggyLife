@@ -359,6 +359,7 @@ class WriteContent extends React.Component {
                 </Notice>
               </Box>
             </PopupInner>
+
             {this.state.showList ? (
               <PopupInner>
                 <SFrame>
@@ -422,6 +423,7 @@ const TextD = styled.div`
   width: 96%;
   display: flex;
   align-items: center;
+  margin-bottom: 0.5rem;
 `;
 
 const ML = styled.div`
@@ -432,6 +434,7 @@ const ML = styled.div`
   border-radius: 0.3rem;
   border-color: gray;
   width: 96%;
+  margin-bottom: 0.5rem;
 `;
 const Mn = styled.div``;
 
@@ -440,9 +443,10 @@ const Content = styled.div`
   height: 100%;
   padding: 10% 10% 5% 10%;
 `;
-
 const PF = styled.div`
+  padding-top: 2rem;
   height: auto;
+  margin-bottom: 0.5rem;
 `;
 const PvImg = styled.img`
   justify-content: center;
@@ -457,8 +461,10 @@ const PvImg = styled.img`
 const Pic = styled.input`
   border-style: solid;
   border-width: 0.05rem;
+  border-radius: 0.3rem;
   border-color: gray;
-  width: 95%;
+  height: 2rem;
+  width: 97%;
 `;
 const FF = styled.button`
   width: 100%;
@@ -483,13 +489,13 @@ const Input = styled.input`
   box-shadow: none;
   border-width: 0.05rem;
   height: 2rem;
+  margin-bottom: 0.5rem;
 `;
 
 const TextArea = styled.textarea`
   display: block;
   font-size: 1rem;
   resize: none;
-  margin-top: 0.4rem;
   width: 95%;
   padding-left: 0.3rem;
   background: none;
@@ -501,12 +507,15 @@ const TextArea = styled.textarea`
   border-width: 0.05rem;
   height: 5rem;
   line-height: 2rem;
+  margin-bottom: 0.5rem;
+  margin-top: 1rem;
 `;
 const CheckDiv = styled.div`
   width: 95%;
   margin-top: 0.4rem;
   height: 2rem;
   text-align: center;
+  margin-bottom: 0.5rem;
 `;
 
 const BF = styled.button`
@@ -523,7 +532,6 @@ const EBF = styled.div`
 `;
 
 const CButton = styled.button`
-  margin-top: 0.4rem;
   width: 30%;
   height: 2rem;
   color: white;
@@ -677,6 +685,7 @@ const ICFrame = styled.div`
   height: 2rem;
   width: 95%;
   display: inline-block;
+  margin-bottom: 1rem;
 `;
 
 const Div = styled.button`

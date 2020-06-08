@@ -39,7 +39,7 @@ class MatchingResult extends React.Component {
           <UserInfo id={sessionStorage.getItem("email")}></UserInfo>
           <Score>
             <Icon src={icon}></Icon>
-            <div>{this.props.storeStore.similarity}</div>
+            <Text>{this.props.storeStore.similarity}%</Text>
           </Score>
           <UserInfo id={this.props.id}></UserInfo>
         </Info>
@@ -81,7 +81,7 @@ const Info = styled.div`
   background-color: #f2e9e4;
 `;
 const Score = styled.span`
-  margin-top: 50%;
+  margin-top: 90%;
   text-align: center;
 `;
 const Icon = styled.img`
@@ -92,6 +92,9 @@ const Icon = styled.img`
   object-fit: cover;
   margin: auto;
 `;
+const Text=styled.div`
+  font-size: 2rem;
+`
 const TopText = styled.div`
   align-self: center;
   margin-left: 1rem;

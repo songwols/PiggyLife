@@ -67,7 +67,7 @@ export default class UserStore {
   findByEmail(email) {
     return agent.Data.findByEmail(email)
       .then((res) => {
-        alert("매칭을 시작합니다!");
+        // alert("매칭을 시작합니다!");
         window.location.replace("/Result/" + email);
       })
       .catch((err) => {

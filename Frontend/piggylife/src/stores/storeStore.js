@@ -74,12 +74,12 @@ export default class StoreStore {
       .catch((err) => alert("실패하였습니다"));
   }
   @action
-  get_hotplace() {
-    //  return agent.Data.get_hotplace()
-    //    .then((res) => {
-    //      this.setHotplace(res.data);
-    //    })
-    //    .catch((err) => console.log(err));
+  get_hotplace(uid) {
+     return agent.Data.get_hotplace(uid)
+       .then((res) => {
+         this.setHotplace(res.data.recommendStores);
+       })
+       .catch((err) => console.log(err));
   }
   @action
   get_similar(uId) {
