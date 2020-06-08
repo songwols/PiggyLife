@@ -400,7 +400,7 @@ const Close = styled.button`
   margin: 0.3rem 0.5rem;
 `;
 const LIF = styled.div`
-  margin: 45% 10% 45% 10%;
+  margin: 20% 10% 45% 10%;
   height: 60%;
   width: 80%;
 `;
@@ -562,8 +562,8 @@ const PopupInner = styled.div`
   position: absolute;
   left: 20%;
   right: 20%;
-  top: 20%;
-  bottom: 20%;
+  top: 30%;
+  bottom: 30%;
   margin: auto;
   background: white;
 
@@ -584,8 +584,8 @@ const PopupInner = styled.div`
 `;
 
 const Box = styled.div`
-  margin: 45% 10% 45% 10%;
-  height: 60%;
+  margin: 20% 10% 45% 10%;
+  height: 70%;
   width: 80%;
   background-color: #ffe8bd;
   display: grid;
@@ -598,6 +598,7 @@ const Notice = styled.div`
   grid-area: notice;
   background-color: white;
   font-size: smaller;
+  margin-top: .2rem;
 `;
 
 const Title = styled.div`
@@ -650,7 +651,8 @@ const OK = styled.button`
   background-color: #5897a6;
 `;
 const SFrame = styled.div`
-  margin: 60% 10% 45% 10%;
+  margin: 35% 10% 25% 10%;
+  // margin: 60% 10% 45% 10%;
   height: 4rem;
   width: 80%;
   background-color: #ffe8bd;

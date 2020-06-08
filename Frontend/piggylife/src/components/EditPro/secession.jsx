@@ -40,8 +40,8 @@ const PopupInner = styled.div`
   position: absolute;
   left: 20%;
   right: 20%;
-  top: 20%;
-  bottom: 20%;
+  top: 30%;
+  bottom: 30%;
   margin: auto;
   background: white;
 
@@ -63,7 +63,7 @@ const PopupInner = styled.div`
 `;
 
 const Box = styled.div`
-  margin: 45% 10% 45% 10%;
+  margin: 35% 10% 45% 10%;
   height: 40%;
   width: 80%;
   background-color: #ffe8bd;
