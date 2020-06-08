@@ -92,6 +92,7 @@ class WriteContent extends React.Component {
         v_tel: this.state.detail.tel,
         v_menu: this.state.detail.menues,
         sid: this.state.detail.sid,
+        store_name: "",
       });
       if (this.state.detail.menues.length === 0) {
         this.setState({
@@ -252,8 +253,10 @@ class WriteContent extends React.Component {
       //디테일 받아올 스토어
       await this.props.storeStore.detail(this.state.address);
       const getD = this.props.storeStore.detailPost;
+      console.log(getD)
       this.setState({
         detail: getD,
+        store_name: getD.name +" - "+getD.address,
       });
 
       this.setState({

@@ -14,7 +14,6 @@ class Mydetail extends React.Component {
       store_name: "",
       address: "",
       img: "",
-      ct:"",
       category: [],
       tel: "",
       menu: "등록된 메뉴가 없습니다.",
@@ -58,7 +57,6 @@ class Mydetail extends React.Component {
   }
 
   render() {
-    console.log(this.state.category)
     const goEdit = (e) => {
       e.preventDefault();
       this.props.history.push("/editdetail/" + this.props.id);
