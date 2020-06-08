@@ -155,6 +155,8 @@ const Category = styled.div`
   background-color: #f2e9e4;
   margin-top: 0.3rem;
   margin-bottom: 0.3rem;
+  position: relative;
+  z-index: -3;
 `;
 const Div = styled.div`
   justify-content: center;

@@ -11,31 +11,38 @@ class CategoryGraph extends React.Component {
       nickname: "",
       big: 0,
       size: "",
-      area1: {
-        area: "",
-        city: "",
-        cnt: 0,
+      cate1: {
+        categoty_group: "",
+        count: 0,
       },
-      area2: {
-        area: "",
-        city: "",
-        cnt: 0,
+      cate2: {
+        categoty_group: "",
+        count: 0,
       },
-      area3: { area: "", city: "", cnt: 0 },
-      area4: { area: "", city: "", cnt: 0 },
-      area5: { area: "", city: "", cnt: 0 },
+      cate3: {
+        categoty_group: "",
+        count: 0,
+      },
+      cate4: {
+        categoty_group: "",
+        count: 0,
+      },
+      cate5: {
+        categoty_group: "",
+        count: 0,
+      },
     };
   }
   UNSAFE_componentWillMount() {
     this.props.userStore.whoami(window.sessionStorage.getItem("email"));
   }
   render() {
-    this.area1 = this.props.statisticStore.area1;
-    this.area2 = this.props.statisticStore.area2;
-    this.area3 = this.props.statisticStore.area3;
-    this.area4 = this.props.statisticStore.area4;
-    this.area5 = this.props.statisticStore.area5;
-    this.big = this.area1.cnt;
+    this.cate1 = this.props.statisticStore.cate1;
+    this.cate2 = this.props.statisticStore.cate2;
+    this.cate3 = this.props.statisticStore.cate3;
+    this.cate4 = this.props.statisticStore.cate4;
+    this.cate5 = this.props.statisticStore.cate5;
+    this.big = this.cate1.count;
     this.size = 145 / this.big;
     this.nickname = this.props.userStore.nickname;
     return (
@@ -44,33 +51,44 @@ class CategoryGraph extends React.Component {
         <Graph>
           <Grid>
             <FirstGrid>
-              <First style={{ height: "120px" }}></First>
+              <First
+                style={{ height: this.size * this.cate1.count + "px" }}
+              ></First>
             </FirstGrid>
             <SecondGrid>
-              <Second style={{ height: "100px" }}></Second>
+              <Second
+                style={{ height: this.size * this.cate2.count + "px" }}
+              ></Second>
             </SecondGrid>
             <ThirdGrid>
-              <Third style={{ height: "80px" }}></Third>
+              <Third
+                style={{ height: this.size * this.cate3.count + "px" }}
+              ></Third>
             </ThirdGrid>
             <FourthGrid>
-              <Fourth style={{ height: "80px" }}></Fourth>
+              <Fourth
+                style={{ height: this.size * this.cate4.count + "px" }}
+              ></Fourth>
             </FourthGrid>
             <FifthGrid>
-              <Fifth style={{ height: "50px" }}></Fifth>
+              <Fifth
+                style={{ height: this.size * this.cate5.count + "px" }}
+              ></Fifth>
             </FifthGrid>
           </Grid>
         </Graph>
         <Place>
-          <FirstPlace>한식</FirstPlace>
-          <SecondPlace>중식</SecondPlace>
-          <ThirdPlace>양식</ThirdPlace>
-          <FourthPlace>치킨</FourthPlace>
-          <FifthPlace>일식</FifthPlace>
+          <FirstPlace>{this.cate1.category_group}</FirstPlace>
+          <SecondPlace>{this.cate2.category_group}</SecondPlace>
+          <ThirdPlace>{this.cate3.category_group}</ThirdPlace>
+          <FourthPlace>{this.cate4.category_group}</FourthPlace>
+          <FifthPlace>{this.cate5.category_group}</FifthPlace>
         </Place>
       </Frame>
     );
   }
 }
+
 const Title = styled.div`
   padding-top: 0.5rem;
   padding-left: 0.5rem;
@@ -119,6 +137,8 @@ const Frame = styled.div`
   text-align: center;
   align-items: center;
   display: block;
+  position: relative;
+  z-index: -2;
 `;
 const Graph = styled.div`
   height: 150px;
