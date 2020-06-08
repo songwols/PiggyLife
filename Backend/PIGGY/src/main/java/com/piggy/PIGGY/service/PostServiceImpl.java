@@ -1,5 +1,7 @@
 package com.piggy.PIGGY.service;
 
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -121,27 +123,21 @@ public class PostServiceImpl implements PostService {
 	}
 
 	@Override
-	public Map<String, Integer> getCategoryStatistic(Long uId) {
-		String sql = "SELECT s.category AS category FROM post p LEFT JOIN store s ON p.s_id = s.s_id "
-				+ "WHERE p.u_id = :uId";
+	public List<PostCategoryStatisticDto> getCategoryStatistic(Long uId) {
+		String sql = "SELECT s.category_group AS category_group, count(s.category_group) AS count FROM post p LEFT JOIN store s ON p.s_id = s.s_id "
+				+ "WHERE p.u_id = :uId GROUP BY s.category_group ORDER BY count DESC";
 		Query query = em.createNativeQuery(sql, "Post.CategoryStatistic");
 		query.setParameter("uId", uId);
 		List<PostCategoryStatisticDto> list = query.getResultList();
-
-		Map<String, Integer> map = new HashMap<String, Integer>();
+		
+		List<PostCategoryStatisticDto> output = new ArrayList<PostCategoryStatisticDto>();
+		
 		for (int i = 0; i < list.size(); i++) {
-			String categories = list.get(i).getCategory();
-			StringTokenizer st = new StringTokenizer(categories,"|");
-			while(st.hasMoreTokens()) {
-				String category = st.nextToken();
-				if(map.containsKey(category)) {
-					map.put(category, map.get(category)+1);
-				}else {
-					map.put(category, 1);
-				}
-			}
+			String category = list.get(i).getCategory_group().substring(0,list.get(i).getCategory_group().length()-1);
+			Integer count = list.get(i).getCount();
+			output.add(new PostCategoryStatisticDto(category, count));
 		}
-		return map;
+		return output;
 	}
 
 	@Override

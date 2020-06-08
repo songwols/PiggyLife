@@ -9,6 +9,7 @@ import lombok.NoArgsConstructor;
 @Data
 public class PostCategoryStatisticDto {
 	
-	private String category;
-	
+	private String category_group;
+	private Integer count;
+
 }

@@ -21,6 +21,7 @@ public class StoreOutputDto {
 	private BigDecimal latitude;
 	private BigDecimal longitude;
 	private String category;
+	private String image;
 	private List<Menu> menues;
 	
 }

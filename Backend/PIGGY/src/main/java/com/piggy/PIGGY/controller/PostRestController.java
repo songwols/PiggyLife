@@ -21,6 +21,7 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.piggy.PIGGY.dto.PostAreaStatisticDto;
+import com.piggy.PIGGY.dto.PostCategoryStatisticDto;
 import com.piggy.PIGGY.dto.PostImageDto;
 import com.piggy.PIGGY.dto.PostInputDto;
 import com.piggy.PIGGY.dto.PostOutputDto;
@@ -162,7 +163,7 @@ public class PostRestController {
 	public ResponseEntity<Object> getCategoryStatistic(@PathVariable Long uId){
 		try {
 			log.trace("PostRestController - getCategoryStatistic", uId);
-			Map<String, Integer> output = pService.getCategoryStatistic(uId);
+			List<PostCategoryStatisticDto> output = pService.getCategoryStatistic(uId);
 			return new ResponseEntity<Object>(output, HttpStatus.OK);
 		} catch (Exception e) {
 			throw e;
