@@ -198,7 +198,8 @@ export default class UserStore {
           window.sessionStorage.setItem("token", res.data.token);
           window.location.replace("/Home");
         } else {
-          alert(res.data.massage);
+          if(res.data.data===null) alert('아이디와 비밀번호를 다시 확인해주세요.')
+          else alert(res.data.massage);
         }
       })
       .catch((err) => {
