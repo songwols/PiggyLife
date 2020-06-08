@@ -3,10 +3,11 @@ import styled from "styled-components";
 import icon from "./clipboard.png";
 import { inject, observer } from "mobx-react";
 import UserInfo from "../../components/MatchingContent/userInfo";
+import UserInfo2 from "../../components/MatchingContent/userInfo2";
 import CardLayout from "../../components/CardL";
 
 @inject("userStore")
-@inject("storeStore")
+@inject("storeStore", "statisticStore")
 @observer
 class MatchingResult extends React.Component {
   constructor(props) {
@@ -14,6 +15,8 @@ class MatchingResult extends React.Component {
     this.state = {
       myName: "",
       fName: "",
+      myemail: "",
+      femail: "",
     };
   }
 
@@ -21,12 +24,13 @@ class MatchingResult extends React.Component {
     await this.props.userStore.whoami(sessionStorage.getItem("email"));
     this.setState({
       myName: this.props.userStore.nickname,
-      myLevel: this.props.userStore.ranking,
+      myemail: this.props.userStore.email,
     });
+
     await this.props.userStore.whoami(this.props.id);
     this.setState({
-      myName: this.state.myName,
       fName: this.props.userStore.nickname,
+      femail: this.props.userStore.email,
     });
   }
   render() {
@@ -36,12 +40,12 @@ class MatchingResult extends React.Component {
           {this.state.myName} 님과 {this.state.fName} 님의 먹궁합 결과는
         </TopText>
         <Info>
-          <UserInfo id={sessionStorage.getItem("email")}></UserInfo>
+          <UserInfo email={window.sessionStorage.getItem("email")}></UserInfo>
           <Score>
             <Icon src={icon}></Icon>
             <Text>{this.props.storeStore.similarity}%</Text>
           </Score>
-          <UserInfo id={this.props.id}></UserInfo>
+          <UserInfo2 email={this.props.id}></UserInfo2>
         </Info>
         <Blank></Blank>
         <BothMukSpotlist>
@@ -92,9 +96,9 @@ const Icon = styled.img`
   object-fit: cover;
   margin: auto;
 `;
-const Text=styled.div`
+const Text = styled.div`
   font-size: 2rem;
-`
+`;
 const TopText = styled.div`
   align-self: center;
   margin-left: 1rem;

@@ -34,23 +34,23 @@ export default class StatisticStore {
     cnt: 0,
   };
   @observable cate1 = {
-    categoty_group: "",
+    category_group: "",
     count: 0,
   };
   @observable cate2 = {
-    categoty_group: "",
+    category_group: "",
     count: 0,
   };
   @observable cate3 = {
-    categoty_group: "",
+    category_group: "",
     count: 0,
   };
   @observable cate4 = {
-    categoty_group: "",
+    category_group: "",
     count: 0,
   };
   @observable cate5 = {
-    categoty_group: "",
+    category_group: "",
     count: 0,
   };
 
@@ -100,6 +100,23 @@ export default class StatisticStore {
         }
         if (res.data.length > 4) {
           this.cate5 = res.data[4];
+        }
+      })
+      .catch((err) => console.log(err));
+  }
+  @action
+  getCategoryStatisticByEmail(email) {
+    return agent.Data.getCategoryStatisticByEmail(email)
+      .then((res) => {
+        this.categoryList = res.data;
+        if (res.data.length > 0) {
+          this.cate1 = res.data[0];
+        }
+        if (res.data.length > 1) {
+          this.cate2 = res.data[1];
+        }
+        if (res.data.length > 2) {
+          this.cate3 = res.data[2];
         }
       })
       .catch((err) => console.log(err));

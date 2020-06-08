@@ -4,7 +4,7 @@ import { inject, observer } from "mobx-react";
 
 @inject("userStore", "statisticStore")
 @observer
-class UserInfo extends React.Component {
+class UserInfo2 extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -28,15 +28,15 @@ class UserInfo extends React.Component {
   }
 
   async UNSAFE_componentWillMount() {
-    this.props.userStore.whoami(this.props.email);
+    await this.props.userStore.whoru(this.props.email);
     await this.props.statisticStore.getCategoryStatisticByEmail(
       this.props.email
     );
     this.setState({
-      Name: this.props.userStore.nickname,
-      Image: this.props.userStore.image,
-      Level: this.props.userStore.ranking,
-      RName: this.props.userStore.rname,
+      Name: this.props.userStore.fnickname,
+      Image: this.props.userStore.fimage,
+      Level: this.props.userStore.franking,
+      RName: this.props.userStore.frname,
       cate1: this.props.statisticStore.cate1,
       cate2: this.props.statisticStore.cate2,
       cate3: this.props.statisticStore.cate3,
@@ -90,4 +90,4 @@ const Img = styled.img`
 const Level = styled.div``;
 const Type = styled.div``;
 
-export default UserInfo;
+export default UserInfo2;
