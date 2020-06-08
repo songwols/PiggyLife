@@ -16,6 +16,21 @@ export default class UserStore {
   @observable fimage = "";
 
   @action
+  deleteUser(token) {
+    return agent.Data.deleteUser(token)
+      .then((res) => {
+        alert(res.data.message);
+        window.sessionStorage.removeItem("email");
+        window.sessionStorage.removeItem("uid");
+        window.sessionStorage.removeItem("token");
+        window.location.replace("/");
+      })
+      .catch((err) => {
+        alert("실패하였습니다.");
+      });
+  }
+
+  @action
   checkPwd(user) {
     return agent.Data.checkPwd(user, sessionStorage.getItem("token"))
       .then((res) => {
