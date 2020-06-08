@@ -253,10 +253,9 @@ class WriteContent extends React.Component {
       //디테일 받아올 스토어
       await this.props.storeStore.detail(this.state.address);
       const getD = this.props.storeStore.detailPost;
-      console.log(getD)
       this.setState({
         detail: getD,
-        store_name: getD.name +" - "+getD.address,
+        store_name: getD.name + " - " + getD.address,
       });
 
       this.setState({
