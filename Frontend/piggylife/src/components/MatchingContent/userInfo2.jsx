@@ -29,7 +29,7 @@ class UserInfo2 extends React.Component {
 
   async UNSAFE_componentWillMount() {
     await this.props.userStore.whoru(this.props.email);
-    await this.props.statisticStore.getCategoryStatisticByEmail(
+    await this.props.statisticStore.fgetCategoryStatisticByEmail(
       this.props.email
     );
     this.setState({
@@ -37,9 +37,9 @@ class UserInfo2 extends React.Component {
       Image: this.props.userStore.fimage,
       Level: this.props.userStore.franking,
       RName: this.props.userStore.frname,
-      cate1: this.props.statisticStore.cate1,
-      cate2: this.props.statisticStore.cate2,
-      cate3: this.props.statisticStore.cate3,
+      cate1: this.props.statisticStore.fcate1,
+      cate2: this.props.statisticStore.fcate2,
+      cate3: this.props.statisticStore.fcate3,
     });
   }
 
