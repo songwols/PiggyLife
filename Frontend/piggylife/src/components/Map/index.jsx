@@ -7,6 +7,7 @@ import { withRouter } from "react-router-dom";
 import will from './will.png'
 import went from './went.png'
 import currentimg from './current.png'
+import './index.css'
 
 dotenv.config();
 
@@ -33,11 +34,18 @@ class MapContent extends React.Component {
 
     script.onload = () => {
       kakao.maps.load(() => {
+        // 마커를 클릭했을 때 해당 장소의 상세정보를 보여줄 커스텀오버레이입니다
+        // var placeOverlay = new kakao.maps.CustomOverlay({zIndex:1}), 
+        // contentNode = document.createElement('div'), // 커스텀 오버레이의 컨텐츠 엘리먼트 입니다 
+        // markers = [], // 마커를 담을 배열입니다
+        // currCategory = ''; // 현재 선택된 카테고리를 가지고 있을 변수입니다
+
         let container = document.getElementById("Mymap");
         let options = {
           center: new kakao.maps.LatLng(37.5013068, 127.0396597),
           level: 5
         };
+        
         //map 생성
         const map = new window.kakao.maps.Map(container, options);
         // HTML5의 geolocation으로 사용할 수 있는지 확인
@@ -117,6 +125,7 @@ class MapContent extends React.Component {
         }
 
           marker.setMap(map);
+          // markers.push(marker);
           // 인포윈도우를 표시하는 클로저를 만드는 함수입니다 
           function makeClickListener(map, marker, infowindow) {
             return function() {
@@ -128,7 +137,26 @@ class MapContent extends React.Component {
   }
   render() {
     return (
-      <MapContents id="Mymap"></MapContents>
+      <MapContents id="Mymap">
+    <ul id="category">
+        {/* <li id="BK9" data-order="0">  */}
+        <li data-order="0">
+            <span className="category_bg all"></span>
+            전체
+        </li >       
+        {/* <li id="MT1" data-order="1">  */}
+        <li data-order="1">
+            <span className="category_bg went"></span>
+            간곳
+        </li >  
+        {/* <li id="PM9" data-order="2">  */}
+        <li data-order="2">
+            <span className="category_bg willgo"></span>
+            갈곳
+        </li>  
+             
+    </ul>
+      </MapContents>
     );
   }
 }
