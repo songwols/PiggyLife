@@ -75,12 +75,15 @@ const Data = {
   getAreaStatistic: (uId) => requests.get(`/post/getAreaStatistic/${uId}`),
   getCategoryStatistic: (uId) =>
     requests.get(`/post/getCategoryStatistic/${uId}`),
+  getCategoryStatisticByEmail: (email) =>
+    requests.get(`/post/getCategoryStatisticByEmail?email=${email}`),
   postdelete: (pid) => requests.delete(`/post/delete/${pid}`),
   profileImage: (file, uid) =>
     requests.post(`/user/uploadImage/${uid}`, file, {}),
   get_for2: (mid, fid) =>
     requests.get(`/recommend/findMatch?selfEmail=${mid}&friendEmail=${fid}`),
-  get_hotplace: (uId) => requests.get(`/recommend/findAreaRecommend?uId=${uId}`),
+  get_hotplace: (uId) =>
+    requests.get(`/recommend/findAreaRecommend?uId=${uId}`),
 };
 
 export default {

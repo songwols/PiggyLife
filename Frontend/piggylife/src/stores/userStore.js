@@ -9,6 +9,11 @@ export default class UserStore {
   @observable data = "";
   @observable ranking = 0;
   @observable rname = "";
+  @observable femail = "";
+  @observable franking = 0;
+  @observable frname = "";
+  @observable fnickname = "";
+  @observable fimage = "";
 
   @action
   checkPwd(user) {
@@ -67,7 +72,7 @@ export default class UserStore {
   findByEmail(email) {
     return agent.Data.findByEmail(email)
       .then((res) => {
-        // alert("매칭을 시작합니다!");
+        this.femail = email;
         window.location.replace("/Result/" + email);
       })
       .catch((err) => {
@@ -113,6 +118,43 @@ export default class UserStore {
           this.rname = "공작돼지 ";
         } else if (this.ranking === 10) {
           this.rname = "로얄돼지";
+        }
+      })
+      .catch((err) => {
+        alert("실패하였습니다");
+      });
+  }
+
+  @action
+  whoru(email) {
+    return agent.Data.findByEmail(email)
+      .then((res) => {
+        this.femail = res.data.email;
+        this.fimage = res.data.image;
+        this.fnickname = res.data.nickname;
+        this.franking = res.data.ranking;
+        if (this.franking === 0) {
+          this.frname = "아기돼지";
+        } else if (this.franking === 1) {
+          this.frname = "어린이돼지";
+        } else if (this.franking === 2) {
+          this.frname = "청년돼지";
+        } else if (this.franking === 3) {
+          this.frname = "평민돼지";
+        } else if (this.franking === 4) {
+          this.frname = "기사돼지";
+        } else if (this.franking === 5) {
+          this.frname = "남작돼지";
+        } else if (this.franking === 6) {
+          this.frname = "자작돼지";
+        } else if (this.franking === 7) {
+          this.frname = "백작돼지";
+        } else if (this.franking === 8) {
+          this.frname = "후작돼지 ";
+        } else if (this.franking === 9) {
+          this.frname = "공작돼지 ";
+        } else if (this.franking === 10) {
+          this.frname = "로얄돼지";
         }
       })
       .catch((err) => {
