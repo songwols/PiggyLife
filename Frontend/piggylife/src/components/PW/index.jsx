@@ -27,10 +27,15 @@ class PW extends React.Component {
     });
   };
   toggleConfirm() {
-    this.props.userStore.email_check(this.state.email, "pw");
-    this.setState({
-      showConfirm: !this.state.showConfirm,
-    });
+    if(this.state.email !== ""){
+      this.props.userStore.email_check(this.state.email, "pw");
+      this.setState({
+        showConfirm: !this.state.showConfirm,
+      });
+    }
+    else{
+      alert('이메일을 입력해주세요.')
+    }
   }
   onPasswordChange = (e) => {
     this.setState({

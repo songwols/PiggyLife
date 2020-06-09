@@ -69,11 +69,16 @@ class CJoin extends React.Component {
   };
 
   EmailCheck = (e) => {
-    this.setState({
-      showConfirm: !this.state.showConfirm,
-    });
-
-    this.props.userStore.email_check(this.state.email, "register");
+    if(this.state.email !== ""){
+      this.setState({
+        showConfirm: !this.state.showConfirm,
+      });
+  
+      this.props.userStore.email_check(this.state.email, "register");
+    }
+    else{
+      alert('이메일을 입력해주세요.')
+    }
   };
 
   render() {
