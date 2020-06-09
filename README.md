@@ -8,11 +8,8 @@
 - Spring Security , JPA , Google Cloud Storage 
 
 # Developer
-- 박유진(PL)
-- 이인경(Frontend)
-- 정수안(Backend)
-- 조경은(Frontend)
-- 허대원(Backend)
+![devtech](./UI/devtech.png)
+
 
 # How to Run
 
