@@ -150,7 +150,7 @@ export default class StoreStore {
           alert(res.data.message);
         }
       })
-      .catch((err) => alert("실패하였습니다"));
+      .catch((err) => alert("게시글 업로드에 실패하였습니다"));
   }
 
   @action postImage(data, id) {
@@ -163,7 +163,7 @@ export default class StoreStore {
           alert(res.data.message);
         }
       })
-      .catch((err) => alert("실패하였습니다"));
+      .catch((err) => alert("파일 업로드에 실패하였습니다"));
   }
 
   @action
