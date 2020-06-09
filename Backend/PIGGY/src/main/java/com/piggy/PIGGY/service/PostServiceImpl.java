@@ -1,12 +1,10 @@
 package com.piggy.PIGGY.service;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.NoSuchElementException;
-import java.util.StringTokenizer;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -58,12 +56,12 @@ public class PostServiceImpl implements PostService {
 		
 		int size = pRepo.findByUser(user).size();
 		int status = 0;
-		if(size <= 100) {
+		if(size <= 230) {
 			int rank = user.getRanking();
-			int[] step = {10,10,10,20,20,20,30,30,30,50};
-			int nextRank = (int)((size+1)/step[rank]);
-			if(rank != nextRank) {
-				status = uRepo.updateRanking(nextRank, uId);
+			int[] step = {0,10,20,30,50,70,90,120,150,180,230};
+
+			if(size+1 == step[rank+1]) {
+				status = uRepo.updateRanking(rank+1, uId);
 			}
 		}
 	    PostOutputDto output = MapperUtils.map(pRepo.save(Post.builder()
@@ -107,7 +105,18 @@ public class PostServiceImpl implements PostService {
 	}
 
 	@Override
-	public void delete(Long pId) {
+	public void delete(Long pId, Long uId) {
+		User user = uRepo.findById(uId).orElseThrow(NoSuchElementException::new);
+		int rank = user.getRanking();
+		int size = pRepo.findByUser(user).size();
+		if(size>=10) {
+			int[] step = {0,10,20,30,50,70,90,120,150,180,230};
+			if(size-1 == step[rank-1]) {
+				uRepo.updateRanking(rank-1, uId);
+			}
+			
+		}
+		
 		pRepo.deleteById(pId);
 	}
 
@@ -139,6 +148,7 @@ public class PostServiceImpl implements PostService {
 		}
 		return output;
 	}
+
 
 	@Override
 	public List<Post> findByUserAndVisited(Long uId, boolean visited) {

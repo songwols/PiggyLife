@@ -21,7 +21,7 @@ public interface PostService {
 	
 	public Post update(Long pId, PostInputDto dto);
 	
-	public void delete(Long pId);
+	public void delete(Long pId, Long uId);
 	
 	public List<PostAreaStatisticDto> getAreaStatistic(Long uId);
 

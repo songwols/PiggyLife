@@ -1,6 +1,7 @@
 package com.piggy.PIGGY.controller;
 
 import java.io.UnsupportedEncodingException;
+import java.util.HashMap;
 import java.util.Map;
 
 import javax.mail.MessagingException;
@@ -53,7 +54,10 @@ public class SignRestController {
 			UserDto userdto = MapperUtils.map(user, UserDto.class);
 			return new ResponseEntity<Object>(userdto, HttpStatus.CREATED);
 		} catch (Exception e) {
-			throw e;
+			Map<String, Object> resultMap = new HashMap<String, Object>();
+			resultMap.put("data", e.getMessage());
+			resultMap.put("status", false);
+			return new ResponseEntity<Object>(resultMap, HttpStatus.OK);
 		}
 	}
 	
@@ -92,9 +96,13 @@ public class SignRestController {
 	@PostMapping("/signin")
 	public ResponseEntity<Object> signin(@RequestBody SigninDto dto) {
 		try {
-			return new ResponseEntity<Object>(uService.signin(dto), HttpStatus.OK);
+			Map<String, Object> output = uService.signin(dto);
+			return new ResponseEntity<Object>(output, HttpStatus.OK);
 		} catch (Exception e) {
-			throw e;
+			Map<String, Object> resultMap = new HashMap<String, Object>();
+			resultMap.put("data", e.getMessage());
+			resultMap.put("status", false);
+			return new ResponseEntity<Object>(resultMap, HttpStatus.OK);
 		}
 	}
 	

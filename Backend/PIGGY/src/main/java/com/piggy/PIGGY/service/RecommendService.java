@@ -4,8 +4,8 @@ import java.util.List;
 
 import com.piggy.PIGGY.dto.AreaRecommendDto;
 import com.piggy.PIGGY.dto.MatchDto;
-import com.piggy.PIGGY.entity.UserRecommend;
 import com.piggy.PIGGY.entity.Store;
+import com.piggy.PIGGY.entity.UserRecommend;
 
 public interface RecommendService {
 

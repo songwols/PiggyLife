@@ -13,3 +13,4 @@ public class PostCategoryStatisticDto {
 	private Integer count;
 
 }
+

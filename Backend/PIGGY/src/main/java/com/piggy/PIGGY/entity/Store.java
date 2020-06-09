@@ -101,5 +101,4 @@ public class Store {
 		this.category_group = category_group;
 		this.branch = branch;
 	}
-	
 }

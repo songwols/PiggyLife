@@ -15,13 +15,14 @@ import com.piggy.PIGGY.dto.StoreOutputDto;
 import com.piggy.PIGGY.entity.AreaRecommend;
 import com.piggy.PIGGY.entity.Match;
 import com.piggy.PIGGY.entity.MatchId;
-import com.piggy.PIGGY.entity.UserRecommend;
 import com.piggy.PIGGY.entity.Store;
 import com.piggy.PIGGY.entity.User;
+import com.piggy.PIGGY.entity.UserRecommend;
 import com.piggy.PIGGY.repository.AreaRecommendRepository;
 import com.piggy.PIGGY.repository.MatchRepository;
-import com.piggy.PIGGY.repository.UserRecommendRepository;
+import com.piggy.PIGGY.repository.PostRepository;
 import com.piggy.PIGGY.repository.StoreRepository;
+import com.piggy.PIGGY.repository.UserRecommendRepository;
 import com.piggy.PIGGY.repository.UserRepository;
 import com.piggy.PIGGY.util.MapperUtils;
 
@@ -42,6 +43,9 @@ public class RecommendServiceImpl implements RecommendService{
 	
 	@Autowired
 	private MatchRepository mRepo;
+	
+	@Autowired
+	private PostRepository pRepo;
 	
 	@Override
 	public List<UserRecommend> findAllRecommend() {
@@ -69,8 +73,13 @@ public class RecommendServiceImpl implements RecommendService{
 	@Override
 	public MatchDto findMatch(String selfEmail, String friendEmail) {
 		
+		
 		User self = uRepo.findByEmail(selfEmail).orElseThrow(NoSuchElementException::new);
 		User friend = uRepo.findByEmail(friendEmail).orElseThrow(NoSuchElementException::new);
+		
+		if(pRepo.findByUser(self).size()<5) {
+			self = uRepo.findByEmail("jmiha22@gmail.com").orElseThrow(NoSuchElementException::new);
+		}
 		
 		MatchId mId = new MatchId(self.getUId(), friend.getUId());
 		Match match = mRepo.findById(mId).orElseThrow(NoSuchElementException::new);
