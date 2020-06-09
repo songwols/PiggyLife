@@ -42,7 +42,7 @@ public class UserServiceImpl implements UserService {
 				.password(passwordEncoder.encode(dto.getPassword()))
 				.nickname(dto.getNickname())
 				.emailCertify("email_send_require")
-				.ranking(1)
+				.ranking(0)
 				.roles(Collections.singletonList("EMAIL_USER"))
 				.build());
 	}

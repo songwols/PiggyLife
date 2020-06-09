@@ -42,7 +42,8 @@ import lombok.NoArgsConstructor;
 					@ConstructorResult(
 							targetClass=PostCategoryStatisticDto.class,
 							columns={
-									@ColumnResult(name="category",type=String.class),
+									@ColumnResult(name="category_group",type=String.class),
+									@ColumnResult(name="count",type=Integer.class),
 							}
 							)
 			}

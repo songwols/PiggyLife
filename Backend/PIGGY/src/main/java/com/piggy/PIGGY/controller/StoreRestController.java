@@ -1,6 +1,8 @@
 package com.piggy.PIGGY.controller;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -43,7 +45,10 @@ public class StoreRestController {
 			Store store = sService.create(dto);
 			return new ResponseEntity<Object>(store, HttpStatus.OK);
 		} catch (Exception e) {
-			throw e;
+			Map<String, Object> resultMap = new HashMap<String, Object>();
+			resultMap.put("data", e.getMessage());
+			resultMap.put("status", false);
+			return new ResponseEntity<Object>(resultMap, HttpStatus.OK);
 		}
 	}
 	
@@ -56,7 +61,10 @@ public class StoreRestController {
 			StoreOutputDto output = MapperUtils.map(store, StoreOutputDto.class);
 			return new ResponseEntity<Object>(output, HttpStatus.OK);
 		} catch (Exception e) {
-			throw e;
+			Map<String, Object> resultMap = new HashMap<String, Object>();
+			resultMap.put("data", "존재하지 않는 가게입니다");
+			resultMap.put("status", false);
+			return new ResponseEntity<Object>(resultMap, HttpStatus.OK);
 		}
 	}
 	
@@ -69,7 +77,10 @@ public class StoreRestController {
 			List<StoreTop10Dto> stores = sService.getStoreTop10();
 			return new ResponseEntity<Object>(stores, HttpStatus.OK);
 		} catch (Exception e) {
-			throw e;
+			Map<String, Object> resultMap = new HashMap<String, Object>();
+			resultMap.put("data", e.getMessage());
+			resultMap.put("status", false);
+			return new ResponseEntity<Object>(resultMap, HttpStatus.OK);
 		}
 	}
 	
@@ -77,13 +88,15 @@ public class StoreRestController {
 	@GetMapping("/findByName")
 	public ResponseEntity<Object> findByName(@RequestParam String name) {
 		try {
-			
 			log.trace("StoreRestController - findByName");
 			List<Store> stores = sService.findByName(name);
 			List<StoreOutputDto> output = MapperUtils.mapAll(stores, StoreOutputDto.class);
 			return new ResponseEntity<Object>(output, HttpStatus.OK);
 		} catch (Exception e) {
-			throw e;
+			Map<String, Object> resultMap = new HashMap<String, Object>();
+			resultMap.put("data", e.getMessage());
+			resultMap.put("status", false);
+			return new ResponseEntity<Object>(resultMap, HttpStatus.OK);
 		}
 	}
 	

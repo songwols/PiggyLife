@@ -21,13 +21,16 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.piggy.PIGGY.dto.PostAreaStatisticDto;
+import com.piggy.PIGGY.dto.PostCategoryStatisticDto;
 import com.piggy.PIGGY.dto.PostImageDto;
 import com.piggy.PIGGY.dto.PostInputDto;
 import com.piggy.PIGGY.dto.PostOutputDto;
 import com.piggy.PIGGY.dto.ResultDto;
 import com.piggy.PIGGY.entity.Post;
+import com.piggy.PIGGY.entity.User;
 import com.piggy.PIGGY.service.FileService;
 import com.piggy.PIGGY.service.PostService;
+import com.piggy.PIGGY.service.UserService;
 import com.piggy.PIGGY.util.MapperUtils;
 
 import io.swagger.annotations.Api;
@@ -47,6 +50,9 @@ public class PostRestController {
 	@Autowired
 	private FileService fileService;
 	
+	@Autowired
+	private UserService uService;
+	
 	@ApiOperation(value = "Post 생성")
 	@PostMapping("/create/{uId}")
 	public ResponseEntity<Object> create(@PathVariable Long uId, @RequestBody PostInputDto dto){
@@ -55,7 +61,10 @@ public class PostRestController {
 			Map<String, Object> output = pService.create(uId, dto);
 			return new ResponseEntity<Object>(output, HttpStatus.OK);
 		} catch (Exception e) {
-			return new ResponseEntity<Object>(e.getMessage(), HttpStatus.CONFLICT);
+			Map<String, Object> resultMap = new HashMap<String, Object>();
+			resultMap.put("data", e.getMessage());
+			resultMap.put("status", false);
+			return new ResponseEntity<Object>(resultMap, HttpStatus.OK);
 		}
 	}
 	
@@ -68,7 +77,10 @@ public class PostRestController {
 			List<PostOutputDto> output = MapperUtils.mapAll(posts, PostOutputDto.class);
 			return new ResponseEntity<Object>(output, HttpStatus.OK);
 		} catch (Exception e) {
-			throw e;
+			Map<String, Object> resultMap = new HashMap<String, Object>();
+			resultMap.put("data", e.getMessage());
+			resultMap.put("status", false);
+			return new ResponseEntity<Object>(resultMap, HttpStatus.OK);
 		}
 	}
 	
@@ -81,8 +93,10 @@ public class PostRestController {
 			PostOutputDto output = MapperUtils.map(post, PostOutputDto.class);
 			return new ResponseEntity<Object>(output, HttpStatus.OK);
 		} catch (Exception e) {
-			
-			return new ResponseEntity<Object>(e.getMessage(), HttpStatus.CONFLICT);
+			Map<String, Object> resultMap = new HashMap<String, Object>();
+			resultMap.put("data", e.getMessage());
+			resultMap.put("status", false);
+			return new ResponseEntity<Object>(resultMap, HttpStatus.OK);
 		}
 	}
 	
@@ -125,23 +139,29 @@ public class PostRestController {
 			PostOutputDto output = MapperUtils.map(post, PostOutputDto.class);
 			return new ResponseEntity<Object>(output, HttpStatus.OK);
 		} catch (Exception e) {
-			return new ResponseEntity<Object>(e.getMessage(), HttpStatus.CONFLICT);
+			Map<String, Object> resultMap = new HashMap<String, Object>();
+			resultMap.put("data", e.getMessage());
+			resultMap.put("status", false);
+			return new ResponseEntity<Object>(resultMap, HttpStatus.OK);
 		}
 	}
 	
 	@ApiOperation(value = "해당  Post 삭제")
 	@DeleteMapping("/delete/{pId}")
-	public ResponseEntity<Object> delete(@PathVariable Long pId){
+	public ResponseEntity<Object> delete(@PathVariable Long pId, @RequestParam Long uId){
 		try {
 			log.trace("PostRestController - delete", pId);
 			Post post = pService.findById(pId);
 			if(post.getImageName()!=null) {
 				fileService.deleteImage(post.getImageName());
 			}
-			pService.delete(pId);
+			pService.delete(pId, uId);
 			return new ResponseEntity<Object>(new ResultDto(true, 1, "삭제되었습니다."), HttpStatus.OK);
 		} catch (Exception e) {
-			return new ResponseEntity<Object>(e.getMessage(), HttpStatus.CONFLICT);
+			Map<String, Object> resultMap = new HashMap<String, Object>();
+			resultMap.put("data", e.getMessage());
+			resultMap.put("status", false);
+			return new ResponseEntity<Object>(resultMap, HttpStatus.OK);
 		}
 	}
 
@@ -153,7 +173,10 @@ public class PostRestController {
 			List<PostAreaStatisticDto> output = pService.getAreaStatistic(uId);
 			return new ResponseEntity<Object>(output, HttpStatus.OK);
 		} catch (Exception e) {
-			throw e;
+			Map<String, Object> resultMap = new HashMap<String, Object>();
+			resultMap.put("data", e.getMessage());
+			resultMap.put("status", false);
+			return new ResponseEntity<Object>(resultMap, HttpStatus.OK);
 		}
 	}
 	
@@ -162,10 +185,29 @@ public class PostRestController {
 	public ResponseEntity<Object> getCategoryStatistic(@PathVariable Long uId){
 		try {
 			log.trace("PostRestController - getCategoryStatistic", uId);
-			Map<String, Integer> output = pService.getCategoryStatistic(uId);
+			List<PostCategoryStatisticDto> output = pService.getCategoryStatistic(uId);
 			return new ResponseEntity<Object>(output, HttpStatus.OK);
 		} catch (Exception e) {
-			throw e;
+			Map<String, Object> resultMap = new HashMap<String, Object>();
+			resultMap.put("data", e.getMessage());
+			resultMap.put("status", false);
+			return new ResponseEntity<Object>(resultMap, HttpStatus.OK);
+		}
+	}
+	
+	@ApiOperation(value = "해당 유저의 이메일로 카테코리 통계 불러오기")
+	@GetMapping("/getCategoryStatisticByEmail")
+	public ResponseEntity<Object> getCategoryStatisticByEmail(@RequestParam String email){
+		try {
+			log.trace("PostRestController - getCategoryStatisticByEmail", email);
+			User user = uService.findByEmail(email);
+			List<PostCategoryStatisticDto> output = pService.getCategoryStatistic(user.getUId());
+			return new ResponseEntity<Object>(output, HttpStatus.OK);
+		} catch (Exception e) {
+			Map<String, Object> resultMap = new HashMap<String, Object>();
+			resultMap.put("data", e.getMessage());
+			resultMap.put("status", false);
+			return new ResponseEntity<Object>(resultMap, HttpStatus.OK);
 		}
 	}
 	
@@ -178,7 +220,10 @@ public class PostRestController {
 			List<PostOutputDto> output = MapperUtils.mapAll(posts, PostOutputDto.class);
 			return new ResponseEntity<Object>(output, HttpStatus.OK);
 		} catch (Exception e) {
-			throw e;
+			Map<String, Object> resultMap = new HashMap<String, Object>();
+			resultMap.put("data", e.getMessage());
+			resultMap.put("status", false);
+			return new ResponseEntity<Object>(resultMap, HttpStatus.OK);
 		}
 	}
 
@@ -192,7 +237,10 @@ public class PostRestController {
 			PostOutputDto output = MapperUtils.map(post, PostOutputDto.class);
 			return new ResponseEntity<Object>(output, HttpStatus.OK);
 		} catch (Exception e) {
-			return new ResponseEntity<Object>(e.getMessage(), HttpStatus.OK);
+			Map<String, Object> resultMap = new HashMap<String, Object>();
+			resultMap.put("data", e.getMessage());
+			resultMap.put("status", false);
+			return new ResponseEntity<Object>(resultMap, HttpStatus.OK);
 		}
 	}
 	

@@ -1,10 +1,10 @@
 package com.piggy.PIGGY.service;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.NoSuchElementException;
-import java.util.StringTokenizer;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -56,12 +56,12 @@ public class PostServiceImpl implements PostService {
 		
 		int size = pRepo.findByUser(user).size();
 		int status = 0;
-		if(size <= 100) {
+		if(size <= 230) {
 			int rank = user.getRanking();
-			int[] step = {10,10,10,20,20,20,30,30,30,50};
-			int nextRank = (int)((size+1)/step[rank]);
-			if(rank != nextRank) {
-				status = uRepo.updateRanking(nextRank, uId);
+			int[] step = {0,10,20,30,50,70,90,120,150,180,230};
+
+			if(size+1 == step[rank+1]) {
+				status = uRepo.updateRanking(rank+1, uId);
 			}
 		}
 	    PostOutputDto output = MapperUtils.map(pRepo.save(Post.builder()
@@ -105,7 +105,18 @@ public class PostServiceImpl implements PostService {
 	}
 
 	@Override
-	public void delete(Long pId) {
+	public void delete(Long pId, Long uId) {
+		User user = uRepo.findById(uId).orElseThrow(NoSuchElementException::new);
+		int rank = user.getRanking();
+		int size = pRepo.findByUser(user).size();
+		if(size>=10) {
+			int[] step = {0,10,20,30,50,70,90,120,150,180,230};
+			if(size-1 == step[rank-1]) {
+				uRepo.updateRanking(rank-1, uId);
+			}
+			
+		}
+		
 		pRepo.deleteById(pId);
 	}
 
@@ -121,28 +132,23 @@ public class PostServiceImpl implements PostService {
 	}
 
 	@Override
-	public Map<String, Integer> getCategoryStatistic(Long uId) {
-		String sql = "SELECT s.category AS category FROM post p LEFT JOIN store s ON p.s_id = s.s_id "
-				+ "WHERE p.u_id = :uId";
+	public List<PostCategoryStatisticDto> getCategoryStatistic(Long uId) {
+		String sql = "SELECT s.category_group AS category_group, count(s.category_group) AS count FROM post p LEFT JOIN store s ON p.s_id = s.s_id "
+				+ "WHERE p.u_id = :uId GROUP BY s.category_group ORDER BY count DESC";
 		Query query = em.createNativeQuery(sql, "Post.CategoryStatistic");
 		query.setParameter("uId", uId);
 		List<PostCategoryStatisticDto> list = query.getResultList();
-
-		Map<String, Integer> map = new HashMap<String, Integer>();
+		
+		List<PostCategoryStatisticDto> output = new ArrayList<PostCategoryStatisticDto>();
+		
 		for (int i = 0; i < list.size(); i++) {
-			String categories = list.get(i).getCategory();
-			StringTokenizer st = new StringTokenizer(categories,"|");
-			while(st.hasMoreTokens()) {
-				String category = st.nextToken();
-				if(map.containsKey(category)) {
-					map.put(category, map.get(category)+1);
-				}else {
-					map.put(category, 1);
-				}
-			}
+			String category = list.get(i).getCategory_group().substring(0,list.get(i).getCategory_group().length()-1);
+			Integer count = list.get(i).getCount();
+			output.add(new PostCategoryStatisticDto(category, count));
 		}
-		return map;
+		return output;
 	}
+
 
 	@Override
 	public List<Post> findByUserAndVisited(Long uId, boolean visited) {

@@ -1,5 +1,8 @@
 package com.piggy.PIGGY.dto;
 
+import java.math.BigDecimal;
+import java.util.List;
+
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -7,10 +10,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 @Data
-public class PostCategoryStatisticDto {
-	
-	private String category_group;
-	private Integer count;
-
+public class RegionDto {
+	private String city;
+	private String area;
 }
-

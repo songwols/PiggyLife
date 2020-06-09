@@ -1,5 +1,6 @@
 package com.piggy.PIGGY.controller;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -59,7 +60,7 @@ public class UserRestController {
 			UserDto output = MapperUtils.map(user, UserDto.class);
 			return new ResponseEntity<Object>(output, HttpStatus.OK);
 		} catch (Exception e) {
-			throw e;
+			return new ResponseEntity<Object>(new ResultDto(false, -1, e.getMessage()), HttpStatus.CONFLICT);
 		}
 	}
 	
@@ -71,7 +72,10 @@ public class UserRestController {
 			UserDto output = MapperUtils.map(user, UserDto.class);
 			return new ResponseEntity<Object>(output, HttpStatus.OK);
 		} catch (Exception e) {
-			throw e;
+			Map<String, Object> resultMap = new HashMap<String, Object>();
+			resultMap.put("data", "회원정보가 존재하지 않습니다");
+			resultMap.put("status", false);
+			return new ResponseEntity<Object>(resultMap, HttpStatus.OK);	
 		}
 	}
 
@@ -83,7 +87,7 @@ public class UserRestController {
 			List<UserDto> output = MapperUtils.mapAll(user, UserDto.class);
 			return new ResponseEntity<Object>(output, HttpStatus.OK);
 		} catch (Exception e) {
-			throw e;
+			return new ResponseEntity<Object>(new ResultDto(false, -1, e.getMessage()), HttpStatus.CONFLICT);
 		}
 	}
 	
@@ -98,7 +102,7 @@ public class UserRestController {
 			uService.deleteById(Long.parseLong(uId));
 			return new ResponseEntity<Object>(new ResultDto(true, 1, "삭제되었습니다."), HttpStatus.OK);
 		} catch (Exception e) {
-			throw e;
+			return new ResponseEntity<Object>(new ResultDto(false, -1, e.getMessage()), HttpStatus.CONFLICT);
 		}
 	}
 
@@ -116,7 +120,10 @@ public class UserRestController {
 			else
 				return new ResponseEntity<Object>(new ResultDto(false, -1, "비밀번호가 틀렸습니다"), HttpStatus.ACCEPTED);
 		} catch (Exception e) {
-			throw e;
+			Map<String, Object> resultMap = new HashMap<String, Object>();
+			resultMap.put("data", e.getMessage());
+			resultMap.put("status", false);
+			return new ResponseEntity<Object>(resultMap, HttpStatus.OK);
 		}
 	}
 	
@@ -132,7 +139,10 @@ public class UserRestController {
 			UserDto output = MapperUtils.map(user, UserDto.class);
 			return new ResponseEntity<Object>(output, HttpStatus.OK);
 		} catch (Exception e) {
-			throw e;
+			Map<String, Object> resultMap = new HashMap<String, Object>();
+			resultMap.put("data", e.getMessage());
+			resultMap.put("status", false);
+			return new ResponseEntity<Object>(resultMap, HttpStatus.OK);
 		}
 	}
 	
@@ -144,7 +154,10 @@ public class UserRestController {
 			UserDto output = MapperUtils.map(user, UserDto.class);
 			return new ResponseEntity<Object>(output, HttpStatus.OK);
 		} catch (Exception e) {
-			throw e;
+			Map<String, Object> resultMap = new HashMap<String, Object>();
+			resultMap.put("data", e.getMessage());
+			resultMap.put("status", false);
+			return new ResponseEntity<Object>(resultMap, HttpStatus.OK);
 		}
 	}
 	
@@ -166,7 +179,10 @@ public class UserRestController {
 			}
 			return new ResponseEntity<Object>(output, HttpStatus.OK);
 		} catch (Exception e) {
-			return new ResponseEntity<Object>(e.getMessage(), HttpStatus.OK);
+			Map<String, Object> resultMap = new HashMap<String, Object>();
+			resultMap.put("data", e.getMessage());
+			resultMap.put("status", false);
+			return new ResponseEntity<Object>(resultMap, HttpStatus.OK);
 		}
 	}
 }

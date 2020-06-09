@@ -8,16 +8,21 @@ import java.util.Random;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.piggy.PIGGY.dto.AreaRecommendDto;
 import com.piggy.PIGGY.dto.MatchDto;
+import com.piggy.PIGGY.dto.RegionDto;
 import com.piggy.PIGGY.dto.StoreOutputDto;
+import com.piggy.PIGGY.entity.AreaRecommend;
 import com.piggy.PIGGY.entity.Match;
 import com.piggy.PIGGY.entity.MatchId;
-import com.piggy.PIGGY.entity.Recommend;
 import com.piggy.PIGGY.entity.Store;
 import com.piggy.PIGGY.entity.User;
+import com.piggy.PIGGY.entity.UserRecommend;
+import com.piggy.PIGGY.repository.AreaRecommendRepository;
 import com.piggy.PIGGY.repository.MatchRepository;
-import com.piggy.PIGGY.repository.RecommendRepository;
+import com.piggy.PIGGY.repository.PostRepository;
 import com.piggy.PIGGY.repository.StoreRepository;
+import com.piggy.PIGGY.repository.UserRecommendRepository;
 import com.piggy.PIGGY.repository.UserRepository;
 import com.piggy.PIGGY.util.MapperUtils;
 
@@ -25,7 +30,10 @@ import com.piggy.PIGGY.util.MapperUtils;
 public class RecommendServiceImpl implements RecommendService{
 
 	@Autowired
-	private RecommendRepository rRepo;
+	private UserRecommendRepository urRepo;
+	
+	@Autowired
+	private AreaRecommendRepository arRepo;
 	
 	@Autowired
 	private StoreRepository sRepo;
@@ -36,23 +44,42 @@ public class RecommendServiceImpl implements RecommendService{
 	@Autowired
 	private MatchRepository mRepo;
 	
+	@Autowired
+	private PostRepository pRepo;
+	
 	@Override
-	public List<Recommend> findAllRecommend() {
-		return rRepo.findAll();
+	public List<UserRecommend> findAllRecommend() {
+		return urRepo.findAll();
 	}
 
 	@Override
-	public List<Store> findRecommend(Long uId) {
-		Recommend recommend = rRepo.findById(uId).orElseThrow(NoSuchElementException::new);
+	public List<Store> findUserRecommend(Long uId) {
+		UserRecommend recommend = urRepo.findById(uId).orElseThrow(NoSuchElementException::new);
 		List<Store> stores = getStores(recommend.getStores());
 		return stores;
 	}
 	
 	@Override
+	public AreaRecommendDto findAreaRecommend(Long uId) {
+		AreaRecommend recommend = arRepo.findById(uId).orElseThrow(NoSuchElementException::new);
+		List<Store> recommendStores = getStores(recommend.getStores());
+		List<StoreOutputDto> recommendStoresDto = MapperUtils.mapAll(recommendStores, StoreOutputDto.class);
+		RegionDto regionDto = MapperUtils.map(recommend.getRegion(), RegionDto.class);
+		AreaRecommendDto dto = new AreaRecommendDto(recommendStoresDto, regionDto);
+		
+		return dto;
+	}
+	
+	@Override
 	public MatchDto findMatch(String selfEmail, String friendEmail) {
+		
 		
 		User self = uRepo.findByEmail(selfEmail).orElseThrow(NoSuchElementException::new);
 		User friend = uRepo.findByEmail(friendEmail).orElseThrow(NoSuchElementException::new);
+		
+		if(pRepo.findByUser(self).size()<5) {
+			self = uRepo.findByEmail("jmiha22@gmail.com").orElseThrow(NoSuchElementException::new);
+		}
 		
 		MatchId mId = new MatchId(self.getUId(), friend.getUId());
 		Match match = mRepo.findById(mId).orElseThrow(NoSuchElementException::new);
