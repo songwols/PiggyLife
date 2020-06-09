@@ -16,7 +16,7 @@ const Data = {
   get_mypost: (uid) => requests.get(`/post/findByUser/${uid}`), //url 정해지면 채워넣기
   getMukitlist: (uid) => requests.get(`/post/getMukitlist/${uid}`),
   get_top10: () => requests.get(`/store/getStoreTop10`),
-  get_similar: (uId) => requests.get(`/recommend/findRecommend?uId=${uId}`),
+  get_similar: (uId) => requests.get(`/recommend/findUserRecommend?uId=${uId}`),
   email_check: (email) =>
     requests.get(`/sign/checkDuplicateEmail?email=${email}`),
   code_check: (user) =>
@@ -75,11 +75,16 @@ const Data = {
   getAreaStatistic: (uId) => requests.get(`/post/getAreaStatistic/${uId}`),
   getCategoryStatistic: (uId) =>
     requests.get(`/post/getCategoryStatistic/${uId}`),
-  postdelete: (pid) => requests.delete(`/post/delete/${pid}`),
+  getCategoryStatisticByEmail: (email) =>
+    requests.get(`/post/getCategoryStatisticByEmail?email=${email}`),
+  postdelete: (pid,uid) => requests.delete(`/post/delete/${pid}?uId=${uid}`),
   profileImage: (file, uid) =>
     requests.post(`/user/uploadImage/${uid}`, file, {}),
   get_for2: (mid, fid) =>
     requests.get(`/recommend/findMatch?selfEmail=${mid}&friendEmail=${fid}`),
+  get_hotplace: (uId) =>
+    requests.get(`/recommend/findAreaRecommend?uId=${uId}`),
+  deleteUser: (token) => requests.delete(`/user/deleteUser`, { TOKEN: token }),
 };
 
 export default {

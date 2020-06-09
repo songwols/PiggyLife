@@ -8,13 +8,16 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 
 import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
+@JsonIdentityInfo(generator = ObjectIdGenerators.IntSequenceGenerator.class)
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Getter
 @Entity

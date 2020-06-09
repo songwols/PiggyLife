@@ -50,7 +50,7 @@ class Login extends React.Component {
             ></PW>
           </InputBox>
           <ButtonBox>
-            <Button onClick={this.Login}>LOGIN</Button>
+            <Button onClick={this.Login}>로그인</Button>
           </ButtonBox>
         </InputFrame>
         <LinkFrame>

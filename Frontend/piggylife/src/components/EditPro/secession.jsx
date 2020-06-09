@@ -1,25 +1,30 @@
 import React from "react";
 import styled from "styled-components";
-import { Link } from 'react-router-dom';
+import { inject, observer } from "mobx-react";
 
-class Secession extends React.Component{
-    render(){
-        return(
-            <Popup>
-                <PopupInner>
-                  <Box>
-                    <Title>탈퇴하시겠습니까?</Title>
-                    <BFrame>
-                      <BF>
-                      <Cancel onClick={this.props.cancelSecession}>취소</Cancel>&nbsp;
-                      <Link to={"/"} style={{ textDecoration: "none" }}><OK>확인</OK></Link>
-                      </BF>
-                    </BFrame>
-                  </Box>
-                </PopupInner>
-            </Popup>
-        )
-    }
+@inject("userStore")
+@observer
+class Secession extends React.Component {
+  deleteUser = (e) => {
+    this.props.userStore.deleteUser(window.sessionStorage.getItem("token"));
+  };
+  render() {
+    return (
+      <Popup>
+        <PopupInner>
+          <Box>
+            <Title>탈퇴하시겠습니까?</Title>
+            <BFrame>
+              <BF>
+                <Cancel onClick={this.props.cancelSecession}>취소</Cancel>&nbsp;
+                <OK onClick={this.deleteUser}>확인</OK>
+              </BF>
+            </BFrame>
+          </Box>
+        </PopupInner>
+      </Popup>
+    );
+  }
 }
 
 const Popup = styled.div`
@@ -40,8 +45,8 @@ const PopupInner = styled.div`
   position: absolute;
   left: 20%;
   right: 20%;
-  top: 20%;
-  bottom: 20%;
+  top: 30%;
+  bottom: 30%;
   margin: auto;
   background: white;
 
@@ -59,40 +64,37 @@ const PopupInner = styled.div`
       transform: scale(1);
     }
   }
-
 `;
 
 const Box = styled.div`
-  margin: 45% 10% 45% 10%;
+  margin: 35% 10% 45% 10%;
   height: 40%;
   width: 80%;
   background-color: #ffe8bd;
   display: grid;
-  grid-template-rows: repeat(2,1fr);
+  grid-template-rows: repeat(2, 1fr);
   grid-template-areas: "title" "bframe";
-
-`
+`;
 const Title = styled.div`
   grid-area: "title";
-  display: flex; 
-  align-items: center; 
-  justify-content: center; 
-  -webkit-justify-content: center; 
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  -webkit-justify-content: center;
   -webkit-align-items: center;
-
-`
+`;
 
 const BFrame = styled.div`
   grid-area: "bframe";
-  margin-top: .3rem;
+  margin-top: 0.3rem;
   height: 2rem;
   text-align: center;
-  display: flex; 
-  align-items: center; 
-  justify-content: center; 
-  -webkit-justify-content: center; 
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  -webkit-justify-content: center;
   -webkit-align-items: center;
-`
+`;
 
 const Cancel = styled.button`
   width: 30%;
@@ -102,13 +104,13 @@ const Cancel = styled.button`
   border: none;
   outline: none;
   border-radius: 0.3rem;
-  background-color: #F28379;
-`
+  background-color: #f28379;
+`;
 
 const BF = styled.div`
-    text-align: center;
-    width: 95%;
-`
+  text-align: center;
+  width: 95%;
+`;
 
 const OK = styled.button`
   width: 30%;
@@ -118,7 +120,7 @@ const OK = styled.button`
   border: none;
   outline: none;
   border-radius: 0.3rem;
-  background-color: #5897A6;
-`
+  background-color: #5897a6;
+`;
 
 export default Secession;

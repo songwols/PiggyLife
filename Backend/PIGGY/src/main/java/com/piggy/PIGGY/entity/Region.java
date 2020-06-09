@@ -1,10 +1,12 @@
 package com.piggy.PIGGY.entity;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToOne;
 
 import lombok.AccessLevel;
 import lombok.Builder;
@@ -24,6 +26,9 @@ public class Region {
 	private String city;
 	
 	private String area;
+	
+	@OneToOne(mappedBy="region", cascade=CascadeType.ALL)
+	private AreaRecommend aRecommend;
 
 	@Builder
 	public Region(Long rId, String city, String area) {

@@ -12,11 +12,14 @@ class Detail extends React.Component {
       store_name: "",
       address: "",
       img: "",
-      category: "",
+      category: [],
       tel: "",
       menu: "등록된 메뉴가 없습니다.",
       visited: false,
       isLike: 0,
+      v_memo: "",
+      sid: "",
+      file: null,
     };
   }
 
@@ -27,12 +30,13 @@ class Detail extends React.Component {
     this.setState({
       store_name: post.name,
       address: post.address,
-      img: "",
-      category: post.category,
+      img: post.image,
+      category: [...post.category.split('|')],
       tel: post.tel,
       menu: post.menues,
       visited: false,
       isLike: 0,
+      sid: this.props.id,
     });
     if (post.menues.length === 0) {
       this.setState({
@@ -42,10 +46,15 @@ class Detail extends React.Component {
   }
 
   render() {
+    const putMypost = (e) => {
+      e.preventDefault();
+      this.props.storeStore.upload(this.state, this.state.file);
+    };
+
     return (
       <Frame>
         <Pic>
-          {this.state.img === "" || this.state.img === null ? (
+          {this.state.img === "" || this.state.img === null || this.state.img === "image" ? (
             <Text>등록된 이미지가 없습니다.</Text>
           ) : (
             <Simg src={this.state.img}></Simg>
@@ -72,7 +81,21 @@ class Detail extends React.Component {
           )}
         </Menu>
         <Map id={this.props.id} keyword="detail"></Map>
-        <Tag>태그</Tag>
+        <Tag>
+          {this.state.category.length !== 0 ? 
+          <div>{this.state.category.map((item, index) => (
+            <Hash key={index}>
+              {item}
+            </Hash>
+          ))}</div>
+          :
+          <div></div>
+        }
+        </Tag>
+        <Context />
+        <BFrame>
+          <OK onClick={putMypost}>담기</OK>
+        </BFrame>
         <Context />
       </Frame>
     );
@@ -125,6 +148,7 @@ const Menu = styled.div`
 const Tag = styled.div`
   grid-area: "tag";
   margin-top: 0.5rem;
+  padding-top: .7rem;
   height: 5rem;
   background-color: #f2e9e4;
   border-radius: 0.5rem;
@@ -138,6 +162,37 @@ const Text = styled.div`
 
 const Context = styled.div`
   height: 2rem;
+`;
+
+const Hash = styled.span`
+  height: 2rem;
+  width: auto;
+  background: #CCCCCC;
+  border-radius: .5rem;
+  padding: .2rem .5rem .2rem .5rem;
+  margin-right: 1rem;
+`
+const BFrame = styled.div`
+  grid-area: "button";
+  margin-top: 0.3rem;
+  height: 2rem;
+  text-align: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  -webkit-justify-content: center;
+  -webkit-align-items: center;
+`;
+
+const OK = styled.button`
+  width: 30%;
+  height: 2rem;
+  color: white;
+  background: none;
+  border: none;
+  outline: none;
+  border-radius: 0.3rem;
+  background-color: #5897a6;
 `;
 
 export default Detail;

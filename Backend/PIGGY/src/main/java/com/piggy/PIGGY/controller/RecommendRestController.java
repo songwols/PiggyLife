@@ -16,11 +16,9 @@ import com.piggy.PIGGY.dto.MatchDto;
 import com.piggy.PIGGY.dto.StoreOutputDto;
 import com.piggy.PIGGY.entity.Post;
 import com.piggy.PIGGY.entity.Store;
-import com.piggy.PIGGY.entity.User;
 import com.piggy.PIGGY.entity.UserRecommend;
 import com.piggy.PIGGY.service.PostService;
 import com.piggy.PIGGY.service.RecommendService;
-import com.piggy.PIGGY.service.UserService;
 import com.piggy.PIGGY.util.MapperUtils;
 
 import io.swagger.annotations.Api;
@@ -38,9 +36,6 @@ public class RecommendRestController {
 	@Autowired
 	private PostService pService;
 	
-	@Autowired
-	private UserService uService;
-
 	@ApiOperation(value = "모든 추천 불러오기 (테스트용)")
 	@GetMapping("/findAllRecommend")
 	public ResponseEntity<Object> findAllRecommend(){
@@ -83,7 +78,7 @@ public class RecommendRestController {
 			throw e;
 		}
 	}
-
+	
 	@ApiOperation(value = "두 유저 매칭 불러오기")
 	@GetMapping("/findMatch")
 	public ResponseEntity<Object> findMatch(@RequestParam String selfEmail, @RequestParam String friendEmail) {

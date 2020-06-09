@@ -74,12 +74,12 @@ export default class StoreStore {
       .catch((err) => alert("실패하였습니다"));
   }
   @action
-  get_hotplace() {
-    //  return agent.Data.get_hotplace()
-    //    .then((res) => {
-    //      this.setHotplace(res.data);
-    //    })
-    //    .catch((err) => console.log(err));
+  get_hotplace(uid) {
+     return agent.Data.get_hotplace(uid)
+       .then((res) => {
+         this.setHotplace(res.data.recommendStores);
+       })
+       .catch((err) => console.log(err));
   }
   @action
   get_similar(uId) {
@@ -150,19 +150,20 @@ export default class StoreStore {
           alert(res.data.message);
         }
       })
-      .catch((err) => alert("실패하였습니다"));
+      .catch((err) => alert("게시글 업로드에 실패하였습니다"));
   }
 
   @action postImage(data, id) {
     return agent.Data.postImage(data, id)
       .then((res) => {
         if (res.status === 200) {
+          this.get_post(sessionStorage.getItem("uid"));
           window.location.replace("/feed");
         } else {
           alert(res.data.message);
         }
       })
-      .catch((err) => alert("실패하였습니다"));
+      .catch((err) => alert("파일 업로드에 실패하였습니다"));
   }
 
   @action
@@ -204,7 +205,7 @@ export default class StoreStore {
   }
 
   @action postdelete(pid) {
-    return agent.Data.postdelete(pid)
+    return agent.Data.postdelete(pid, sessionStorage.getItem("uid"))
       .then((res) => {
         window.location.replace("/feed");
       })

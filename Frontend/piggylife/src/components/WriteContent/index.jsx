@@ -92,6 +92,7 @@ class WriteContent extends React.Component {
         v_tel: this.state.detail.tel,
         v_menu: this.state.detail.menues,
         sid: this.state.detail.sid,
+        store_name: "",
       });
       if (this.state.detail.menues.length === 0) {
         this.setState({
@@ -254,6 +255,7 @@ class WriteContent extends React.Component {
       const getD = this.props.storeStore.detailPost;
       this.setState({
         detail: getD,
+        store_name: getD.name + " - " + getD.address,
       });
 
       this.setState({
@@ -359,6 +361,7 @@ class WriteContent extends React.Component {
                 </Notice>
               </Box>
             </PopupInner>
+
             {this.state.showList ? (
               <PopupInner>
                 <SFrame>
@@ -397,7 +400,7 @@ const Close = styled.button`
   margin: 0.3rem 0.5rem;
 `;
 const LIF = styled.div`
-  margin: 45% 10% 45% 10%;
+  margin: 23% 10% 45% 10%;
   height: 60%;
   width: 80%;
 `;
@@ -422,6 +425,7 @@ const TextD = styled.div`
   width: 96%;
   display: flex;
   align-items: center;
+  margin-bottom: 0.5rem;
 `;
 
 const ML = styled.div`
@@ -432,6 +436,7 @@ const ML = styled.div`
   border-radius: 0.3rem;
   border-color: gray;
   width: 96%;
+  margin-bottom: 0.5rem;
 `;
 const Mn = styled.div``;
 
@@ -440,9 +445,10 @@ const Content = styled.div`
   height: 100%;
   padding: 10% 10% 5% 10%;
 `;
-
 const PF = styled.div`
+  padding-top: 2rem;
   height: auto;
+  margin-bottom: 0.5rem;
 `;
 const PvImg = styled.img`
   justify-content: center;
@@ -457,8 +463,10 @@ const PvImg = styled.img`
 const Pic = styled.input`
   border-style: solid;
   border-width: 0.05rem;
+  border-radius: 0.3rem;
   border-color: gray;
-  width: 95%;
+  height: 2rem;
+  width: 97%;
 `;
 const FF = styled.button`
   width: 100%;
@@ -483,13 +491,13 @@ const Input = styled.input`
   box-shadow: none;
   border-width: 0.05rem;
   height: 2rem;
+  margin-bottom: 0.5rem;
 `;
 
 const TextArea = styled.textarea`
   display: block;
   font-size: 1rem;
   resize: none;
-  margin-top: 0.4rem;
   width: 95%;
   padding-left: 0.3rem;
   background: none;
@@ -501,12 +509,15 @@ const TextArea = styled.textarea`
   border-width: 0.05rem;
   height: 5rem;
   line-height: 2rem;
+  margin-bottom: 0.5rem;
+  margin-top: 1rem;
 `;
 const CheckDiv = styled.div`
   width: 95%;
   margin-top: 0.4rem;
   height: 2rem;
   text-align: center;
+  margin-bottom: 0.5rem;
 `;
 
 const BF = styled.button`
@@ -523,7 +534,6 @@ const EBF = styled.div`
 `;
 
 const CButton = styled.button`
-  margin-top: 0.4rem;
   width: 30%;
   height: 2rem;
   color: white;
@@ -552,8 +562,8 @@ const PopupInner = styled.div`
   position: absolute;
   left: 20%;
   right: 20%;
-  top: 20%;
-  bottom: 20%;
+  top: 30%;
+  bottom: 30%;
   margin: auto;
   background: white;
 
@@ -574,8 +584,8 @@ const PopupInner = styled.div`
 `;
 
 const Box = styled.div`
-  margin: 45% 10% 45% 10%;
-  height: 60%;
+  margin: 20% 10% 45% 10%;
+  height: 70%;
   width: 80%;
   background-color: #ffe8bd;
   display: grid;
@@ -588,6 +598,7 @@ const Notice = styled.div`
   grid-area: notice;
   background-color: white;
   font-size: smaller;
+  margin-top: .2rem;
 `;
 
 const Title = styled.div`
@@ -640,7 +651,8 @@ const OK = styled.button`
   background-color: #5897a6;
 `;
 const SFrame = styled.div`
-  margin: 60% 10% 45% 10%;
+  margin: 35% 10% 25% 10%;
+  // margin: 60% 10% 45% 10%;
   height: 4rem;
   width: 80%;
   background-color: #ffe8bd;
@@ -677,6 +689,7 @@ const ICFrame = styled.div`
   height: 2rem;
   width: 95%;
   display: inline-block;
+  margin-bottom: 1rem;
 `;
 
 const Div = styled.button`

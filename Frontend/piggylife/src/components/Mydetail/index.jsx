@@ -14,7 +14,7 @@ class Mydetail extends React.Component {
       store_name: "",
       address: "",
       img: "",
-      category: "",
+      category: [],
       tel: "",
       menu: "등록된 메뉴가 없습니다.",
       memo: "",
@@ -40,7 +40,7 @@ class Mydetail extends React.Component {
       store_name: post.store.name,
       address: post.store.address,
       img: post.image, //post.image
-      category: post.store.category,
+      category: [...post.store.category.split('|')],
       tel: post.store.tel,
       menu: post.store.menues,
       memo: post.content,
@@ -70,7 +70,7 @@ class Mydetail extends React.Component {
     return (
       <Frame>
         <Pic>
-          {this.state.img === "" || this.state.img === null ? (
+          {this.state.img === "" || this.state.img === null || this.state.img === "image" ? (
             <Text>등록된 이미지가 없습니다.</Text>
           ) : (
             <Simg src={this.state.img}></Simg>
@@ -97,7 +97,17 @@ class Mydetail extends React.Component {
           )}
         </Menu>
         <Map id={this.props.id} keyword="mydetail"></Map>
-        <Tag>태그</Tag>
+        <Tag>
+        {this.state.category.length !== 0 ? 
+          <div>{this.state.category.map((item, index) => (
+            <Hash key={index}>
+              {item}
+            </Hash>
+          ))}</div>
+          :
+          <div></div>
+        }
+        </Tag>
         <Memo>
           <Text>메모</Text>
           <Context>{this.state.memo}</Context>
@@ -176,7 +186,8 @@ const Menu = styled.div`
 const Tag = styled.div`
   grid-area: "tag";
   margin-top: 0.5rem;
-  min-height: 5rem;
+  padding-top: .7rem;
+  height: 5rem;
   background-color: #f2e9e4;
   border-radius: 0.5rem;
   padding-left: 0.5rem;
@@ -256,8 +267,8 @@ const PopupInner = styled.div`
   position: absolute;
   left: 20%;
   right: 20%;
-  top: 20%;
-  bottom: 20%;
+  top: 30%;
+  bottom: 30%;
   margin: auto;
   background: white;
 
@@ -278,7 +289,7 @@ const PopupInner = styled.div`
 `;
 
 const Box = styled.div`
-  margin: 45% 10% 45% 10%;
+  margin: 30% 10% 45% 10%;
   height: 40%;
   width: 80%;
   background-color: #ffe8bd;
@@ -299,5 +310,14 @@ const BF = styled.div`
   text-align: center;
   width: 95%;
 `;
+
+const Hash = styled.span`
+  height: 2rem;
+  width: auto;
+  background: #CCCCCC;
+  border-radius: .5rem;
+  padding: .2rem .5rem .2rem .5rem;
+  margin-right: 1rem;
+`
 
 export default Mydetail;

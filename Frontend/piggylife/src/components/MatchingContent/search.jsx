@@ -2,6 +2,7 @@ import React from "react";
 import styled from "styled-components";
 import logo from "./logo_match.png";
 import { inject, observer } from "mobx-react";
+import loading from "./loading.gif";
 
 @inject("userStore")
 @observer
@@ -10,6 +11,7 @@ class Search extends React.Component {
     super(props);
     this.state = {
       friendID: "",
+      loading: false,
     };
   }
 
@@ -20,11 +22,35 @@ class Search extends React.Component {
   };
 
   Matching = (e) => {
+    this.setState({
+      loading: true,
+    });
     const email = this.state.friendID;
-    this.props.userStore.findByEmail(email);
+    if (email === window.sessionStorage.getItem("email")) {
+      alert("자기 자신과는 매칭할 수 없습니다!");
+    } else {
+      setTimeout(() => {
+        
+      }, 5000);
+      this.props.userStore.findByEmail(email);
+      this.setState({
+        loading: false,
+      });
+    }
   };
 
   render() {
+    if (this.state.loading) {
+      return (
+        <Popup>
+          <PopupInner>
+            <LIF>
+              <LI src={loading}></LI>
+            </LIF>
+          </PopupInner>
+        </Popup>
+      );
+    }
     return (
       <Content>
         <Box1>
@@ -38,7 +64,7 @@ class Search extends React.Component {
             name="friendId"
           ></Input>
           <EBF>
-            <CButton onClick={this.Matching}>Search</CButton>
+            <CButton onClick={this.Matching}>매칭</CButton>
           </EBF>
         </Box2>
       </Content>
@@ -106,6 +132,58 @@ const CButton = styled.button`
   outline: none;
   border-radius: 0.3rem;
   background-color: #ff7566;
+`;
+const Popup = styled.div`
+  z-index: 10;
+  position: fixed;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  margin: auto;
+  background-color: rgba(0, 0, 0, 0.5);
+  z-index: 999;
+`;
+
+const PopupInner = styled.div`
+  position: absolute;
+  left: 20%;
+  right: 20%;
+  top: 30%;
+  bottom: 30%;
+  margin: auto;
+  background: white;
+
+  border-radius: 4%;
+  overflow: hidden;
+
+  animation-name: zoom;
+  animation-duration: 0.6s;
+
+  @keyframes zoom {
+    from {
+      transform: scale(0);
+    }
+    to {
+      transform: scale(1);
+    }
+  }
+`;
+const LIF = styled.div`
+  margin: 23% 10% 45% 10%;
+  height: 60%;
+  width: 80%;
+`;
+
+const LI = styled.img`
+  justify-content: center;
+  align-items: center;
+  object-fit: cover;
+  top: 0;
+  left: 0;
+  width: 95%;
 `;
 
 export default Search;

@@ -26,7 +26,7 @@ class PlaceGraph extends React.Component {
       area5: { area: "", city: "", cnt: 0 },
     };
   }
-  componentWillMount() {
+  UNSAFE_componentWillMount() {
     this.props.userStore.whoami(window.sessionStorage.getItem("email"));
   }
   render() {

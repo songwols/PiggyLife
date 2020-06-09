@@ -11,7 +11,7 @@ import 평민돼지 from "../Statistic/평민돼지.png";
 
 @inject("userStore", "statisticStore")
 @observer
-class UserInfo extends React.Component {
+class UserInfo2 extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -31,23 +31,22 @@ class UserInfo extends React.Component {
         category_group: "",
         count: 0,
       },
-      ranking: 0,
     };
   }
 
   async UNSAFE_componentWillMount() {
-    this.props.userStore.whoami(this.props.email);
-    await this.props.statisticStore.getCategoryStatisticByEmail(
+    await this.props.userStore.whoru(this.props.email);
+    await this.props.statisticStore.fgetCategoryStatisticByEmail(
       this.props.email
     );
     this.setState({
-      Name: this.props.userStore.nickname,
-      Image: this.props.userStore.image,
-      Level: this.props.userStore.ranking,
-      RName: this.props.userStore.rname,
-      cate1: this.props.statisticStore.cate1,
-      cate2: this.props.statisticStore.cate2,
-      cate3: this.props.statisticStore.cate3,
+      Name: this.props.userStore.fnickname,
+      Image: this.props.userStore.fimage,
+      Level: this.props.userStore.franking,
+      RName: this.props.userStore.frname,
+      cate1: this.props.statisticStore.fcate1,
+      cate2: this.props.statisticStore.fcate2,
+      cate3: this.props.statisticStore.fcate3,
     });
   }
 
@@ -131,4 +130,4 @@ const Img = styled.img`
 const Level = styled.div``;
 const Type = styled.div``;
 
-export default UserInfo;
+export default UserInfo2;

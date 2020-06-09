@@ -100,7 +100,7 @@ class Navbar extends React.Component {
           <Link to={"/Home"} style={{ textDecoration: "none" }}>
             <Home
               onClick={this.HomeClick}
-              color={localStorage.getItem("home")}
+              color={window.sessionStorage.getItem("home")}
             ></Home>
           </Link>
         </HOME>
@@ -108,7 +108,7 @@ class Navbar extends React.Component {
           <Link to={"/Feed"} style={{ textDecoration: "none" }}>
             <Feed
               onClick={this.FeedClick}
-              color={localStorage.getItem("feed")}
+              color={window.sessionStorage.getItem("feed")}
             ></Feed>
           </Link>
         </FEED>
@@ -116,7 +116,7 @@ class Navbar extends React.Component {
           <Link to={"/Write"} style={{ textDecoration: "none" }}>
             <Post
               onClick={this.PostClick}
-              color={localStorage.getItem("post")}
+              color={window.sessionStorage.getItem("post")}
             ></Post>
           </Link>
         </POST>
@@ -124,7 +124,7 @@ class Navbar extends React.Component {
           <Link to={"/Map"} style={{ textDecoration: "none" }}>
             <MapIcon
               onClick={this.MapClick}
-              color={localStorage.getItem("map")}
+              color={window.sessionStorage.getItem("map")}
             ></MapIcon>
           </Link>
         </MAP>
@@ -133,7 +133,7 @@ class Navbar extends React.Component {
           <Link to={"/Match"} style={{ textDecoration: "none" }}>
             <Muk
               onClick={this.MatchClick}
-              color={localStorage.getItem("match")}
+              color={window.sessionStorage.getItem("match")}
             ></Muk>
           </Link>
         </Match>

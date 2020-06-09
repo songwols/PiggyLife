@@ -6,6 +6,10 @@ import { withRouter } from "react-router-dom";
 
 @withRouter
 class Top extends React.Component{
+    async UNSAFE_componentWillMount() {
+        window.scrollTo(0, 0);
+    }
+    
     render(){
         const goBack = (e) => {
             e.preventDefault();
