@@ -122,8 +122,11 @@ export default class StoreStore {
       .then((res) => {
         this.storeItems = res.data;
         if (res.data.length === 0) {
-          alert("검색된 데이터가 없습니다.");
-          window.location.reload();
+          if(window.confirm("검색된 데이터가 없습니다. 데이터 추가를 하러 가시겠습니까?")){
+            window.location.replace("/more")
+          }else{
+            window.location.replace("/write")
+          }
         }
       })
       .catch((err) => alert("실패"));
