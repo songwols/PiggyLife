@@ -2,6 +2,8 @@ import React from "react";
 import styled from "styled-components";
 import { inject, observer } from "mobx-react";
 import CheckPopUp from "../EditPro/checkPopUp";
+
+export const Links = styled
 @inject("userStore")
 @observer
 class More extends React.Component {
@@ -37,6 +39,9 @@ class More extends React.Component {
   goRequest = (e) => {
     //this.props.storeStore.request
   }
+  suggestList = (e) => {
+    window.location.replace("/adminS")
+  }
 
   render() {
     return (
@@ -53,6 +58,10 @@ class More extends React.Component {
           <a href="https://pf.kakao.com/_fzqDxb">
             <Button>고객센터</Button>
           </a>
+        </BF>
+        <Space></Space>
+        <BF>
+          <Button onClick={this.suggestList}>추가된 데이터 조회</Button>
         </BF>
         <Space></Space>
         <BF>

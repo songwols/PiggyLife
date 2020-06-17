@@ -18,6 +18,8 @@ import DetailPage from "./pages/DetailPage";
 import MatchingResultPage from "./pages/MatchingResultPage";
 import MyDetailPage from "./pages/MyDetailPage";
 import EditDetailPage from "./pages/EditDetailPage";
+import AdminRegisterPage from "./pages/AdminRegisterPage";
+import AdminSearchPage from "./pages/AdminSearchPage";
 
 @inject("colorStore")
 @observer
@@ -40,6 +42,8 @@ class App extends React.Component {
             <Route path="/result/:fid" component={MatchingResultPage} />
             <Route path="/mydetail/:pid" component={MyDetailPage} />
             <Route path="/editdetail/:pid" component={EditDetailPage} />
+            <Route path="/adminR" component={AdminRegisterPage} />
+            <Route path="/adminS" component={AdminSearchPage} />
             <Route path="/" component={HomePage} />
           </Switch>
         ) : (
