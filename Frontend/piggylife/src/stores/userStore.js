@@ -87,8 +87,13 @@ export default class UserStore {
   findByEmail(email) {
     return agent.Data.findByEmail(email)
       .then((res) => {
-        this.femail = email;
-        window.location.replace("/Result/" + email);
+        if(res.data.status !== false){
+          this.femail = email;
+          window.location.replace("/Result/" + email);
+        }
+        else{
+          alert("존재하지 않는 이메일입니다. 다시 확인해주세요.");
+        }
       })
       .catch((err) => {
         alert("존재하지 않는 이메일입니다.");
