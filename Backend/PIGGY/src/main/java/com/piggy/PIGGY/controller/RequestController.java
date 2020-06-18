@@ -38,7 +38,6 @@ public class RequestController {
 			ResultDto output = new ResultDto(true, 1, "생성성공");
 			return new ResponseEntity<Object>(output, HttpStatus.OK);
 		} catch (Exception e) {
-			System.out.println(e.getMessage());
 			ResultDto output = new ResultDto(false, -1, "생성실패", e.getMessage());
 			return new ResponseEntity<Object>(output, HttpStatus.BAD_REQUEST);
 		}
