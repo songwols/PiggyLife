@@ -76,7 +76,7 @@ public class User implements UserDetails {
 	private List<Post> feeds = new ArrayList<>();
 
 	@Builder
-	public User(String email, String password, String nickname, String image, String emailCertify, Integer ranking, List<String> roles) {
+	public User(String email, String password, String nickname, String image, String emailCertify, Integer ranking, Boolean superuser, List<String> roles) {
 		this.email = email;
 		this.password = password;
 		this.nickname = nickname;
@@ -84,6 +84,7 @@ public class User implements UserDetails {
 		this.roles = roles;
 		this.emailCertify = emailCertify; 
 		this.ranking = ranking;
+		this.superuser = superuser;
 	}
 	
 	public void passwordUpdate(String password) {
