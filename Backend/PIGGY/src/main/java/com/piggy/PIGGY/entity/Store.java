@@ -101,4 +101,19 @@ public class Store {
 		this.category_group = category_group;
 		this.branch = branch;
 	}
+	
+	public void update(String name, String tel, String address, BigDecimal latitude, BigDecimal longitude, String category, String category_group, String branch) {
+		this.name = name;
+		this.tel = tel;
+		this.address = address;
+		this.latitude = latitude;
+		this.longitude = longitude;
+		this.category = category;
+		this.category_group = category_group;
+		this.branch = branch;
+	}
+	
+	public void updateImg(String image) {
+		this.image = image;
+	}
 }

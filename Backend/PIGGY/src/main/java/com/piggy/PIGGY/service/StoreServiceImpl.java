@@ -10,9 +10,13 @@ import javax.persistence.Query;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.piggy.PIGGY.dto.MenuDto;
+import com.piggy.PIGGY.dto.ImageDto;
 import com.piggy.PIGGY.dto.StoreInputDto;
 import com.piggy.PIGGY.dto.StoreTop10Dto;
+import com.piggy.PIGGY.entity.Menu;
 import com.piggy.PIGGY.entity.Store;
+import com.piggy.PIGGY.repository.MenuRepository;
 import com.piggy.PIGGY.repository.StoreRepository;
 
 @Service
@@ -24,17 +28,56 @@ public class StoreServiceImpl implements StoreService {
 	@Autowired
 	private StoreRepository sRepo;
 	
+	@Autowired
+	private MenuRepository mRepo;
+	
 	@Override
-	public Store create(StoreInputDto store) {
-		return sRepo.save(Store.builder()
-				.name(store.getName())
-				.tel(store.getTel())
-				.address(store.getAddress())
-				.latitude(store.getLatitude())
-				.longitude(store.getLongitude())
-				.category(store.getCategory())
+	public void create(StoreInputDto input) {
+		Store store = sRepo.save(Store.builder()
+				.name(input.getName())
+				.address(input.getAddress())
+				.branch(input.getBranch())
+				.tel(input.getTel())
+				.category(input.getCategory())
+				.category_group(input.getCategoryGroup())
+				.latitude(input.getLatitude())
+				.longitude(input.getLongitude())
 				.build()
 				);
+		
+		for (MenuDto menu : input.getMenues()) {
+			mRepo.save(Menu.builder()
+					.store(store)
+					.menuName(menu.getMenuName())
+					.price(menu.getPrice())
+					.build()
+					);		
+		}
+	}
+	
+	@Override
+	public Store update(Long sId, StoreInputDto input) {
+		Store store = sRepo.findById(sId).orElseThrow(NoSuchElementException::new);
+		mRepo.deleteByStore(store);
+		for (MenuDto menu : input.getMenues()) {
+			mRepo.save(Menu.builder()
+					.store(store)
+					.menuName(menu.getMenuName())
+					.price(menu.getPrice())
+					.build()
+					);		
+		}
+		
+		store.update(input.getName(), 
+				input.getTel(), 
+				input.getAddress(), 
+				input.getLatitude(), 
+				input.getLongitude(), 
+				input.getCategory(), 
+				input.getCategoryGroup(), 
+				input.getBranch());
+		
+		return sRepo.save(store);
 	}
 
 	@Override
@@ -58,6 +101,18 @@ public class StoreServiceImpl implements StoreService {
 	@Override
 	public List<Store> findByName(String name) {
 		return sRepo.findByNameContainingOrderByNameAscAddressAsc(name);
+	}
+
+	@Override
+	public void delete(Long sid) {
+		sRepo.deleteById(sid);
+	}
+	
+	@Override
+	public Store updateImage(Long sId, ImageDto dto) {
+		Store store = sRepo.findById(sId).orElseThrow(NoSuchElementException::new);
+		store.updateImg(dto.getImage());
+		return sRepo.save(store);
 	}
 
 }
