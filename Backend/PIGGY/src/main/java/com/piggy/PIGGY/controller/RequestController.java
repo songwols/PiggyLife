@@ -21,8 +21,8 @@ import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 
 @RestController
-@Api(tags = { "Admin" }, description = "관리자 정보 REST API")
-@RequestMapping(value = "/admin")
+@Api(tags = { "Request" }, description = "관리자 정보 REST API")
+@RequestMapping(value = "/Request")
 @CrossOrigin(origins = "*")
 public class RequestController {
 
