@@ -8,6 +8,8 @@ import { inject, observer } from "mobx-react";
 @observer
 class Card extends React.Component {
   render() {
+    console.log(this.props.store)
+    const info=this.props.store;
     const Register = (e) => {
       e.preventDefault();
       this.props.history.push("/adminR");
@@ -15,16 +17,16 @@ class Card extends React.Component {
 
     const Delete = (e) => {
         e.preventDefault();
-        // this.props.history.push("/adminR");
+        this.props.storeStore.Requestdelete(info.urId)
       };
 
     return (
       <F>
         <Frame onClick={Register}>  
             <CF>
-            <T>가게 이름 : </T>
-            <T>가게 주소 : </T>
-            <T>등록자 : </T>
+            <T>가게 이름 : {info.name}</T> 
+            <T>가게 주소 : {info.address}</T> 
+            <T>등록자 : {info.user.nickname}</T>
             </CF>
         </Frame>
         <Close onClick={Delete}>삭제</Close>
@@ -49,6 +51,7 @@ const F = styled.div`
 `;
 
 const CF = styled.div`
+    text-align: left;
     grid-area: content;
 `
 
@@ -58,12 +61,13 @@ const Frame = styled.button`
   border: none;
   outline: none;
   cursor: pointer;
-  padding-right: 3rem;
+  padding-right: 1rem;
+  padding-left: 1rem;
 `;
 
 const T = styled.div`
   white-space: pre-line;
-  width: 70px;
+  width: 100%;
   height: auto;
   justify-content: center;
   align-items: center;

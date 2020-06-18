@@ -85,6 +85,10 @@ const Data = {
   get_hotplace: (uId) =>
     requests.get(`/recommend/findAreaRecommend?uId=${uId}`),
   deleteUser: (token) => requests.delete(`/user/deleteUser`, { TOKEN: token }),
+  requestStore: (data,uid) => requests.post(`/Request/create/${uid}/?name=${data.store_name}&address=${data.address}`),
+  requestFindAll: () => requests.get(`/Request/findAll`),
+  Requestdelete: (urid) => requests.delete(`/Request/delete/${urid}`),
+  requestFindMy: (uid) => requests.get(`/Request/findByUser/${uid}`),
 };
 
 export default {

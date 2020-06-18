@@ -14,6 +14,7 @@ export default class UserStore {
   @observable frname = "";
   @observable fnickname = "";
   @observable fimage = "";
+  @observable superuser = "";
 
   @action
   deleteUser(token) {
@@ -116,6 +117,7 @@ export default class UserStore {
         this.image = res.data.image;
         this.nickname = res.data.nickname;
         this.ranking = res.data.ranking;
+        this.superuser = res.data.superuser;
         if (this.ranking === 0) {
           this.rname = "아기돼지";
         } else if (this.ranking === 1) {

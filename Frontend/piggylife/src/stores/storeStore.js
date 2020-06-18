@@ -15,6 +15,8 @@ export default class StoreStore {
   @observable for2 = [];
   @observable newplace = [];
   @observable similarity = "";
+  @observable RFindAll = [];
+  @observable RFindMy = [];
 
   @computed get postslength() {
     return this.posts.length;
@@ -213,5 +215,43 @@ export default class StoreStore {
         window.location.replace("/feed");
       })
       .catch((err) => alert("실패"));
+  }
+
+  @action requestStore(data){
+    return agent.Data.requestStore(data, sessionStorage.getItem("uid"))
+    .then((res) => {
+      alert("성공적으로 요청되었습니다.")
+    })
+    .catch((err) => alert("실패"));
+  }
+
+  @action requestFindAll(){
+    return agent.Data.requestFindAll()
+    .then((res) => {
+      this.setRequests(res.data);
+    })
+    .catch((err) => alert("실패"));
+  }
+
+  @action
+  setRequests(data) {
+    this.RFindAll = data;
+  }
+
+  @action Requestdelete(urid){
+    return agent.Data.Requestdelete(urid)
+    .then((res) => {
+      alert("삭제가 완료되었습니다.")
+      window.location.replace("/adminS");
+    })
+    .catch((err) => alert("실패"));
+  }
+
+  @action requestFindMy(uid){
+    return agent.Data.requestFindMy(uid)
+    .then((res) => {
+      this.RFindMy=res.data;
+    })
+    .catch((err) => alert("실패"));
   }
 }

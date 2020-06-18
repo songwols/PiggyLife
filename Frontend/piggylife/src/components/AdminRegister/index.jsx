@@ -38,6 +38,8 @@ class AdminRegister extends React.Component {
       v_address: "",
       v_tel: "",
       v_menu: "",
+      v_latitude: "",
+      v_longitude: "",
       click: 0,
       file: "",
       previewURL: "",
