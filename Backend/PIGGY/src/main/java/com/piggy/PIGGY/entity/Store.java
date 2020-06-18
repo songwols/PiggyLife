@@ -91,7 +91,7 @@ public class Store {
 	private List<Menu> menues = new ArrayList<>();
 
 	@Builder
-	public Store(String name, String tel, String address, BigDecimal latitude, BigDecimal longitude, String category, String category_group, String branch) {
+	public Store(String name, String tel, String address, BigDecimal latitude, BigDecimal longitude, String category, String category_group, String branch, Region region) {
 		this.name = name;
 		this.tel = tel;
 		this.address = address;
@@ -100,5 +100,22 @@ public class Store {
 		this.category = category;
 		this.category_group = category_group;
 		this.branch = branch;
+		this.region = region;
+	}
+	
+	public void update(String name, String tel, String address, BigDecimal latitude, BigDecimal longitude, String category, String category_group, String branch, Region region) {
+		this.name = name;
+		this.tel = tel;
+		this.address = address;
+		this.latitude = latitude;
+		this.longitude = longitude;
+		this.category = category;
+		this.category_group = category_group;
+		this.branch = branch;
+		this.region = region;
+	}
+	
+	public void updateImg(String image) {
+		this.image = image;
 	}
 }

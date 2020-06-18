@@ -21,7 +21,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.piggy.PIGGY.dto.PostAreaStatisticDto;
 import com.piggy.PIGGY.dto.PostCategoryStatisticDto;
-import com.piggy.PIGGY.dto.PostImageDto;
+import com.piggy.PIGGY.dto.ImageDto;
 import com.piggy.PIGGY.dto.PostInputDto;
 import com.piggy.PIGGY.dto.PostOutputDto;
 import com.piggy.PIGGY.dto.ResultDto;
@@ -127,12 +127,12 @@ public class PostRestController {
 			Post post = pService.findById(pId);
 			PostInputDto dto = new PostInputDto(post.getStore().getSId(), content, visited, isLike);
 			post = pService.update(pId, dto);
-			if(file != null && post.getImageName()!=null) {
+			if(file != null && post.getImageName() != null) {
 				fileService.deleteImage(post.getImageName());
 			}
 			if(file != null && !file.getName().equals(post.getImageName())) {
 				Map<String, Object> responseImage = fileService.uploadImage(file, "post");
-				PostImageDto imageDto = new PostImageDto(pId, responseImage.get("image").toString(), responseImage.get("imageName").toString());
+				ImageDto imageDto = new ImageDto(pId, responseImage.get("image").toString(), responseImage.get("imageName").toString());
 				post = pService.updateImage(pId, imageDto);
 			}
 			PostOutputDto output = MapperUtils.map(post, PostOutputDto.class);
@@ -231,7 +231,7 @@ public class PostRestController {
 	public ResponseEntity<Object> postImage(@PathVariable Long pId , @RequestParam("file") MultipartFile file) {
 		try {
 			Map<String, Object> responseImage = fileService.uploadImage(file, "post");
-			PostImageDto dto = new PostImageDto(pId, responseImage.get("image").toString(), responseImage.get("imageName").toString());
+			ImageDto dto = new ImageDto(pId, responseImage.get("image").toString(), responseImage.get("imageName").toString());
 			Post post = pService.updateImage(pId, dto);
 			PostOutputDto output = MapperUtils.map(post, PostOutputDto.class);
 			return new ResponseEntity<Object>(output, HttpStatus.OK);

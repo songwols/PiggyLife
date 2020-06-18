@@ -7,9 +7,9 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 @Data
-public class PostImageDto {
+public class ImageDto {
 	
-	private Long pId;
+	private Long id;
 	private String image;
 	private String imageName;
 }

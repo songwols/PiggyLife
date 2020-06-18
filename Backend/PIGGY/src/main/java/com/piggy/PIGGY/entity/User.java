@@ -64,7 +64,14 @@ public class User implements UserDetails {
 	
 	@Column
 	private String emailCertify;
-
+	
+//	@Column(columnDefinition="tinyint(1) default 1")
+	@Column(nullable = false)
+	private Boolean superuser;
+	
+	@OneToMany(mappedBy = "user", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+	private List<UserRequest> requests = new ArrayList<>();
+	
 	@OneToMany(mappedBy = "user", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
 	private List<Post> feeds = new ArrayList<>();
 
