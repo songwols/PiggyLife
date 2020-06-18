@@ -36,6 +36,12 @@ public class RequestServiceImpl implements RequestService {
 	public List<UserRequestDto> findAll() {
 		return MapperUtils.mapAll(urRepo.findAll(), UserRequestDto.class);
 	}
+	
+	@Override
+	public List<UserRequestDto> findByUser(Long uId) {
+		User user = uRepo.findById(uId).orElseThrow(NoSuchElementException::new);
+		return MapperUtils.mapAll(urRepo.findByUser(user), UserRequestDto.class);
+	}
 
 	@Override
 	public void delete(Long urId) {

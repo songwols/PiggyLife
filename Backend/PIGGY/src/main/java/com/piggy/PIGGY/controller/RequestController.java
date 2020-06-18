@@ -44,9 +44,21 @@ public class RequestController {
 	
 	@ApiOperation(value = "유저의 모든 요청 불러오기")
 	@GetMapping("/findAll")
-	public ResponseEntity<Object> create() {
+	public ResponseEntity<Object> findAll() {
 		try {
 			List<UserRequestDto> dtos = requestService.findAll();
+			return new ResponseEntity<Object>(dtos, HttpStatus.OK);
+		} catch (Exception e) {
+			ResultDto output = new ResultDto(false, -1, "불러오기 실패");
+			return new ResponseEntity<Object>(output, HttpStatus.BAD_REQUEST);
+		}
+	}
+	
+	@ApiOperation(value = "유저의 모든 요청 불러오기")
+	@GetMapping("/findByUser/{uId}")
+	public ResponseEntity<Object> findByUser(@PathVariable Long uId) {
+		try {
+			List<UserRequestDto> dtos = requestService.findByUser(uId);
 			return new ResponseEntity<Object>(dtos, HttpStatus.OK);
 		} catch (Exception e) {
 			ResultDto output = new ResultDto(false, -1, "불러오기 실패");

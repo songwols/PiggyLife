@@ -10,6 +10,8 @@ public interface RequestService {
 	
 	public List<UserRequestDto> findAll();
 	
+	public List<UserRequestDto> findByUser(Long uId);
+	
 	public void delete(Long urId);
 	
 }
