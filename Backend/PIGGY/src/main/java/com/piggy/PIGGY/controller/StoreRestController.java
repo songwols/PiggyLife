@@ -53,27 +53,27 @@ public class StoreRestController {
 	public ResponseEntity<Object> create(@RequestBody StoreInputDto dto) {
 		try {
 			log.trace("StoreRestController - create", dto);
-			sService.create(dto);
-			ResultDto output = new ResultDto(true, 1, "생성에 성공했습니다.");
+			StoreOutputDto store = sService.create(dto);
+			ResultDto output = new ResultDto(true, 1, "생성에 성공했습니다.", store);
 			return new ResponseEntity<Object>(output, HttpStatus.OK);
 		} catch (Exception e) {
-			Map<String, Object> resultMap = new HashMap<String, Object>();
-			resultMap.put("data", e.getMessage());
-			resultMap.put("status", false);
-			return new ResponseEntity<Object>(resultMap, HttpStatus.BAD_REQUEST);
+			ResultDto output = new ResultDto(false, -1, "생성에 실패했습니다.", e.getMessage());
+			return new ResponseEntity<Object>(output, HttpStatus.BAD_REQUEST);
 		}
 	}
 	
 	@ApiOperation(value = "Store 업데이트")
 	@PutMapping("/update/{sId}")
-	public ResponseEntity<Object> update(@PathVariable Long sId, @RequestBody StoreInputDto dto, @RequestParam(value="file", required=false) MultipartFile file) {
+	public ResponseEntity<Object> update(@PathVariable Long sId, @RequestBody StoreInputDto dto
+//			, @RequestParam(value="file", required=false) MultipartFile file
+			) {
 		try {
 			log.trace("StoreRestController - update");
-			Store store = sService.update(sId, dto);
-			ResultDto output = new ResultDto(true, 1, "수정에 성공했습니다.");
+			StoreOutputDto store = sService.update(sId, dto);
+			ResultDto output = new ResultDto(true, 1, "수정에 성공했습니다.", store);
 			return new ResponseEntity<Object>(output, HttpStatus.OK);
 		} catch (Exception e) {
-			ResultDto output = new ResultDto(false, -1, "수정에 실패했습니다.");
+			ResultDto output = new ResultDto(false, -1, "수정에 실패했습니다.", e.getMessage());
 			return new ResponseEntity<Object>(output, HttpStatus.BAD_REQUEST);
 		}
 	}
@@ -127,15 +127,15 @@ public class StoreRestController {
 	}
 	
 	@ApiOperation(value = "가게 삭제")
-	@DeleteMapping("/delete/{sId}")
-	public ResponseEntity<Object> delete(@PathVariable Long sid) {
+	@DeleteMapping("/delete")
+	public ResponseEntity<Object> delete(@RequestParam Long sid) {
 		try {
 			log.trace("StoreRestController - delete");
 			sService.delete(sid);
 			ResultDto output = new ResultDto(true, 1, "성공적으로 삭제되었습니다.");
 			return new ResponseEntity<Object>(output, HttpStatus.OK);
 		} catch (Exception e) {
-			ResultDto output = new ResultDto(false, -1, "삭제에 실패했습니다.");
+			ResultDto output = new ResultDto(false, -1, "삭제에 실패했습니다.", e.getMessage());
 			return new ResponseEntity<Object>(output, HttpStatus.BAD_REQUEST);
 		}
 	}

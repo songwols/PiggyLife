@@ -12,6 +12,6 @@ public class UserRequestDto {
 	private Long urId;
 	private String name;
 	private String address;
-	private String userEmail;
+	private UserDto user;
 	
 }

@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -37,7 +38,8 @@ public class RequestController {
 			ResultDto output = new ResultDto(true, 1, "생성성공");
 			return new ResponseEntity<Object>(output, HttpStatus.OK);
 		} catch (Exception e) {
-			ResultDto output = new ResultDto(false, -1, "생성실패");
+			System.out.println(e.getMessage());
+			ResultDto output = new ResultDto(false, -1, "생성실패", e.getMessage());
 			return new ResponseEntity<Object>(output, HttpStatus.BAD_REQUEST);
 		}
 	}
@@ -49,7 +51,7 @@ public class RequestController {
 			List<UserRequestDto> dtos = requestService.findAll();
 			return new ResponseEntity<Object>(dtos, HttpStatus.OK);
 		} catch (Exception e) {
-			ResultDto output = new ResultDto(false, -1, "불러오기 실패");
+			ResultDto output = new ResultDto(false, -1, "불러오기 실패", e.getMessage());
 			return new ResponseEntity<Object>(output, HttpStatus.BAD_REQUEST);
 		}
 	}
@@ -61,20 +63,20 @@ public class RequestController {
 			List<UserRequestDto> dtos = requestService.findByUser(uId);
 			return new ResponseEntity<Object>(dtos, HttpStatus.OK);
 		} catch (Exception e) {
-			ResultDto output = new ResultDto(false, -1, "불러오기 실패");
+			ResultDto output = new ResultDto(false, -1, "불러오기 실패", e.getMessage());
 			return new ResponseEntity<Object>(output, HttpStatus.BAD_REQUEST);
 		}
 	}
 	
 	@ApiOperation(value = "유저 요청 삭제")
-	@GetMapping("/delete/{urId}")
+	@DeleteMapping("/delete/{urId}")
 	public ResponseEntity<Object> delete(@PathVariable Long urId) {
 		try {
 			requestService.delete(urId);
 			ResultDto output = new ResultDto(true, 1, "삭제 성공");
 			return new ResponseEntity<Object>(output, HttpStatus.OK);
 		} catch (Exception e) {
-			ResultDto output = new ResultDto(false, -1, "삭제 실패");
+			ResultDto output = new ResultDto(false, -1, "삭제 실패", e.getMessage());
 			return new ResponseEntity<Object>(output, HttpStatus.BAD_REQUEST);
 		}
 	}

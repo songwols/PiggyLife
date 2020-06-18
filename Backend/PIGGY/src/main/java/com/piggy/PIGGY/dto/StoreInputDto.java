@@ -21,7 +21,7 @@ public class StoreInputDto {
 	private String category;
 	private String categoryGroup;
 	private String image;
-	private String rId;
+	private Long rId;
 	private List<MenuDto> menues;
 
 }

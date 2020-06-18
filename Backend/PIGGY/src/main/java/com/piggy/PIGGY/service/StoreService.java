@@ -4,14 +4,15 @@ import java.util.List;
 
 import com.piggy.PIGGY.dto.ImageDto;
 import com.piggy.PIGGY.dto.StoreInputDto;
+import com.piggy.PIGGY.dto.StoreOutputDto;
 import com.piggy.PIGGY.dto.StoreTop10Dto;
 import com.piggy.PIGGY.entity.Store;
 
 public interface StoreService {
 
-	public void create(StoreInputDto input);
+	public StoreOutputDto create(StoreInputDto input);
 	
-	public Store update(Long sId, StoreInputDto input);
+	public StoreOutputDto update(Long sId, StoreInputDto input);
 	
 	public Store findById(Long sId);
 	

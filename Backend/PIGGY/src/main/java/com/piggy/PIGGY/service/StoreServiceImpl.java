@@ -6,6 +6,7 @@ import java.util.NoSuchElementException;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
+import javax.transaction.Transactional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -13,11 +14,15 @@ import org.springframework.stereotype.Service;
 import com.piggy.PIGGY.dto.MenuDto;
 import com.piggy.PIGGY.dto.ImageDto;
 import com.piggy.PIGGY.dto.StoreInputDto;
+import com.piggy.PIGGY.dto.StoreOutputDto;
 import com.piggy.PIGGY.dto.StoreTop10Dto;
 import com.piggy.PIGGY.entity.Menu;
+import com.piggy.PIGGY.entity.Region;
 import com.piggy.PIGGY.entity.Store;
 import com.piggy.PIGGY.repository.MenuRepository;
+import com.piggy.PIGGY.repository.RegionRepository;
 import com.piggy.PIGGY.repository.StoreRepository;
+import com.piggy.PIGGY.util.MapperUtils;
 
 @Service
 public class StoreServiceImpl implements StoreService {
@@ -31,8 +36,14 @@ public class StoreServiceImpl implements StoreService {
 	@Autowired
 	private MenuRepository mRepo;
 	
+	@Autowired
+	private RegionRepository rRepo;
+	
 	@Override
-	public void create(StoreInputDto input) {
+	public StoreOutputDto create(StoreInputDto input) {
+		
+		Region region = rRepo.findById(input.getRId()).orElseThrow(NoSuchElementException::new);
+		
 		Store store = sRepo.save(Store.builder()
 				.name(input.getName())
 				.address(input.getAddress())
@@ -42,6 +53,7 @@ public class StoreServiceImpl implements StoreService {
 				.category_group(input.getCategoryGroup())
 				.latitude(input.getLatitude())
 				.longitude(input.getLongitude())
+				.region(region)
 				.build()
 				);
 		
@@ -53,10 +65,13 @@ public class StoreServiceImpl implements StoreService {
 					.build()
 					);		
 		}
+		
+		return MapperUtils.map(store, StoreOutputDto.class);
 	}
 	
+	@Transactional
 	@Override
-	public Store update(Long sId, StoreInputDto input) {
+	public StoreOutputDto update(Long sId, StoreInputDto input) {
 		Store store = sRepo.findById(sId).orElseThrow(NoSuchElementException::new);
 		mRepo.deleteByStore(store);
 		for (MenuDto menu : input.getMenues()) {
@@ -67,7 +82,8 @@ public class StoreServiceImpl implements StoreService {
 					.build()
 					);		
 		}
-		
+
+		Region region = rRepo.findById(input.getRId()).orElseThrow(NoSuchElementException::new);
 		store.update(input.getName(), 
 				input.getTel(), 
 				input.getAddress(), 
@@ -75,9 +91,10 @@ public class StoreServiceImpl implements StoreService {
 				input.getLongitude(), 
 				input.getCategory(), 
 				input.getCategoryGroup(), 
-				input.getBranch());
+				input.getBranch(),
+				region);
 		
-		return sRepo.save(store);
+		return MapperUtils.map(sRepo.save(store), StoreOutputDto.class);
 	}
 
 	@Override
