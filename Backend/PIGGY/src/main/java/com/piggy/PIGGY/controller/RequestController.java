@@ -15,7 +15,6 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.piggy.PIGGY.dto.ResultDto;
 import com.piggy.PIGGY.dto.UserRequestDto;
-import com.piggy.PIGGY.service.AdminService;
 import com.piggy.PIGGY.service.RequestService;
 
 import io.swagger.annotations.Api;
