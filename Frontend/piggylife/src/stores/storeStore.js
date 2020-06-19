@@ -17,6 +17,7 @@ export default class StoreStore {
   @observable similarity = "";
   @observable RFindAll = [];
   @observable RFindMy = [];
+  @observable menuList = [];
 
   @computed get postslength() {
     return this.posts.length;
@@ -239,10 +240,15 @@ export default class StoreStore {
     this.RFindAll = data;
   }
 
-  @action Requestdelete(urid){
+  @action Requestdelete(urid, ck){
     return agent.Data.Requestdelete(urid)
-    .then((res) => {
-      alert("삭제가 완료되었습니다.")
+    .then((res) => { 
+      if(ck!==1){
+        alert("삭제가 완료되었습니다.")
+      }
+      else{
+        alert("업로드가 성공적으로 완료되었습니다.")
+      }      
       window.location.replace("/adminS");
     })
     .catch((err) => alert("실패"));
@@ -257,11 +263,36 @@ export default class StoreStore {
   }
 
   @action createStore(data, file, urid){
-    return agent.Data.createStore(data, file)
+    for (var i = 0; i < data.menues.length; i++) {
+      var mname = [...data.menues[i].split(':')];
+      this.menuList = this.menuList.concat({
+          menuName: mname[0],
+          price: mname[1],
+          sid: 0,
+      });
+    }
+    return agent.Data.createStore(data, this.menuList, file)
     .then((res) => {
-      alert("업로드가 성공적으로 완료되었습니다.")
-      this.Requestdelete(urid);
+      if (res.data.code === 1) {
+        if (file !== null) {
+          this.storeImage(file, res.data.obj.sid, urid);
+        }
+        else{
+          alert("업로드가 성공적으로 완료되었습니다.")
+          window.location.replace("/adminS");
+        }
+      } else {
+        alert(res.data.message);
+      }
     })
     .catch((err) => alert("실패"));
+  }
+
+  @action storeImage(file, id, urid) {
+    return agent.Data.storeImage(file, id)
+      .then((res) => {
+        this.Requestdelete(urid, 1);
+      })
+      .catch((err) => alert("이미지 등록에 실패하였습니다"));
   }
 }
