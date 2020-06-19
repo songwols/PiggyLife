@@ -79,13 +79,13 @@ public class Store {
 	@Column
 	private String branch;
 
-	@JsonIgnore
-	@OneToMany(mappedBy = "store", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-	private List<Post> posts = new ArrayList<>();
-	
 	@ManyToOne
 	@JoinColumn(name="rId")
 	private Region region;
+
+	@JsonIgnore
+	@OneToMany(mappedBy = "store", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+	private List<Post> posts = new ArrayList<>();
 	
 	@OneToMany(mappedBy = "store", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
 	private List<Menu> menues = new ArrayList<>();

@@ -26,7 +26,7 @@ public class UserRecommend{
     private long uId;
 
     @OneToOne
-    @PrimaryKeyJoinColumn(name="u_id", referencedColumnName="recommend")
+    @PrimaryKeyJoinColumn(name="u_id", referencedColumnName="UserRecommend")
     private User user;
 	
 	@Column

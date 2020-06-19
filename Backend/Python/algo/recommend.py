@@ -51,7 +51,7 @@ def convert_area(svd_preds, ori_posts, ori_stores):
             result = result + str(id) + ","
 
         now = datetime.datetime.now()
-        df = df.append(pd.DataFrame([[user, user_area[0], result, now.strftime('%Y-%m-%d %H:%M:%S')]], columns=['u_id', 'region_r_id', 'stores', 'update_time_at']), ignore_index=True)
+        df = df.append(pd.DataFrame([[user, int(user_area[0]), result, now.strftime('%Y-%m-%d %H:%M:%S')]], columns=['u_id', 'region_r_id', 'stores', 'update_time_at']), ignore_index=True)
 
     return df
 
