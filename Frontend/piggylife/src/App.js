@@ -29,7 +29,7 @@ class App extends React.Component {
       <Div>
         <GlobalStyle></GlobalStyle>
 
-        {window.sessionStorage.getItem("uid") !== null ? (
+        {window.sessionStorage.getItem("uid") === 35 ? (
           <Switch>
             <Route path="/map" component={MapPage} />
             <Route path="/feed" component={FeedPage} />
@@ -47,11 +47,31 @@ class App extends React.Component {
             <Route path="/" component={HomePage} />
           </Switch>
         ) : (
-          <Switch>
-            <Route path="/findpw" component={FindPWPage} />
-            <Route path="/join" component={JoinPage} />
-            <Route path="/" component={LoginPage} />
-          </Switch>
+          <Div>
+            {window.sessionStorage.getItem("uid") === null ? (
+              <Switch>
+                <Route path="/findpw" component={FindPWPage} />
+                <Route path="/join" component={JoinPage} />
+                <Route path="/" component={LoginPage} />
+              </Switch>
+            ) : (
+              <Switch>
+                <Route path="/map" component={MapPage} />
+                <Route path="/feed" component={FeedPage} />
+                <Route path="/home" component={HomePage} />
+                <Route path="/write" component={WritePage} />
+                <Route path="/match" component={MatchingPage} />
+                <Route path="/more" component={MorePage} />
+                <Route path="/editP" component={EditProPage} />
+                <Route path="/detail/:sid" component={DetailPage} />
+                <Route path="/result/:fid" component={MatchingResultPage} />
+                <Route path="/mydetail/:pid" component={MyDetailPage} />
+                <Route path="/editdetail/:pid" component={EditDetailPage} />
+                <Route path="/" component={HomePage} />
+              </Switch>
+            )}
+            ;
+          </Div>
         )}
       </Div>
     );
