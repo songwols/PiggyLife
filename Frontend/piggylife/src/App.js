@@ -67,6 +67,7 @@ class App extends React.Component {
                 <Route path="/result/:fid" component={MatchingResultPage} />
                 <Route path="/mydetail/:pid" component={MyDetailPage} />
                 <Route path="/editdetail/:pid" component={EditDetailPage} />
+                <Route path="/adminS" component={AdminSearchPage} />
                 <Route path="/" component={HomePage} />
               </Switch>
             )}
