@@ -45,14 +45,15 @@ class MapContent extends React.Component {
         //map 생성
         const map = new window.kakao.maps.Map(container, options);
         this.setState({ map: map });
+
         // HTML5의 geolocation으로 사용할 수 있는지 확인
         if (navigator.geolocation) {
           // GeoLocation을 이용해서 접속 위치를 얻어옵니다
           navigator.geolocation.getCurrentPosition(function (position) {
-            var lat = position.coords.latitude, // 위도
-              lon = position.coords.longitude; // 경도
-            // var locPosition = new kakao.maps.LatLng(37.5013068, 127.0396597), // 마커가 표시될 위치를 geolocation으로 얻어온 좌표로 생성합니다
-            var locPosition = new kakao.maps.LatLng(lat, lon), // 마커가 표시될 위치를 geolocation으로 얻어온 좌표로 생성합니다
+            // var lat = position.coords.latitude, // 위도
+            //   lon = position.coords.longitude; // 경도
+            var locPosition = new kakao.maps.LatLng(37.5013068, 127.0396597), // 마커가 표시될 위치를 geolocation으로 얻어온 좌표로 생성합니다
+              // var locPosition = new kakao.maps.LatLng(lat, lon), // 마커가 표시될 위치를 geolocation으로 얻어온 좌표로 생성합니다
               message = '<div style="padding:5px;">현재 여기계신가요?!</div>'; // 인포윈도우에 표시될 내용입니다
             // 마커와 인포윈도우를 표시합니다
             displayMarker(locPosition, message);
@@ -63,8 +64,6 @@ class MapContent extends React.Component {
             message = "geolocation을 사용할수 없어요..";
           displayMarker(locPosition, message);
         }
-        // locPosition = new kakao.maps.LatLng(37.5013068, 127.0396597);
-        //   displayMarker(locPosition);
         // 마커 이미지
         var current = currentimg;
 
@@ -101,7 +100,6 @@ class MapContent extends React.Component {
             var markerImage = null;
             markerImage = new kakao.maps.MarkerImage(willvis, imageSize);
             var marker = createMarker(willgoMakers[i], markerImage);
-            console.log(map);
             var infowindow = this.createInfoWindow(willgoMakers[i]);
             kakao.maps.event.addListener(
               marker,
