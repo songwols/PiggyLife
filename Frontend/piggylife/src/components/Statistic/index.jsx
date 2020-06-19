@@ -10,6 +10,10 @@ import 아기돼지 from "./아기돼지.png";
 import 어린돼지 from "./어린돼지.png";
 import 청년돼지 from "./청년돼지.png";
 import 평민돼지 from "./평민돼지.png";
+import 자작돼지 from "./자작돼지.png";
+import 공작돼지 from "./공작돼지.png";
+import 후작돼지 from "./후작돼지.png";
+import 백작돼지 from "./백작돼지.png";
 import { inject, observer } from "mobx-react";
 
 @inject("statisticStore", "userStore", "storeStore")
@@ -83,19 +87,19 @@ class Statistic extends React.Component {
     } else if (this.ranking === 6) {
       this.goalnum = 120;
       this.startnum = 90;
-      //this.img = 자작돼지;
+      this.img = 자작돼지;
     } else if (this.ranking === 7) {
       this.goalnum = 150;
       this.startnum = 120;
-      // this.img = 백작돼지;
+      this.img = 백작돼지;
     } else if (this.ranking === 8) {
       this.goalnum = 180;
       this.startnum = 150;
-      //this.img = 후작돼지;
+      this.img = 후작돼지;
     } else if (this.ranking === 9) {
       this.goalnum = 230;
       this.startnum = 180;
-      // this.img = 공작돼지;
+      this.img = 공작돼지;
     } else if (this.ranking === 10) {
       this.startnum = 230;
       this.img = 로얄돼지;

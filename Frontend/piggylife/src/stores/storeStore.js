@@ -15,6 +15,8 @@ export default class StoreStore {
   @observable for2 = [];
   @observable newplace = [];
   @observable similarity = "";
+  @observable RFindAll = [];
+  @observable RFindMy = [];
 
   @computed get postslength() {
     return this.posts.length;
@@ -122,8 +124,11 @@ export default class StoreStore {
       .then((res) => {
         this.storeItems = res.data;
         if (res.data.length === 0) {
-          alert("검색된 데이터가 없습니다.");
-          window.location.reload();
+          if(window.confirm("검색된 데이터가 없습니다. 데이터 추가를 하러 가시겠습니까?")){
+            window.location.replace("/more")
+          }else{
+            window.location.replace("/write")
+          }
         }
       })
       .catch((err) => alert("실패"));
@@ -210,5 +215,53 @@ export default class StoreStore {
         window.location.replace("/feed");
       })
       .catch((err) => alert("실패"));
+  }
+
+  @action requestStore(data){
+    return agent.Data.requestStore(data, sessionStorage.getItem("uid"))
+    .then((res) => {
+      alert("성공적으로 요청되었습니다.")
+      window.location.replace("/more");
+    })
+    .catch((err) => alert("실패"));
+  }
+
+  @action requestFindAll(){
+    return agent.Data.requestFindAll()
+    .then((res) => {
+      this.setRequests(res.data);
+    })
+    .catch((err) => alert("실패"));
+  }
+
+  @action
+  setRequests(data) {
+    this.RFindAll = data;
+  }
+
+  @action Requestdelete(urid){
+    return agent.Data.Requestdelete(urid)
+    .then((res) => {
+      alert("삭제가 완료되었습니다.")
+      window.location.replace("/adminS");
+    })
+    .catch((err) => alert("실패"));
+  }
+
+  @action requestFindMy(uid){
+    return agent.Data.requestFindMy(uid)
+    .then((res) => {
+      this.RFindMy=res.data;
+    })
+    .catch((err) => alert("실패"));
+  }
+
+  @action createStore(data, file, urid){
+    return agent.Data.createStore(data, file)
+    .then((res) => {
+      alert("업로드가 성공적으로 완료되었습니다.")
+      this.Requestdelete(urid);
+    })
+    .catch((err) => alert("실패"));
   }
 }

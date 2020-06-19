@@ -5,6 +5,8 @@ import java.time.LocalDateTime;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 import javax.persistence.PrimaryKeyJoinColumn;
 
@@ -26,13 +28,14 @@ public class AreaRecommend{
     private long uId;
 
     @OneToOne
-    @PrimaryKeyJoinColumn(name="u_id", referencedColumnName="recommend")
+    @PrimaryKeyJoinColumn(name="u_id", referencedColumnName="AreaRecommend")
     private User user;
 	
 	@Column
 	private String stores;
 	
-	@OneToOne
+	@ManyToOne
+	@JoinColumn(name="region_r_Id")
 	private Region region;
 	
 	@Column
