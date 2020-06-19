@@ -29,7 +29,7 @@ class App extends React.Component {
       <Div>
         <GlobalStyle></GlobalStyle>
 
-        {window.sessionStorage.getItem("uid") === 35 ? (
+        {window.sessionStorage.getItem("email") === "piggylife02@gmail.com" ? (
           <Switch>
             <Route path="/map" component={MapPage} />
             <Route path="/feed" component={FeedPage} />
