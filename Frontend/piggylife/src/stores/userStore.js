@@ -87,11 +87,10 @@ export default class UserStore {
   findByEmail(email) {
     return agent.Data.findByEmail(email)
       .then((res) => {
-        if(res.data.status !== false){
+        if (res.data.status !== false) {
           this.femail = email;
           window.location.replace("/Result/" + email);
-        }
-        else{
+        } else {
           alert("존재하지 않는 이메일입니다. 다시 확인해주세요.");
         }
       })
@@ -105,6 +104,11 @@ export default class UserStore {
     window.sessionStorage.removeItem("email");
     window.sessionStorage.removeItem("uid");
     window.sessionStorage.removeItem("token");
+    window.sessionStorage.setItem("feed", "#cccccc");
+    window.sessionStorage.setItem("post", "#cccccc");
+    window.sessionStorage.setItem("home", "#5897A6");
+    window.sessionStorage.setItem("map", "#cccccc");
+    window.sessionStorage.setItem("match", "#cccccc");
     alert("로그아웃 되었습니다.");
     window.location.replace("/");
   }
@@ -201,9 +205,15 @@ export default class UserStore {
           window.sessionStorage.setItem("email", user.email);
           window.sessionStorage.setItem("uid", res.data.uId);
           window.sessionStorage.setItem("token", res.data.token);
+          window.sessionStorage.setItem("feed", "#cccccc");
+          window.sessionStorage.setItem("post", "#cccccc");
+          window.sessionStorage.setItem("home", "#5897A6");
+          window.sessionStorage.setItem("map", "#cccccc");
+          window.sessionStorage.setItem("match", "#cccccc");
           window.location.replace("/Home");
         } else {
-          if(res.data.data===null) alert('아이디와 비밀번호를 다시 확인해주세요.')
+          if (res.data.data === null)
+            alert("아이디와 비밀번호를 다시 확인해주세요.");
           else alert(res.data.massage);
         }
       })
