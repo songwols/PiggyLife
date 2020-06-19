@@ -16,5 +16,7 @@ public interface RecommendService {
 	public AreaRecommendDto findAreaRecommend(Long uId);
 	
 	public MatchDto findMatch(String selfEmail, String friendEmail);
+
+	public AreaRecommendDto findPopularAreaRecommend();
 	
 }
