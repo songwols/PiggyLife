@@ -89,15 +89,15 @@ const Data = {
   requestFindAll: () => requests.get(`/Request/findAll`),
   Requestdelete: (urid) => requests.delete(`/Request/delete/${urid}`),
   requestFindMy: (uid) => requests.get(`/Request/findByUser/${uid}`),
-  createStore: (data, file) => requests.post(`/store/create`,{
+  createStore: (data, menu) => requests.post(`/store/create`,{
     address: data.v_address,
     branch: data.v_branch,
     category: data.v_category,
     categoryGroup: data.v_categoryGroup,
-    image: file,
+    image: "",
     latitude: data.latitude,
     longitude: data.longitude,
-    menues: data.v_menu,
+    menues: menu,
     name: data.v_name,
     rid: data.rid,
     tel: data.v_tel,

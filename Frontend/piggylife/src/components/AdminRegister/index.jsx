@@ -34,7 +34,7 @@ class AdminRegister extends React.Component {
       v_categoryGroup: "",
       v_address: "",
       v_tel: "",
-      v_menu: "",
+      menues:[],
       latitude: "",
       longitude: "",
       rid: "",
@@ -101,8 +101,9 @@ class AdminRegister extends React.Component {
 
   memuChange= (e) => {
     this.setState({
-      v_menu: e.target.value,
+      menues: [...e.target.value.split(',\n')],
     });
+    
   }
 
   goRegister = (e) => {
@@ -121,8 +122,8 @@ class AdminRegister extends React.Component {
       this.props.colorStore.setPostColor("#cccccc");
       this.props.colorStore.setMapColor("#cccccc");
       this.props.colorStore.setMatchColor("#cccccc");
-    //   this.props.storeStore.createStore(this.state, formData, this.props.id);
-    console.log(this.state)
+
+      this.props.storeStore.createStore(this.state, formData, this.props.id);
     }
   };
 

@@ -17,6 +17,7 @@ export default class StoreStore {
   @observable similarity = "";
   @observable RFindAll = [];
   @observable RFindMy = [];
+  @observable menuList = [];
 
   @computed get postslength() {
     return this.posts.length;
@@ -257,10 +258,26 @@ export default class StoreStore {
   }
 
   @action createStore(data, file, urid){
-    return agent.Data.createStore(data, file)
+    for (var i = 0; i < data.menues.length; i++) {
+      var mname = [...data.menues[i].split(':')];
+      this.menuList = this.menuList.concat({
+          menuName: mname[0],
+          price: mname[1],
+          sid: 0,
+      });
+    }
+    return agent.Data.createStore(data, this.menuList, file)
     .then((res) => {
       alert("업로드가 성공적으로 완료되었습니다.")
       this.Requestdelete(urid);
+      // if (res.data.code === 1) {
+      //   if (file !== null) {
+      //     this.이미지업로드(file, res.data.obj.sid);
+      //   }
+        // window.location.replace("/adminS");
+      // } else {
+      //   alert(res.data.message);
+      // }
     })
     .catch((err) => alert("실패"));
   }
