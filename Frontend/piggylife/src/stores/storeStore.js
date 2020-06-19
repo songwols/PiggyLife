@@ -221,6 +221,7 @@ export default class StoreStore {
     return agent.Data.requestStore(data, sessionStorage.getItem("uid"))
     .then((res) => {
       alert("성공적으로 요청되었습니다.")
+      window.location.replace("/more");
     })
     .catch((err) => alert("실패"));
   }
