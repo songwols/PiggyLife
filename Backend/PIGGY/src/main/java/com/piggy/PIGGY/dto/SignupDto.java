@@ -13,5 +13,4 @@ public class SignupDto {
 	private String password;
 	private String nickname;
 	private String image;
-	private Boolean superuser;
 }

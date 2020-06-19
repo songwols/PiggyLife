@@ -90,7 +90,7 @@ const InputFrame = styled.div`
 const InputBox = styled.div`
   grid-area: "inputbox";
   // height: 100%;
-  padding-top: 5%; //15%
+  padding-top: 15%;
   padding-bottom: 15%;
   padding-left: 5%;
 `;
@@ -128,8 +128,7 @@ const ButtonBox = styled.div`
   grid-area: "buttonbox";
   justify-items: center;
   text-align: center;
-  // padding: 30% 10% 30% 10%;
-  padding: 10% 10% 40% 10%;
+  padding: 30% 10% 30% 10%;
 `;
 
 const Button = styled.button`

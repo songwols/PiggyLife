@@ -12,10 +12,6 @@ import 아기돼지 from "../Statistic/아기돼지.png";
 import 어린돼지 from "../Statistic/어린돼지.png";
 import 청년돼지 from "../Statistic/청년돼지.png";
 import 평민돼지 from "../Statistic/평민돼지.png";
-import 자작돼지 from "../Statistic/자작돼지.png";
-import 공작돼지 from "../Statistic/공작돼지.png";
-import 후작돼지 from "../Statistic/후작돼지.png";
-import 백작돼지 from "../Statistic/백작돼지.png";
 
 export const More = styled(DotsVerticalRounded)`
   width: 2rem;
@@ -82,13 +78,13 @@ class Profile extends React.Component {
         defaultimg: 남작돼지,
       });
     } else if (this.props.ranking === 6) {
-      this.defaultimg = 자작돼지;
+      //this.defaultimg = 자작돼지;
     } else if (this.props.ranking === 7) {
-      this.defaultimg = 백작돼지;
+      // this.defaultimg = 백작돼지;
     } else if (this.props.ranking === 8) {
-      this.defaultimg = 후작돼지;
+      //this.defaultimg = 후작돼지;
     } else if (this.props.ranking === 9) {
-      this.defaultimg = 공작돼지;
+      // this.defaultimg = 공작돼지;
     } else if (this.props.ranking === 10) {
       this.setState({
         defaultimg: 로얄돼지,

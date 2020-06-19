@@ -216,12 +216,7 @@ def import_data(data_path=DATA_FILE):
 
     #data 가공
     for d in data:
-        
-        print("===================================================================check here for category")
         categories = [c["category"] for c in d["category_list"]]
-        print("===================================================================check here for category")
-
-        print(categories)
         # data에 주소가 없을때
         if d["address"] == None:
             continue

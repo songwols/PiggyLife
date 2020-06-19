@@ -77,7 +77,7 @@ const Data = {
     requests.get(`/post/getCategoryStatistic/${uId}`),
   getCategoryStatisticByEmail: (email) =>
     requests.get(`/post/getCategoryStatisticByEmail?email=${email}`),
-  postdelete: (pid, uid) => requests.delete(`/post/delete/${pid}?uId=${uid}`),
+  postdelete: (pid,uid) => requests.delete(`/post/delete/${pid}?uId=${uid}`),
   profileImage: (file, uid) =>
     requests.post(`/user/uploadImage/${uid}`, file, {}),
   get_for2: (mid, fid) =>
@@ -85,25 +85,6 @@ const Data = {
   get_hotplace: (uId) =>
     requests.get(`/recommend/findAreaRecommend?uId=${uId}`),
   deleteUser: (token) => requests.delete(`/user/deleteUser`, { TOKEN: token }),
-  requestStore: (data,uid) => requests.post(`/Request/create/${uid}/?name=${data.store_name}&address=${data.address}`),
-  requestFindAll: () => requests.get(`/Request/findAll`),
-  Requestdelete: (urid) => requests.delete(`/Request/delete/${urid}`),
-  requestFindMy: (uid) => requests.get(`/Request/findByUser/${uid}`),
-  createStore: (data, menu) => requests.post(`/store/create`,{
-    address: data.v_address,
-    branch: data.v_branch,
-    category: data.v_category,
-    categoryGroup: data.v_categoryGroup,
-    image: "",
-    latitude: data.latitude,
-    longitude: data.longitude,
-    menues: menu,
-    name: data.v_name,
-    rid: data.rid,
-    tel: data.v_tel,
-  }),
-  storeImage: (file, sid) =>
-    requests.post(`/store/storeImage/${sid}`, file, {}),
 };
 
 export default {

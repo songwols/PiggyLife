@@ -66,7 +66,7 @@ public class SignRestController {
 	public ResponseEntity<Object> emailSend(@RequestParam String email) {
 		try {
 			if (!uService.emailDuplicateCheck(email)) {
-				SignupDto user = new SignupDto(email, "dummy", "dummy", "dummy", false);
+				SignupDto user = new SignupDto(email, "dummy", "dummy", "dummy");
 				uService.signup(user);
 			}
 			

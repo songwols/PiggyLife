@@ -1,16 +1,11 @@
 package com.piggy.PIGGY.entity;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 
 import lombok.AccessLevel;
@@ -32,11 +27,8 @@ public class Region {
 	
 	private String area;
 	
-	@OneToMany(mappedBy="region", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-	private List<AreaRecommend> aRecommends = new ArrayList<>();
-	
-	@OneToMany(mappedBy = "region", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-	private List<Store> stores = new ArrayList<>();
+	@OneToOne(mappedBy="region", cascade=CascadeType.ALL)
+	private AreaRecommend aRecommend;
 
 	@Builder
 	public Region(Long rId, String city, String area) {

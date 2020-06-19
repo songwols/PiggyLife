@@ -14,6 +14,5 @@ public class UserDto {
 	private Integer ranking;
 	private String image;
 	private String imageName;
-	private Boolean superuser;
 	
 }
