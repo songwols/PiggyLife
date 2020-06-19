@@ -10,7 +10,8 @@ export default class StoreStore {
   @observable top10 = [];
   @observable hotplace = [];
   @observable similar = [];
-  @observable location = [];
+  @observable willGoLoc = [];
+  @observable visitLoc = [];
   @observable detailPost = {};
   @observable for2 = [];
   @observable newplace = [];
@@ -46,16 +47,28 @@ export default class StoreStore {
     return agent.Data.get_mypost(uid)
       .then((res) => {
         this.setPosts(res.data);
-        this.location = [];
+        this.willGoLoc = [];
+        this.visitLoc = [];
         for (var i = 0; i < res.data.length; i++) {
-          this.location = this.location.concat({
-            lat: res.data[i].store.latitude,
-            long: res.data[i].store.longitude,
-            name: res.data[i].store.name,
-            address: res.data[i].store.address,
-            vis: res.data[i].visited,
-            pid: res.data[i].pid,
-          });
+          if(res.data[i].visited=== false){
+            this.willGoLoc = this.willGoLoc.concat({
+              lat: res.data[i].store.latitude,
+              long: res.data[i].store.longitude,
+              name: res.data[i].store.name,
+              address: res.data[i].store.address,
+              vis: res.data[i].visited,
+              pid: res.data[i].pid,
+            });
+          }else{
+            this.visitLoc = this.visitLoc.concat({
+              lat: res.data[i].store.latitude,
+              long: res.data[i].store.longitude,
+              name: res.data[i].store.name,
+              address: res.data[i].store.address,
+              vis: res.data[i].visited,
+              pid: res.data[i].pid,
+            });
+          }          
         }
       })
       .catch((err) => alert("실패하였습니다"));
