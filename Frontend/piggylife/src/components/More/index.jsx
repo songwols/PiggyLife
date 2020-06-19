@@ -58,7 +58,7 @@ class More extends React.Component {
           <Button onClick={this.CheckPwdPopUp}>프로필 수정</Button>
         </BF>
         <Space></Space>
-        {this.state.check ? (
+        {check ? (
           <div>
           <BF>
           <Button onClick={this.suggestList} keyword="all">추가된 데이터 조회</Button>

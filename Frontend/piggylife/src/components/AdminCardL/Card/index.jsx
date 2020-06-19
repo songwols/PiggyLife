@@ -8,11 +8,10 @@ import { inject, observer } from "mobx-react";
 @observer
 class Card extends React.Component {
   render() {
-    console.log(this.props.store)
     const info=this.props.store;
     const Register = (e) => {
       e.preventDefault();
-      this.props.history.push("/adminR");
+      this.props.history.push("/adminR/"+info.urId);
     };
 
     const Delete = (e) => {

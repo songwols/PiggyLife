@@ -26,7 +26,7 @@ class CardLayout extends React.Component {
     const check = this.props.userStore.superuser;
     return (
       <OUT>
-        {this.state.check ? 
+        {check ? 
         (<div>
         {list.length !== 0 ? (
           <Frame>

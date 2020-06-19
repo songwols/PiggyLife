@@ -28,19 +28,17 @@ class AdminRegister extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      showList: false,
-      store_name: "",
-      address: "",
-      stores: [],
       v_img: "",
       v_name: "",
       v_category: "",
+      v_categoryGroup: "",
       v_address: "",
       v_tel: "",
       v_menu: "",
-      v_latitude: "",
-      v_longitude: "",
-      click: 0,
+      latitude: "",
+      longitude: "",
+      rid: "",
+      v_branch: "",
       file: "",
       previewURL: "",
       loading: false,
@@ -53,25 +51,55 @@ class AdminRegister extends React.Component {
     });
   };
   
-  categoryChange(e) {
+  categoryChange= (e) => {
+    this.setState({
+      v_category: e.target.value,
+    });
+  }
+
+  categoryGroupChange= (e) => {
+    this.setState({
+      v_categoryGroup: e.target.value,
+    });
+  }
+
+  addressChange= (e) => {
     this.setState({
       v_address: e.target.value,
     });
   }
 
-  addressChange(e) {
+  latitudeChange= (e) => {
     this.setState({
-      v_address: e.target.value,
+      latitude: e.target.value,
     });
   }
 
-  telChange(e) {
+  longitudeChange= (e) => {
+    this.setState({
+      longitude: e.target.value,
+    });
+  }
+
+  ridChange= (e) => {
+    this.setState({
+      rid: e.target.value,
+    });
+  }
+
+  branchChange= (e) => {
+    this.setState({
+      v_branch: e.target.value,
+    });
+  }
+
+  telChange= (e) => {
     this.setState({
       v_tel: e.target.value,
     });
   }
 
-  menuChange(e) {
+  memuChange= (e) => {
     this.setState({
       v_menu: e.target.value,
     });
@@ -85,7 +113,7 @@ class AdminRegister extends React.Component {
     } else {
       formData = null;
     }
-    if (this.state.v_name === "이름을 검색하고 싶으면 여기를 클릭하세요") {
+    if (this.state.v_name === "" || this.state.v_address === "" || this.state.latitude === "" || this.state.longitude === "" || this.state.rid === "") {
       alert("빈 값이 있습니다.");
     } else {
       this.props.colorStore.setHomeColor("#cccccc");
@@ -93,7 +121,8 @@ class AdminRegister extends React.Component {
       this.props.colorStore.setPostColor("#cccccc");
       this.props.colorStore.setMapColor("#cccccc");
       this.props.colorStore.setMatchColor("#cccccc");
-    //   this.props.storeStore.upload(this.state, formData);
+    //   this.props.storeStore.createStore(this.state, formData, this.props.id);
+    console.log(this.state)
     }
   };
 
@@ -132,9 +161,14 @@ class AdminRegister extends React.Component {
           {profile_preview}
         </PF>
 
-        <Input placeholder="이름" value={this.state.v_name} onChange={this.nameChange}></Input>
-        <Input placeholder="카테고리" value={this.state.v_category} onChange={this.categoryChange}></Input>
+        <Input placeholder="가게 이름" value={this.state.v_name} onChange={this.nameChange}></Input>
+        <HInput placeholder="카테고리 그룹" value={this.state.v_categoryGroup} onChange={this.categoryGroupChange}></HInput>&nbsp;
+        <HInput placeholder="카테고리" value={this.state.v_category} onChange={this.categoryChange}></HInput>
         <Input placeholder="주소" value={this.state.v_address} onChange={this.addressChange}></Input>
+        <HInput placeholder="위도" value={this.state.latitude} onChange={this.latitudeChange}></HInput>&nbsp;
+        <HInput placeholder="경도" value={this.state.longitude} onChange={this.longitudeChange}></HInput>
+        <HInput placeholder="지역ID" value={this.state.rid} onChange={this.ridChange}></HInput>&nbsp;
+        <HInput placeholder="지점" value={this.state.v_branch} onChange={this.branchChange}></HInput>
         <Input placeholder="전화번호" value={this.state.v_tel} onChange={this.telChange}></Input>
         <TextArea placeholder="메뉴" value={this.state.v_memu} onChange={this.memuChange}></TextArea>
         <Space />
@@ -156,7 +190,6 @@ const Content = styled.div`
   padding: 10% 10% 5% 10%;
 `;
 const PF = styled.div`
-  padding-top: 2rem;
   height: auto;
   margin-bottom: 0.5rem;
 `;
@@ -183,6 +216,22 @@ const Input = styled.input`
   font-size: 1rem;
   margin-top: 0.4rem;
   width: 95%;
+  padding-left: 0.3rem;
+  background: none;
+  border-color: gray;
+  border-style: solid;
+  border-radius: 0.3rem;
+  outline: none;
+  box-shadow: none;
+  border-width: 0.05rem;
+  height: 2rem;
+  margin-bottom: 0.5rem;
+`;
+
+const HInput = styled.input`
+  font-size: 1rem;
+  margin-top: 0.4rem;
+  width: 45%;
   padding-left: 0.3rem;
   background: none;
   border-color: gray;

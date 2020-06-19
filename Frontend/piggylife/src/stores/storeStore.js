@@ -254,4 +254,13 @@ export default class StoreStore {
     })
     .catch((err) => alert("실패"));
   }
+
+  @action createStore(data, file, urid){
+    return agent.Data.createStore(data, file)
+    .then((res) => {
+      alert("업로드가 성공적으로 완료되었습니다.")
+      this.Requestdelete(urid);
+    })
+    .catch((err) => alert("실패"));
+  }
 }
