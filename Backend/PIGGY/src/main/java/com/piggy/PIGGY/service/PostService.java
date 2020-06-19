@@ -5,7 +5,7 @@ import java.util.Map;
 
 import com.piggy.PIGGY.dto.PostAreaStatisticDto;
 import com.piggy.PIGGY.dto.PostCategoryStatisticDto;
-import com.piggy.PIGGY.dto.PostImageDto;
+import com.piggy.PIGGY.dto.ImageDto;
 import com.piggy.PIGGY.dto.PostInputDto;
 import com.piggy.PIGGY.entity.Post;
 
@@ -29,6 +29,6 @@ public interface PostService {
 	
 	public List<Post> findByUserAndVisited(Long uId, boolean visited);
 
-	public Post updateImage(Long pId, PostImageDto dto);
+	public Post updateImage(Long pId, ImageDto dto);
 	
 }

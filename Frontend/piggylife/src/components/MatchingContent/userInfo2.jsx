@@ -8,6 +8,10 @@ import 아기돼지 from "../Statistic/아기돼지.png";
 import 어린돼지 from "../Statistic/어린돼지.png";
 import 청년돼지 from "../Statistic/청년돼지.png";
 import 평민돼지 from "../Statistic/평민돼지.png";
+import 자작돼지 from "../Statistic/자작돼지.png";
+import 공작돼지 from "../Statistic/공작돼지.png";
+import 후작돼지 from "../Statistic/후작돼지.png";
+import 백작돼지 from "../Statistic/백작돼지.png";
 
 @inject("userStore", "statisticStore")
 @observer
@@ -64,13 +68,13 @@ class UserInfo2 extends React.Component {
     } else if (this.state.Level === 5) {
       this.img = 남작돼지;
     } else if (this.state.Level === 6) {
-      //this.img = 자작돼지;
+      this.img = 자작돼지;
     } else if (this.state.Level === 7) {
-      // this.img = 백작돼지;
+      this.img = 백작돼지;
     } else if (this.state.Level === 8) {
-      //this.img = 후작돼지;
+      this.img = 후작돼지;
     } else if (this.state.Level === 9) {
-      // this.img = 공작돼지;
+      this.img = 공작돼지;
     } else if (this.state.Level === 10) {
       this.img = 로얄돼지;
     }

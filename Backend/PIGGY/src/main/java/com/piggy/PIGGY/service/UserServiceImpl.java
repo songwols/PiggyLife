@@ -43,6 +43,7 @@ public class UserServiceImpl implements UserService {
 				.nickname(dto.getNickname())
 				.emailCertify("email_send_require")
 				.ranking(0)
+				.superuser(false)
 				.roles(Collections.singletonList("EMAIL_USER"))
 				.build());
 	}

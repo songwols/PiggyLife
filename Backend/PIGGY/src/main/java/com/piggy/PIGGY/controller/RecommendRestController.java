@@ -89,5 +89,16 @@ public class RecommendRestController {
 			throw e;
 		}
 	}
+	
+	@ApiOperation(value = "인기 지역 맛집 불러오기")
+	@GetMapping("/findPopularAreaRecommend")
+	public ResponseEntity<Object> findPopularAreaRecommend() {
+		try {
+			AreaRecommendDto output = rService.findPopularAreaRecommend();
+			return new ResponseEntity<Object>(output, HttpStatus.OK);
+		} catch (Exception e) {
+			throw e;
+		}
+	}
 
 }
