@@ -3,37 +3,57 @@ import styled from "styled-components";
 import { inject, observer } from "mobx-react";
 import Card from "./Card";
 
-@inject("storeStore")
+@inject("storeStore","userStore")
 @observer
 class CardLayout extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
       list: [],
-      length: 1,
+      check: true,
     };
   }
 
   async UNSAFE_componentWillMount() {
-    
+    await this.props.userStore.whoami(window.sessionStorage.getItem("email"))
+    await this.props.storeStore.requestFindAll()
+    await this.props.storeStore.requestFindMy(window.sessionStorage.getItem("uid"))
   }
 
   render() {
+    const list=this.props.storeStore.RFindAll;
+    const list2=this.props.storeStore.RFindMy;
+    const check = this.props.userStore.superuser;
     return (
       <OUT>
-        {this.state.length !== 0 ? (
+        {check ? 
+        (<div>
+        {list.length !== 0 ? (
           <Frame>
-            {/* {this.list.map((item, index) => (
-              <Card key={index} store={item} keyword={this.props.keyword}/>
-            ))} */}
-            <Card></Card>
-            <Card></Card>
+            {list.map((item, index) => (
+              <Card key={index} store={item}/>
+            ))}
           </Frame>
         ) : (
           <NFrame>
             <Text>등록된 게시글이 없습니다.</Text>
           </NFrame>
         )}
+        </div>) : 
+        (<div>
+          {list2.length !== 0 ? (
+          <Frame>
+            {list2.map((item, index) => (
+              <Card key={index} store={item}/>
+            ))}
+          </Frame>
+        ) : (
+          <NFrame>
+            <Text>등록된 게시글이 없습니다.</Text>
+          </NFrame>
+        )}
+        </div>)}
+        
       </OUT>
     );
   }

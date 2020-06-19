@@ -85,6 +85,23 @@ const Data = {
   get_hotplace: (uId) =>
     requests.get(`/recommend/findAreaRecommend?uId=${uId}`),
   deleteUser: (token) => requests.delete(`/user/deleteUser`, { TOKEN: token }),
+  requestStore: (data,uid) => requests.post(`/Request/create/${uid}/?name=${data.store_name}&address=${data.address}`),
+  requestFindAll: () => requests.get(`/Request/findAll`),
+  Requestdelete: (urid) => requests.delete(`/Request/delete/${urid}`),
+  requestFindMy: (uid) => requests.get(`/Request/findByUser/${uid}`),
+  createStore: (data, file) => requests.post(`/store/create`,{
+    address: data.v_address,
+    branch: data.v_branch,
+    category: data.v_category,
+    categoryGroup: data.v_categoryGroup,
+    image: file,
+    latitude: data.latitude,
+    longitude: data.longitude,
+    menues: data.v_menu,
+    name: data.v_name,
+    rid: data.rid,
+    tel: data.v_tel,
+  }),
 };
 
 export default {

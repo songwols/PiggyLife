@@ -4,7 +4,7 @@ import { inject, observer } from "mobx-react";
 import CheckPopUp from "../EditPro/checkPopUp";
 
 export const Links = styled
-@inject("userStore")
+@inject("userStore", "storeStore")
 @observer
 class More extends React.Component {
   state = {
@@ -12,6 +12,7 @@ class More extends React.Component {
     infoW: false,
     store_name: "",
     address: "",
+    check: true,
   };
   CheckPwdPopUp = (e) => {
     this.setState({
@@ -29,39 +30,57 @@ class More extends React.Component {
   changename = (e)=>{
     this.setState({
       store_name: e.target.value,
+      address : this.state.address,
     });
   }
   changeaddress = (e)=>{
     this.setState({
-      address : this.state.currPwd,
+      store_name: this.state.store_name,
+      address : e.target.value,
     });
   };
   goRequest = (e) => {
-    //this.props.storeStore.request
+    this.props.storeStore.requestStore(this.state)
   }
   suggestList = (e) => {
     window.location.replace("/adminS")
   }
 
+  async UNSAFE_componentWillMount() {
+    await this.props.userStore.whoami(window.sessionStorage.getItem("email"))
+  }
+
   render() {
+    const check = this.props.userStore.superuser
     return (
       <Frame>
         <BF>
           <Button onClick={this.CheckPwdPopUp}>프로필 수정</Button>
         </BF>
         <Space></Space>
-        <BF>
-          <Button onClick={this.addInfoPopup}>데이터 추가</Button>
-        </BF>
-        <Space></Space>
+        {check ? (
+          <div>
+          <BF>
+          <Button onClick={this.suggestList} keyword="all">추가된 데이터 조회</Button>
+          </BF>
+          <Space></Space>
+        </div>
+        ) : (
+          <div>
+            <BF>
+              <Button onClick={this.addInfoPopup}>데이터 추가</Button>
+            </BF>
+            <Space></Space>
+            <BF>
+              <Button onClick={this.suggestList} keyword="mine">내가 요청한 데이터 조회</Button>
+            </BF>
+            <Space></Space>
+          </div>
+        )}
         <BF>
           <a href="https://pf.kakao.com/_fzqDxb">
             <Button>고객센터</Button>
           </a>
-        </BF>
-        <Space></Space>
-        <BF>
-          <Button onClick={this.suggestList}>추가된 데이터 조회</Button>
         </BF>
         <Space></Space>
         <BF>

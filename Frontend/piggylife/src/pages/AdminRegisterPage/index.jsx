@@ -4,16 +4,15 @@ import Navbar from "../../components/Navbar";
 import Top from "../../components/Top"
 import AdminRegister from "../../components/AdminRegister"
 
-class AdminRegisterPage extends React.Component{
-    render(){
-        return(
-            <Frame>
-            <Top></Top>
-            <AdminRegister></AdminRegister>
-            <Navbar></Navbar>
-        </Frame>
-        )
-    }
+const AdminRegisterPage  = ({ match }) => {
+    return(
+        <Frame>
+        <Top></Top>
+        <AdminRegister id={match.params.urid}></AdminRegister>
+        <Navbar></Navbar>
+    </Frame>
+    )
+    
 }
 
 const Frame = styled.div`
