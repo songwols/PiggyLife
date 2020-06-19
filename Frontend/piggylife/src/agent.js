@@ -102,6 +102,8 @@ const Data = {
     rid: data.rid,
     tel: data.v_tel,
   }),
+  storeImage: (file, sid) =>
+    requests.post(`/store/storeImage/${sid}`, file, {}),
 };
 
 export default {
