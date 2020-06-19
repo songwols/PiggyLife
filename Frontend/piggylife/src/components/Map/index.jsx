@@ -27,7 +27,7 @@ class MapContent extends React.Component {
   // visitMakersList = []
   
   // map;
-  async componentDidMount() {    
+  async componentWillMount() {    
     
     const script = document.createElement("script");
     await this.props.storeStore.get_post(sessionStorage.getItem("uid"));
@@ -130,7 +130,7 @@ class MapContent extends React.Component {
       <MapContents id="Mymap">
     <ul id="category">
         {/* <li id="BK9" data-order="0">  */}
-        <li data-order="0" onClick={()=>this.changeMarker('all')}>
+        <li data-order="0" onClick={this.changeMarker('all').bind(this)}>
             <span className="category_bg all"></span>
             전체
         </li >       
